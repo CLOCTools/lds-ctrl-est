@@ -225,8 +225,8 @@ int main(void) {
 		// /*
 		sys.setXRef(xRefVec);
 		sys.setYRef(yRefVec);
-		sys.setKx(KxVec);
-		sys.setKinty(KintyVec);
+		sys.setKc_x(KxVec);
+		sys.setKc_inty(KintyVec);
 		// */
 
 		// input
@@ -241,7 +241,7 @@ int main(void) {
 		armaVec z_k = armaVec(z.colptr(k), z.n_rows, false, false);
 		sys_true.simMeasurement(z_k);
 
-		// update prev. prediction
+		// void steadyState_fbCtrl(armaVec& z, bool& gateCtrl=TRUE, bool& gateEst=TRUE, bool& gateLock=FALSE, data_t& sigma_softStart=DEFAULT_SOFTSTART, data_t& sigma_uNoise=DATA_T_ZERO, bool& resetAtCtrlOnset=TRUE, bool& doRecurse_Ke=TRUE);
 		sys.steadyState_fbCtrl(z_k, gateCtrl, gateEst, gateLock, sigma_softStart, uSigma);
 
 		lambdaRef.submat(0,k,nY-1,k) = armaMat(yRefVec.data(),nY,1);

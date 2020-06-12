@@ -53,4 +53,11 @@ where
 
 # Dependencies
  -  Linear algebra library [`armadillo`](http://arma.sourceforge.net/) is used throughout this repository. Either install binaries via package manager or from [source](https://gitlab.com/conradsnicta/armadillo-code).
+ - For debugging, the [`matio`](https://github.com/tbeu/matio) C library is used in the test programs to save signals in MATLAB `.mat` files. You can install this with many package managers.
  -  For use with Matlab, you may need to compile [OpenBlas](http://www.openblas.net/) from source and make a static library (`libldsCtrlEst.a`) using objects from this repository as well as unarchived objects in `libopenblas.a`. Certain package managers may allow you to install static libraries from which you can extract objects using `ar -x` command. However you get these objects, put the OpenBlas objects under `build/static-objects/openblas/`, as the `make all-static` is looking for files in this directory.
+
+# Compiling
+ - For basic functionality, compile as a dynamic (AKA shared) library and install.
+ ```bash
+make all && sudo make install
+``` 
