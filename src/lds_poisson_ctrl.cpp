@@ -503,18 +503,32 @@ void plds::ctrl_t::checkGainInversion() {
 }
 
 void plds::ctrl_t::calc_ssSetPt() {
-	// This is a waste to do every timestep, but because I have separate set* methods for A,B,C, this is the only safe way to do it...
-	// TODO: replace setA,setB, etc. with single setSysParams(A,B,g,m,C), and compute there so this can be avoided? setSysParams should be private to lds::sys_t so it doesn't get inherited for plds/glds
-	armaMat phi_ss = join_horiz(getA()-armaMat(nX,nX,fill::eye), getB()*arma::diagmat(g));
-	phi_ss = join_vert(phi_ss, join_horiz(getC(), armaMat(nY,nU,fill::zeros)));
-	//TODO: consider pinv()? Would at least give least-sq solution if can't invert
-	armaVec xu_ss = inv(phi_ss) * join_vert(-m, logyRef-d);
+	// // SISO:
+	// // This is a waste to do every timestep, but because I have separate set* methods for A,B,C, this is the only safe way to do it...
+	// // TODO: replace setA,setB, etc. with single setSysParams(A,B,g,m,C), and compute there so this can be avoided? setSysParams should be private to lds::sys_t so it doesn't get inherited for plds/glds
+	// armaMat phi_ss = join_horiz(getA()-armaMat(nX,nX,fill::eye), getB()*arma::diagmat(g));
+	// phi_ss = join_vert(phi_ss, join_horiz(getC(), armaMat(nY,nU,fill::zeros)));
+	// //TODO: consider pinv()? Would at least give least-sq solution if can't invert
+	// armaVec xu_ss = inv(phi_ss) * join_vert(-m, logyRef-d);
+	//
+	// // WARNING: Do not do the below unless you are okay with the fact that since m is now time-varying, the steady-state solution is not appropriate.
+	// // xu_ss = inv(phi_ss) * join_vert(-getM(), yRef-d); //TODO: consider pinv()?
+	//
+	// xRef.subvec(0,nX-1) = xu_ss.subvec(0,nX-1);
+	// uRef = xu_ss.subvec(nX,nX+nU-1);
 
-	// WARNING: Do not do the below unless you are okay with the fact that since m is now time-varying, the steady-state solution is not appropriate.
-	// xu_ss = inv(phi_ss) * join_vert(-getM(), yRef-d); //TODO: consider pinv()?
-
-	xRef.subvec(0,nX-1) = xu_ss.subvec(0,nX-1);
-	uRef = xu_ss.subvec(nX,nX+nU-1);
+	// Linearly-constrained least squares (ls).
+	// Boyd & Vandenberghe 2018 Intro to Applied Linear Alg
+	armaMat A_ls = join_horiz(getC(), armaMat(nY,nU,fill::zeros));
+	armaVec b_ls = logyRef-d;
+	armaMat C_ls = join_horiz(getA()-armaMat(nX,nX,fill::eye), getB()*arma::diagmat(g));
+	armaVec d_ls = -m;//to adapt setpoint: -getM();
+	armaMat phi_ls = join_vert(join_horiz(2*A_ls.t()*A_ls, C_ls.t()), join_horiz(C_ls, armaMat(nX,nX,fill::zeros)));
+	armaVec xulam = inv(phi_ls) * join_vert(2*A_ls.t()*b_ls, d_ls);
+	xRef.subvec(0,nX-1) = xulam.subvec(0,nX-1);
+	uRef = xulam.subvec(nX,nX+nU-1);
+	logyRef = getC()*xRef.subvec(0,nX-1) + d;//the least-squares soln
+	yRef = exp(logyRef);
 }
 
 void plds::ctrl_t::update_expFilt() {

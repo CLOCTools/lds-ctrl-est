@@ -8,6 +8,7 @@ namespace lds {
 		{
 		public:
 			void h();//output nonlinearity
+			void predict();
 			void update(armaVec& z); //update estimate given measurement
 			void simMeasurement(armaVec& z);
 

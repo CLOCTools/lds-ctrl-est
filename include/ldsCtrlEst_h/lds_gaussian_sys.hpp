@@ -8,6 +8,7 @@ namespace lds {
 		{
 		public:
 			void h();//output
+			void predict();
 			void update(armaVec& z, bool doRecurse_Ke=true); //update estimate given measurement
 			void recurse_Ke(); //recursively estimate Ke
 			void simMeasurement(armaVec& z);

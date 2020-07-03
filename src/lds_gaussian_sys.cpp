@@ -24,6 +24,15 @@ r0(r0)
 };
 
 /*
+predict: Given input, predict the state, covar
+*/
+void glds::sys_t::predict()
+{
+	lds::sys_t::predict();
+	h();
+}
+
+/*
 Correct: Given measurement (z) and predicted state, update estimate of the state, covar, output using Kalman filter
 */
 void glds::sys_t::update(armaVec& z, bool doRecurse_Ke)

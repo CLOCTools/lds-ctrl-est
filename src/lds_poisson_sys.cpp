@@ -30,6 +30,15 @@ lds::sys_t(nU, nX, dt, p0, q0)
 };
 
 /*
+predict: Given input, predict the state, covar
+*/
+void plds::sys_t::predict()
+{
+	lds::sys_t::predict();
+	h();
+}
+
+/*
 Correct: Given measurement (z) and current input (u), update estimate of the state, covar, output.
 Eden et al. 2004
 */

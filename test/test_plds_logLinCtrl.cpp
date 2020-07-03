@@ -64,7 +64,7 @@ int main(void) {
 	// control vars
 	// Going to take the steady-state vals...
 	stdVec Kc_xVec = stdVec(nU*nX, 1);
-	stdVec Kc_intyVec = stdVec(nU*nY, 25);//250);
+	stdVec Kc_intyVec = stdVec(nU*nY, 25);
 	stdVec xRefVec = stdVec(nX, log(20.0*dt));
 	stdVec yRefVec = stdVec(nY, 20.0*dt);
 
