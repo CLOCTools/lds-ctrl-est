@@ -85,6 +85,10 @@ Thumbs.db
 *.ogv
 *.mkv
 
+# Ignore OS-related #
+#####################
+.DS_Store
+
 # Specific to this project #
 ############################
 build/*
