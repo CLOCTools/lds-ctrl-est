@@ -22,12 +22,12 @@ t_since_ctrl_onset(0.0)
 	uSat = armaVec(nU, fill::zeros);
 
 	//might not need this, so will not give them elements until I know they need them.
-	Kx = armaMat(nU,nX, fill::zeros);
+	Kc_x = armaMat(nU,nX, fill::zeros);
 	// Likewise, might not need these, so zero elements until later.
-	Ku = armaMat(0,0, fill::zeros);
-	Ky = armaMat(nU,nY, fill::zeros);
-	Kinty = armaMat(0,0, fill::zeros);
-	Kdy = armaMat(0,0, fill::zeros);
+	Kc_u = armaMat(0,0, fill::zeros);
+	Kc_y = armaMat(nU,nY, fill::zeros);
+	Kc_inty = armaMat(0,0, fill::zeros);
+	Kc_dy = armaMat(0,0, fill::zeros);
 
 	gDesign = g;
 
@@ -62,18 +62,23 @@ void plds::ctrl_t::piCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& si
 			t_since_ctrl_onset += dt;
 		}
 
+		// enforce softstart on control vars.
+		data_t softStart_sf = 1 - exp(-pow(t_since_ctrl_onset,2)/(2*pow(sigma_softStart,2)));
+		uRef *= softStart_sf;
+		yRef *= softStart_sf;
+
 		if (!gateLock) {
 			// first do g inversion change of vars. (v = g.*u)
 			vRef = gDesign % uRef;
 
 			//calc. the control
 			v = vRef; //nominally-optimal.
-			v -= Ky * (y - yRef); //instantaneous error
+			v -= Kc_y * (y - yRef); //instantaneous error
 
 			if (augmentation & AUGMENT_INTY) {
 				// if (!uSaturated)
 				intE += (y - yRef)*dt; //integrated error
-				v -= Kinty*intE;//control for integrated error
+				v -= Kc_inty*intE;//control for integrated error
 			}
 
 			// // TODO: add derivative...
@@ -110,9 +115,6 @@ void plds::ctrl_t::piCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& si
 	// Limit u and if saturated, back-calculate integral error.
 	antiWindup();
 
-	// enforce the soft-start.
-	u *= 1 - exp(-pow(t_since_ctrl_onset,2.0)/(2*pow(sigma_softStart,2.0)));
-
 	gateCtrl_prev = gateCtrl;
 	gateLock_prev = gateLock;
 }
@@ -120,8 +122,7 @@ void plds::ctrl_t::piCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& si
 // Most generic
 void plds::ctrl_t::fbCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset) {
 	//update state estiarmaMates, given latest measurement
-	setZ(z);
-	update();
+	update(z);
 
 	if (gateCtrl) {
 		//consider resetting estimates each control epoch...
@@ -134,6 +135,11 @@ void plds::ctrl_t::fbCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& si
 			t_since_ctrl_onset += dt;
 		}
 
+		// enforce softstart on control vars.
+		data_t softStart_sf = 1 - exp(-pow(t_since_ctrl_onset,2)/(2*pow(sigma_softStart,2)));
+		uRef *= softStart_sf;
+		yRef *= softStart_sf;
+
 		if (!gateLock) {
 			duRef = uRef - uRef_prev;
 
@@ -144,25 +150,25 @@ void plds::ctrl_t::fbCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& si
 			//Given FB, calc. the change in control
 			if (augmentation & AUGMENT_U) {
 				dv = dvRef; //nominally-optimal.
-				dv -= Kx * (getX() - xRef); //instantaneous state error
-				dv -= Ku * (v - vRef); //penalty on changes in u
+				dv -= Kc_x * (getX() - xRef); //instantaneous state error
+				dv -= Kc_u * (v - vRef); //penalty on changes in u
 
 				if (augmentation & AUGMENT_INTY) {
 					// if (!uSaturated)
 					intE += (y - yRef)*dt; //integrated error
-					dv -= Kinty * intE;//control for integrated error
+					dv -= Kc_inty * intE;//control for integrated error
 				}
 
 				// update the control
 				v += dv;
 			} else {
 				v = vRef; //nominally-optimal.
-				v -= Kx * (getX() - xRef); //instantaneous state error
+				v -= Kc_x * (getX() - xRef); //instantaneous state error
 
 				if (augmentation & AUGMENT_INTY) {
 					// if (!uSaturated)
 					intE += (y - yRef)*dt; //integrated error
-					v -= Kinty * intE; //control for integrated error
+					v -= Kc_inty * intE; //control for integrated error
 				}
 			}
 
@@ -198,9 +204,6 @@ void plds::ctrl_t::fbCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& si
 	// because gradient for input disappears when there is no input, consider adding a small light level at all times...
 	antiWindup();
 
-	// enforce the soft-start.
-	u *= 1 - exp(-pow(t_since_ctrl_onset,2.0)/(2*pow(sigma_softStart,2.0)));
-
 	// now that we have a new input, make a prediction
 	predict();
 
@@ -224,6 +227,13 @@ void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma
 			t_since_ctrl_onset += dt;
 		}
 
+		// enforce softstart on control vars.
+		data_t softStart_sf = 1 - exp(-pow(t_since_ctrl_onset,2)/(2*pow(sigma_softStart,2)));
+		uRef *= softStart_sf;
+		xRef *= softStart_sf;
+		yRef *= softStart_sf;
+		logyRef *= softStart_sf;
+
 		duRef = uRef - uRef_prev;
 		uRef_prev = uRef;
 
@@ -235,8 +245,8 @@ void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma
 			//Given FB, calc. the change in control
 			if (augmentation & AUGMENT_U) {
 				dv = dvRef; //nominally-optimal.
-				dv -= Kx * (getX() - xRef); //instantaneous state error
-				dv -= Ku * (v - vRef); //penalty on changes in u
+				dv -= Kc_x * (getX() - xRef); //instantaneous state error
+				dv -= Kc_u * (v - vRef); //penalty on changes in u
 
 				// if (augmentation & AUGMENT_M)
 				// dv -= Km * (getM() - d); //changes in d
@@ -244,19 +254,19 @@ void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma
 				if (augmentation & AUGMENT_INTY) {
 					// if (!uSaturated)
 					intE += (logy - logyRef)*dt; //integrated error
-					dv -= Kinty * intE;//control for integrated error
+					dv -= Kc_inty * intE;//control for integrated error
 				}
 
 				// update the control
 				v += dv;
 			} else {
 				v = vRef; //nominally-optimal.
-				v -= Kx * (getX() - xRef); //instantaneous state error
+				v -= Kc_x * (getX() - xRef); //instantaneous state error
 
 				if (augmentation & AUGMENT_INTY) {
 					// if (!uSaturated)
 					intE += (logy - logyRef)*dt; //integrated error
-					v -= Kinty * intE; //control for integrated error
+					v -= Kc_inty * intE; //control for integrated error
 				}
 			}
 
@@ -287,9 +297,6 @@ void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma
 	antiWindup();
 	// limit(u, uLB, uUB);
 
-	// enforce the soft-start.
-	u *= 1 - exp(-pow(t_since_ctrl_onset,2.0)/(2*pow(sigma_softStart,2.0)));
-
 	// now that we have a new input, make a prediction
 	predict();
 
@@ -299,8 +306,7 @@ void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma
 
 void plds::ctrl_t::logLin_fbCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset) {
 
-	setZ(z);
-	update();
+	update(z);
 
 	calc_logLinCtrl(gateCtrl, gateLock, sigma_softStart, sigma_uNoise, resetAtCtrlOnset);
 }
@@ -308,8 +314,7 @@ void plds::ctrl_t::logLin_fbCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, dat
 void plds::ctrl_t::steadyState_logLin_fbCtrl(armaVec& z, bool& gateCtrl, bool& gateEst, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset) {
 
 	if (gateEst) {
-		setZ(z);
-		update();
+		update(z);
 	} else {
 		// Need to make sure that P doesn't grow with repeated calls of predict without calls to update()...
 		defaultQ();
@@ -345,29 +350,29 @@ void plds::ctrl_t::augment(size_t augmentation, bool gateCtrl) {
 	plds::sys_t::augment(augmentation);
 
 	if (augmentation & AUGMENT_U) {
-		Ku.zeros(nU, nU);
+		Kc_u.zeros(nU, nU);
 		this->augmentation = this->augmentation | AUGMENT_U;
 	}
 
 	if (augmentation & AUGMENT_INTY) {
-		Kinty.zeros(nU, nY);
+		Kc_inty.zeros(nU, nY);
 		intE.zeros(nY);
 		intE_awuAdjust.zeros(nY);
 		this->augmentation = this->augmentation | AUGMENT_INTY;
 	}
 
-	// TODO : add Kdy, eyprev, etc.
+	// TODO : add Kc_dy, eyprev, etc.
 	// if (augmentation & AUGMENT_DY) {
-	// 	Kdy.zeros(nU, nY);
+	// 	Kc_dy.zeros(nU, nY);
 	// 	this->augmentation = this->augmentation | AUGMENT_DY;
 	// }
 }
 
 void plds::ctrl_t::deaugment() {
 	plds::sys_t::deaugment();
-	Ku.zeros(0,0);
-	Kinty.zeros(0,0);
-	Kdy.zeros(0,0);
+	Kc_u.zeros(0,0);
+	Kc_inty.zeros(0,0);
+	Kc_dy.zeros(0,0);
 	intE.zeros(0,0);
 	intE_awuAdjust.zeros(0,0);
 }
@@ -432,45 +437,45 @@ void plds::ctrl_t::setYRef(armaVec& yRef) {
 	logyRef = log(this->yRef);
 }
 
-void plds::ctrl_t::setKx(stdVec& KxVec) {
-	reassign(Kx, KxVec);
+void plds::ctrl_t::setKc_x(stdVec& Kc_xVec) {
+	reassign(Kc_x, Kc_xVec);
 }
-void plds::ctrl_t::setKx(armaVec& Kx) {
-	reassign(this->Kx, Kx);
+void plds::ctrl_t::setKc_x(armaVec& Kc_x) {
+	reassign(this->Kc_x, Kc_x);
 }
 
-void plds::ctrl_t::setKu(stdVec& KuVec) {
+void plds::ctrl_t::setKc_u(stdVec& Kc_uVec) {
 	if (augmentation & AUGMENT_U)
-	reassign(Ku, KuVec);
+	reassign(Kc_u, Kc_uVec);
 }
-void plds::ctrl_t::setKu(armaVec& Ku) {
+void plds::ctrl_t::setKc_u(armaVec& Kc_u) {
 	if (augmentation & AUGMENT_U)
-	reassign(this->Ku, Ku);
+	reassign(this->Kc_u, Kc_u);
 }
 
-void plds::ctrl_t::setKy(stdVec& KyVec) {
-	reassign(Ky, KyVec);
+void plds::ctrl_t::setKc_y(stdVec& Kc_yVec) {
+	reassign(Kc_y, Kc_yVec);
 }
-void plds::ctrl_t::setKy(armaVec& Ky) {
-	reassign(this->Ky, Ky);
+void plds::ctrl_t::setKc_y(armaVec& Kc_y) {
+	reassign(this->Kc_y, Kc_y);
 }
 
-void plds::ctrl_t::setKinty(stdVec& KintyVec) {
+void plds::ctrl_t::setKc_inty(stdVec& Kc_intyVec) {
 	if (augmentation & AUGMENT_INTY)
-	reassign(Kinty, KintyVec);
+	reassign(Kc_inty, Kc_intyVec);
 }
-void plds::ctrl_t::setKinty(armaVec& Kinty) {
+void plds::ctrl_t::setKc_inty(armaVec& Kc_inty) {
 	if (augmentation & AUGMENT_INTY)
-	reassign(this->Kinty, Kinty);
+	reassign(this->Kc_inty, Kc_inty);
 }
 
-void plds::ctrl_t::setKdy(stdVec& KdyVec) {
+void plds::ctrl_t::setKc_dy(stdVec& Kc_dyVec) {
 	if (augmentation & AUGMENT_DY)
-	reassign(Kdy, KdyVec);
+	reassign(Kc_dy, Kc_dyVec);
 }
-void plds::ctrl_t::setKdy(armaVec& Kdy) {
+void plds::ctrl_t::setKc_dy(armaVec& Kc_dy) {
 	if (augmentation & AUGMENT_DY)
-	reassign(this->Kdy, Kdy);
+	reassign(this->Kc_dy, Kc_dy);
 }
 
 void plds::ctrl_t::setTauAntiWindup(data_t& tau) {
@@ -539,13 +544,13 @@ void plds::ctrl_t::antiWindup() {
 
 	if (augmentation & AUGMENT_INTY) {
 		// one-step back-calculation (Astroem, Rundqwist 1989 warn against using this...)
-		// armaVec delta_intE = solve(Kinty, (u-uSat)); //pinv(Kinty) * (u-uSat);
+		// armaVec delta_intE = solve(Kc_inty, (u-uSat)); //pinv(Kc_inty) * (u-uSat);
 		// intE += delta_intE;
 
 		// gradual: see Astroem, Rundqwist 1989
 		// my fudge for doing MIMO gradual
 		// n.b., went ahead and multipled 1/T by dt so don't have to do that here.
-		intE_awuAdjust += kAntiWindup * (sign(Kinty).t()/nU) * (u-uSat);
+		intE_awuAdjust += kAntiWindup * (sign(Kc_inty).t()/nU) * (u-uSat);
 		intE += intE_awuAdjust;
 	}
 
@@ -629,10 +634,10 @@ plds::ctrl_t& plds::ctrl_t::operator=(const plds::ctrl_t& sys)
 	this->xRef = sys.xRef;
 	this->logyRef = sys.logyRef;
 	this->yRef = sys.yRef;
-	this->Kx = sys.Kx;
-	this->Ku = sys.Ku;
+	this->Kc_x = sys.Kc_x;
+	this->Kc_u = sys.Kc_u;
 	// this->Km = sys.Km;
-	this->Kinty = sys.Kinty;
+	this->Kc_inty = sys.Kc_inty;
 	this->duRef = sys.duRef;
 	this->dvRef = sys.dvRef;
 	this->vRef = sys.vRef;

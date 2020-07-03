@@ -7,4 +7,5 @@ URL: https://github.com/mfbolus/cpp-ldsCtrlEst
 Version: 0.2.0
 Cflags: -I${includedir}
 Libs: -L${libdir} -lldsCtrlEst
+# -Wl,-rpath,${libdir}
 Libs.private: -larmadillo -lmatio -lhdf5

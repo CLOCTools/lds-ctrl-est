@@ -8,7 +8,7 @@ namespace lds {
 		{
 		public:
 			void h();//output nonlinearity
-			void update(); //update estimate given measurement
+			void update(armaVec& z); //update estimate given measurement
 			void simMeasurement(armaVec& z);
 
 			sys_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& dt, data_t& p0, data_t& q0, std::size_t augmentation=0);

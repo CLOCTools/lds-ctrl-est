@@ -56,7 +56,11 @@ int main(void) {
 	armaMat z(nY, K, fill::zeros);
 
 	// Fake stimlus.
-	armaMat u(nU, K, fill::randu);
+	armaMat u(nU, K, arma::fill::zeros);//randu);
+	// u.randu(); //For some reason, bus error.
+	u.randn(); //need to do this first.
+	u.randu(nU,K);
+
 	data_t tau_u = 0.002;
 	u = smooth(u, tau_u, dt);
 
@@ -151,8 +155,7 @@ int main(void) {
 		sys_true.simMeasurement(z_k);
 
 		// update prev. prediction
-		sys.setZ(z_k);//set measurement
-		sys.update();
+		sys.update(z_k);
 		// cout << "sys.y[0]_" << k << " = " << sys.y[0] << "\n";
 
 		lambdaHat.submat(0,k,nY-1,k) = sys.getY();

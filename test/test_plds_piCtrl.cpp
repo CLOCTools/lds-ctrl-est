@@ -177,6 +177,8 @@ int main(void) {
 	data_t tauAntiWindup = 1e6;
 	sys.setTauAntiWindup(tauAntiWindup);
 
+	data_t sigma_softStart = 0.1;
+
 	cout << "Starting " << K*dt << " sec simulation ... \n";
 	auto start = chrono::high_resolution_clock::now();
 	for (size_t k=1; k<K; k++)
@@ -215,8 +217,8 @@ int main(void) {
 		// /*
 		sys.setXRef(xRefVec);
 		sys.setYRef(yRefVec);
-		sys.setKy(KpVec);
-		sys.setKinty(KiVec);
+		sys.setKc_y(KpVec);
+		sys.setKc_inty(KiVec);
 		// */
 
 		// input
@@ -232,7 +234,7 @@ int main(void) {
 		sys_true.simMeasurement(z_k);
 
 		// update prev. prediction
-		sys.piCtrl(z_k, gateCtrl, gateLock, uSigma);
+		sys.piCtrl(z_k, gateCtrl, gateLock, sigma_softStart, uSigma);
 
 		lambdaRef.submat(0,k,nY-1,k) = armaMat(yRefVec.data(),nY,1);
 		lambdaTrue.submat(0,k,nY-1,k) = sys_true.getY();

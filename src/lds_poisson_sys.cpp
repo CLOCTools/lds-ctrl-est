@@ -18,7 +18,10 @@ lds::sys_t(nU, nX, dt, p0, q0)
 	C = armaMat(nY, nX, fill::eye); //each state will map to an output by default (as many as possible)
 
 	diag_y = diagmat(y);
-	chance = armaVec(nY, fill::randu);
+
+	// TODO: for some reason, on my mac, initializing with randu results in bus error!
+	// chance = armaVec(nY, fill::randu);
+	chance = armaVec(nY, fill::zeros);
 
 	nlType = EXP;
 
@@ -30,17 +33,24 @@ lds::sys_t(nU, nX, dt, p0, q0)
 Correct: Given measurement (z) and current input (u), update estimate of the state, covar, output.
 Eden et al. 2004
 */
-void plds::sys_t::update()
+void plds::sys_t::update(armaVec& z)
 {
+	// assign the measurement internal variable.
+	setZ(z);
+
 	// Given *current* input, make a prediction of the output.
 	h();
-	diag_y.diag() = y; //less overhead...
+	diag_y.diag() = y;
 
-	// TODO:
-	// Since P should always be symmetric, and I think semidefinite.
-	// Not sure if it will be pos def...but this does not crash.
+	// predict covariance (took this out of generic predict step...)
+	P = A*P*A.t() + Q;
+
+	// update cov
 	P = inv_sympd( inv_sympd(P) + C.t() * diag_y * C ); //posterior
 	x = x + P * C.t() * (z - y); //posterior
+
+	// armaMat Ke = P*C.t();
+	// cout << "Ke = " << Ke[0] << endl;
 
 	// With new update, estimate output.
 	h();//posterior

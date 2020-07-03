@@ -21,7 +21,8 @@ lds::sys_t::sys_t(size_t nU, size_t nX, data_t& dt, data_t& p0, data_t& q0): dt(
 	// initial conditions.
 	x0 = armaVec(nX, fill::zeros); // includes bias (nY) and g (nU)
 	x = x0;
-	P0 = p0*armaMat(nX, nX, fill::zeros);//fill::eye);
+	P0 = armaMat(nX, nX, fill::zeros);
+	// P0 = p0*armaMat(nX, nX, fill::eye);
 	P = P0;
 
 	g = armaVec(nU, fill::ones);

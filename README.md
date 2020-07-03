@@ -46,18 +46,28 @@ where
  - Use of `set*` methods: In order to ensure dimensionalities always match internally and to use intention in handling any mismatches that may be present in parameters, signals, etc., every property of a system/controller class is `protected`. Set methods are defined so users can define parameters in a safe way. Note that this layer of set methods slowed the library down by 0.2x, but the consistency of dimensions and how inconsistencies are handled is of great importance.
 
 # Notes on Repository Organization
- - Header files are under `include/ldsEstCtrl_h`
- - Source files are under `src/`.
- - Wrappers for exposing functions to matlab as matlab executables are located under `mex/`.
- - Test programs/visualization scripts are located under `test/`.
+- Header files are under `include/ldsEstCtrl_h`
+- Source files are under `src/`.
+- Wrappers for exposing functions to matlab as matlab executables are located under `mex/`.
+- Test programs/visualization scripts are located under `test/`.
 
 # Dependencies
- -  Linear algebra library [`armadillo`](http://arma.sourceforge.net/) is used throughout this repository. Either install binaries via package manager or from [source](https://gitlab.com/conradsnicta/armadillo-code).
- - For debugging, the [`matio`](https://github.com/tbeu/matio) C library is used in the test programs to save signals in MATLAB `.mat` files. You can install this with many package managers.
- -  For use with Matlab, you may need to compile [OpenBlas](http://www.openblas.net/) from source and make a static library (`libldsCtrlEst.a`) using objects from this repository as well as unarchived objects in `libopenblas.a`. Certain package managers may allow you to install static libraries from which you can extract objects using `ar -x` command. However you get these objects, put the OpenBlas objects under `build/static-objects/openblas/`, as the `make all-static` is looking for files in this directory.
+-  Linear algebra library [`armadillo`](http://arma.sourceforge.net/) is used throughout this repository. Either install binaries via package manager or from [source](https://gitlab.com/conradsnicta/armadillo-code).
+- For debugging, the [`matio`](https://github.com/tbeu/matio) C library is used in the test programs to save signals in MATLAB `.mat` files. You can install this with many package managers.
+-  For use with Matlab in Linux (see mex functions), you may need to compile [OpenBlas](http://www.openblas.net/) from source and make a static library (`libldsCtrlEst.a`) using objects from this repository as well as unarchived objects in `libopenblas.a`. Certain package managers may allow you to install the binaries for static libraries from which you can extract objects using `ar -x` command, rather than compiling from source yourself. However you get these objects, put the OpenBlas objects under `build/static-objects/openblas/`, as the `make all-static` rule is looking for files in this directory.
 
-# Compiling
- - For basic functionality, compile as a dynamic (AKA shared) library and install.
+# Compiling + Installation
+- For basic functionality, compile as a dynamic (AKA shared) library and install.
  ```bash
 make all && sudo make install
-``` 
+```
+- For running from Matlab in Linux, build a static version of this library that includes the needed blas functionality.
+```bash
+make all-static && sudo make install
+```
+- On MacOS, the installation directory is set to `/opt/local/lib` which may not be in your system runtime search path by default. For running programs that dynamically link with this library, you may need to create/append to the `DYLD_LIBRARY_PATH` environment variable in your preferred shell configuration script. For linking matlab mex functions, you will need to include something like
+```sh
+mex ... LDFLAGS='$LDFLAGS -Wl,-rpath,/opt/local/lib -L/opt/local/lib' ... mex_fn_name.cpp
+```
+
+- On Linux, the installation directory is set to the more commonly used `/usr/lib`, so this should already be in the runtime search path.

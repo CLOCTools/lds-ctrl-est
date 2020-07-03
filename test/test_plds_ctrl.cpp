@@ -63,8 +63,8 @@ int main(void) {
 
 	// control vars
 	// Going to take the steady-state vals...
-	stdVec KxVec = stdVec(nU*nX, 1);
-	stdVec KintyVec = stdVec(nU*nY, 250);
+	stdVec Kc_xVec = stdVec(nU*nX, 1);
+	stdVec Kc_intyVec = stdVec(nU*nY, 250);
 	stdVec uRefVec = stdVec(nU, 0.45);
 	stdVec xRefVec = stdVec(nX, log(20.0*dt));
 	stdVec yRefVec = stdVec(nY, 20.0*dt);
@@ -178,6 +178,8 @@ int main(void) {
 	data_t tauAntiWindup = 1e6;
 	sys.setTauAntiWindup(tauAntiWindup);
 
+	data_t sigma_softStart = 0.1;
+
 	cout << "Starting " << K*dt << " sec simulation ... \n";
 	auto start = chrono::high_resolution_clock::now();
 	for (size_t k=1; k<K; k++)
@@ -217,8 +219,8 @@ int main(void) {
 		sys.setURef(uRefVec);
 		sys.setXRef(xRefVec);
 		sys.setYRef(yRefVec);
-		sys.setKx(KxVec);
-		sys.setKinty(KintyVec);
+		sys.setKc_x(Kc_xVec);
+		sys.setKc_inty(Kc_intyVec);
 		// */
 
 		// input
@@ -234,7 +236,7 @@ int main(void) {
 		sys_true.simMeasurement(z_k);
 
 		// update prev. prediction
-		sys.fbCtrl(z_k, gateCtrl, gateLock, uSigma);
+		sys.fbCtrl(z_k, gateCtrl, gateLock, sigma_softStart, uSigma);
 
 		lambdaRef.submat(0,k,nY-1,k) = armaMat(yRefVec.data(),nY,1);
 		lambdaTrue.submat(0,k,nY-1,k) = sys_true.getY();

@@ -50,23 +50,20 @@ namespace lds {
 			void setYRef(stdVec& yRefVec);
 			void setYRef(armaVec& yRef);
 
-			void setKx(stdVec& KxVec);
-			void setKx(armaVec& Kx);
+			void setKc_x(stdVec& Kc_xVec);
+			void setKc_x(armaVec& Kc_x);
 
-			void setKu(stdVec& KuVec);
-			void setKu(armaVec& Ku);
+			void setKc_u(stdVec& Kc_uVec);
+			void setKc_u(armaVec& Kc_u);
 
-			// void setKm(stdVec& KmVec);
-			// void setKm(armaVec& Km);
+			void setKc_y(stdVec& Kc_yVec);
+			void setKc_y(armaVec& Kc_y);
 
-			void setKy(stdVec& KyVec);
-			void setKy(armaVec& Ky);
+			void setKc_inty(stdVec& Kc_intyVec);
+			void setKc_inty(armaVec& Kc_inty);
 
-			void setKinty(stdVec& KintyVec);
-			void setKinty(armaVec& Kinty);
-
-			void setKdy(stdVec& KdyVec);
-			void setKdy(armaVec& Kdy);
+			void setKc_dy(stdVec& Kc_dyVec);
+			void setKc_dy(armaVec& Kc_dy);
 
 			void setTauAntiWindup(data_t& tau);
 
@@ -94,12 +91,12 @@ namespace lds {
 			armaVec yRef; //reference output
 
 			// Controller gains
-			armaMat Kx; //on instantaneous state error
-			armaMat Ku; //if designed control around min deltaU
+			armaMat Kc_x; //on instantaneous state error
+			armaMat Kc_u; //if designed control around min deltaU
 			// armaMat Km; //adaptive control
-			armaMat Ky; //on instantaneous output error
-			armaMat Kinty; //on integrated output error
-			armaMat Kdy; //on deriv output error
+			armaMat Kc_y; //on instantaneous output error
+			armaMat Kc_inty; //on integrated output error
+			armaMat Kc_dy; //on deriv output error
 
 			// control after g inversion (partial fb linearization)
 			// do not need set methods for these.
