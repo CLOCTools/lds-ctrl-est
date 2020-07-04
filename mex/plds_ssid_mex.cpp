@@ -33,6 +33,11 @@ public:
         data_t t_startSSID;
         data_t t_stopSSID;
 
+        CellArray u_matlab = move(inputs[0]);
+        CellArray z_matlab = move(inputs[1]);
+        dt = inputs[2][0];
+        nX = inputs[3][0];
+
         size_t nInputs = inputs.size();
         if (nInputs<11) {
             t_stopSSID = inf;
@@ -47,41 +52,39 @@ public:
         }
 
         if (nInputs<9) {
-            wtG0 = 0.0;
+          t0 = vector<data_t>(z_matlab.getNumberOfElements(),0.0);
         } else {
-            wtG0 = (data_t) inputs[8][0];
+          TypedArray<double> t0_matlab = move(inputs[8]);
+          t0 = matlabVector2vector<double>(t0_matlab);
         }
 
         if (nInputs<8) {
-            whichWt = 0;
+            wtG0 = 0.0;
         } else {
-            whichWt = (size_t) inputs[7][0];
+            wtG0 = (data_t) inputs[7][0];
         }
 
         if (nInputs<7) {
-            d0 = armaVec(1).fill(-inf);
+            whichWt = 0;
         } else {
-            TypedArray<double> d0_matlab = move(inputs[6]);
-
-            d0 = matlabVector2armaVector<double>(d0_matlab);
+            whichWt = (size_t) inputs[6][0];
         }
 
         if (nInputs<6) {
-            nH = 50;
+            d0 = armaVec(1).fill(-inf);
         } else {
-            nH = (size_t) inputs[5][0];
+            TypedArray<double> d0_matlab = move(inputs[5]);
+            d0 = matlabVector2armaVector<double>(d0_matlab);
         }
 
-        CellArray u_matlab = move(inputs[0]);
-        CellArray z_matlab = move(inputs[1]);
-        TypedArray<double> t0_matlab = move(inputs[2]);
-
+        if (nInputs<5) {
+            nH = 50;
+        } else {
+            nH = (size_t) inputs[4][0];
+        }
 
         u = matlabCell2vectorArmaMat<double>(u_matlab);
         z = matlabCell2vectorArmaMat<double>(z_matlab);
-        t0 = matlabVector2vector<double>(t0_matlab);
-        dt = inputs[3][0];
-        nX = inputs[4][0];
 
         ssidFit_t pldsFit;
         lds::gaussian::ssidFit_t gldsFit;
@@ -98,7 +101,7 @@ public:
             wt = lds::CVA;
           } break;
         }
-        tie(pldsFit, gldsFit) = ssidFit(u,z,t0,dt,nX,nH,d0,wt,wtG0,t_startSSID,t_stopSSID);
+        tie(pldsFit, gldsFit) = ssidFit(u,z,dt,nX,nH,d0,wt,wtG0,t0,t_startSSID,t_stopSSID);
 
         // These are two things I'm going to look at all the time, so let's go ahead and put them into the fit struct.
         data_t tau = -dt/log(gldsFit.A[0]);

@@ -28,6 +28,7 @@ namespace lds {
 
 	// Weights for SSID.
 	enum ssidWt { NONE, MOESP, CVA };
+	static std::vector<data_t> DEFAULT_T0 = std::vector<data_t>(1,0.0);
 } //end lds
 
 #endif

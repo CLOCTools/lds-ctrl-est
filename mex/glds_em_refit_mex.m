@@ -1,4 +1,4 @@
-% [fit, yHat, xHat, sum_E_xu_tm1_xu_tm1, sum_E_xu_t_xu_tm1, sum_E_xu_t_xu_t, T] = glds_em_refit_mex(fit0, u, z, t0, dt, calcAB, calcQ, calcInitial, calcC, calcd, calcR, maxIter, tol)
+% [fit, yHat, xHat, sum_E_xu_tm1_xu_tm1, sum_E_xu_t_xu_tm1, sum_E_xu_t_xu_t, T] = glds_em_refit_mex(fit0, u, z, dt, calcAB, calcQ, calcInitial, calcC, calcd, calcR, maxIter, tol)
 %
 % Refit a Gaussian Linear Dynamical System (GLDS) by expectation-maximization.
 %

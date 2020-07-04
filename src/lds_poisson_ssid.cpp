@@ -13,7 +13,7 @@ void limit(armaVec& x, data_t lb, data_t ub)
 	}
 }
 
-tuple<ssidFit_t,lds::gaussian::ssidFit_t> lds::poisson::ssidFit(vector<armaMat>& u, vector<armaMat>& n, vector<data_t>& t0, data_t dt, size_t nX, size_t nH, armaVec d0, ssidWt wt, data_t wtG0, data_t t_startSSID, data_t t_stopSSID, bool assumeGaussian)
+tuple<ssidFit_t,lds::gaussian::ssidFit_t> lds::poisson::ssidFit(vector<armaMat>& u, vector<armaMat>& n, data_t dt, size_t nX, size_t nH, armaVec d0, ssidWt wt, data_t wtG0, vector<data_t>& t0, data_t t_startSSID, data_t t_stopSSID, bool assumeGaussian)
 {
 	if (!assumeGaussian)
 	cerr << "Poisson -> Gaussian moment conversion not implemented. Assuming linear/gaussian. Then refitting output function parameters assuming Poisson.\n";
@@ -23,12 +23,17 @@ tuple<ssidFit_t,lds::gaussian::ssidFit_t> lds::poisson::ssidFit(vector<armaMat>&
 	// dims
 	size_t nY = n[0].n_rows;
 	size_t nU = u[0].n_rows;
+  size_t nTrials = n.size();
+  if (t0.size() != nTrials)
+  {
+    t0 = vector<data_t>(nTrials,0.0);
+  }
 
 	// fit assuming linear/gaussian observations...
 	// Bc of how fitOutput_mle() is written, it does not preserve the y=x structure, so no point in allowing this right now.
 	// TODO: rewrite fitOutput_mle() to only re-scale C rather than refit each element. When this happens, will make the force_unitNormC option visible
 	bool force_unitNormC=false; //true;
-	lds::gaussian::ssidFit_t linFit = lds::gaussian::ssidFit(u, n, t0, dt, nX, nH, d0, force_unitNormC, wt, wtG0, t_startSSID, t_stopSSID);
+	lds::gaussian::ssidFit_t linFit = lds::gaussian::ssidFit(u, n, dt, nX, nH, d0, force_unitNormC, wt, wtG0, t0, t_startSSID, t_stopSSID);
 
 	armaMat C = linFit.C;
 	armaVec d = linFit.d;
@@ -42,7 +47,6 @@ tuple<ssidFit_t,lds::gaussian::ssidFit_t> lds::poisson::ssidFit(vector<armaMat>&
 	// cout << "Initial guess for d: \n" << d << endl;
 
 	// for Poisson MLE, going to use all the data.
-	size_t nTrials = n.size();
 	vector<armaMat> x(nTrials,armaMat(nX,n[0].n_cols,fill::zeros));
 	for (size_t k=0; k<nTrials; k++) {
 		x[k] = armaMat(nX,n[k].n_cols);

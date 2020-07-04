@@ -4,24 +4,29 @@ using namespace std;
 using namespace glds;
 
 lds::gaussian::ssidFit_t::ssidFit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaMat& D, armaVec& d, armaMat& R, data_t dt, data_t t_startSSID, data_t t_stopSSID, armaVec& singVals, vector<data_t>& t0, vector<armaMat>& uTrain, vector<armaMat>& zTrain) :
-lds::gaussian::fit_t(A,B,g,m,Q,x0,P0,C,D,d,R,dt,t0,uTrain,zTrain)
+lds::gaussian::fit_t(A,B,g,m,Q,x0,P0,C,D,d,R,dt,uTrain,zTrain)
 {
+	this->t0 = t0;
 	this->t_startSSID = t_startSSID;
 	this->t_stopSSID = t_stopSSID;
 	this->singVals = singVals;
 }
 
-ssidFit_t lds::gaussian::ssidFit(vector<armaMat>& u, vector<armaMat>& z, vector<data_t>& t0, data_t dt, size_t nX, size_t nH, armaVec d0, bool force_unitNormC, ssidWt wt, data_t wtG0, data_t t_startSSID, data_t t_stopSSID)
+ssidFit_t lds::gaussian::ssidFit(vector<armaMat>& u, vector<armaMat>& z, data_t dt, size_t nX, size_t nH, armaVec d0, bool force_unitNormC, ssidWt wt, data_t wtG0, vector<data_t>& t0, data_t t_startSSID, data_t t_stopSSID)
 {
 	cout << "************** Fitting order " << nX << " model **************\n\n";
 	// dims
 	size_t nY = z[0].n_rows;
 	size_t nU = u[0].n_rows;
+	size_t nTrials = z.size();
+	if (t0.size() != nTrials)
+	{
+		t0 = vector<data_t>(nTrials,0.0);
+	}
 
 	// Subselect between t_startSSID and t_stopSSID
 	// TODO: Ideally, there would not be any copying of data until making H
 	// could I make zSSID and uSSID composites of submats?
-
 	arma::uvec idxStart = arma::uvec(z.size(),fill::zeros);
 	arma::uvec idxStop = arma::uvec(z.size(),fill::zeros);
 	vector<armaVec> t = vector<armaVec>(z.size(), arma::linspace<armaVec>(t0[0], t0[0]+dt*(z[0].n_cols-1), z[0].n_cols));

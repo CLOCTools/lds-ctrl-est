@@ -10,8 +10,8 @@ namespace lds {
 		class emFit_t : public fit_t {
 		public:
 			emFit_t() : fit_t() {};
-			emFit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaVec& d, armaMat& R, data_t dt, std::vector<data_t>& t0, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
-			emFit_t(data_t dt, std::vector<data_t>& t0, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+			emFit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaVec& d, armaMat& R, data_t dt, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+			emFit_t(data_t dt, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
 			emFit_t(ssidFit_t& fit0);
 
 			void reset(void);
@@ -56,7 +56,7 @@ namespace lds {
 			std::size_t augmentation = 0;
 		};
 
-		emFit_t emFit_x_equals_y(std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain,  std::vector<data_t>& t0, data_t dt, std::size_t maxIter=100, data_t tol=1e-3, data_t q0=1e-6, bool calcAB=true, bool calcQ=true, bool calcR=true);
+		emFit_t emFit_x_equals_y(std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain, data_t dt, std::size_t maxIter=100, data_t tol=1e-3, data_t q0=1e-6, bool calcAB=true, bool calcQ=true, bool calcR=true);
 
 		// std::tuple<emFit_t, armaVec> emFit_x_equals_y_qM(std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain,  std::vector<data_t>& t0, data_t dt, std::size_t maxIter=100, data_t tol=1e-3);
 	}; //gaussian

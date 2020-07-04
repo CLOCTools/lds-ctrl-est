@@ -16,14 +16,14 @@ armaMat forceSymPD(armaMat X) {
 	return X;
 };
 
-glds::emFit_t::emFit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaVec& d, armaMat& R, data_t dt, vector<data_t>& t0, vector<armaMat>& uTrain, vector<armaMat>& zTrain) :
-glds::fit_t(A,B,g,m,Q,x0,P0,C,d,R,dt,t0,uTrain,zTrain)
+glds::emFit_t::emFit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaVec& d, armaMat& R, data_t dt, vector<armaMat>& uTrain, vector<armaMat>& zTrain) :
+glds::fit_t(A,B,g,m,Q,x0,P0,C,d,R,dt,uTrain,zTrain)
 {
 	reset();
 }
 
 // Initialize to nX=nY random walk
-glds::emFit_t::emFit_t(data_t dt, vector<data_t>& t0, vector<armaMat>& uTrain, vector<armaMat>& zTrain)
+glds::emFit_t::emFit_t(data_t dt, vector<armaMat>& uTrain, vector<armaMat>& zTrain)
 {
 	size_t nU = uTrain[0].n_rows;
 	size_t nY = zTrain[0].n_rows;
@@ -83,7 +83,6 @@ glds::emFit_t::emFit_t(glds::ssidFit_t& fit0)
 	R = fit0.R;
 	dt = fit0.dt;
 
-	t0 = move(fit0.t0);
 	uTrain = move(fit0.uTrain);
 	zTrain = move(fit0.zTrain);
 
@@ -600,9 +599,9 @@ void glds::emFit_t::Mstep(bool calcAB, bool calcQ, bool calcInitial, bool calcC,
 	} //Initial state/cov.
 } //Mstep
 
-emFit_t glds::emFit_x_equals_y(vector<armaMat>& uTrain, vector<armaMat>& zTrain,  std::vector<data_t>& t0, data_t dt, size_t maxIter, data_t tol, data_t q0, bool calcAB, bool calcQ, bool calcR)
+emFit_t glds::emFit_x_equals_y(vector<armaMat>& uTrain, vector<armaMat>& zTrain, data_t dt, size_t maxIter, data_t tol, data_t q0, bool calcAB, bool calcQ, bool calcR)
 {
-	emFit_t fit(dt, t0, uTrain, zTrain);
+	emFit_t fit(dt, uTrain, zTrain);
 	fit.maxIter = maxIter;
 	fit.tol = tol;
 
@@ -631,9 +630,9 @@ emFit_t glds::emFit_x_equals_y(vector<armaMat>& uTrain, vector<armaMat>& zTrain,
 }
 
 /*
-tuple<emFit_t,armaVec> glds::emFit_x_equals_y_qM(vector<armaMat>& uTrain, vector<armaMat>& zTrain,  std::vector<data_t>& t0, data_t dt, size_t maxIter, data_t tol)
+tuple<emFit_t,armaVec> glds::emFit_x_equals_y_qM(vector<armaMat>& uTrain, vector<armaMat>& zTrain, data_t dt, size_t maxIter, data_t tol)
 {
-	emFit_t fit = emFit_x_equals_y(uTrain, zTrain, t0, dt, maxIter, tol);
+	emFit_t fit = emFit_x_equals_y(uTrain, zTrain, dt, maxIter, tol);
 
 	// augment x with m and refit noise (Q,R)
 	size_t nX = fit.A.n_rows;
@@ -660,7 +659,7 @@ tuple<emFit_t,armaVec> glds::emFit_x_equals_y_qM(vector<armaMat>& uTrain, vector
 	// cout << "d: \n" << d << endl;
 
 	// TODO: this makes an unnecessary copy, but want the convenience of calling constructor to make x,P,etc
-	emFit_t fit_m(A, B, fit.g, m, Q, x0, C, d, fit.R, dt, t0, uTrain, zTrain);
+	emFit_t fit_m(A, B, fit.g, m, Q, x0, C, d, fit.R, dt, uTrain, zTrain);
 	fit_m.maxIter = maxIter;
 	fit_m.tol = tol;
 

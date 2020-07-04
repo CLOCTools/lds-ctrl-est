@@ -6,7 +6,7 @@ namespace lds {
 		class fit_t : public lds::fit_t {
 		public:
 			fit_t() { };
-			fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaVec& d, data_t dt, std::vector<data_t>& t0, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+			fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaVec& d, data_t dt, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
 
 			// Output
 			armaMat C; // output matrix
@@ -14,7 +14,6 @@ namespace lds {
 
 			// debating whether I should put this here.
 			// input/output training data
-			std::vector<data_t> t0;
 			std::vector<armaMat> uTrain;//inputs
 			std::vector<armaMat> zTrain;//measurements
 		};
@@ -23,6 +22,7 @@ namespace lds {
 		public:
 			ssidFit_t() : fit_t() {};
 			ssidFit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaVec& d, data_t dt, data_t t_startSSID, data_t t_stopSSID, armaVec& singVals, std::vector<data_t>& t0, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+			std::vector<data_t> t0;
 			data_t t_startSSID;
 			data_t t_stopSSID;
 			armaVec singVals;

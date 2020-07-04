@@ -7,8 +7,8 @@ namespace lds {
 		class fit_t : public lds::fit_t {
 		public:
 			fit_t() {};
-			fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaMat& D, armaVec& d, armaMat& R, data_t dt, std::vector<data_t>& t0, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
-			fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaVec& d, armaMat& R, data_t dt, std::vector<data_t>& t0, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+			fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaMat& D, armaVec& d, armaMat& R, data_t dt, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+			fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C, armaVec& d, armaMat& R, data_t dt, std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
 
 
 			// Output
@@ -18,12 +18,10 @@ namespace lds {
 			armaMat R; // output noise cov
 
 			// input/output training data
-			std::vector<data_t> t0;
 			std::vector<armaMat> uTrain;
 			std::vector<armaMat> zTrain;
 		};
-
-
+		
 	}; //gaussian
 }//lds
 

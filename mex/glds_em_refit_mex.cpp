@@ -23,7 +23,7 @@ public:
         // Input Parameters
         vector<armaMat> u;
         vector<armaMat> z;
-        vector<data_t> t0;
+        // vector<data_t> t0;
         data_t dt;
         bool calcAB = true;
         bool calcQ = true;
@@ -38,21 +38,20 @@ public:
         matlab::data::StructArray fit0 = move(inputs[0]);
         CellArray u_matlab = move(inputs[1]);
         CellArray z_matlab = move(inputs[2]);
-        TypedArray<double> t0_matlab = move(inputs[3]);
+        dt = inputs[3][0];
 
         u = matlabCell2vectorArmaMat<double>(u_matlab);
         z = matlabCell2vectorArmaMat<double>(z_matlab);
-        t0 = matlabVector2vector<double>(t0_matlab);
-        dt = inputs[4][0];
+        // t0 = vector<data_t>(z_matlab.getNumberOfElements(),0.0);
 
-        if (inputs.size()>5) {calcAB = (bool) inputs[5][0];};
-        if (inputs.size()>6) {calcQ = (bool) inputs[6][0];};
-        if (inputs.size()>7) {calcInitial = (bool) inputs[7][0];};
-        if (inputs.size()>8) {calcC = (bool) inputs[8][0];};
-        if (inputs.size()>9) {calcd = (bool) inputs[9][0];};
-        if (inputs.size()>10) {calcR = (bool) inputs[10][0];};
-        if (inputs.size()>11) {maxIter = (size_t) inputs[11][0];};
-        if (inputs.size()>12) {tol = (data_t) inputs[12][0];};
+        if (inputs.size()>4) {calcAB = (bool) inputs[4][0];};
+        if (inputs.size()>5) {calcQ = (bool) inputs[5][0];};
+        if (inputs.size()>6) {calcInitial = (bool) inputs[6][0];};
+        if (inputs.size()>7) {calcC = (bool) inputs[7][0];};
+        if (inputs.size()>8) {calcd = (bool) inputs[8][0];};
+        if (inputs.size()>9) {calcR = (bool) inputs[9][0];};
+        if (inputs.size()>10) {maxIter = (size_t) inputs[10][0];};
+        if (inputs.size()>11) {tol = (data_t) inputs[11][0];};
 
         // get the model parameters.
         armaMat A_0 = matlabMat2armaMat<double>(fit0[0]["A"]);
@@ -67,7 +66,7 @@ public:
         armaVec d_0 = matlabVector2armaVector<double>(fit0[0]["d"]);
         armaMat R_0 = matlabMat2armaMat<double>(fit0[0]["R"]);
 
-        emFit_t ldsFit(A_0, B_0, g_0, m_0, Q_0, x0_0, P0_0, C_0, d_0, R_0, dt, t0, u, z);
+        emFit_t ldsFit(A_0, B_0, g_0, m_0, Q_0, x0_0, P0_0, C_0, d_0, R_0, dt, u, z);
         ldsFit.maxIter = maxIter;
         ldsFit.tol = tol;
 

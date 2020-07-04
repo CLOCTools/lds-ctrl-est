@@ -22,7 +22,7 @@ namespace lds {
 
 		@return tuple<ssidFit_t,lds::gaussian::ssidFit_t>
 		*/
-		std::tuple<ssidFit_t,lds::gaussian::ssidFit_t> ssidFit(std::vector<armaMat>& u, std::vector<armaMat>& n, std::vector<data_t>& t0, data_t dt, size_t nX, size_t nH=25, armaVec d0=armaVec(1).fill(-inf), ssidWt wt=NONE, data_t wtG0=0.0, data_t t_startSSID=-std::numeric_limits<data_t>::infinity(), data_t t_stopSSID=std::numeric_limits<data_t>::infinity(), bool assumeGaussian=true);
+		std::tuple<ssidFit_t,lds::gaussian::ssidFit_t> ssidFit(std::vector<armaMat>& u, std::vector<armaMat>& n, data_t dt, size_t nX, size_t nH=25, armaVec d0=armaVec(1).fill(-inf), ssidWt wt=NONE, data_t wtG0=0.0, std::vector<data_t>& t0=DEFAULT_T0, data_t t_startSSID=-std::numeric_limits<data_t>::infinity(), data_t t_stopSSID=std::numeric_limits<data_t>::infinity(), bool assumeGaussian=true);
 
 		void newtonSolveC_mle(armaMat& C, armaVec& d, std::vector<armaMat>& x, std::vector<armaMat>& n, data_t& dt);
 		data_t newtonSolve_rescaleC_mle(armaMat& C, armaVec& d, std::vector<armaMat>& x, std::vector<armaMat>& n, data_t& dt);

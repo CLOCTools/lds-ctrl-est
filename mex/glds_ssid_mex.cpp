@@ -23,7 +23,6 @@ public:
         // Input Parameters
         vector<armaMat> u;
         vector<armaMat> z;
-        vector<data_t> t0;
         data_t dt;
         size_t nX;
         size_t nH;
@@ -32,8 +31,12 @@ public:
         size_t whichWt;
         data_t wtG0;
 
+        vector<data_t> t0;
         data_t t_startSSID;
         data_t t_stopSSID;
+
+        CellArray u_matlab = move(inputs[0]);
+        CellArray z_matlab = move(inputs[1]);
 
         size_t nInputs = inputs.size();
         if (nInputs<12) {
@@ -49,45 +52,47 @@ public:
         }
 
         if (nInputs<10) {
-          wtG0 = 0.0;
+          t0 = vector<data_t>(z_matlab.getNumberOfElements(),0.0);
         } else {
-          wtG0 = (data_t) inputs[9][0];
+          TypedArray<double> t0_matlab = move(inputs[9]);
+          t0 = matlabVector2vector<double>(t0_matlab);
         }
 
         if (nInputs<9) {
-            whichWt = 0;
+          wtG0 = 0.0;
         } else {
-            whichWt = (size_t) inputs[8][0];
+          wtG0 = (data_t) inputs[8][0];
         }
 
         if (nInputs<8) {
-            force_unitNormC = false;
+            whichWt = 0;
         } else {
-            force_unitNormC = (bool) inputs[7][0];
+            whichWt = (size_t) inputs[7][0];
         }
 
         if (nInputs<7) {
-            d0 = armaVec(1).fill(-inf);
+            force_unitNormC = false;
         } else {
-            TypedArray<double> d0_matlab = move(inputs[6]);
-            d0 = matlabVector2armaVector<double>(d0_matlab);
+            force_unitNormC = (bool) inputs[6][0];
         }
 
         if (nInputs<6) {
-            nH = 50;
+            d0 = armaVec(1).fill(-inf);
         } else {
-            nH = (size_t) inputs[5][0];
+            TypedArray<double> d0_matlab = move(inputs[5]);
+            d0 = matlabVector2armaVector<double>(d0_matlab);
         }
 
-        CellArray u_matlab = move(inputs[0]);
-        CellArray z_matlab = move(inputs[1]);
-        TypedArray<double> t0_matlab = move(inputs[2]);
+        if (nInputs<5) {
+            nH = 50;
+        } else {
+            nH = (size_t) inputs[4][0];
+        }
 
         u = matlabCell2vectorArmaMat<double>(u_matlab);
         z = matlabCell2vectorArmaMat<double>(z_matlab);
-        t0 = matlabVector2vector<double>(t0_matlab);
-        dt = inputs[3][0];
-        nX = inputs[4][0];
+        dt = inputs[2][0];
+        nX = inputs[3][0];
 
         ssidFit_t pldsFit;
         lds::gaussian::ssidFit_t ldsFit;
@@ -104,7 +109,7 @@ public:
             wt = lds::CVA;
           } break;
         }
-        ldsFit = ssidFit(u,z,t0,dt,nX,nH,d0,force_unitNormC,wt,wtG0,t_startSSID,t_stopSSID);
+        ldsFit = ssidFit(u,z,dt,nX,nH,d0,force_unitNormC,wt,wtG0,t0,t_startSSID,t_stopSSID);
 
         // These are two things I'm going to look at all the time, so let's go ahead and put them into the fit struct.
         data_t tau = -dt/log(ldsFit.A[0]);
