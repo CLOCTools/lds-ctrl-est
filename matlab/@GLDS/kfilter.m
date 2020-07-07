@@ -1,0 +1,130 @@
+function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0)
+	% [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0)
+	%
+	% Perform Kalman filtering (i.e., estimate state given data, z, up to current time)
+	% Refs: Shumway et Stoffer 1982; Ghahramani et Hinton 1996
+	%
+	% u: cell array of inputs (nU x nTime)
+	% z: cell array of measurements (nY x nTime)
+	% recurseK: [bool] whether to recursively solve for K at each time point
+	% augmentM: [bool] whether to augment state with disturbance (m)
+	% q0: diagonal elements of disturbance process noise cov
+	%
+
+
+	if (~iscell(u) || ~iscell(z))
+		error('Inputs (u) and measurements (z) must be a cell array.')
+	end
+
+	if nargin<4
+		recurseK = true;
+	end
+
+	if nargin<5
+		augmentM = false;
+	end
+
+	this.checkDims();
+
+	A = this.A;
+	B = this.B * diag(this.g);
+	m = this.m;
+	x0 = this.x0;
+	P0 = this.P0;
+	C = this.C;
+	d = this.d;
+
+	Q = this.Q;
+	R = this.R;
+	K0 = this.K;
+
+	nU = this.nU;
+	nX = this.nX;
+	nY = this.nY;
+
+	if augmentM
+		% augment system with m
+		% m = m + d*pinv(C*inv(eye(nX)-A));
+		% x0 = inv(eye(nX)-A)*m;
+		A = [A eye(nX); zeros(nX,nX) eye(nX)];
+		B = [B; zeros(nX, nU)];
+		Q = [[Q; zeros(nX, nX)], zeros(nX+nX, nX)];
+		Q(nX+1:end, nX+1:end) = q0 .* eye(nX);
+		C = [C zeros(nY, nX)];
+
+		x0 = [x0; m];
+		P0 = [[P0; zeros(nX, nX)], zeros(nX+nX, nX)];
+		m = zeros(2*nX,1);
+
+		nU = size(B,2);
+		nX = size(A,1);
+		nY = size(C,1);
+	end
+
+	% if K0 is not correct size, recalculate s-s Kalman gain.
+	if sum(abs(size(K0)-double([nX, nY])))>0
+		sys_aug = copy(this);
+		sys_aug.A = A;
+		sys_aug.Q = Q;
+		sys_aug.B = B;
+		sys_aug.C = C;
+		sys_aug.x0 = x0;
+		sys_aug.P0 = P0;
+		if recurseK
+			warning('Kalman gain was wrong dimensionality. Solving for steady-state gains.')
+		end
+		K0 = sys_aug.calcK_steadyState();
+		P0 = sys_aug.P0;
+	end
+
+	I = eye(nX, nX);
+
+	yHat = cell(size(u));
+	xHat = cell(size(u));
+	P = cell(size(u));
+	K = cell(size(u));
+	e = zeros(nY,1);
+
+	for trial=1:numel(u)
+		nSamps = size(u{trial}, 2);
+		xHat{trial} = zeros(nX, nSamps);
+		P{trial} = zeros(nX, nX, nSamps);
+		yHat{trial} = zeros(nY, nSamps);
+		K{trial} = K0 + zeros(nX, nY, nSamps);
+
+		% initial cond
+		xHat{trial}(:,1) = x0;
+		P{trial}(:,:,1) = P0;
+		yHat{trial}(:,1) = C*x0 + d;
+
+		for k=2:nSamps
+			% predict
+			xHat{trial}(:,k) = A*xHat{trial}(:,k-1) + B*u{trial}(:,k-1) + m;
+			P{trial}(:,:,k) = A*P{trial}(:,:,k-1)*A' + Q;
+			yHat{trial}(:,k) = C*xHat{trial}(:,k) + d;
+
+			% update
+			e(:,1) = z{trial}(:,k) - yHat{trial}(:,k);
+			if recurseK
+				S = R + C*P{trial}(:,:,k)*C';
+				K{trial}(:,:,k) = P{trial}(:,:,k) * C' * inv(S);
+			end
+
+			xHat{trial}(:,k) = xHat{trial}(:,k) + K{trial}(:,:,k)*e;
+			P{trial}(:,:,k) = (I - K{trial}(:,:,k)*C) * P{trial}(:,:,k);
+			yHat{trial}(:,k) = C*xHat{trial}(:,k) + d;
+		end
+	end
+
+
+	% % calculate the time-constants of the system, assuming the final K is at ss.
+	% A_est = (eye(nX) - K{end}(:,:,end)*C)*A;
+	% eig_est = eig(A_est);
+	% tau_est = -this.dt ./ log(abs(eig_est));
+	%
+	% B_est = K;%steady-state feedback gain.
+	% C_est = C;
+	% D_est = -eye(nY);
+	%
+	% sys_z2e = ss(A_est,B_est,C_est,D_est,this.dt);
+end

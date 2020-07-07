@@ -1,8 +1,10 @@
-% pldsFit, gldsFit = plds_ssid_mex(u, z, dt, nX, [nH, d0, whichWt, wtG0, t0, t_startSSID, t_stopSSID])
+% singVals = plds_ssid_mex(gldsFit, pldsFit, u, z, dt, nX, [nH, d0, whichWt, wtG0, t0, t_startSSID, t_stopSSID])
 %
 % Fit dynamics of a Gaussian Linear Dynamical System (GLDS) by subspace identification. Then refit output by Poisson MLE using Newton's method, yielding a Poisson LDS (PLDS).
 %
 % INPUTS
+% gldsFit: GLDS object being fit
+% pldsFit: PLDS object being fit.
 % u: input, cellarray(nTrials,1), where each trial is numericarray{double}(nU, nSamps)
 % z: measurement, cellarray(nTrials,1), where each trial is numericarray{double}(nY, nSamps)
 % dt: sample period (double)

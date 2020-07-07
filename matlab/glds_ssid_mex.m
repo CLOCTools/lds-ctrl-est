@@ -1,8 +1,9 @@
-% fit = glds_ssid_mex(u, z, dt, nX, [nH, d0, force_unitNorm_C, whichWt, wtG0, t0, t_startSSID, t_stopSSID])
+% [singVals] = glds_ssid_mex(fit, u, z, dt, nX, [nH, d0, force_unitNorm_C, whichWt, wtG0, t0, t_startSSID, t_stopSSID])
 %
 % Fit dynamics of a Gaussian Linear Dynamical System (GLDS) by subspace identification.
 %
 % INPUTS
+% fit: GLDS object being fit.
 % u: input, cellarray(nTrials,1), where each trial is numericarray{double}(nU, nSamps)
 % z: measurement, cellarray(nTrials,1), where each trial is numericarray{double}(nY, nSamps)
 % dt: sample period (double)

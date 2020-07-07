@@ -48,7 +48,8 @@ where
 # Notes on Repository Organization
 - Header files are under `include/ldsEstCtrl_h`
 - Source files are under `src/`.
-- Wrappers for exposing functions to matlab as matlab executables are located under `mex/`.
+- Wrappers for exposing functions to matlab as matlab executables (mex) are located under `matlab/`.
+- Complimentary Matlab functions for control and estimation are also located under `matlab/`.
 - Test programs/visualization scripts are located under `test/`.
 
 # Dependencies
