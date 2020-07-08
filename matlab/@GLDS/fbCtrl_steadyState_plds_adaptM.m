@@ -44,6 +44,10 @@ function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_a
 	R = this.R;
 	dt = this.dt;
 
+	if isempty(Q)||isempty(R)
+		error('This function requires process and measurement noise covariances, Q + R.');
+	end
+
 	fn_r_mu_2_xvlam = get_steadyState_ctrlFn(this);
 
 	% augment system with m
@@ -120,24 +124,26 @@ function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_a
 
 	function [] = predictLDS(k)
 		xHat(:,k) = A_est * xHat(:,k-1) + B_est * u(:,k-1);
-		P(:,:,k) = A_est * P(:,:,k-1) * A_est' + Q_est;
+		% P(:,:,k) = A_est * P(:,:,k-1) * A_est' + Q_est;
 		yHat(:,k) = C_est * xHat(:,k) + d;
 	end
 
 	function [] = updateLDS(k)
-		% update
-		e = z(:,k) - yHat(:,k);
 		if recurseK
+			% predict cov.
+			P(:,:,k) = A_est * P(:,:,k-1) * A_est' + Q_est;
+
 			S = C_est*P(:,:,k)*C_est' + R;
 			K(:,:,k) = P(:,:,k) * C_est' * inv(S);
+
+			% update cov
+			% Hinton, Gaghramani 1995
+			P(:,:,k) = P(:,:,k) - K(:,:,k) * C_est * P(:,:,k);
 		end
+
+		% update
+		e = z(:,k) - yHat(:,k);
 		xHat(:,k) = xHat(:,k) + K(:,:,k)*e;
-
-		% Stengel:
-		% P(:,:,k) = inv( inv(P(:,:,k)) + C_est'*inv(R)*C_est );
-		% Hinton, Gaghramani 1995
-		P(:,:,k) = P(:,:,k) - K(:,:,k) * C_est * P(:,:,k);
-
 		yHat(:,k) = C_est*xHat(:,k) + d;
 	end
 

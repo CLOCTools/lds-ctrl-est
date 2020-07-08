@@ -67,6 +67,7 @@ function checkDims(this)
 end
 
 % methods in other files:
+matlabSS_to_this(this,sys,g,d);
 [y, x] = simulate(this, u, addNoise);
 [yImpC, tImp] = simulate_imp(this, nSamps);
 [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0);

@@ -4,13 +4,12 @@ function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0)
 	% Perform Kalman filtering (i.e., estimate state given data, z, up to current time)
 	% Refs: Shumway et Stoffer 1982; Ghahramani et Hinton 1996
 	%
-	% u: cell array of inputs (nU x nTime)
+	% u: cell array of inputs (nU x nTime), where each cell is "trial"
 	% z: cell array of measurements (nY x nTime)
 	% recurseK: [bool] whether to recursively solve for K at each time point
 	% augmentM: [bool] whether to augment state with disturbance (m)
 	% q0: diagonal elements of disturbance process noise cov
 	%
-
 
 	if (~iscell(u) || ~iscell(z))
 		error('Inputs (u) and measurements (z) must be a cell array.')
@@ -41,6 +40,11 @@ function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0)
 	nU = this.nU;
 	nX = this.nX;
 	nY = this.nY;
+
+	if isempty(Q)||isempty(R)
+		recurseK = false;
+		augmentM = false;
+	end
 
 	if augmentM
 		% augment system with m
@@ -98,20 +102,22 @@ function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0)
 		yHat{trial}(:,1) = C*x0 + d;
 
 		for k=2:nSamps
-			% predict
+			% predict mean
 			xHat{trial}(:,k) = A*xHat{trial}(:,k-1) + B*u{trial}(:,k-1) + m;
-			P{trial}(:,:,k) = A*P{trial}(:,:,k-1)*A' + Q;
 			yHat{trial}(:,k) = C*xHat{trial}(:,k) + d;
+
+			if recurseK
+				%predict state cov
+				P{trial}(:,:,k) = A*P{trial}(:,:,k-1)*A' + Q;
+				S = R + C*P{trial}(:,:,k)*C';
+				K{trial}(:,:,k) = P{trial}(:,:,k) * C' * inv(S);
+				% update cov
+				P{trial}(:,:,k) = (I - K{trial}(:,:,k)*C) * P{trial}(:,:,k);
+			end
 
 			% update
 			e(:,1) = z{trial}(:,k) - yHat{trial}(:,k);
-			if recurseK
-				S = R + C*P{trial}(:,:,k)*C';
-				K{trial}(:,:,k) = P{trial}(:,:,k) * C' * inv(S);
-			end
-
 			xHat{trial}(:,k) = xHat{trial}(:,k) + K{trial}(:,:,k)*e;
-			P{trial}(:,:,k) = (I - K{trial}(:,:,k)*C) * P{trial}(:,:,k);
 			yHat{trial}(:,k) = C*xHat{trial}(:,k) + d;
 		end
 	end
