@@ -1,9 +1,9 @@
-function [K_est, eig_z2e, sys_z2e, sys_aug] = calcK_steadyState(this, augmentM, q0)
-	% [K_est, eig_z2e, sys_z2e, sys_aug] = calcK_steadyState(this, augmentM, q0)
+function [K_est, eig_z2e, sys_z2e, sys_aug] = calcK_steadyState(this, augmentM, qM)
+	% [K_est, eig_z2e, sys_z2e, sys_aug] = calcK_steadyState(this, augmentM, qM)
 	%
 	% Calculates steady state estimator gain (K_est) as well as eigenvalues and estimation error system (ignoring input).
 	%
-	% If `augmentM` true, augments state with process disturbance whose process noise is q0*I.
+	% If `augmentM` true, augments state with process disturbance whose process noise is qM*I.
 	%
 
 	this.checkDims();
@@ -33,7 +33,7 @@ function [K_est, eig_z2e, sys_z2e, sys_aug] = calcK_steadyState(this, augmentM, 
 		A_est(nX+1:end, nX+1:end) = eye(nX);
 
 		Q_est = [[Q; zeros(nX, nX)], zeros(nX+nX, nX)];
-		Q_est(nX+1:end, nX+1:end) = q0*eye(nX);
+		Q_est(nX+1:end, nX+1:end) = qM*eye(nX);
 
 		B_est = [B; zeros(nX, nU)];
 		x0_est = [this.x0; this.m];

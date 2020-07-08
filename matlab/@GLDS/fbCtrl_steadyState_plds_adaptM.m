@@ -1,5 +1,5 @@
-function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_adaptM(this, plds, r, Kfb_x, Kfb_intY, qMu, ctrlGate, recurseK, adaptSetPoint, uLims)
-	% [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_adaptM(this, plds, r, Kfb_x, Kfb_intY, qMu, ctrlGate, recurseK, adaptSetPoint, uLims)
+function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_adaptM(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims)
+	% [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_adaptM(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims)
 	%
 	% Feedback control of a spiking PLDS model with adaptive re-estimation of process disturbance, m.
 	% Using steady state control solution (e.g., inf horizon lqr).
@@ -8,7 +8,7 @@ function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_a
 	% r : [nY, nTime] reference/target **output** (not state)
 	% Kfb_x : [nU, nX] state feedback controller gains. May be either time varying or not.
 	% Kfb_intY : [nU, nY] state feedback controller gains. May be either time varying or not.
-	% qMu : diagonal elements of assumed process noise for disturbance variation
+	% qM : diagonal elements of assumed process noise for disturbance variation
 	% ctrlGate : logical gate for whether control is enabled
 	% recurseK : [bool] Whether to recursively calculate K (Kalman gain)
 	% adaptSetPoint : [bool] Use adaptively re-estimated disturbance when calculating state-control setpoint.
@@ -56,10 +56,10 @@ function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_a
 	A_est(nX+1:end, nX+1:end) = eye(nX);
 	B_est = [B; zeros(nX, nU)];
 	Q_est = [[Q; zeros(nX, nX)], zeros(nX+nX, nX)];
-	Q_est(nX+1:end, nX+1:end) = qMu .* eye(nX);
+	Q_est(nX+1:end, nX+1:end) = qM .* eye(nX);
 	x0_est = [x0; m];
 	P0_est = [[P0; zeros(nX, nX)], zeros(nX+nX, nX)];
-	P0_est(nX+1:end, nX+1:end) = qMu .* eye(nX);
+	P0_est(nX+1:end, nX+1:end) = qM .* eye(nX);
 	C_est = [C zeros(nY, nX)];
 	I_est = eye(nX+nX, nX+nX);
 

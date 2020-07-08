@@ -1,5 +1,5 @@
-function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0)
-	% [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0)
+function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, qM)
+	% [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, qM)
 	%
 	% Perform Kalman filtering (i.e., estimate state given data, z, up to current time)
 	% Refs: Shumway et Stoffer 1982; Ghahramani et Hinton 1996
@@ -8,7 +8,7 @@ function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0)
 	% z: cell array of measurements (nY x nTime)
 	% recurseK: [bool] whether to recursively solve for K at each time point
 	% augmentM: [bool] whether to augment state with disturbance (m)
-	% q0: diagonal elements of disturbance process noise cov
+	% qM: diagonal elements of disturbance process noise cov
 	%
 
 	if (~iscell(u) || ~iscell(z))
@@ -53,7 +53,7 @@ function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, q0)
 		A = [A eye(nX); zeros(nX,nX) eye(nX)];
 		B = [B; zeros(nX, nU)];
 		Q = [[Q; zeros(nX, nX)], zeros(nX+nX, nX)];
-		Q(nX+1:end, nX+1:end) = q0 .* eye(nX);
+		Q(nX+1:end, nX+1:end) = qM .* eye(nX);
 		C = [C zeros(nY, nX)];
 
 		x0 = [x0; m];
