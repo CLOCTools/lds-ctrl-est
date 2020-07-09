@@ -68,14 +68,20 @@ end
 
 % methods in other files:
 matlabSS_to_this(this,sys,g,d);
+
 [y, x] = simulate(this, u, addNoise);
 [yImpC, tImp] = simulate_imp(this, nSamps);
+
 [K_est, eig_z2e, sys_z2e, sys_aug] = calcK_steadyState(this, augmentM, qM);
-[yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, qM);
-[yHat, xHat, P, K] = ksmooth(this, u, z, augmentM, qM);
-[u_ss, x_ss, y_ss] = calc_steadyState_ctrl(this, r);
+[yHat, xHat, mHat, P, Pm, K, Km] = kfilter_joint(this, u, z, recurseK, augmentM, qM);
+[yHat, xHat, mHat, P, Pm, K, Km] = kfilter_dual(this, u, z, recurseK, adaptM, qM);
+[yHat, xHat, mHat, P, Pm, K, Km] = ksmooth_joint(this, u, z, augmentM, qM);
+
+[u_ss, x_ss, y_ss] = calcCtrl_steadyState(this, r);
 [Kx, KintY, Fx, Fv, Hx] = lqr_outputWt(this, qIntY_over_qY, r_over_qY);
-[u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_adaptM(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims);
+[u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_joint(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims);
+[u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims);
+
 [plds, y, x] = fit_plds_output_mle(this, u, z, g, rescaleOnly, wG0);
 [y, x] = refit_output(this, u, z, g);
 end%end methods

@@ -1,5 +1,5 @@
-function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, qM)
-	% [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, qM)
+function [yHat, xHat, mHat, P, Pm, K, Km] = kfilter_joint(this, u, z, recurseK, augmentM, qM)
+	% [yHat, xHat, mHat, P, Pm, K, Km] = kfilter_joint(this, u, z, recurseK, augmentM, qM)
 	%
 	% Perform Kalman filtering (i.e., estimate state given data, z, up to current time)
 	% Refs: Shumway et Stoffer 1982; Ghahramani et Hinton 1996
@@ -89,12 +89,22 @@ function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, qM)
 	K = cell(size(u));
 	e = zeros(nY,1);
 
+	mHat = cell(size(u));
+	Pm = cell(size(u));
+	Km = cell(size(u));
+
 	for trial=1:numel(u)
 		nSamps = size(u{trial}, 2);
+
+		mHat{trial} = this.m + zeros(this.nX, nSamps);
+		Pm{trial} = qM.*eye(this.nX) + zeros(this.nX, this.nX, nSamps);
+
 		xHat{trial} = zeros(nX, nSamps);
 		P{trial} = zeros(nX, nX, nSamps);
 		yHat{trial} = zeros(nY, nSamps);
+
 		K{trial} = K0 + zeros(nX, nY, nSamps);
+		Km{trial} = zeros(nX, nY, nSamps);
 
 		% initial cond
 		xHat{trial}(:,1) = x0;
@@ -119,6 +129,15 @@ function [yHat, xHat, P, K] = kfilter(this, u, z, recurseK, augmentM, qM)
 			e(:,1) = z{trial}(:,k) - yHat{trial}(:,k);
 			xHat{trial}(:,k) = xHat{trial}(:,k) + K{trial}(:,:,k)*e;
 			yHat{trial}(:,k) = C*xHat{trial}(:,k) + d;
+		end
+
+		if augmentM
+			mHat{trial} = xHat{trial}(this.nX+1:end, :);
+			xHat{trial} = xHat{trial}(1:this.nX, :);
+			Pm{trial} = P{trial}(this.nX+1:end,this.nX+1:end,:);
+			P{trial} = P{trial}(1:this.nX,1:this.nX,:);
+			Km{trial} = K{trial}(this.nX+1:end,:,:);
+			K{trial} = K{trial}(1:this.nX,:,:);
 		end
 	end
 

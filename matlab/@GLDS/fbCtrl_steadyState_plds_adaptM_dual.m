@@ -1,5 +1,5 @@
-function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_adaptM(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims)
-	% [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_adaptM(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims)
+function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims)
+	% [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims)
 	%
 	% Feedback control of a spiking PLDS model with adaptive re-estimation of process disturbance, m.
 	% Using steady state control solution (e.g., inf horizon lqr).
@@ -40,28 +40,31 @@ function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_a
 	C = this.C;
 	m = this.m;
 	d = this.d;
+
 	Q = this.Q;
 	R = this.R;
+	K0 = this.K;
+
+	Qm = qM .* eye(nX);
+	P0m = Qm;
+	K0m = zeros(nX,nY);
+
 	dt = this.dt;
 
-	if isempty(Q)||isempty(R)
-		error('This function requires process and measurement noise covariances, Q + R.');
+	if (isempty(Q)||isempty(R)) && recurseK
+		error('Cannot recursively calculate Kalman gain without Q, R.')
 	end
 
-	fn_r_mu_2_xvlam = get_steadyState_ctrlFn(this);
+	if ~(isempty(Q)||isempty(R))
+		sys0 = copy(this);
+		K0 = sys0.calcK_steadyState();
+		P0 = sys0.P0;
+	end
+	sysM = GLDS(dt,eye(nX),zeros(nX,nU),g,zeros(nX,1),Qm,C,d,R,m,P0m);
+	K0m = sysM.calcK_steadyState()
+	P0m = sysM.P0;
 
-	% augment system with m
-	A_est = [[A; zeros(nX, nX)], zeros(nX+nX, nX)];
-	A_est(1:nX, nX+1:end) = eye(nX);
-	A_est(nX+1:end, nX+1:end) = eye(nX);
-	B_est = [B; zeros(nX, nU)];
-	Q_est = [[Q; zeros(nX, nX)], zeros(nX+nX, nX)];
-	Q_est(nX+1:end, nX+1:end) = qM .* eye(nX);
-	x0_est = [x0; m];
-	P0_est = [[P0; zeros(nX, nX)], zeros(nX+nX, nX)];
-	P0_est(nX+1:end, nX+1:end) = qM .* eye(nX);
-	C_est = [C zeros(nY, nX)];
-	I_est = eye(nX+nX, nX+nX);
+	fn_r_mu_2_xvlam = get_steadyState_ctrlFn(this);
 
 	% true sytem: plds
 	nX_true = length(plds.x0);
@@ -77,9 +80,11 @@ function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_a
 	if nargin < 7
 		ctrlGate = ones(nSamps,1,'logical');
 	end
-	xTrue = zeros(nX_true, nSamps);
-	xHat = zeros(nX+nX, nSamps);
-	P = zeros(nX+nX, nX+nX, nSamps);
+	xTrue = x0_true + zeros(nX_true, nSamps);
+	xHat = x0 + zeros(nX, nSamps);
+	mHat = m + zeros(nX, nSamps);
+	P = P0 + zeros(nX, nX, nSamps);
+	Pm = P0m + zeros(nX, nX, nSamps);
 
 	yTrue = zeros(nY, nSamps);
 	yHat = zeros(nY, nSamps);
@@ -93,28 +98,16 @@ function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_a
 	uRef = zeros(nU, nSamps);
 	xRef = zeros(nX, nSamps);
 
-	K = zeros(nX+nX,nY,nSamps);
-
-	sys_aug = copy(this);
-	sys_aug.A = A_est;
-	sys_aug.Q = Q_est;
-	sys_aug.B = B_est;
-	sys_aug.C = C_est;
-	sys_aug.x0 = x0_est;
-	sys_aug.P0 = P0_est;
-	K0 = sys_aug.calcK_steadyState();
-	P0_est = sys_aug.P0;
-	if ~recurseK
-		K = K + K0;
-	end
+	K = K0 + zeros(nX,nY,nSamps);
+	Km = K0m + zeros(nX,nY,nSamps);
 
 	% Initial conditions
 	xTrue(:,1) = x0_true;
 	yTrue(:,1) = exp(C_true * x0_true + d_true);
+	yHat(:,1) = C * x0 + d;
 
-	xHat(:,1) = x0_est;
-	P(:,:,1) = P0_est;
-	yHat(:,1) = C_est * x0_est + d;
+	m_prev = m;
+	Pm_prev = P0m;
 
 	function [] = simPLDS(k)
 		xTrue(:,k) = A_true * xTrue(:,k-1) + B_true * u(:,k-1) + m_true;
@@ -123,34 +116,40 @@ function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_a
 	end
 
 	function [] = predictLDS(k)
-		xHat(:,k) = A_est * xHat(:,k-1) + B_est * u(:,k-1);
-		% P(:,:,k) = A_est * P(:,:,k-1) * A_est' + Q_est;
-		yHat(:,k) = C_est * xHat(:,k) + d;
+		mHat(:,k-1) = m_prev;
+		xHat(:,k) = A*xHat(:,k-1) + B*u(:,k-1) + mHat(:,k-1);
+		yHat(:,k) = C*xHat(:,k) + d;
 	end
 
 	function [] = updateLDS(k)
 		if recurseK
-			% predict cov.
-			P(:,:,k) = A_est * P(:,:,k-1) * A_est' + Q_est;
+			% cov
+			Pm(:,:,k-1) = Pm_prev + Qm;
+			S = R + C*Pm(:,:,k-1)*C';
+			Km(:,:,k-1) = Pm(:,:,k-1) * C' * inv(S);
+			Pm(:,:,k-1) = Pm(:,:,k-1) - Km(:,:,k-1) * C * Pm(:,:,k-1);
 
-			S = C_est*P(:,:,k)*C_est' + R;
-			K(:,:,k) = P(:,:,k) * C_est' * inv(S);
-
-			% update cov
-			% Hinton, Gaghramani 1995
-			P(:,:,k) = P(:,:,k) - K(:,:,k) * C_est * P(:,:,k);
+			P(:,:,k) = A * P(:,:,k-1) * A' + Q;
+			S = C*P(:,:,k)*C' + R;
+			K(:,:,k) = P(:,:,k) * C' * inv(S);
+			P(:,:,k) = P(:,:,k) - K(:,:,k) * C * P(:,:,k);
 		end
 
 		% update
 		e = z(:,k) - yHat(:,k);
+
+		mHat(:,k-1) = mHat(:,k-1) + Km(:,:,k-1)*e;
+		m_prev = mHat(:,k-1);%for next time.
+		Pm_prev = Pm(:,:,k-1);
+
 		xHat(:,k) = xHat(:,k) + K(:,:,k)*e;
-		yHat(:,k) = C_est*xHat(:,k) + d;
+		yHat(:,k) = C*xHat(:,k) + d;
 	end
 
 	function [] = updateCtrl(k)
 		if ctrlGate(k)
 			if adaptSetPoint
-				r_mu = [r(:,k); xHat(nX+1:end,k)];
+				r_mu = [r(:,k); mHat(:,k-1)];
 				xvlam = fn_r_mu_2_xvlam(r_mu);
 				xRef(:,k) = xvlam(1:nX);
 				v_ss = xvlam(nX+1:nX+nU);
@@ -167,7 +166,7 @@ function [u, z, yTrue, yHat, xHat, uRef, xRef, P, K] = fbCtrl_steadyState_plds_a
 
 			% calc control in intensity ("v")
 			v = v_ss;
-			v = v - Kfb_x*(xHat(1:nX,k) - xRef(:,k));
+			v = v - Kfb_x*(xHat(:,k) - xRef(:,k));
 
 			% only integrate error if not saturated?
 			if ((u(:,k-1) > uLims(1)) && (u(:,k-1) < uLims(2)))

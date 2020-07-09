@@ -1,5 +1,5 @@
-function [u_ss, x_ss, y_ss] = calc_steadyState_ctrl(this, r)
-  % [u_ss, x_ss, y_ss] = calc_steadyState_ctrl(this, r)
+function [u_ss, x_ss, y_ss] = calcCtrl_steadyState(this, r)
+  % [u_ss, x_ss, y_ss] = calcCtrl_steadyState(this, r)
   %
   % Calculate LS solution for control/state trajectory for output reference (r), constrained to be at steady-state.
   %

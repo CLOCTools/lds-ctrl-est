@@ -1,5 +1,5 @@
-function [yHat, xHat, P, K] = ksmooth(this, u, z, augmentM, qM)
-	% [yHat, xHat, P, K] = ksmooth(this, u, z, augmentM, qM)
+function [yHat, xHat, mHat, P, Pm, K, Km] = ksmooth_joint(this, u, z, augmentM, qM)
+	% [yHat, xHat, mHat, P, Pm, K, Km] = ksmooth_joint(this, u, z, augmentM, qM)
 	%
 	% Perform Kalman smoothing (i.e., estimate state given ALL data, z)
 	% Refs: Shumway et Stoffer 1982; Ghahramani et Hinton 1996
@@ -35,6 +35,10 @@ function [yHat, xHat, P, K] = ksmooth(this, u, z, augmentM, qM)
 	nU = this.nU;
 	nX = this.nX;
 	nY = this.nY;
+
+	if isempty(Q)||isempty(R)
+		error('Need Q, R.')
+	end
 
 	if augmentM
 		% augment system with m
@@ -78,12 +82,22 @@ function [yHat, xHat, P, K] = ksmooth(this, u, z, augmentM, qM)
 	K = cell(size(u));
 	e = zeros(nY,1);
 
+	mHat = cell(size(u));
+	Pm = cell(size(u));
+	Km = cell(size(u));
+
 	for trial=1:numel(u)
 		nSamps = size(u{trial}, 2);
+
+		mHat{trial} = this.m + zeros(this.nX, nSamps);
+		Pm{trial} = qM.*eye(this.nX) + zeros(this.nX, this.nX, nSamps);
+
 		xHat{trial} = zeros(nX, nSamps);
 		P{trial} = zeros(nX, nX, nSamps);
 		yHat{trial} = zeros(nY, nSamps);
+
 		K{trial} = K0 + zeros(nX, nY, nSamps);
+		Km{trial} = zeros(nX, nY, nSamps);
 
 		x_pre = zeros(nX, nSamps);
 		P_pre = zeros(nX, nX, nSamps);
@@ -128,6 +142,14 @@ function [yHat, xHat, P, K] = ksmooth(this, u, z, augmentM, qM)
 			yHat{trial}(:,k) = C*xHat{trial}(:,k) + d;
 		end
 
+		if augmentM
+			mHat{trial} = xHat{trial}(this.nX+1:end, :);
+			xHat{trial} = xHat{trial}(1:this.nX, :);
+			Pm{trial} = P{trial}(this.nX+1:end,this.nX+1:end,:);
+			P{trial} = P{trial}(1:this.nX,1:this.nX,:);
+			Km{trial} = K{trial}(this.nX+1:end,:,:);
+			K{trial} = K{trial}(1:this.nX,:,:);
+		end
 	end %trials loop
 
 end
