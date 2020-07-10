@@ -7,7 +7,7 @@ This library currently provides three namespaces.
  - `lds::poisson` (aka `plds`) : linear dynamical systems with Poisson observations
 
 Future iterations may include an additional namespace for LDS with Bernoulli (`blds`) observations.
-
+#Adam was here
 # Linear Dynamical System
 	x_{t+1} = A x_{t} + B v_{t} + m + w_{t}
 
