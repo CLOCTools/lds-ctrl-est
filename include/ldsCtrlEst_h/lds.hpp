@@ -4,7 +4,7 @@
 // LINEAR DYNAMICAL SYSTEM
 // (i.e., no observations)
 namespace lds {
-	// in future, if need different precision or integer math, change definition of data_t?
+	// if need different precision, change definition of data_t
 	typedef double data_t;
 	typedef std::vector<data_t> stdVec;
 	typedef arma::Col<data_t> armaVec;
@@ -15,16 +15,20 @@ namespace lds {
 
 	namespace fill = arma::fill;
 
-	// AUGMENTATION BIT MASKS
-	static const std::size_t AUGMENT_G = 0x1;
-	static const std::size_t AUGMENT_M = AUGMENT_G<<1;
-	static const std::size_t AUGMENT_U = AUGMENT_G<<2;//for cases where control was designed to penalize deltaU, the state is technically augmented with u
-	static const std::size_t AUGMENT_INTY = AUGMENT_G<<3;//for cases where there will be integral action for control
-	static const std::size_t AUGMENT_DY = AUGMENT_G<<4;//for cases where there will be derivative action for control
-	// static const data_t inf = std::numeric_limits<data_t>::infinity();//arma::datum::inf;
-	static data_t inf = std::numeric_limits<data_t>::infinity();//arma::datum::inf;
-	static data_t neginf = -inf;//arma::datum::inf;
+	// CONTROL BIT MASKS
+	static const std::size_t CONTROL_TYPE_U = 0x1;//for cases where control was designed to penalize deltaU, the state is technically augmented with u
+	static const std::size_t CONTROL_TYPE_INTY = CONTROL_TYPE_U<<1;//for cases where there will be integral action for control
+	static const std::size_t CONTROL_TYPE_ADAPT_M = CONTROL_TYPE_U<<2;//adapt setpoint with m.
+
+	static data_t inf = std::numeric_limits<data_t>::infinity();
+	static data_t neginf = -inf;
 	static const data_t pi = arma::datum::pi;
+
+	// Filler vals for diag elements of elements in case
+	// there is need to resolve dimensionality mismatch:
+	static data_t DEFAULT_P0 = 1e-6;
+	static data_t DEFAULT_Q0 = 1e-6;
+	static data_t DEFAULT_R0 = 1e-2;
 
 	// Weights for SSID.
 	enum ssidWt { NONE, MOESP, CVA };

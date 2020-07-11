@@ -2,7 +2,6 @@
 #define LDS_FIT_HPP
 
 namespace lds {
-	const data_t DEFAULT_P0 = 1e-6;
 
 	class fit_t {
 	public:
@@ -21,5 +20,6 @@ namespace lds {
 		// sample period
 		data_t dt;
 	};
+	
 }//lds
 #endif

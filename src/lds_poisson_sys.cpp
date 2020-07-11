@@ -5,7 +5,7 @@ using namespace plds;
 
 // ******************* SYS_T *******************
 /* Constructor(s) for sys class... */
-plds::sys_t::sys_t(size_t nU, size_t nX, size_t nY, data_t& dt, data_t& p0, data_t& q0, size_t augmentation) :
+plds::sys_t::sys_t(size_t nU, size_t nX, size_t nY, data_t& dt, data_t& p0, data_t& q0) :
 lds::sys_t(nU, nX, dt, p0, q0)
 {
 	this->nY = nY;
@@ -16,17 +16,11 @@ lds::sys_t(nU, nX, dt, p0, q0)
 	d = armaVec(nY, fill::zeros);
 
 	C = armaMat(nY, nX, fill::eye); //each state will map to an output by default (as many as possible)
-
 	diag_y = diagmat(y);
 
 	// TODO: for some reason, on my mac, initializing with randu results in bus error!
 	// chance = armaVec(nY, fill::randu);
 	chance = armaVec(nY, fill::zeros);
-
-	nlType = EXP;
-
-	// perform any augmentations.
-	augment(augmentation);
 };
 
 /*
@@ -42,26 +36,26 @@ void plds::sys_t::predict()
 Correct: Given measurement (z) and current input (u), update estimate of the state, covar, output.
 Eden et al. 2004
 */
-void plds::sys_t::update(armaVec& z)
+void plds::sys_t::filter(armaVec& z)
 {
+	predict();
+	diag_y.diag() = y;
+
 	// assign the measurement internal variable.
 	setZ(z);
-
-	// Given *current* input, make a prediction of the output.
-	h();
-	diag_y.diag() = y;
 
 	// predict covariance (took this out of generic predict step...)
 	P = A*P*A.t() + Q;
 
 	// update cov
-	P = inv_sympd( inv_sympd(P) + C.t() * diag_y * C ); //posterior
+	P = inv_sympd( inv_sympd(P) + C.t() * diag_y * C );
 	x = x + P * C.t() * (z - y); //posterior
-
-	// armaMat Ke = P*C.t();
-	// cout << "Ke = " << Ke[0] << endl;
-
-	// With new update, estimate output.
+	if (adaptM)
+	{
+		P_m += Q_m;//A_m = I
+		P_m = inv_sympd(inv_sympd(P_m) + C.t() * diag_y * C);
+		m = m + P_m * C.t() * (z-y);
+	}
 	h();//posterior
 }
 
@@ -81,16 +75,17 @@ If either of those is violated, results will be innacurate.
 */
 void plds::sys_t::simMeasurement(armaVec& z)
 {
+	h();
+
 	// roll the dice.
 	chance.randu(y.n_elem);
 
 	// Compare.
+	z.zeros();
 	for (std::size_t k=0; k<y.n_elem; k++)
 	{
 		if ((y[k]) > chance[k])
 		z[k] = 1.0;
-		else
-		z[k] = 0.0;
 	}
 }
 
@@ -123,26 +118,16 @@ void plds::sys_t::setDims(size_t& nU, size_t& nX, size_t& nY) {
 	// this seems a bit heavy-handed, but if any of the dimensions are changed, reset everything.
 	if (szChanged) {
 		cout << "System dimensions were changed. Resetting object.\n";
-		(*this)=plds::sys_t(nU,nX,nY,dt,p0,q0,augmentation);
+		(*this)=plds::sys_t(nU,nX,nY,dt,p0,q0);
 		szChanged=false;
 	}
 }
 
 void plds::sys_t::setC(stdVec& cVec) {
-	if (augmentation && (cVec.size() != C.n_elem)) {
-		auto temp = C.submat(0,0,nY-1,nX-1);
-		reassign(temp, cVec);
-	} else {
-		reassign(C, cVec);
-	}
+	reassign(C, cVec);
 }
 void plds::sys_t::setC(armaMat& C) {
-	if (augmentation && (C.n_elem != this->C.n_elem)) {
-		auto temp = this->C.submat(0,0,nY-1,nX-1);
-		reassign(temp, C);
-	} else {
-		reassign(this->C, C);
-	}
+	reassign(this->C, C);
 }
 
 void plds::sys_t::setD(stdVec& dVec) {
@@ -157,20 +142,6 @@ void plds::sys_t::setZ(stdVec& zVec) {
 }
 void plds::sys_t::setZ(armaVec& z) {
 	reassign(this->z, z);
-}
-
-void plds::sys_t::augment(size_t augmentation) {
-	// call the parent's method
-	lds::sys_t::augment(augmentation);
-
-	// now just to the C augmentations
-	if (augmentation & AUGMENT_M) {
-		C = join_horiz(getC(), armaMat(nY,nX,fill::zeros));
-	}
-
-	if (augmentation & AUGMENT_G) {
-		C = join_horiz( C, armaMat(nY,nU,fill::zeros) );
-	}
 }
 
 void plds::sys_t::printSys() {
@@ -191,15 +162,20 @@ plds::sys_t& plds::sys_t::operator=(const plds::sys_t& sys)
 	// FROM LDS
 	this->A = sys.A;
 	this->B = sys.B;
+	this->g = sys.g;
 	this->Q = sys.Q;
-
 	this->x0 = sys.x0;
 	this->P0 = sys.P0;
-	this->m = sys.m;
-	this->g = sys.g;
 
+	this->Q_m = sys.Q_m;
+	this->m0 = sys.m0;
+	this->P0_m = sys.P0_m;
+
+	this->u = sys.u;
 	this->x = sys.x;
 	this->P = sys.P;
+	this->m = sys.m;
+	this->P_m = sys.P_m;
 
 	this->dt = sys.dt;
 	this->p0 = sys.p0;
@@ -207,23 +183,19 @@ plds::sys_t& plds::sys_t::operator=(const plds::sys_t& sys)
 
 	this->nX = sys.nX;
 	this->nU = sys.nU;
-	this->nXaug = sys.nXaug;
-
-	this->augmentation = sys.augmentation;
-	this->diag_u = sys.diag_u;
+	this->szChanged = sys.szChanged;
 	// END FROM LDS
 
+	// PLDS
 	this->C = sys.C;
 	this->d = sys.d;
-
 	this->logy = sys.logy;
 	this->y = sys.y;
 	this->z = sys.z;
 	this->nY = sys.nY;
-
-	this->nlType = sys.nlType;
 	this->diag_y = sys.diag_y;
 	this->chance = sys.chance;
+	// END FROM PLDS
 
 	return *this;
 }

@@ -8,32 +8,27 @@ namespace lds {
 	{
 	public:
 		// constructor
-		sys_t(std::size_t nU, std::size_t nX, data_t& dt, data_t& p0, data_t& q0);
+		sys_t(std::size_t nU, std::size_t nX, data_t& dt, data_t& p0=DEFAULT_P0, data_t& q0=DEFAULT_Q0);
 		sys_t& operator=(const sys_t& sys);
 
-		// Augmentation stuff...
-		void augment(std::size_t augmentation);
-		void deaugment();
-
-		bool checkIfAugmented(); //reports whether augmentation.
-		bool checkIfAugmented(std::size_t augmentationType); //reports whether augmentation.
-
 		// make one-step prediction
-		void predict();
 		void simPredict();
 
 		// get methods
-		std::size_t getAugmentation() const {return augmentation;};
 		armaVec getU() const {return u;};
-		armaVec getX() {return x.subvec(0,nX-1);};
-		armaVec getG() const;
-		armaVec getM() const;
-		armaMat getA() const {return A.submat(0,0,nX-1,nX-1);};
-		armaMat getB() const {return B.submat(0,0,nX-1,nU-1);};
-		armaMat getQ() const {return Q;};//.armaSubMat(0,0,nX-1,nX-1);};
+		armaVec getX() {return x;};
+		armaVec getG() const {return g;};
+		armaVec getM() const {return m;};
+		armaMat getA() const {return A;};
+		armaMat getB() const {return B;};
+		armaMat getQ() const {return Q;};
+		armaMat getQ_m() const {return Q_m;};
 		armaMat getP() const {return P;};
-		armaVec getX0() const {return x0.subvec(0,nX-1);};
-		armaVec getP0() const {return P0.submat(0,0,nX-1,nX-1);};
+		armaMat getP_m() const {return P_m;};
+		armaVec getX0() const {return x0;};
+		armaMat getP0() const {return P0;};
+		armaVec getM0() const {return m0;};
+		armaMat getP0_m() const {return P0_m;};
 
 		// set methods
 		void setDims(std::size_t& nU, std::size_t& nX);
@@ -45,17 +40,21 @@ namespace lds {
 		void setB(armaMat& B);
 		void setM(stdVec& mVec);
 		void setM(armaVec& m);
+		void setG(stdVec& gVec);
+		void setG(armaVec& g);
 		void setQ(stdVec& qVec);
 		void setQ(armaMat& Q);
+		void setQ_m(stdVec& qmVec);
+		void setQ_m(armaMat& Q_m);
 		void setX0(stdVec& x0Vec);
 		void setX0(armaVec& x0);
 		void setP0(stdVec& p0Vec);
 		void setP0(armaMat& P0);
-		void setG(stdVec& gVec);
-		void setG(armaVec& g);
+		void setP0_m(stdVec& p0mVec);
+		void setP0_m(armaMat& P0_m);
 
-		// these are really redundant. Should be able to use templates in some way to make this less type-specific
-		// I think I should only need to two definitions.
+		// TODO: these are very redundant.
+		// Should be able to use templates in some way to make this less type-specific
 		void reassign(armaVec& oldVar, armaVec& newVar, data_t defaultVal=0);
 		void reassign(armaVec& oldVar, stdVec& newVar, data_t defaultVal=0);
 		void reassign(armaSubVec& oldVar, armaVec& newVar, data_t defaultVal=0);
@@ -76,36 +75,38 @@ namespace lds {
 
 		void checkP();
 
+		bool adaptM;
+
 	protected:
+		void predict();
+
 		armaVec u; //input
 		armaVec x; //state
 		armaMat P; //covar of state
+		armaVec m;//process disturbance
+		armaMat P_m;//cov
 
 		// Parameters:
 		armaVec x0;
 		armaMat P0;
-
-		// If augmentation, make sure functions don't call g & m.
-		// Really wanted to have a changeable reference to a piece of x, but it's not changeable after initialization.
-		armaVec m;
-		armaVec g;
+		armaVec m0;
+		armaMat P0_m;
 
 		armaMat A;
 		armaMat B;
+		armaVec g;//input gain.
 		armaMat Q;
+		armaMat Q_m;
 
 		//it should be safe for dt to be a reference. I should not need to control what the set behavior is.
 		data_t& dt;
 		data_t& q0;
 		data_t& p0;
 
+		// dimensions
 		std::size_t nX;
 		std::size_t nU;
-		std::size_t nXaug;
-
 		bool szChanged;
-		std::size_t augmentation; //making this potected to ensure that you can't change augmentation without actually augmenting the vars..
-		armaMat diag_u;
 
 		// max val for elements of P before reset for numerical reasons...
 		const data_t plim = 1e2;

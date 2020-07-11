@@ -6,13 +6,10 @@ namespace lds {
 		// FB controller functionality
 		class ctrl_t : public sys_t {
 		public:
-			ctrl_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& uLB, data_t& uUB, data_t& dt, data_t& p0, data_t& q0, data_t& r0, std::size_t augmentation=0);
+			ctrl_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& uLB, data_t& uUB, data_t& dt, data_t& p0=DEFAULT_P0, data_t& q0=DEFAULT_Q0, data_t& r0=DEFAULT_R0, size_t controlType=0);
 			ctrl_t& operator=(const ctrl_t& sys);
 
 			// These are the workhorse functions
-			// feedback control (update estimate --> update control --> predict)
-			void piCtrl(armaVec& z, bool& gateCtrl=TRUE, bool& gateLock=FALSE, data_t& sigma_softStart=DEFAULT_SOFTSTART, data_t& sigma_uNoise=DATA_T_ZERO, bool& resetAtCtrlOnset=TRUE);
-
 			// most flexible, but user has to supply xRef, uRef
 			void fbCtrl(armaVec& z, bool& gateCtrl=TRUE, bool& gateLock=FALSE, data_t& sigma_softStart=DEFAULT_SOFTSTART, data_t& sigma_uNoise=DATA_T_ZERO, bool& resetAtCtrlOnset=TRUE, bool& doRecurse_Ke=TRUE);
 
@@ -21,9 +18,6 @@ namespace lds {
 
 			// calculate steady-state setpoint [xRef; uRef]
 			void calc_ssSetPt();
-
-			void augment(std::size_t augmentation=0, bool gateCtrl = false);
-			void deaugment();
 
 			void printSys();
 			void setDims(std::size_t& nU, std::size_t& nX, std::size_t& nY);
@@ -54,26 +48,16 @@ namespace lds {
 			void setKc_u(stdVec& Kc_u_vec);
 			void setKc_u(armaVec& Kc_u);
 
-			void setKc_y(stdVec& Kc_y_vec);
-			void setKc_y(armaVec& Kc_y);
-
 			void setKc_inty(stdVec& Kc_inty_vec);
 			void setKc_inty(armaVec& Kc_inty);
 
-			void setKc_dy(stdVec& Kc_dy_vec);
-			void setKc_dy(armaVec& Kc_dy);
-
+			void setControlType(size_t controlType);
 			void setTauAntiWindup(data_t& tau);
 
 			armaVec getURef() const {return uRef;};
 			armaVec getIntE() const {return intE;};
 
-			void checkGainInversion();
 			void reset();
-
-			void update_expFilt();
-			data_t tauEst;//time constant of 1st order filter estimator
-
 			void antiWindup();
 
 		protected:
@@ -87,11 +71,8 @@ namespace lds {
 
 			// Controller gains
 			armaMat Kc_x; //on instantaneous state error
-			armaMat Kc_u; //if designed control around min deltaU
-			// armaMat Kc_m; //fb gain on disturbance??
-			armaMat Kc_y; //on instantaneous output error
+			armaMat Kc_u; //control around min deltaU
 			armaMat Kc_inty; //on integrated output error
-			armaMat Kc_dy; //on deriv output error
 
 			// control after g inversion (partial fb linearization)
 			// do not need set methods for these.
@@ -111,24 +92,18 @@ namespace lds {
 			bool gateLock_prev;
 
 			//whether the g of system has become inverted from what you think it is (gainRef)
-			bool gInverted;
 			bool uSaturated;
 
 			// I think it should be safe to have references here bc there is nothing I need to do (like reset vars) when it changes...
 			data_t& uLB;
 			data_t& uUB;
 
-			// for exponential smoothing...
-			data_t aEst;
-			data_t bEst;
-
 			// antiwindup backcalculation timeconstant
 			data_t tauAntiWindup;
 			data_t kAntiWindup;
 
-			data_t yRefLB;
-
 			data_t t_since_ctrl_onset;
+			size_t controlType;
 
 		private:
 			void calc_ctrl(bool& gateCtrl=TRUE, bool& gateLock=FALSE, data_t& sigma_softStart=DEFAULT_SOFTSTART, data_t& sigma_uNoise=DATA_T_ZERO, bool& resetAtCtrlOnset=TRUE);

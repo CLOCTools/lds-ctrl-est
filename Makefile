@@ -92,17 +92,9 @@ test_plds_est: test/test_plds_est.cpp
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $(shell pkg-config --cflags ldsCtrlEst) test/test_plds_est.cpp -o $(BIN_DIR)/test_plds_est $(LDFLAGS) $(shell pkg-config --libs ldsCtrlEst)
 
-test_plds_ctrl: test/test_plds_ctrl.cpp
-	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $(shell pkg-config --cflags ldsCtrlEst) test/test_plds_ctrl.cpp -o $(BIN_DIR)/test_plds_ctrl $(LDFLAGS) $(shell pkg-config --libs ldsCtrlEst)
-
 test_plds_logLinCtrl: test/test_plds_logLinCtrl.cpp
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $(shell pkg-config --cflags ldsCtrlEst) test/test_plds_logLinCtrl.cpp -o $(BIN_DIR)/test_plds_logLinCtrl $(LDFLAGS) $(shell pkg-config --libs ldsCtrlEst)
-
-test_plds_piCtrl: test/test_plds_piCtrl.cpp
-	@mkdir -p $(BIN_DIR)
-	$(CXX) $(CXXFLAGS) $(shell pkg-config --cflags ldsCtrlEst) test/test_plds_piCtrl.cpp -o $(BIN_DIR)/test_plds_piCtrl $(LDFLAGS) $(shell pkg-config --libs ldsCtrlEst)
 
 test_glds_ctrl: test/test_glds_ctrl.cpp
 	@mkdir -p $(BIN_DIR)

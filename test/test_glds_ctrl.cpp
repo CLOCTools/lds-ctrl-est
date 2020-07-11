@@ -15,6 +15,8 @@ int main(void) {
 	cout << "********** Testing LDS C++ library. **********  \n\n";
 	cout << "********** Gaussian **********  \n\n";
 
+	bool doAdaptiveSetPoint = false;
+
 	// Make SISO system sampled at 1kHz
 	data_t dt = 1e-3;
 	size_t nU = 1;
@@ -22,7 +24,7 @@ int main(void) {
 	size_t nY = 1;
 
 	data_t q0_true = 1e-12;
-	data_t q0 = 5e-8;
+	data_t q0 = 1e-8;
 	data_t qM = q0;
 	data_t r0 = 1e-2;
 	data_t p0 = 0;
@@ -38,7 +40,7 @@ int main(void) {
 	data_t mLo_true = log(5*dt) * (1-aArma_true[0]);
 	data_t prLo2Hi = 1e-3;
 	data_t mHi_true = log(20*dt) * (1-aArma_true[0]);
-	data_t prHi2Lo = prLo2Hi/2;
+	data_t prHi2Lo = prLo2Hi;// /2;
 
 	stdVec mVec_true = stdVec(nY,mLo_true);
 	stdVec gVec_true = stdVec(nY,9.3/0.03);
@@ -61,7 +63,7 @@ int main(void) {
 	// control vars
 	// Going to take the steady-state vals...
 	stdVec KxVec = stdVec(nU*nX, 25);
-	stdVec KintyVec = stdVec(nU*nY, 1e3);
+	stdVec KintyVec = stdVec(nU*nY, 1e3*(!doAdaptiveSetPoint));
 	stdVec xRefVec = stdVec(nX, log(20.0*dt));
 	stdVec yRefVec = stdVec(nY, 20.0*dt);
 
@@ -99,17 +101,19 @@ int main(void) {
 	sys.setGDesign(gDesign);
 	sys.reset();
 
-	// augment
-	size_t augmentation = AUGMENT_M;
-	// augmentation = augmentation | AUGMENT_G;
-	augmentation = augmentation | AUGMENT_INTY;
-	sys.augment(augmentation);
+	size_t controlType = CONTROL_TYPE_INTY;
+	if (doAdaptiveSetPoint)
+	controlType = controlType | CONTROL_TYPE_ADAPT_M;
+	sys.setControlType(controlType);
 
-	auto Q = sys.getQ();
-	Q.diag()[nX]=qM;//disturbance
-	if (augmentation & AUGMENT_G)
-	Q.diag()[nX+nX]=1e-8;
+	sys.adaptM = true;
+	armaMat Q = sys.getQ();
+	Q.diag().fill(1e-10);
 	sys.setQ(Q);
+
+	armaMat Q_m = sys.getQ_m();
+	Q_m.diag().fill(1e-8);
+	sys.setQ_m(Q_m);
 
 	// Create vectors
 	stdVec aVec = armaVec2stdVec( vectorise(sys.getA()) );
@@ -138,9 +142,6 @@ int main(void) {
 	sys.printSys();
 	cout << ".....................................\n";
 
-	bool isAugmented = sys.checkIfAugmented();
-	cout << "Is sys_hat augmented? " << isAugmented << "\n";
-
 	// create armaMatrix to save outputs in...
 	armaMat lambdaHat = armaMat(nY, K, fill::zeros);
 	armaMat lambdaTrue = armaMat(nY, K, fill::zeros);
@@ -149,11 +150,9 @@ int main(void) {
 	// states and gain/disturbance params
 	armaMat xHat = armaMat(nX, K, fill::zeros);
 	armaMat mHat = armaMat(nY, K, fill::zeros);
-	armaMat gHat = armaMat(nU, K, fill::zeros);
 
 	armaMat xTrue = armaMat(nX, K, fill::zeros);
 	armaMat mTrue = armaMat(nY, K, fill::zeros);
-	armaMat gTrue = armaMat(nU, K, fill::zeros);
 
 	sys_true.reset();
 	sys.reset();
@@ -167,9 +166,6 @@ int main(void) {
 
 	mHat.submat(0,0,nX-1,0) = sys.getM();
 	mTrue.submat(0,0,nX-1,0) = sys_true.getM();
-
-	gHat.submat(0,0,nX-1,0) = sys.getG();
-	gTrue.submat(0,0,nX-1,0) = sys_true.getG();
 
 	bool gateCtrl = true;
 	bool gateLock = false;
@@ -192,7 +188,6 @@ int main(void) {
 	for (size_t k=1; k<K; k++)
 	{
 		armaVec chance(1,fill::randu);
-		bool doSwitch = false;
 		if (frState == 0) //low state
 		{
 				if (chance[0] < prLo2Hi) {
@@ -235,9 +230,6 @@ int main(void) {
 		// Simulate the true system.
 		sys_true.setU(u_km1);
 		sys_true.simPredict();
-		sys_true.h();
-
-		// generate a measurement
 		armaVec z_k = armaVec(z.colptr(k), z.n_rows, false, false);
 		sys_true.simMeasurement(z_k);
 
@@ -247,12 +239,10 @@ int main(void) {
 		lambdaRef.submat(0,k,nY-1,k) = armaMat(yRefVec.data(),nY,1);
 		lambdaTrue.submat(0,k,nY-1,k) = sys_true.getY();
 		xTrue.submat(0,k,nX-1,k) = sys_true.getX();
-		gTrue.submat(0,k,nU-1,k) = sys_true.getG();
 		mTrue.submat(0,k,nY-1,k) = sys_true.getM();
 
 		lambdaHat.submat(0,k,nY-1,k) = sys.getY();
 		xHat.submat(0,k,nX-1,k) = sys.getX();
-		gHat.submat(0,k,nU-1,k) = sys.getG();
 		mHat.submat(0,k,nY-1,k) = sys.getM();
 
 		// write control to u
@@ -302,12 +292,6 @@ int main(void) {
 		Mat_VarWrite(matfile, matvar, matCompression);
 		Mat_VarFree(matvar);
 
-		// gHat
-		dims[0] = gHat.n_rows; dims[1] = gHat.n_cols;
-		matvar = Mat_VarCreate("gHat", MAT_C_DOUBLE, matDataType, 2, dims, gHat.memptr(), 0);
-		Mat_VarWrite(matfile, matvar, matCompression);
-		Mat_VarFree(matvar);
-
 		// simulated measurements.
 		dims[0] = z.n_rows; dims[1] = z.n_cols;
 		matvar = Mat_VarCreate("z", MAT_C_DOUBLE, matDataType, 2, dims, z.memptr(), 0);
@@ -338,14 +322,8 @@ int main(void) {
 		Mat_VarWrite(matfile, matvar, matCompression);
 		Mat_VarFree(matvar);
 
-		// gTrue
-		dims[0] = gTrue.n_rows; dims[1] = gTrue.n_cols;
-		matvar = Mat_VarCreate("gTrue", MAT_C_DOUBLE, matDataType, 2, dims, gTrue.memptr(), 0);
-		Mat_VarWrite(matfile, matvar, matCompression);
-		Mat_VarFree(matvar);
-
 		// mTrue
-		dims[0] = gTrue.n_rows; dims[1] = gTrue.n_cols;
+		dims[0] = mTrue.n_rows; dims[1] = mTrue.n_cols;
 		matvar = Mat_VarCreate("mTrue", MAT_C_DOUBLE, matDataType, 2, dims, mTrue.memptr(), 0);
 		Mat_VarWrite(matfile, matvar, matCompression);
 		Mat_VarFree(matvar);

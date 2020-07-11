@@ -12,16 +12,10 @@ namespace lds {
 
 		namespace fill = arma::fill;
 
-		// AUGMENTATION BIT MASKS
-		static const std::size_t AUGMENT_G = lds::AUGMENT_G;
-		static const std::size_t AUGMENT_M = lds::AUGMENT_M;
-		static const std::size_t AUGMENT_U = lds::AUGMENT_U;
-		static const std::size_t AUGMENT_INTY = lds::AUGMENT_INTY;
-		static const std::size_t AUGMENT_DY = lds::AUGMENT_DY;
-
-		// OUTPUT NONLINEARITY BIT MASKS
-		static const std::size_t EXP = 0x1;
-		// const std::size_t LOGEXP = EXP<<1;
+		// CONTROL BIT MASKS
+		static const std::size_t CONTROL_TYPE_U = lds::CONTROL_TYPE_U;
+		static const std::size_t CONTROL_TYPE_INTY = lds::CONTROL_TYPE_INTY;
+		static const std::size_t CONTROL_TYPE_ADAPT_M = lds::CONTROL_TYPE_ADAPT_M;
 
 		// Ideally these should be const, but trying to pass reference which means its val implicitly must be allowed to change.
 		// hopefully no one will try to reassign their vals...

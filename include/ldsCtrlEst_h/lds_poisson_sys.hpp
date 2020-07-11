@@ -7,16 +7,15 @@ namespace lds {
 		class sys_t : public lds::sys_t
 		{
 		public:
-			void h();//output nonlinearity
-			void predict();
-			void update(armaVec& z); //update estimate given measurement
+			void filter(armaVec& u_tm1, armaVec& z_t);
+			void filter(armaVec& z);
 			void simMeasurement(armaVec& z);
 
-			sys_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& dt, data_t& p0, data_t& q0, std::size_t augmentation=0);
+			sys_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& dt, data_t& p0=DEFAULT_P0, data_t& q0=DEFAULT_Q0);
 			sys_t& operator=(const sys_t& sys);
 
 			// get methods
-			armaMat getC() const {return C.submat(0,0,nY-1,nX-1);};
+			armaMat getC() const {return C;};
 			armaVec getD() const {return d;};
 			armaVec getY() const {return y;};
 			armaVec getZ() const {return z;};
@@ -30,15 +29,15 @@ namespace lds {
 			void setZ(stdVec& zVec);
 			void setZ(armaVec& z);
 
-			void augment(std::size_t augmentation);
-
 			void reset();
 			void printSys();
 
 		protected:
+			void predict();
+			void h();//output nonlinearity
+
 			// output-specific stuff
 			std::size_t nY;
-
 			armaMat C;
 			armaVec d;
 			armaVec y;
@@ -46,8 +45,6 @@ namespace lds {
 			armaVec z;
 
 			armaMat diag_y;
-
-			std::string nlType; //making this protected b/c currently only should use exponential nonlinearity.
 			armaVec chance; //for rolling dice if producing spikes...
 		}; // sys_t
 	} //poisson

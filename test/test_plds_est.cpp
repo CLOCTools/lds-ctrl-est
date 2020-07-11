@@ -25,11 +25,14 @@ int main(void) {
 	armaMat aArma_true = armaMat(nX,nX,fill::eye);
 	aArma_true[0] = exp(-dt/0.075);
 	armaMat bArma_true = armaMat(nX,nU,fill::eye);
-	bArma_true[0] = 5e-2; //2.7e-2;
+	bArma_true[0] = 5e-2;
 	armaMat cArma_true = armaMat(nY,nX,fill::zeros);
 	cArma_true[0] = 1;
 
-	data_t m = -7e-2;//-7.67e-2;
+	armaVec x0Arma_true = armaVec(nX, fill::zeros);
+	x0Arma_true.fill(-7);
+
+	data_t m = -7e-2;
 	armaVec mArma_true = armaVec(nX, fill::zeros);
 	mArma_true.fill(m);
 
@@ -45,8 +48,8 @@ int main(void) {
 	sys_true.setA(aArma_true);
 	sys_true.setB(bArma_true);
 	sys_true.setC(cArma_true);
+	sys_true.setX0(x0Arma_true);
 	sys_true.setM(mArma_true);
-	sys_true.h();
 	sys_true.reset();
 
 	// augment sys_true to let params vary
@@ -67,16 +70,20 @@ int main(void) {
 	sys_t sys(nU, nX, nY, dt, p0, q0);
 
 	// Create *incorrect* model.
-	armaVec gSys = sys_true.getG() * 2;
-	armaVec mSys = sys_true.getM() / 2;
+	armaVec gSys = sys_true.getG();
+	armaVec mSys = sys_true.getM() * 1.25;
 	sys.setG(gSys);
 	sys.setM(mSys);
+	sys.reset();
 
-	sys.augment(AUGMENT_M | AUGMENT_G);
+	sys.adaptM = true;
 	armaMat Q = sys.getQ();
-	Q.diag()[nX]=1e-7;
-	Q.diag()[nX+nX]=1e-4;
+	Q.diag().fill(1e-8);
 	sys.setQ(Q);
+
+	armaMat Q_m = sys.getQ_m();
+	Q_m.diag().fill(1e-8);
+	sys.setQ_m(Q_m);
 
 	cout << ".....................................\n";
 	cout << "sys_hat:\n";
@@ -110,9 +117,6 @@ int main(void) {
 	sys.printSys();
 	cout << ".....................................\n";
 
-	bool isAugmented = sys.checkIfAugmented();
-	cout << "Is sys_hat augmented? " << isAugmented << "\n";
-
 	// create matrix to save outputs in...
 	armaMat lambdaHat = armaMat(nY, K, fill::zeros);
 	armaMat lambdaTrue = armaMat(nY, K, fill::zeros);
@@ -120,18 +124,15 @@ int main(void) {
 	// states and gain/bias params
 	armaMat xHat = armaMat(nX, K, fill::zeros);
 	armaMat mHat = armaMat(nX, K, fill::zeros);
-	armaMat gHat = armaMat(nU, K, fill::zeros);
 
 	armaMat xTrue = armaMat(nX, K, fill::zeros);
 	armaMat mTrue = armaMat(nY, K, fill::zeros);
-	armaMat gTrue = armaMat(nU, K, fill::zeros);
 
 	cout << "Starting " << K*dt << " sec simlation ... \n";
 	auto start = chrono::high_resolution_clock::now();
 	for (size_t k=0; k<K; k++)
 	{
 		// Assign params (uncomment to simlate online conditions)
-		// /*
 		sys.setDims(nU, nX, nY);
 		sys.setA(aVec);
 		sys.setB(bVec);
@@ -140,7 +141,7 @@ int main(void) {
 		sys.setC(cVec);
 		sys.setM(mVec);
 		sys.setG(gVec);
-		// */
+		//
 
 		// input
 		armaVec u_k = armaVec(u.colptr(k), u.n_rows, false, false);
@@ -148,31 +149,25 @@ int main(void) {
 		// Simlate the true system.
 		sys_true.setU(u_k);
 		sys_true.simPredict();
-		sys_true.h();
 
 		// generate a measurement
 		armaVec z_k = armaVec(z.colptr(k), z.n_rows, false, false);
 		sys_true.simMeasurement(z_k);
 
-		// update prev. prediction
-		sys.update(z_k);
-		// cout << "sys.y[0]_" << k << " = " << sys.y[0] << "\n";
+		// filter (predict -> update)
+		sys.filter(z_k);
 
 		lambdaHat.submat(0,k,nY-1,k) = sys.getY();
 		lambdaTrue.submat(0,k,nY-1,k) = sys_true.getY();
 
 		xTrue.submat(0,k,nX-1,k) = sys_true.getX();
-		gTrue.submat(0,k,nU-1,k) = sys_true.getG();
 		mTrue.submat(0,k,nY-1,k) = sys_true.getM();
 
 		xHat.submat(0,k,nX-1,k) = sys.getX();
-		gHat.submat(0,k,nU-1,k) = sys.getG();
 		mHat.submat(0,k,nY-1,k) = sys.getM();
 
-		// Predict
+		// for next time.
 		sys.setU(u_k);
-		sys.predict();
-		// sys.h();
 	}
 
 	auto finish = chrono::high_resolution_clock::now();
@@ -223,12 +218,6 @@ int main(void) {
 		Mat_VarWrite( matfile, matvar, matCompression);
 		Mat_VarFree(matvar);
 
-		// gHat
-		dims[0] = gHat.n_rows; dims[1] = gHat.n_cols;
-		matvar = Mat_VarCreate("gHat", MAT_C_DOUBLE, matDataType, 2, dims, gHat.memptr(), 0);
-		Mat_VarWrite( matfile, matvar, matCompression);
-		Mat_VarFree(matvar);
-
 		// simlated measurements.
 		dims[0] = z.n_rows; dims[1] = z.n_cols;
 		matvar = Mat_VarCreate("z", MAT_C_DOUBLE, matDataType, 2, dims, z.memptr(), 0);
@@ -253,14 +242,8 @@ int main(void) {
 		Mat_VarWrite( matfile, matvar, matCompression);
 		Mat_VarFree(matvar);
 
-		// gTrue
-		dims[0] = gTrue.n_rows; dims[1] = gTrue.n_cols;
-		matvar = Mat_VarCreate("gTrue", MAT_C_DOUBLE, matDataType, 2, dims, gTrue.memptr(), 0);
-		Mat_VarWrite( matfile, matvar, matCompression);
-		Mat_VarFree(matvar);
-
 		// mTrue
-		dims[0] = gTrue.n_rows; dims[1] = gTrue.n_cols;
+		dims[0] = mTrue.n_rows; dims[1] = mTrue.n_cols;
 		matvar = Mat_VarCreate("mTrue", MAT_C_DOUBLE, matDataType, 2, dims, mTrue.memptr(), 0);
 		Mat_VarWrite( matfile, matvar, matCompression);
 		Mat_VarFree(matvar);

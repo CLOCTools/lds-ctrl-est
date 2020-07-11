@@ -5,7 +5,7 @@ using namespace glds;
 
 // ******************* SYS_T *******************
 /* Constructor(s) for sys class... */
-glds::sys_t::sys_t(size_t nU, size_t nX, size_t nY, data_t& dt, data_t& p0, data_t& q0, data_t& r0, size_t augmentation) :
+glds::sys_t::sys_t(size_t nU, size_t nX, size_t nY, data_t& dt, data_t& p0, data_t& q0, data_t& r0) :
 lds::sys_t(nU, nX, dt, p0, q0),
 r0(r0)
 {
@@ -17,15 +17,10 @@ r0(r0)
 
 	C = armaMat(nY, nX, fill::eye); //each state will map to an output by default (as many as possible)
 	Ke = armaMat(nX, nY, fill::zeros);//estimator gain.
+	Ke_m = armaMat(nX, nY, fill::zeros);//estimator gain for m adaptation.
 	defaultR();
-
-	// perform any augmentations.
-	augment(augmentation);
 };
 
-/*
-predict: Given input, predict the state, covar
-*/
 void glds::sys_t::predict()
 {
 	lds::sys_t::predict();
@@ -35,25 +30,34 @@ void glds::sys_t::predict()
 /*
 Correct: Given measurement (z) and predicted state, update estimate of the state, covar, output using Kalman filter
 */
-void glds::sys_t::update(armaVec& z, bool doRecurse_Ke)
+void glds::sys_t::filter(armaVec& u_tm1, armaVec& z_t, bool doRecurse_Ke)
 {
+	setU(u_tm1);
+	filter(z_t, doRecurse_Ke);
+}
+
+void glds::sys_t::filter(armaVec& z, bool doRecurse_Ke)
+{
+	// predict mean
+	predict();
+
 	// assign the measurement internal variable.
 	setZ(z);
-
-	// Given *predicted* state, calc predicted output.
-	h();//predicted y
 
 	if (doRecurse_Ke)
 	recurse_Ke();
 
 	// update
-	x = x - Ke * (y-this->z); //posterior
+	x += Ke * (this->z-y);
+	if (adaptM)
+	m += Ke_m * (this->z-y);
 
-	// With new update, estimate output.
+	// With new state, estimate output.
 	h();//posterior
 }
 
-void glds::sys_t::recurse_Ke() //recursively estimate Ke
+//recursively estimate Ke
+void glds::sys_t::recurse_Ke()
 {
 	// predict covariance
 	P = A*P*A.t() + Q;
@@ -62,7 +66,14 @@ void glds::sys_t::recurse_Ke() //recursively estimate Ke
 	Ke = P * C.t() * inv_sympd(C*P*C.t() + R);
 
 	// update covariance
-	P = P - Ke*C*P;//Hinton, Gaghramani 1995
+	P = P - Ke*C*P;//e.g., Ghahramani+Hinton 1996
+
+	if (adaptM)
+	{
+		P_m += Q_m;//A_m = I
+		Ke_m = P_m * C.t() * inv_sympd(C*P_m*C.t() + R);
+		P_m = P_m - Ke_m*C*P_m;
+	}
 }
 
 /*
@@ -78,6 +89,7 @@ Measurement: z ~ N(y,R)
 */
 void glds::sys_t::simMeasurement(armaVec& z)
 {
+	h();
 	z = y + sqrtmat_sympd(R)*armaVec(y.n_elem,fill::randn);
 }
 
@@ -115,26 +127,16 @@ void glds::sys_t::setDims(size_t& nU, size_t& nX, size_t& nY) {
 	// this seems a bit heavy-handed, but if any of the dimensions are changed, reset everything.
 	if (szChanged) {
 		cout << "System dimensions were changed. Resetting object.\n";
-		(*this)=glds::sys_t(nU,nX,nY,dt,p0,q0,r0,augmentation);
+		(*this)=glds::sys_t(nU,nX,nY,dt,p0,q0,r0);
 		szChanged=false;
 	}
 }
 
 void glds::sys_t::setC(stdVec& cVec) {
-	if (augmentation && (cVec.size() != C.n_elem)) {
-		auto temp = C.submat(0,0,nY-1,nX-1);
-		reassign(temp, cVec);
-	} else {
-		reassign(C, cVec);
-	}
+	reassign(C, cVec);
 }
 void glds::sys_t::setC(armaMat& C) {
-	if (augmentation && (C.n_elem != this->C.n_elem)) {
-		auto temp = this->C.submat(0,0,nY-1,nX-1);
-		reassign(temp, C);
-	} else {
-		reassign(this->C, C);
-	}
+	reassign(this->C, C);
 }
 
 void glds::sys_t::setR(stdVec& rVec) {
@@ -157,6 +159,7 @@ void glds::sys_t::setZ(stdVec& zVec) {
 void glds::sys_t::setZ(armaVec& z) {
 	reassign(this->z, z);
 }
+
 void glds::sys_t::setKe(stdVec& keVec) {
 	reassign(Ke, keVec);
 }
@@ -164,20 +167,11 @@ void glds::sys_t::setKe(armaMat& Ke) {
 	reassign(this->Ke, Ke);
 }
 
-void glds::sys_t::augment(size_t augmentation) {
-	// call the parent's method
-	lds::sys_t::augment(augmentation);
-
-	// now just to the C augmentations
-	if (augmentation & AUGMENT_M) {
-		C = join_horiz(getC(), armaMat(nY,nX,fill::zeros));
-		Ke = join_horiz(Ke, armaMat(nY,nX,fill::zeros));
-	}
-
-	if (augmentation & AUGMENT_G) {
-		C = join_horiz( C, armaMat(nY,nU,fill::zeros) );
-		Ke = join_horiz(Ke, armaMat(nY,nU,fill::zeros));
-	}
+void glds::sys_t::setKe_m(stdVec& kemVec) {
+	reassign(Ke_m, kemVec);
+}
+void glds::sys_t::setKe_m(armaMat& Ke_m) {
+	reassign(this->Ke_m, Ke_m);
 }
 
 void glds::sys_t::printSys() {
@@ -193,15 +187,20 @@ glds::sys_t& glds::sys_t::operator=(const glds::sys_t& sys)
 	// FROM LDS
 	this->A = sys.A;
 	this->B = sys.B;
+	this->g = sys.g;
 	this->Q = sys.Q;
-
 	this->x0 = sys.x0;
 	this->P0 = sys.P0;
-	this->m = sys.m;
-	this->g = sys.g;
 
+	this->Q_m = sys.Q_m;
+	this->m0 = sys.m0;
+	this->P0_m = sys.P0_m;
+
+	this->u = sys.u;
 	this->x = sys.x;
 	this->P = sys.P;
+	this->m = sys.m;
+	this->P_m = sys.P_m;
 
 	this->dt = sys.dt;
 	this->p0 = sys.p0;
@@ -209,10 +208,7 @@ glds::sys_t& glds::sys_t::operator=(const glds::sys_t& sys)
 
 	this->nX = sys.nX;
 	this->nU = sys.nU;
-	this->nXaug = sys.nXaug;
-
-	this->augmentation = sys.augmentation;
-	this->diag_u = sys.diag_u;
+	this->szChanged = sys.szChanged;
 	// END FROM LDS
 
 	this->C = sys.C;
@@ -221,6 +217,8 @@ glds::sys_t& glds::sys_t::operator=(const glds::sys_t& sys)
 	this->r0 = sys.r0;
 
 	this->Ke = sys.Ke;
+	this->Ke_m = sys.Ke_m;
+	this->adaptM = sys.adaptM;
 
 	this->y = sys.y;
 	this->z = sys.z;
