@@ -43,17 +43,21 @@ namespace lds {
 			void setYRef(armaVec& yRef);
 
 			void setKc_x(stdVec& Kc_x_vec);
-			void setKc_x(armaVec& Kc_x);
+			void setKc_x(armaMat& Kc_x);
 
 			void setKc_u(stdVec& Kc_u_vec);
-			void setKc_u(armaVec& Kc_u);
+			void setKc_u(armaMat& Kc_u);
 
 			void setKc_inty(stdVec& Kc_inty_vec);
-			void setKc_inty(armaVec& Kc_inty);
+			void setKc_inty(armaMat& Kc_inty);
 
 			void setControlType(size_t controlType);
 			void setTauAntiWindup(data_t& tau);
 
+			armaVec getKc_u() const {return Kc_u;};
+			armaVec getKc_x() const {return Kc_x;};
+			armaVec getKc_inty() const {return Kc_inty;};
+			armaVec getGDesign() const {return gDesign;};
 			armaVec getURef() const {return uRef;};
 			armaVec getIntE() const {return intE;};
 

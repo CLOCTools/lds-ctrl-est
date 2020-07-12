@@ -96,6 +96,10 @@ test_plds_logLinCtrl: test/test_plds_logLinCtrl.cpp
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $(shell pkg-config --cflags ldsCtrlEst) test/test_plds_logLinCtrl.cpp -o $(BIN_DIR)/test_plds_logLinCtrl $(LDFLAGS) $(shell pkg-config --libs ldsCtrlEst)
 
+test_plds_switched_logLinCtrl: test/test_plds_switched_logLinCtrl.cpp
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) $(shell pkg-config --cflags ldsCtrlEst) test/test_plds_switched_logLinCtrl.cpp -o $(BIN_DIR)/test_plds_switched_logLinCtrl $(LDFLAGS) $(shell pkg-config --libs ldsCtrlEst)
+
 test_glds_ctrl: test/test_glds_ctrl.cpp
 	@mkdir -p $(BIN_DIR)
 	$(CXX) $(CXXFLAGS) $(shell pkg-config --cflags ldsCtrlEst) test/test_glds_ctrl.cpp -o $(BIN_DIR)/test_glds_ctrl $(LDFLAGS) $(shell pkg-config --libs ldsCtrlEst)
@@ -127,6 +131,6 @@ uninstall:
 	rm -f $(INSTALL_PRE)/lib/pkgconfig/ldsCtrlEst.pc
 	rm -f $(INSTALL_PRE)/lib/pkgconfig/ldsCtrlEst-static.pc
 
-.PHONY: all build clean install uninstall test_plds_est test_plds_ctrl test_plds_logLinCtrl test_plds_piCtrl test_glds_ctrl
+.PHONY: all build clean install uninstall test_plds_est test_plds_logLinCtrl test_glds_ctrl test_plds_switched_logLinCtrl
 
 print-%  : ; @echo $* = $($*)

@@ -16,8 +16,10 @@ namespace lds {
 			sys_t& operator=(const sys_t& sys);
 
 			// get methods
+			size_t getNy() const {return nY;};
 			armaMat getC() const {return C;};
 			armaVec getD() const {return d;};
+			armaVec getR() const {return R;};
 			armaVec getY() const {return y;};
 			armaVec getZ() const {return z;};
 			armaVec getKe() const {return Ke;};

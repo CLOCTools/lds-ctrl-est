@@ -18,6 +18,9 @@
 #include "ldsCtrlEst_h/lds_gaussian_ctrl.hpp"
 #include "ldsCtrlEst_h/lds_poisson_ctrl.hpp"
 
+#include "ldsCtrlEst_h/lds_gaussian_sctrl.hpp"
+#include "ldsCtrlEst_h/lds_poisson_sctrl.hpp"
+
 // plds fitting, loading, saving
 #include "ldsCtrlEst_h/lds_fit.hpp" //basic fit type
 #include "ldsCtrlEst_h/lds_gaussian_fit.hpp" //basic fit type

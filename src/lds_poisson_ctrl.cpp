@@ -226,7 +226,7 @@ void plds::ctrl_t::setYRef(armaVec& yRef) {
 void plds::ctrl_t::setKc_x(stdVec& Kc_xVec) {
 	reassign(Kc_x, Kc_xVec);
 }
-void plds::ctrl_t::setKc_x(armaVec& Kc_x) {
+void plds::ctrl_t::setKc_x(armaMat& Kc_x) {
 	reassign(this->Kc_x, Kc_x);
 }
 
@@ -234,7 +234,7 @@ void plds::ctrl_t::setKc_u(stdVec& Kc_uVec) {
 	if (controlType & CONTROL_TYPE_U)
 	reassign(Kc_u, Kc_uVec);
 }
-void plds::ctrl_t::setKc_u(armaVec& Kc_u) {
+void plds::ctrl_t::setKc_u(armaMat& Kc_u) {
 	if (controlType & CONTROL_TYPE_U)
 	reassign(this->Kc_u, Kc_u);
 }
@@ -242,7 +242,7 @@ void plds::ctrl_t::setKc_u(armaVec& Kc_u) {
 // void plds::ctrl_t::setKc_y(stdVec& Kc_yVec) {
 // 	reassign(Kc_y, Kc_yVec);
 // }
-// void plds::ctrl_t::setKc_y(armaVec& Kc_y) {
+// void plds::ctrl_t::setKc_y(armaMat& Kc_y) {
 // 	reassign(this->Kc_y, Kc_y);
 // }
 
@@ -250,7 +250,7 @@ void plds::ctrl_t::setKc_inty(stdVec& Kc_intyVec) {
 	if (controlType & CONTROL_TYPE_INTY)
 	reassign(Kc_inty, Kc_intyVec);
 }
-void plds::ctrl_t::setKc_inty(armaVec& Kc_inty) {
+void plds::ctrl_t::setKc_inty(armaMat& Kc_inty) {
 	if (controlType & CONTROL_TYPE_INTY)
 	reassign(this->Kc_inty, Kc_inty);
 }
@@ -315,9 +315,6 @@ void plds::ctrl_t::reset() {
 	plds::sys_t::reset();
 	uRef.zeros();
 	uRef_prev.zeros();
-	// xRef.zeros();
-	// logyRef.zeros();
-	// yRef.zeros();
 	intE.zeros();
 	intE_awuAdjust.zeros();
 	uSat.zeros();

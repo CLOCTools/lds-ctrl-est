@@ -15,6 +15,8 @@ namespace lds {
 		void simPredict();
 
 		// get methods
+		size_t getNx() const {return nX;};
+		size_t getNu() const {return nU;};
 		armaVec getU() const {return u;};
 		armaVec getX() {return x;};
 		armaVec getG() const {return g;};

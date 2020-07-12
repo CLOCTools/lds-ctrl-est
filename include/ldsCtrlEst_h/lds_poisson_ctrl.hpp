@@ -6,7 +6,7 @@ namespace lds {
 		// FB controller functionality
 		class ctrl_t : public sys_t {
 		public:
-			ctrl_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& uLB, data_t& uUB, data_t& dt, data_t& p0, data_t& q0, size_t controlType=0);
+			ctrl_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& uLB, data_t& uUB, data_t& dt, data_t& p0=DEFAULT_P0, data_t& q0=DEFAULT_Q0, size_t controlType=0);
 			ctrl_t& operator=(const ctrl_t& sys);
 
 			// These are the workhorse functions
@@ -42,17 +42,21 @@ namespace lds {
 			void setYRef(armaVec& yRef);
 
 			void setKc_x(stdVec& Kc_xVec);
-			void setKc_x(armaVec& Kc_x);
+			void setKc_x(armaMat& Kc_x);
 
 			void setKc_u(stdVec& Kc_uVec);
-			void setKc_u(armaVec& Kc_u);
+			void setKc_u(armaMat& Kc_u);
 
 			void setKc_inty(stdVec& Kc_intyVec);
-			void setKc_inty(armaVec& Kc_inty);
+			void setKc_inty(armaMat& Kc_inty);
 
 			void setControlType(size_t controlType);
 			void setTauAntiWindup(data_t& tau);
 
+			armaVec getKc_u() const {return Kc_u;};
+			armaVec getKc_x() const {return Kc_x;};
+			armaVec getKc_inty() const {return Kc_inty;};
+			armaVec getGDesign() const {return gDesign;};
 			armaVec getURef() const {return uRef;};
 			armaVec getLogYRef() const {return logyRef;};
 			armaVec getLogY() const {return logy;};

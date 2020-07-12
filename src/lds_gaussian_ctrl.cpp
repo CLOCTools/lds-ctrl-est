@@ -216,7 +216,7 @@ void glds::ctrl_t::setYRef(armaVec& yRef) {
 void glds::ctrl_t::setKc_x(stdVec& Kc_x_vec) {
 	reassign(Kc_x, Kc_x_vec);
 }
-void glds::ctrl_t::setKc_x(armaVec& Kc_x) {
+void glds::ctrl_t::setKc_x(armaMat& Kc_x) {
 	reassign(this->Kc_x, Kc_x);
 }
 
@@ -224,7 +224,7 @@ void glds::ctrl_t::setKc_u(stdVec& Kc_u_vec) {
 	if (controlType & CONTROL_TYPE_U)
 	reassign(Kc_u, Kc_u_vec);
 }
-void glds::ctrl_t::setKc_u(armaVec& Kc_u) {
+void glds::ctrl_t::setKc_u(armaMat& Kc_u) {
 	if (controlType & CONTROL_TYPE_U)
 	reassign(this->Kc_u, Kc_u);
 }
@@ -233,7 +233,7 @@ void glds::ctrl_t::setKc_inty(stdVec& Kc_inty_vec) {
 	if (controlType & CONTROL_TYPE_INTY)
 	reassign(Kc_inty, Kc_inty_vec);
 }
-void glds::ctrl_t::setKc_inty(armaVec& Kc_inty) {
+void glds::ctrl_t::setKc_inty(armaMat& Kc_inty) {
 	if (controlType & CONTROL_TYPE_INTY)
 	reassign(this->Kc_inty, Kc_inty);
 }
