@@ -61,7 +61,7 @@ end
 
 % methods in other files
 [y, x] = simulate(this, u, addNoise);
-[yHat, xHat, P, K] = ppfilter(this, u, z, augmentM, qM);
+[yHat, xHat, P, K] = ppfilter_joint(this, u, z, augmentM, qM);
 [Kx, KintY, Fx, Fv, Hx] = log_lqr_outputWt(this, qIntY_over_qY, r_over_qY);
 end%end methods
 

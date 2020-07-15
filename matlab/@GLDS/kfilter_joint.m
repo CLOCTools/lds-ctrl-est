@@ -97,7 +97,7 @@ function [yHat, xHat, mHat, P, Pm, K, Km] = kfilter_joint(this, u, z, recurseK, 
 		nSamps = size(u{trial}, 2);
 
 		mHat{trial} = this.m + zeros(this.nX, nSamps);
-		Pm{trial} = qM.*eye(this.nX) + zeros(this.nX, this.nX, nSamps);
+		Pm{trial} = zeros(this.nX, this.nX, nSamps);
 
 		xHat{trial} = zeros(nX, nSamps);
 		P{trial} = zeros(nX, nX, nSamps);
@@ -140,16 +140,4 @@ function [yHat, xHat, mHat, P, Pm, K, Km] = kfilter_joint(this, u, z, recurseK, 
 			K{trial} = K{trial}(1:this.nX,:,:);
 		end
 	end
-
-
-	% % calculate the time-constants of the system, assuming the final K is at ss.
-	% A_est = (eye(nX) - K{end}(:,:,end)*C)*A;
-	% eig_est = eig(A_est);
-	% tau_est = -this.dt ./ log(abs(eig_est));
-	%
-	% B_est = K;%steady-state feedback gain.
-	% C_est = C;
-	% D_est = -eye(nY);
-	%
-	% sys_z2e = ss(A_est,B_est,C_est,D_est,this.dt);
 end

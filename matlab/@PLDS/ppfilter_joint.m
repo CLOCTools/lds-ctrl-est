@@ -1,5 +1,5 @@
-function [yHat, xHat, P, K] = ppfilter(this, u, z, augmentM, qM)
-	% [yHat, xHat, P, K] = ppfilter(this, u, z, augmentM, qM)
+function [yHat, xHat, P, K] = ppfilter_joint(this, u, z, augmentM, qM)
+	% [yHat, xHat, P, K] = ppfilter_joint(this, u, z, augmentM, qM)
 	%
 	% Perform point-process filtering (i.e., estimate state given data, z, up to current time)
 	% Refs: Eden et al. 2004 and related papers

@@ -6,11 +6,6 @@
 using namespace std;
 using namespace plds;
 
-// for smoothing things..
-armaMat smooth(armaMat& x, data_t tau, data_t dt);
-
-stdVec armaVec2stdVec(armaVec x) { return arma::conv_to<stdVec>::from(x); };
-
 int main(void) {
 	cout << "********** Testing LDS C++ library. **********  \n\n";
 	cout << "********** Switched Poisson **********  \n\n";
@@ -130,7 +125,6 @@ int main(void) {
 	auto start = chrono::high_resolution_clock::now();
 	for (size_t t=1; t<T; t++)
 	{
-		// cout << "here\n";
 		armaVec chance(1,fill::randu);
 		if (gainState == 0) //state1
 		{
@@ -148,9 +142,6 @@ int main(void) {
 				sys.switchSystem(0);
 			}
 		}
-
-		// cout << "here \n";
-		// cout << "t = " << t << endl;
 
 		// input
 		armaVec u_tm1 = armaVec(u.colptr(t-1), u.n_rows, false, false);
@@ -256,25 +247,4 @@ int main(void) {
 	std::cout << "Dammit. Failed to open file... \n";
 
 	return 0;
-}
-
-armaMat smooth(armaMat& x, data_t tau, data_t dt) {
-
-	size_t T = x.n_cols;
-	data_t a = exp(-dt/tau);
-	data_t b = 1.0-a;
-
-	armaMat y = armaMat(size(x), fill::zeros);
-	y.col(T-1) = x.col(T-1);
-	for (size_t t=(T-2); t==0; t--)
-	{
-		y.col(t) = a*y.col(t+1) + b*x.col(t);
-	}
-
-	for (size_t t=1; t<T; t++)
-	{
-		y.col(t) = a*y.col(t-1) + b*x.col(t);
-	}
-
-	return y;
 }

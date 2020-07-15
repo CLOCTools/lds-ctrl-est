@@ -66,7 +66,7 @@ function [yHat, xHat, mHat, P, Pm, K, Km] = kfilter_dual(this, u, z, recurseK, a
 		P0 = sys_aug.P0;
 	end
 
-	P0m = qM.*eye(nX);
+	P0m = zeros(nX);
 	K0m = zeros(nX,nY);
 	if adaptM
 		Qm = qM .* eye(nX);
@@ -144,16 +144,4 @@ function [yHat, xHat, mHat, P, Pm, K, Km] = kfilter_dual(this, u, z, recurseK, a
 			yHat{trial}(:,k) = C*xHat{trial}(:,k) + d;
 		end
 	end
-
-
-	% % calculate the time-constants of the system, assuming the final K is at ss.
-	% A_est = (eye(nX) - K{end}(:,:,end)*C)*A;
-	% eig_est = eig(A_est);
-	% tau_est = -this.dt ./ log(abs(eig_est));
-	%
-	% B_est = K;%steady-state feedback gain.
-	% C_est = C;
-	% D_est = -eye(nY);
-	%
-	% sys_z2e = ss(A_est,B_est,C_est,D_est,this.dt);
 end
