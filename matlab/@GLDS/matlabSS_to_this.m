@@ -1,5 +1,5 @@
 function [] = matlabSS_to_this(this,sys,g,d)
-% [] = matlabSS_to_this(this,sys)
+% [] = matlabSS_to_this(this,sys,g,d)
 %
 % Given matlab state-space (ss) system object (sys), reassign appropriate variables of the current GLDS object (this).
 %

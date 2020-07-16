@@ -34,11 +34,11 @@ function [Kx, KintY, Fx, Fv, Hx] = log_lqr_outputWt(this, qIntY_over_qY, r_over_
   this.checkDims();
 
 	if (nargin < 2)
-		qIntY_over_qY = 1e2;
+		qIntY_over_qY = 1;%1e2;
 	end
 
 	if (nargin < 3)
-		r_over_qY = 1e-3;%1e-2
+		r_over_qY = 1;%1e-3;%1e-2
 	end
 
 	nX = this.nX;
@@ -95,11 +95,12 @@ function K = try_dlqr(A, B, Q, R)
 			Pprev = A'*P*A + Q - A'*P*B*K;
 
 			% P should *NOT* change at steady state.
-			critP = max(abs(Pprev-P)./P,[],'all');
+			critP = max(abs(Pprev-P)./abs(P),[],'all');
 			% fprintf('dP/P = %f\n',critP);
 
 			% At very least make sure K has converged.
-			critK = max(abs(Kprev-K)./K,[],'all');
+			critK = max(abs(Kprev-K)./abs(K),[],'all');
+      % fprintf('dK/K = %f\n',critK);
 			if critK<tol
 				break;
 			end
