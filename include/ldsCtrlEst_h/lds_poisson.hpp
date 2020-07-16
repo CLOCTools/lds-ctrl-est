@@ -21,7 +21,7 @@ namespace lds {
 		// hopefully no one will try to reassign their vals...
 		static data_t DATA_T_ZERO = (data_t) 0;
 		static data_t DATA_T_ONE = (data_t) 1;
-		static data_t DEFAULT_SOFTSTART = (data_t) 0.1;
+		static data_t DEFAULT_SOFTSTART = (data_t) 0;
 		static bool FALSE = false;
 		static bool TRUE = true;
 

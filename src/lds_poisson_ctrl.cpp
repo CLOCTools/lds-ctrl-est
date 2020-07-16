@@ -55,11 +55,13 @@ void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma
 		}
 
 		// enforce softstart on control vars.
-		data_t softStart_sf = 1 - exp(-pow(t_since_ctrl_onset,2)/(2*pow(sigma_softStart,2)));
-		uRef *= softStart_sf;
-		// xRef *= softStart_sf;
-		// yRef *= softStart_sf;
-		// logyRef *= softStart_sf;
+		if (sigma_softStart>0)
+		{
+			data_t softStart_sf = 1 - exp(-pow(t_since_ctrl_onset,2)/(2*pow(sigma_softStart,2)));
+			uRef *= softStart_sf;
+			// xRef *= softStart_sf;
+			// yRef *= softStart_sf;
+		}
 
 		duRef = uRef - uRef_prev;
 		uRef_prev = uRef;

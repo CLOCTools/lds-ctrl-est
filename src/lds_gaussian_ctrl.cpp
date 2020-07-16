@@ -76,10 +76,13 @@ void glds::ctrl_t::calc_ctrl(bool& gateCtrl, bool& gateLock, data_t& sigma_softS
 		}
 
 		// enforce softstart on control vars.
-		data_t softStart_sf = 1 - exp(-pow(t_since_ctrl_onset,2)/(2*pow(sigma_softStart,2)));
-		uRef *= softStart_sf;
-		// xRef *= softStart_sf;
-		// yRef *= softStart_sf;
+		if (sigma_softStart>0)
+		{
+			data_t softStart_sf = 1 - exp(-pow(t_since_ctrl_onset,2)/(2*pow(sigma_softStart,2)));
+			uRef *= softStart_sf;
+			// xRef *= softStart_sf;
+			// yRef *= softStart_sf;
+		}
 
 		if (!gateLock) {
 			duRef = uRef - uRef_prev;

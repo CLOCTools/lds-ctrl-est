@@ -85,9 +85,10 @@ int main(void) {
 	// Create *incorrect* model.
 	armaVec gSys = armaVec(nU,fill::ones).fill(9.3); //V -> mW/mm2
 	armaVec gDesign = armaVec(nU,fill::ones).fill(9.3);//the input gain of the model used for controller design
-	armaVec mSys = armaVec(nX,fill::zeros);//.fill();
+	armaVec mSys = armaVec(nX,fill::zeros);
 	armaMat bSys = armaMat(nX,nU,fill::zeros).fill(4.25e-4);
 	armaVec x0Sys = mSys;
+	armaVec dSys = armaVec(nY,fill::zeros).fill(5*dt);
 
 	data_t uLB = 0.0;
 	data_t uUB = 5.0;
@@ -99,6 +100,7 @@ int main(void) {
 	sys.setM(mSys);
 	sys.setG(gSys);
 	sys.setGDesign(gDesign);
+	sys.setD(dSys);
 	sys.reset();
 
 	size_t controlType = CONTROL_TYPE_INTY;
@@ -181,7 +183,7 @@ int main(void) {
 	data_t tauAntiWindup = 1e6;
 	sys.setTauAntiWindup(tauAntiWindup);
 
-	data_t sigma_softStart = 0.1;
+	// data_t sigma_softStart = 0.1;
 
 	cout << "Starting " << K*dt << " sec simulation ... \n";
 	auto start = chrono::high_resolution_clock::now();
@@ -233,8 +235,8 @@ int main(void) {
 		armaVec z_k = armaVec(z.colptr(k), z.n_rows, false, false);
 		sys_true.simMeasurement(z_k);
 
-		// void steadyState_fbCtrl(armaVec& z, bool& gateCtrl=TRUE, bool& gateEst=TRUE, bool& gateLock=FALSE, data_t& sigma_softStart=DEFAULT_SOFTSTART, data_t& sigma_uNoise=DATA_T_ZERO, bool& resetAtCtrlOnset=TRUE, bool& doRecurse_Ke=TRUE);
-		sys.steadyState_fbCtrl(z_k, gateCtrl, gateEst, gateLock, sigma_softStart, uSigma);
+		// sys.steadyState_fbCtrl(z_k, gateCtrl, gateEst, gateLock, sigma_softStart, uSigma);
+		sys.steadyState_fbCtrl(z_k, gateCtrl, gateEst);
 
 		lambdaRef.submat(0,k,nY-1,k) = armaMat(yRefVec.data(),nY,1);
 		lambdaTrue.submat(0,k,nY-1,k) = sys_true.getY();
