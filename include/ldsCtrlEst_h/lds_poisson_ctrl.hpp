@@ -61,6 +61,7 @@ namespace lds {
 			armaVec getLogYRef() const {return logyRef;};
 			armaVec getLogY() const {return logy;};
 			armaVec getIntE() const {return intE;};
+			size_t getControlType() const {return controlType;};
 
 			void reset();
 			void antiWindup();

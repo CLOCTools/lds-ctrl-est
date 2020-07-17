@@ -167,6 +167,7 @@ void plds::ctrl_t::setControlType(size_t controlType) {
 	}
 
 	if (controlType & CONTROL_TYPE_ADAPT_M) {
+		if (this->adaptM)//only if adapting M...
 		this->controlType = this->controlType | CONTROL_TYPE_ADAPT_M;
 	}
 }

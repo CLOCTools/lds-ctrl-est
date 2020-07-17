@@ -60,6 +60,7 @@ namespace lds {
 			armaVec getGDesign() const {return gDesign;};
 			armaVec getURef() const {return uRef;};
 			armaVec getIntE() const {return intE;};
+			size_t getControlType() const {return controlType;};
 
 			void reset();
 			void antiWindup();
