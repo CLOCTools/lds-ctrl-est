@@ -9,11 +9,11 @@ function [K_est, eig_z2e, sys_z2e, sys_aug] = calcK_steadyState(this, augmentM, 
 	this.checkDims();
 
 	if (isempty(this.Q)||isempty(this.R))
-		warning('Cannot calculate Kalman gain without Q, R.')
-		K_est = [];
-		eig_z2e = [];
-		sys_aug = [];
-		return;
+		error('Cannot calculate Kalman gain without Q, R.')
+		% K_est = [];
+		% eig_z2e = [];
+		% sys_aug = [];
+		% return;
 	end
 
 	tol = 1e-4;%1e-12;
