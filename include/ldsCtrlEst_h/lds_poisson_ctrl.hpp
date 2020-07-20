@@ -58,6 +58,7 @@ namespace lds {
 			armaVec getKc_inty() const {return Kc_inty;};
 			armaVec getGDesign() const {return gDesign;};
 			armaVec getURef() const {return uRef;};
+			armaVec getXRef() const {return xRef;};
 			armaVec getLogYRef() const {return logyRef;};
 			armaVec getLogY() const {return logy;};
 			armaVec getIntE() const {return intE;};
