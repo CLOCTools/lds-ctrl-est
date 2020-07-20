@@ -152,7 +152,6 @@ void plds::ctrl_t::setControlType(size_t controlType) {
 	Kc_inty.zeros(0,0);
 	intE.zeros(0,0);
 	intE_awuAdjust.zeros(0,0);
-	adaptM = false;
 
 	if (controlType & CONTROL_TYPE_U) {
 		Kc_u.zeros(nU, nU);
