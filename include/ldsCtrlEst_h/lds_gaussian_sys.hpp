@@ -22,8 +22,8 @@ namespace lds {
 			armaVec getR() const {return R;};
 			armaVec getY() const {return y;};
 			armaVec getZ() const {return z;};
-			armaVec getKe() const {return Ke;};
-			armaVec getKe_m() const {return Ke_m;};
+			armaMat getKe() const {return Ke;};
+			armaMat getKe_m() const {return Ke_m;};
 
 			// set methods
 			void setDims(std::size_t& nU, std::size_t& nX, std::size_t& nY);
