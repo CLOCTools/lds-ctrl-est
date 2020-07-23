@@ -1,5 +1,5 @@
-function [Km,Pm] = calcK_steadyState(this, qM)
-	%  [Km,Pm] = calcK_steadyState(this, qM)
+function [Km,Pm] = calcKm_dual_steadyState(this, qM)
+	%  [Km,Pm] = calcKm_dual_steadyState(this, qM)
 	%
 	% Calculates steady state estimator gain for dual estimation of disturbance m (Km)
 	%

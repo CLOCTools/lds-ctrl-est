@@ -83,7 +83,9 @@ matlabSS_to_this(this,sys,g,d);
 [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims);
 
 [plds, y, x] = fit_plds_output_mle(this, u, z, g, rescaleOnly, wG0);
-[y, x] = refit_output(this, u, z, g);
+[y, x] = refit_output(this, u, z, g, tol, maxIter, refit_d);
+
+[] = save_params_rtxi_gldsController(this, savename, qM, Kc, Kc_inty, yRef);
 end%end methods
 
 end%classdef

@@ -61,7 +61,7 @@ function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_stea
 		P0 = sys0.P0;
 	end
 	sysM = GLDS(dt,eye(nX),zeros(nX,nU),g,zeros(nX,1),Qm,C,d,R,m,P0m);
-	K0m = sysM.calcK_steadyState()
+	K0m = sysM.calcK_steadyState();
 	P0m = sysM.P0;
 
 	fn_r_mu_2_xvlam = get_steadyState_ctrlFn(this);
@@ -128,6 +128,7 @@ function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_stea
 			S = R + C*Pm(:,:,k-1)*C';
 			Km(:,:,k-1) = Pm(:,:,k-1) * C' * inv(S);
 			Pm(:,:,k-1) = Pm(:,:,k-1) - Km(:,:,k-1) * C * Pm(:,:,k-1);
+			Pm_prev = Pm(:,:,k-1);
 
 			P(:,:,k) = A * P(:,:,k-1) * A' + Q;
 			S = C*P(:,:,k)*C' + R;
@@ -140,7 +141,6 @@ function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_stea
 
 		mHat(:,k-1) = mHat(:,k-1) + Km(:,:,k-1)*e;
 		m_prev = mHat(:,k-1);%for next time.
-		Pm_prev = Pm(:,:,k-1);
 
 		xHat(:,k) = xHat(:,k) + K(:,:,k)*e;
 		yHat(:,k) = C*xHat(:,k) + d;

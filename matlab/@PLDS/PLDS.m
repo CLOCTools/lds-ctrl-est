@@ -63,6 +63,8 @@ end
 [y, x] = simulate(this, u, addNoise);
 [yHat, xHat, P, K] = ppfilter_joint(this, u, z, augmentM, qM);
 [Kx, KintY, Fx, Fv, Hx] = log_lqr_outputWt(this, qIntY_over_qY, r_over_qY);
+
+[] = save_params_rtxi_pldsSimulator(this, savename);
 end%end methods
 
 end%classdef
