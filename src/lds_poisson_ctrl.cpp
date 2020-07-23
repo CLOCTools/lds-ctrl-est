@@ -268,13 +268,14 @@ void plds::ctrl_t::calc_ssSetPt() {
 	armaMat A_ls = join_horiz(C, armaMat(nY,nU,fill::zeros));
 	armaVec b_ls = logyRef-d;
 	armaMat C_ls = join_horiz(A-armaMat(nX,nX,fill::eye), B*arma::diagmat(g));
-
 	armaVec d_ls = -m0;
 	if (controlType & CONTROL_TYPE_ADAPT_M)
 	d_ls = -m;
 
-	armaMat phi_ls = join_vert(join_horiz(2*A_ls.t()*A_ls, C_ls.t()), join_horiz(C_ls, armaMat(nX,nX,fill::zeros)));
-	armaVec xulam = inv(phi_ls) * join_vert(2*A_ls.t()*b_ls, d_ls);
+	armaMat A_ls_t = A_ls.t();//TODO: not sure why but causes seg fault if I do not do this.
+	armaMat phi_ls = join_vert(join_horiz(2*A_ls_t*A_ls, C_ls.t()), join_horiz(C_ls, armaMat(nX,nX,fill::zeros)));
+	armaMat inv_phi = pinv(phi_ls);//TODO: SHOULD BE ACTUAL INVERSE!
+	armaVec xulam = inv_phi * join_vert(2*A_ls_t*b_ls, d_ls);
 	xRef = xulam.subvec(0,nX-1);
 	uRef = xulam.subvec(nX,nX+nU-1);
 	logyRef = C*xRef.subvec(0,nX-1) + d;//least-squares soln
