@@ -1,0 +1,7 @@
+/home/adam/RTXI/module_help/StanleyRTXI/ldsCtrlEst/armadillo-9.900.2/CMakeFiles/install.dir
+/home/adam/RTXI/module_help/StanleyRTXI/ldsCtrlEst/armadillo-9.900.2/CMakeFiles/list_install_components.dir
+/home/adam/RTXI/module_help/StanleyRTXI/ldsCtrlEst/armadillo-9.900.2/CMakeFiles/rebuild_cache.dir
+/home/adam/RTXI/module_help/StanleyRTXI/ldsCtrlEst/armadillo-9.900.2/CMakeFiles/armadillo.dir
+/home/adam/RTXI/module_help/StanleyRTXI/ldsCtrlEst/armadillo-9.900.2/CMakeFiles/install/strip.dir
+/home/adam/RTXI/module_help/StanleyRTXI/ldsCtrlEst/armadillo-9.900.2/CMakeFiles/install/local.dir
+/home/adam/RTXI/module_help/StanleyRTXI/ldsCtrlEst/armadillo-9.900.2/CMakeFiles/edit_cache.dir
