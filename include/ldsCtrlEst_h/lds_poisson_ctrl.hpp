@@ -59,6 +59,7 @@ namespace lds {
 			armaVec getGDesign() const {return gDesign;};
 			armaVec getURef() const {return uRef;};
 			armaVec getXRef() const {return xRef;};
+			armaVec getYRef() const {return yRef;}; //[TO DO] confirm with MB that this makes sense
 			armaVec getLogYRef() const {return logyRef;};
 			armaVec getLogY() const {return logy;};
 			armaVec getIntE() const {return intE;};
