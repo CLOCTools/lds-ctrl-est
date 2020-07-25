@@ -1,0 +1,15 @@
+#for me, armadillo is in /usr/local/lib/pkgconfig, but ldsCtrlEst.pc is in /opt/local/...
+#so i've added both to the config path in case it helps
+
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/local/lib/pkgconfig
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/local/lib
+export LDFLAGS='-Wl,-rpath,/usr/local/lib -L/usr/local/lib'
+
+echo "shell setup run"
+
+
+#the following didn't work for me:
+#export LDFLAGS='$LDFLAGS -Wl,-rpath,/usr/local/lib -L/usr/local/lib'
+#export LDFLAGS='-Wl,-rpath,/opt/local/lib -L/opt/local/lib'

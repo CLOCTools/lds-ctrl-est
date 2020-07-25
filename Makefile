@@ -43,7 +43,7 @@ CXXFLAGS_STATIC	:= $(CXXFLAGS) $(shell pkg-config --cflags armadillo matio) -DAR
 # armadillo is used heavily throughout; matio is only used in the test programs for saving matlab variables.
 CXXFLAGS	:= $(CXXFLAGS) $(shell pkg-config --cflags armadillo matio)
 LDFLAGS		:= $(LDFLAGS) $(shell pkg-config --libs armadillo matio)
-
+#LDFLAGS		:= $(LDFLAGS) $(-Wl,-rpath,/usr/local/lib -L/usr/local/lib)
 all: build $(LIB_DIR)/$(LIB_DYNAMIC)
 all-static: build $(LIB_DIR)/$(LIB_STATIC)
 

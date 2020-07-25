@@ -143,6 +143,12 @@ int main(void) {
 			}
 		}
 
+<<<<<<< Updated upstream
+=======
+		// cout << "here \n";
+		 cout << "t = " << t << endl;
+
+>>>>>>> Stashed changes
 		// input
 		armaVec u_tm1 = armaVec(u.colptr(t-1), u.n_rows, false, false);
 
