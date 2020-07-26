@@ -118,7 +118,10 @@ sweepConditions = array2cell(sweep);
 
 %%
 Phase1A.title = 'Phase 1A: Whisker Calibration Sweep';
-Phase1A.times = [0.5, 5.0, 4. ];
+Phase1A.times = [0.5, 5.0, 0.5];
+Phase1A.times = [2, 2, 2];
+
+Phase1A.trialLength = sum(Phase1A.times)
 Phase1A.nreps = 10;
 Phase1A.dt = dt;
 
@@ -137,9 +140,17 @@ Phase1B.title = 'Phase 1B: Whisker & Opto Identification Stimulus';
 
 whisk_cond = buildConditionCell({'whisk_OFF','whisk_ON'});
 opto_noise_cond = buildConditionCell({'optoNoise_OFF','optoNoise_ON'});
-Phase1B.options = {opto_noise_cond, whisk_cond}
+Phase1B.options = {opto_noise_cond, whisk_cond};
 
-Phase1B.times = [0.5, 5.0, 0.5];
+
+TimeMap1B = containers.Map();
+
+TimeMap1B('whisk') = [0.1, 5.8 , 0.1];
+TimeMap1B('opto') = [1, 4, 1];
+
+Phase1B.times = TimeMap;%[0.5, 5.0, 0.5];
+Phase1B.trialLength = sum(TimeMap('whisk'));
+
 Phase1B.nreps = 10;
 Phase1B.dt = dt;
 

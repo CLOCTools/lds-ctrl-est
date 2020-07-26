@@ -1,6 +1,6 @@
 function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap,ColorsMap)
     
-    t2i = @(t) floor(t/PhaseStruct.dt);
+    t2i = @(t) round(t/PhaseStruct.dt);
     trialLengths = zeros(PhaseStruct.nCond,1);
 
     isOff = @(str) contains(str,'OFF');
@@ -9,8 +9,11 @@ function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap
 
     
     for i = 1:PhaseStruct.nCond
-        lengths = t2i(PhaseStruct.times);
-        trialLengths(i) = sum(lengths);
+        
+        %lengths = t2i(PhaseStruct.times);
+        
+        %trial lengths should be equal across channels
+        trialLengths(i) = t2i(PhaseStruct.trialLength); %sum(lengths);
         t = (1:trialLengths(i))+sum(trialLengths(1:i));
         
         condStruct = PhaseStruct.conditions{i};
@@ -22,7 +25,7 @@ function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap
             channelStruct = condStruct;
         end
         
-        segmentChannels = zeros(nChannels, sum(lengths));
+        segmentChannels = zeros(nChannels, trialLengths(i));
         channelIDs = zeros(nChannels,1);
         plotColors = cell(nChannels,1);
         
@@ -47,13 +50,23 @@ function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap
                 type = ConditionMap(cond).type;
 
             end
-            fOFF = @(len) zeros(1,len);
             
+            if isobject(PhaseStruct.times)
+                lengths = t2i(PhaseStruct.times(type));
+            else
+                lengths = t2i(PhaseStruct.times);
+            end
+            
+            
+            
+            fOFF = @(len) zeros(1,len);
             preSeg = fOFF(lengths(1));
             onSeg = fON(lengths(2),params);
             postSeg = fOFF(lengths(3));
             segment = [preSeg,onSeg,postSeg];
             
+            size(segmentChannels)
+            size(segment)
             segmentChannels(j,:) = segment;
             channelIDs(j) = ChannelMap(type);
             plotColors{j} = ColorsMap(type);
