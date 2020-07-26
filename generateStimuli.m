@@ -12,19 +12,12 @@ function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap
         lengths = t2i(PhaseStruct.times);
         trialLengths(i) = sum(lengths);
         t = (1:trialLengths(i))+sum(trialLengths(1:i));
-
-       % cond = PhaseStruct.conditions{i}{1};
-       % condPre = stripEnd(cond); %get prefix
-        %params = PhaseStruct.conditions{i}{2};
-        
-        
-        %inner for loop based on parallel conditions
         
         condStruct = PhaseStruct.conditions{i};
         nChannels = numel(condStruct);
         
         if (nChannels==1)
-            channelStruct = {condStruct}
+            channelStruct = {condStruct};
         else
             channelStruct = condStruct;
         end
@@ -55,11 +48,7 @@ function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap
 
             end
             fOFF = @(len) zeros(1,len);
-
-            fON
-            params
-            lengths
-
+            
             preSeg = fOFF(lengths(1));
             onSeg = fON(lengths(2),params);
             postSeg = fOFF(lengths(3));
@@ -70,9 +59,6 @@ function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap
             plotColors{j} = ColorsMap(type);
         end
         
-        
-        
-        
         PhaseStruct.t{i} = t;
         PhaseStruct.lenghts{i} = lengths;
         PhaseStruct.segments{i} = segmentChannels;
@@ -82,7 +68,7 @@ function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap
     end
     
     fullt = [];
-    lastt = 0
+    lastt = 0;
     for i = 1:PhaseStruct.nreps
         fullt = [fullt, [PhaseStruct.t{:}]+lastt];
         lastt = fullt(end);

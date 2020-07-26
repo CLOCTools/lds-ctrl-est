@@ -143,10 +143,39 @@ Phase1B.times = [0.5, 5.0, 0.5];
 Phase1B.nreps = 10;
 Phase1B.dt = dt;
 
-[ Phase1B.conditions, Phase1B.nCond ] = combineConditionsMulti(Phase1B.options)
+[ Phase1B.conditions, Phase1B.nCond ] = combineConditionsMulti(Phase1B.options);
 [ Phase1B ] = generateStimuli( Phase1B, ConditionStructMap ,ChannelMap,ColorsMap);
 
 figure(3)
 clf
 plotExptPhase(Phase1B)
 set(gcf,'Position',[   144   171   676   318])
+
+
+%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
