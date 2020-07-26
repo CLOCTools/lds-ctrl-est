@@ -1,4 +1,4 @@
-function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap)
+function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap,ColorsMap)
     
     t2i = @(t) floor(t/PhaseStruct.dt);
     trialLengths = zeros(PhaseStruct.nCond,1);
@@ -20,35 +20,64 @@ function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap
         
         %inner for loop based on parallel conditions
         
-        cond = PhaseStruct.conditions{i}.conditionName;
+        condStruct = PhaseStruct.conditions{i};
+        nChannels = numel(condStruct);
         
-        if isfield(PhaseStruct.conditions{i},'params')
-            params = PhaseStruct.conditions{i}.params;
+        if (nChannels==1)
+            channelStruct = {condStruct}
         else
-            params = 'DEFAULT';
+            channelStruct = condStruct;
         end
-
-
-        if isOff(cond)
-            fON = ConditionMap('OFF');
-        else
-            fON = ConditionMap(cond);
-        end
-        fOFF = @(len) zeros(1,len);
-
-        fON
-        params
-        lengths
         
-        preSeg = fOFF(lengths(1));
-        onSeg = fON(lengths(2),params);
-        postSeg = fOFF(lengths(3));
-        segment = [preSeg,onSeg,postSeg];
+        segmentChannels = zeros(nChannels, sum(lengths));
+        channelIDs = zeros(nChannels,1);
+        plotColors = cell(nChannels,1);
+        
+        for j = 1:nChannels
+            
+            thisChannelStruct = channelStruct{j};
+            cond = thisChannelStruct.conditionName;
+            
+            if isfield(thisChannelStruct,'params')
+                params = thisChannelStruct.params;
+            else
+                params = 'DEFAULT';
+            end
+
+            if isOff(cond)
+                fON = ConditionMap('OFF').function;
+                nameOn = [stripEnd(cond),'_ON']; %if ends in x_OFF, use x_ON to check type
+                type = ConditionMap(nameOn).type;
+
+            else
+                fON = ConditionMap(cond).function;
+                type = ConditionMap(cond).type;
+
+            end
+            fOFF = @(len) zeros(1,len);
+
+            fON
+            params
+            lengths
+
+            preSeg = fOFF(lengths(1));
+            onSeg = fON(lengths(2),params);
+            postSeg = fOFF(lengths(3));
+            segment = [preSeg,onSeg,postSeg];
+            
+            segmentChannels(j,:) = segment;
+            channelIDs(j) = ChannelMap(type);
+            plotColors{j} = ColorsMap(type);
+        end
+        
+        
         
         
         PhaseStruct.t{i} = t;
         PhaseStruct.lenghts{i} = lengths;
-        PhaseStruct.segments{i} = segment;
+        PhaseStruct.segments{i} = segmentChannels;
+        PhaseStruct.channelIDs{i} = channelIDs;
+        PhaseStruct.plotColors{i} = plotColors;
 
     end
     
