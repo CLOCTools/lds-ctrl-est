@@ -33,7 +33,6 @@ postTimeDefault = 0.5;
 % ? Lock Stim Gate (014 gate2)
 % ? Add Noise Gate (015 gate3)
 
-% ?? SwitchGate 
 
 
 %opto_noise ON (implies)-> CL gate OFF
@@ -109,6 +108,17 @@ buildConditionCell = @(cNameAry) array2cell(struct('conditionName',cNameAry));
 ChannelMap = containers.Map()
 ChannelMap('whisk') = 5;
 ChannelMap('opto') = 6;
+
+ChannelMap('yRef') = 10;
+
+ChannelMap('fbCtrl') = 12;
+ChannelMap('fbEstim') = 13;
+
+%Fake:
+ChannelMap('trueState') = 21;
+ChannelMap('decodedState') = 22;
+ChannelMap('stateGate') = 23;
+
 
 ColorsMap = containers.Map()
 ColorsMap('whisk') = [1,.5,.5];
@@ -199,10 +209,14 @@ set(gcf,'Position',[   144   171   676   318])
 %% Phase 2A: Control
 
 
+P2B_subLen = 7.5e3;
+P2B_numSubs = 5;
+P2B_trialLen = P2B_subLen*P2B_numSubs;
+
 nReroll = 0
 nTransition = 0
 nTrExpected = 4
-stateSeqLen = 7.5e3;
+stateSeqLen = P2B_subLen;
 state_pTR = .5*dt;
 
 while ((nTransition < nTrExpected) && (nReroll < 100))
@@ -210,10 +224,11 @@ while ((nTransition < nTrExpected) && (nReroll < 100))
     %"enough" transitions
     nReroll = nReroll+1;
 
-    [~,frozenStateSeq] = stateGenFun(stateSeqLen, state_pTR);
+    [frozenSpikes,frozenStateSeq] = stateGenFun(stateSeqLen, state_pTR);
     nTransition = sum(abs(diff(frozenStateSeq)));
 end
 
+frozenDecode = hmmviterbi(frozenSpikes, trf(state_pTR),FR);
 frozenWhiskerSeqFun = @(mags) stateWhiskerFun(stateSeqLen, frozenStateSeq, mags(1), mags(2));
 
 
@@ -225,9 +240,67 @@ plot(t(1:stateSeqLen), frozenStateSeq-1,'k:')
 
 title(nReroll)
 
+target = sineFun(P2B_subLen, 20*dt, 5);
+olSine = sineFun(P2B_subLen, 5, 5);
 
 
 
+figure(101)
+clf
+plot(t(1:P2B_subLen), target,'g')
+
+
+channelList = ChannelMap.values;
+nChannels = max([channelList{:}]);
+BigStimBlock = zeros(nChannels, P2B_trialLen);
+
+
+olOn = [0,1,0,0,0];
+ctrlOn = [0,0,1,1,1];
+decodeOn = [0,0,0,1,0];
+stateTrueOn = [0,0,0,1,-1];
+
+targetStack=[];
+stateGate = [] ;
+optoStack = [];
+fbGate = [];
+subOnes = ones(1,P2B_subLen);
+
+for i = 1:length(ctrlOn)
+    targetStack = [targetStack,ctrlOn(i)*target];
+    
+    
+    optoStack = [optoStack, olOn(i)*olSine];
+    stateGate = [stateGate, subOnes*stateTrueOn(i) ];
+    
+    fbGate = [fbGate, subOnes*ctrlOn(i)];
+    
+end
+
+
+BigStimBlock(ChannelMap('whisk'),:) = repmat(frozenWhiskerSeqFun([.1,.3]), [1,P2B_numSubs]);
+BigStimBlock(ChannelMap('trueState'),:) = repmat(frozenStateSeq, [1,P2B_numSubs]);
+BigStimBlock(ChannelMap('decodedState'),:) = repmat(frozenDecode, [1,P2B_numSubs]);
+
+
+BigStimBlock(ChannelMap('opto'),:) = optoStack;
+BigStimBlock(ChannelMap('yRef'),:) = targetStack;
+BigStimBlock(ChannelMap('stateGate'),:) = stateGate;
+
+BigStimBlock(ChannelMap('fbCtrl'),:) = fbGate;
+BigStimBlock(ChannelMap('fbEstim'),:) = fbGate;
+
+figure(103)
+clf
+
+
+
+
+hold on
+for i = 1:nChannels
+    vec = BigStimBlock(i,:);
+    plot(vec./max(vec)+i)
+end
 
 
 
