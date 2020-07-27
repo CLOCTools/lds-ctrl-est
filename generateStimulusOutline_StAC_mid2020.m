@@ -33,6 +33,8 @@ postTimeDefault = 0.5;
 % ? Lock Stim Gate (014 gate2)
 % ? Add Noise Gate (015 gate3)
 
+% ?? SwitchGate 
+
 
 %opto_noise ON (implies)-> CL gate OFF
 %%
@@ -56,17 +58,49 @@ whiskerNoiseFunDefault = @(len, ~) whiskerNoiseFun(len,whiskerNoiseMag);
 sinRaised = @(t) (sin(t)+1)/2;
 sineFun = @(len,mag,freq) mag*sinRaised(2*pi*freq*len2t(len));
 
-len=500
+len=15e3
 t = len2t(len);
+
+
+
+
+
+trf = @(tp) [1-tp,tp;tp,1-tp];
+frf = @(f1,f2) [1-f1,f1;1-f2,f2];
+
+hmmDwellTime = 2;%in seconds
+ptr_expt = (1/hmmDwellTime)*dt;
+f1_expt = 20*dt;
+f2_expt = 50*dt;
+
+TR = trf(ptr_expt);
+FR = frf(f1_expt,f2_expt);
+
+stateGenFun = @(len, pTR) hmmgenerate(len, trf(pTR) , FR); 
+
+state2gain = @(states,mag1,mag2) ((states-1)*(mag2-mag1)) + mag1;
+stateWhiskerFun = @(len, states, mag1, mag2) whiskerNoiseFun(len,1).*state2gain(states,mag1,mag2);
+
+
+
+
+[spks_,states_]  = stateGenFun(len, .5*dt);
 
 figure(1)
 clf
 hold on
 plot(t,sineFun(len,5,1),'g')
-plot(t,optoNoiseFun(len,3),'b')
-plot(t,whiskerNoiseFun(len,.1),'r')
+plot(t,optoNoiseFun(len,3)-5,'b')
+plot(t,whiskerNoiseFun(len,.5)-10,'r')
+
+plot(t,spks_-15,'k','LineWidth',1)
+plot(t,states_-14.5,'g','LineWidth',3)
+
+plot(t, stateWhiskerFun(len, states_, .1,.5)-17,'r')
+
 
 hold off
+
 
 %% construct dictionaries
 array2cell = @(ary) arrayfun(@(a) {a}, ary);
@@ -147,8 +181,8 @@ TimeMap1B = containers.Map();
 TimeMap1B('whisk') = [0.1, 5.8 , 0.1];
 TimeMap1B('opto') = [1, 4, 1];
 
-Phase1B.times = TimeMap;%[0.5, 5.0, 0.5];
-Phase1B.trialLength = sum(TimeMap('whisk'));
+Phase1B.times = TimeMap1B;%[0.5, 5.0, 0.5];
+Phase1B.trialLength = sum(TimeMap1B('whisk'));
 
 Phase1B.nreps = 10;
 Phase1B.dt = dt;
@@ -164,6 +198,32 @@ set(gcf,'Position',[   144   171   676   318])
 
 %% Phase 2A: Control
 
+
+nReroll = 0
+nTransition = 0
+nTrExpected = 4
+stateSeqLen = 7.5e3;
+state_pTR = .5*dt;
+
+while ((nTransition < nTrExpected) && (nReroll < 100))
+    %"rerolls the dice" until you get a genuine HMM state sequence with
+    %"enough" transitions
+    nReroll = nReroll+1;
+
+    [~,frozenStateSeq] = stateGenFun(stateSeqLen, state_pTR);
+    nTransition = sum(abs(diff(frozenStateSeq)));
+end
+
+frozenWhiskerSeqFun = @(mags) stateWhiskerFun(stateSeqLen, frozenStateSeq, mags(1), mags(2));
+
+
+figure(100)
+clf
+hold on
+plot(t(1:stateSeqLen), frozenWhiskerSeqFun([1,2]/5),'r')
+plot(t(1:stateSeqLen), frozenStateSeq-1,'k:')
+
+title(nReroll)
 
 
 
