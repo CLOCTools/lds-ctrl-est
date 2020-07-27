@@ -60,6 +60,7 @@ namespace lds {
 			armaVec getURef() const {return uRef;};
 			armaVec getXRef() const {return xRef;};
 			armaVec getLogYRef() const {return logyRef;};
+			armaVec getYRef() const {return yRef;};
 			armaVec getLogY() const {return logy;};
 			armaVec getIntE() const {return intE;};
 			size_t getControlType() const {return controlType;};
