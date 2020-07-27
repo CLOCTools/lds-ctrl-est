@@ -144,7 +144,6 @@ Phase1B.options = {opto_noise_cond, whisk_cond};
 
 
 TimeMap1B = containers.Map();
-
 TimeMap1B('whisk') = [0.1, 5.8 , 0.1];
 TimeMap1B('opto') = [1, 4, 1];
 
@@ -163,7 +162,8 @@ plotExptPhase(Phase1B)
 set(gcf,'Position',[   144   171   676   318])
 
 
-%%
+%% Phase 2A: Control
+
 
 
 
