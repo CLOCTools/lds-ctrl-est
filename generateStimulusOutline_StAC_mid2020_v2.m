@@ -213,6 +213,73 @@ set(gcf,'Position',[144   563   676   242])
 return
 %}
 
+
+
+Phase1A.title = 'Phase 1A: Whisker & Opto Calibration Stimulus';
+
+whisk_cond = buildConditionCell({'whisk_OFF','whisk_ON'});
+opto_noise_cond = buildConditionCell({'optoNoise_OFF','optoNoise_ON'});
+Phase1A.options = {opto_noise_cond, whisk_cond};
+
+TimeMap1A = containers.Map();
+TimeMap1A('whisk') = [1.0, 1.0 , 1.0];
+TimeMap1A('opto') = [1.0, 1.0 , 1.0];
+
+Phase1A.times = TimeMap1A;%[0.5, 5.0, 0.5];
+Phase1A.trialLength = sum(TimeMap1A('whisk'));
+
+Phase1A.nreps = 25;
+Phase1A.dt = dt;
+Phase1A.ChannelMap = ChannelMap;
+
+[ Phase1A.conditions, Phase1A.nCond ] = combineConditionsMulti(Phase1A.options);
+[ Phase1A ] = generateStimuli( Phase1A, ConditionStructMap ,ChannelMap,ColorsMap);
+
+P1A_whisk = Phase1A.fullSegment(2,:);
+P1A_whisk_lowpass = lowpassFun(P1A_whisk);
+Phase1A.fullSegment(2,:) = P1A_whisk_lowpass;
+
+
+
+P1A_whiskerRescale = shuffle(linspace(whiskerNoiseMag/3, whiskerNoiseMag*3 , Phase1A.nreps));
+onesSub = ones(1,t2i(Phase1A.trialLength)*Phase1A.nCond);
+
+rescaleTime = [];
+for i =1:Phase1A.nreps
+    rescaleTime = [rescaleTime, onesSub*P1A_whiskerRescale(i)];
+end
+
+P1A_trigSeg = 0*onesSub;
+P1A_trigSeg(1) = 1;
+P1A_triggers = repmat(P1A_trigSeg,[1,Phase1A.nreps]);
+
+
+Phase1A.fullSegment(2,:) = Phase1A.fullSegment(2,:).*rescaleTime;
+Phase1A.whiskerScale = rescaleTime;
+
+
+
+Phase1A.StimBlock = zeros(nChannels,size(Phase1A.fullSegment,2));
+
+Phase1A.StimBlock(ChannelMap('triggers'),:) = P1A_triggers;
+Phase1A.StimBlock(ChannelMap('opto'),:) = Phase1A.fullSegment(1,:);
+Phase1A.StimBlock(ChannelMap('whisk'),:) = Phase1A.fullSegment(2,:);
+
+
+figure(2)
+clf
+plotExptPhase(Phase1A)
+hold on
+plot(Phase1A.fullt*dt,Phase1A.whiskerScale+5,'k:')
+set(gcf,'Position',[   144   171   676   318])
+
+figure(22)
+clf
+plotStimBlock(Phase1A)
+
+Phase1A = savePhase2MatStim(Phase1A);
+save('Phase1A_stimProtocol.mat','-struct','Phase1A')
+
 %% Phase 1B: Identification stimulus (add probe stim to end of this?)
 
 Phase1B.title = 'Phase 1B: Whisker & Opto Identification Stimulus';
@@ -220,7 +287,6 @@ Phase1B.title = 'Phase 1B: Whisker & Opto Identification Stimulus';
 whisk_cond = buildConditionCell({'whisk_OFF','whisk_ON'});
 opto_noise_cond = buildConditionCell({'optoNoise_OFF','optoNoise_ON'});
 Phase1B.options = {opto_noise_cond, whisk_cond};
-
 
 TimeMap1B = containers.Map();
 TimeMap1B('whisk') = [4.0, 5 , 1.0];
@@ -241,9 +307,14 @@ P1B_whisk_lowpass = lowpassFun(P1B_whisk);
 Phase1B.fullSegment(2,:) = P1B_whisk_lowpass;
 
 
+P1B_trigSeg = zeros(1,t2i(Phase1B.trialLength)*Phase1B.nCond);
+P1B_trigSeg(1) = 1;
+P1B_triggers = repmat(P1B_trigSeg,[1,Phase1B.nreps]);
+
 Phase1B.StimBlock = zeros(nChannels,size(Phase1B.fullSegment,2));
-Phas1B.StimBlock(ChannelMap('opto'),:) = Phase1B.fullSegment(1,:);
-Phas1B.StimBlock(ChannelMap('whisk'),:) = Phase1B.fullSegment(2,:);
+Phase1B.StimBlock(ChannelMap('opto'),:) = Phase1B.fullSegment(1,:);
+Phase1B.StimBlock(ChannelMap('whisk'),:) = Phase1B.fullSegment(2,:);
+Phase1B.StimBlock(ChannelMap('triggers'),:) = P1B_triggers;
 
 
 
@@ -255,33 +326,16 @@ plot(P1B_whisk_lowpass,'k')
 
 
 
-%{
-P1B_whiskerRescale = shuffle(linspace(whiskerNoiseMag/3, whiskerNoiseMag*3 , Phase1B.nreps));
-onesSub = ones(1,t2i(Phase1B.trialLength)*Phase1B.nCond);
-
-rescaleTime = [];
-for i =1:Phase1B.nreps
-    rescaleTime = [rescaleTime, onesSub*P1B_whiskerRescale(i)];
-end
-
-Phase1B.fullSegment(2,:) = Phase1B.fullSegment(2,:).*rescaleTime;
-figure(4)
-clf
-plot(P1B_whiskerRescale)
-%}
-
 figure(3)
 clf
 plotExptPhase(Phase1B)
 set(gcf,'Position',[   144   171   676   318])
 
-
-
-
-
-
-
-
+figure(33)
+clf
+plotStimBlock(Phase1B)
+Phase1B = savePhase2MatStim(Phase1B);
+save('Phase1B_stimProtocol.mat','-struct','Phase1B')
 
 
 
@@ -333,7 +387,7 @@ ExpK = -log(1-ExpVal) / (ExpTime); %this time constant ensures it reaches ExpVal
 
 V2deg = @(V) 2*V;
 AvgRotaVelocity = @(Vsnip) V2deg( mean(abs(diff( Vsnip )))) /dt;
-targVelocity = 1000;%degrees/sec
+targVelocity = 100;%degrees/sec
 
 t_half = i2t(1:t2i(6*dt));
 t_sawStack = {t_half, t_half+t_half(end)}

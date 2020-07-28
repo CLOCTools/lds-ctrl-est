@@ -29,7 +29,7 @@ function plotStimBlock(Phase)
     end
     xlim(XL);
     set(gca,'YTick',channelVals,'YTickLabels',channelKeys)
-    title('Phase2B: Control segments')
+    title(Phase.title)
 
     subplot(2,1,2)
     hold on
