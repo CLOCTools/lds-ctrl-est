@@ -66,7 +66,7 @@ namespace lds {
 			void setKc_u(armaVec& Kc_u) {};
 			void setKc_inty(stdVec& Kc_intyVec) {};
 			void setKc_inty(armaVec& Kc_inty) {};
-			void setControlType(size_t controlType) {};
+			void setControlType(size_t controlType);// {};
 
 			// // assuming I *want* to maintain same references
 			// void setURef(stdVec& uRefVec) {};

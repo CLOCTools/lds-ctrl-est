@@ -400,6 +400,7 @@ plds::ctrl_t& plds::ctrl_t::operator=(const plds::ctrl_t& sys)
 	this->uSat = sys.uSat;
 	this->uSaturated = sys.uSaturated;
 	this->t_since_ctrl_onset = sys.t_since_ctrl_onset;
+	this->controlType = sys.controlType;
 	return *this;
 }
 // ******************* CTRL_T *******************

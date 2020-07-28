@@ -67,6 +67,8 @@ void plds::sctrl_t::switchSystem(size_t sysIdx)
 	P0 = systems[sysIdx].getP0();
 	P0_m = systems[sysIdx].getP0_m();
 
+	size_t controlType = systems[sysIdx].getControlType();
+	setControlType(controlType);
 	Kc_u = systems[sysIdx].getKc_u();
 	Kc_x = systems[sysIdx].getKc_x();
 	Kc_inty = systems[sysIdx].getKc_inty();
@@ -76,5 +78,35 @@ void plds::sctrl_t::switchSystem(size_t sysIdx)
 
 	this->sysIdx = sysIdx;
 }
+
+void plds::sctrl_t::setControlType(size_t controlType) {
+	if (this->controlType == controlType)
+	return;
+
+	//starting over to be safe...but will take more time.
+	this->controlType = 0;
+	Kc_u.zeros(0,0);
+	Kc_inty.zeros(0,0);
+	intE.zeros(0,0);
+	intE_awuAdjust.zeros(0,0);
+
+	if (controlType & CONTROL_TYPE_U) {
+		Kc_u.zeros(nU, nU);
+		this->controlType = this->controlType | CONTROL_TYPE_U;
+	}
+
+	if (controlType & CONTROL_TYPE_INTY) {
+		Kc_inty.zeros(nU, nY);
+		intE.zeros(nY);
+		intE_awuAdjust.zeros(nY);
+		this->controlType = this->controlType | CONTROL_TYPE_INTY;
+	}
+
+	if (controlType & CONTROL_TYPE_ADAPT_M) {
+		if (this->adaptM)//only if adapting M...
+		this->controlType = this->controlType | CONTROL_TYPE_ADAPT_M;
+	}
+}
+
 
 // ******************* SCTRL_T *******************
