@@ -14,7 +14,11 @@ function [ PhaseStruct ] = generateStimuli(PhaseStruct, ConditionMap, ChannelMap
         
         %trial lengths should be equal across channels
         trialLengths(i) = t2i(PhaseStruct.trialLength); %sum(lengths);
-        t = (1:trialLengths(i))+sum(trialLengths(1:i));
+        
+        t = (1:trialLengths(i));
+        if i>1
+            t = t+ sum(trialLengths(1:(i-1)));
+        end
         
         condStruct = PhaseStruct.conditions{i};
         nChannels = numel(condStruct);
