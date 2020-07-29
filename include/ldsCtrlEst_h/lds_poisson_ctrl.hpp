@@ -117,7 +117,7 @@ namespace lds {
 			size_t controlType;
 
 		private:
-			void calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset);
+			void calc_logLinCtrl(bool& gateCtrl, bool& gateEst, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset);
 		};
 	}//end poisosn
 } //end lds

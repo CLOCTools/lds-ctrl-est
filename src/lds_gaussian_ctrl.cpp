@@ -43,7 +43,8 @@ t_since_ctrl_onset(0.0)
 void glds::ctrl_t::fbCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset, bool& doRecurse_Ke) {
 	//update state estimates, given latest measurement
 	filter(z, doRecurse_Ke);
-	calc_ctrl(gateCtrl, gateLock, sigma_softStart, sigma_uNoise, resetAtCtrlOnset);
+	bool gateEst = true;
+	calc_ctrl(gateCtrl, gateEst, gateLock, sigma_softStart, sigma_uNoise, resetAtCtrlOnset);
 }
 
 void glds::ctrl_t::steadyState_fbCtrl(armaVec& z, bool& gateCtrl, bool& gateEst, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset, bool& doRecurse_Ke) {
@@ -58,13 +59,12 @@ void glds::ctrl_t::steadyState_fbCtrl(armaVec& z, bool& gateCtrl, bool& gateEst,
 	if (gateCtrl)
 	calc_ssSetPt();
 
-	calc_ctrl(gateCtrl, gateLock, sigma_softStart, sigma_uNoise, resetAtCtrlOnset);
+	calc_ctrl(gateCtrl, gateEst, gateLock, sigma_softStart, sigma_uNoise, resetAtCtrlOnset);
 }//ends steadyState_fbCtrl
 
 // private method for meat of control logic
-void glds::ctrl_t::calc_ctrl(bool& gateCtrl, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset) {
-
-	if (gateCtrl) {
+void glds::ctrl_t::calc_ctrl(bool& gateCtrl, bool& gateEst, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset) {
+	if (gateCtrl && gateEst) {
 		//consider resetting estimates each control epoch...
 		if (!gateCtrl_prev) {
 			if (resetAtCtrlOnset) {

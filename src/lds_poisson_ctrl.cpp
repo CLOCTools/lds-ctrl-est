@@ -42,8 +42,8 @@ tauAntiWindup(1e6), t_since_ctrl_onset(0.0)
 }
 
 // private meat of ctrl around log-linear system
-void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset) {
-	if (gateCtrl) {
+void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateEst, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset) {
+	if (gateCtrl && gateEst) {
 		//consider resetting estimates each control epoch...
 		if (!gateCtrl_prev) {
 			if (resetAtCtrlOnset) {
@@ -98,7 +98,7 @@ void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma
 
 			u = v / getG();
 		} //else do nothing until lock is low
-	} else { //if not control
+	} else { //if not FB control
 		// feed through uRef in open loop
 		u = uRef % gDesign/getG();
 		uRef.zeros();
@@ -122,7 +122,8 @@ void plds::ctrl_t::calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma
 
 void plds::ctrl_t::logLin_fbCtrl(armaVec& z, bool& gateCtrl, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset) {
 	filter(z);
-	calc_logLinCtrl(gateCtrl, gateLock, sigma_softStart, sigma_uNoise, resetAtCtrlOnset);
+	bool gateEst = true;
+	calc_logLinCtrl(gateCtrl, gateEst, gateLock, sigma_softStart, sigma_uNoise, resetAtCtrlOnset);
 }
 
 void plds::ctrl_t::steadyState_logLin_fbCtrl(armaVec& z, bool& gateCtrl, bool& gateEst, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset) {
@@ -139,7 +140,7 @@ void plds::ctrl_t::steadyState_logLin_fbCtrl(armaVec& z, bool& gateCtrl, bool& g
 		calc_ssSetPt();
 	}
 
-	calc_logLinCtrl(gateCtrl, gateLock, sigma_softStart, sigma_uNoise, resetAtCtrlOnset);
+	calc_logLinCtrl(gateCtrl, gateEst, gateLock, sigma_softStart, sigma_uNoise, resetAtCtrlOnset);
 }
 
 void plds::ctrl_t::setControlType(size_t controlType) {
