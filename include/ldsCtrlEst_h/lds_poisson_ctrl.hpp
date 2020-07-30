@@ -53,9 +53,9 @@ namespace lds {
 			void setControlType(size_t controlType);
 			void setTauAntiWindup(data_t& tau);
 
-			armaVec getKc_u() const {return Kc_u;};
-			armaVec getKc_x() const {return Kc_x;};
-			armaVec getKc_inty() const {return Kc_inty;};
+			armaMat getKc_u() const {return Kc_u;};
+			armaMat getKc_x() const {return Kc_x;};
+			armaMat getKc_inty() const {return Kc_inty;};
 			armaVec getGDesign() const {return gDesign;};
 			armaVec getURef() const {return uRef;};
 			armaVec getXRef() const {return xRef;};

@@ -275,6 +275,7 @@ void plds::ctrl_t::calc_ssSetPt() {
 
 	armaMat A_ls_t = A_ls.t();//TODO: not sure why but causes seg fault if I do not do this.
 	armaMat phi_ls = join_vert(join_horiz(2*A_ls_t*A_ls, C_ls.t()), join_horiz(C_ls, armaMat(nX,nX,fill::zeros)));
+	// armaMat inv_phi = inv(phi_ls);
 	armaMat inv_phi = pinv(phi_ls);//TODO: SHOULD BE ACTUAL INVERSE!
 	armaVec xulam = inv_phi * join_vert(2*A_ls_t*b_ls, d_ls);
 	xRef = xulam.subvec(0,nX-1);
