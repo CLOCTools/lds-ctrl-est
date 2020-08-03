@@ -53,13 +53,14 @@ namespace lds {
 			void setControlType(size_t controlType);
 			void setTauAntiWindup(data_t& tau);
 
-			armaVec getKc_u() const {return Kc_u;};
-			armaVec getKc_x() const {return Kc_x;};
-			armaVec getKc_inty() const {return Kc_inty;};
+			armaMat getKc_u() const {return Kc_u;};
+			armaMat getKc_x() const {return Kc_x;};
+			armaMat getKc_inty() const {return Kc_inty;};
 			armaVec getGDesign() const {return gDesign;};
 			armaVec getURef() const {return uRef;};
 			armaVec getXRef() const {return xRef;};
 			armaVec getLogYRef() const {return logyRef;};
+			armaVec getYRef() const {return yRef;};
 			armaVec getLogY() const {return logy;};
 			armaVec getIntE() const {return intE;};
 			size_t getControlType() const {return controlType;};
@@ -116,7 +117,7 @@ namespace lds {
 			size_t controlType;
 
 		private:
-			void calc_logLinCtrl(bool& gateCtrl, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset);
+			void calc_logLinCtrl(bool& gateCtrl, bool& gateEst, bool& gateLock, data_t& sigma_softStart, data_t& sigma_uNoise, bool& resetAtCtrlOnset);
 		};
 	}//end poisosn
 } //end lds

@@ -48,12 +48,12 @@ void plds::sys_t::filter(armaVec& z)
 	P = A*P*A.t() + Q;
 
 	// update cov
-	P = inv_sympd( inv_sympd(P) + C.t() * diag_y * C );
+	P = pinv( pinv(P) + C.t() * diag_y * C );
 	x = x + P * C.t() * (z - y); //posterior
 	if (adaptM)
 	{
 		P_m += Q_m;//A_m = I
-		P_m = inv_sympd(inv_sympd(P_m) + C.t() * diag_y * C);
+		P_m = pinv(pinv(P_m) + C.t() * diag_y * C);
 		m = m + P_m * C.t() * (z-y);
 	}
 	h();//posterior
