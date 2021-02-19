@@ -1,0 +1,8 @@
+# Generated during cmake configuration of @CMAKE_PROJECT_NAME@.
+
+Name: @CMAKE_PROJECT_NAME@
+Description: A library for control and estimation of linear dynamical systems with Gaussian or Poisson observations.
+URL: @PROJECT_URL@
+Version: @LIBVERSION@
+Cflags: @PROJECT_REQUIRED_CXX_FLAGS@ @PROJECT_PKGCONFIG_INCLUDE_DIRS@
+Libs: @PROJECT_PKGCONFIG_LIBRARIES_ABSOLUTE_NAME@ @PROJECT_PKGCONFIG_LIBRARY_DIRS@ @PROJECT_PKGCONFIG_LIBRARIES_SHORT_NAME@

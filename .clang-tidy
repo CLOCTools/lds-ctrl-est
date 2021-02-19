@@ -1,0 +1,51 @@
+# See list of clang-tidy checks here:
+# https://releases.llvm.org/11.0.1/tools/clang/tools/extra/docs/clang-tidy/checks/list.html
+Checks: >
+  -*,
+  bugprone-*,
+  google-*,
+  misc-*,
+  modernize-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  llvm-header-guard,
+  llvm-include-order,
+  clang-analyzer-cplusplus.InnerPointer,
+  cppcoreguidelines-*,
+# -google-runtime-references,
+# Add this last one to *remove* this check.
+# It prevents passing arguments as non-const reference for editing w/o return.
+# Idea is using const ref makes it clear it is an INPUT rather than output.
+# They suggest using pointer param or explicitly returning.
+
+# Turn almost all the warnings from the checks above into errors.
+WarningsAsErrors: >
+  *,
+  -google-runtime-references,
+  -cppcoreguidelines-*,
+
+CheckOptions:
+  - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
+  - { key: readability-identifier-naming.ClassCase,              value: CamelCase  }
+  - { key: readability-identifier-naming.StructCase,             value: CamelCase  }
+  - { key: readability-identifier-naming.TemplateParameterCase,  value: CamelCase  }
+  - { key: readability-identifier-naming.FunctionCase,           value: aNy_CasE  }
+  - { key: readability-identifier-naming.VariableCase,           value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberCase,        value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberSuffix,      value: _          }
+  - { key: readability-identifier-naming.PrivateMemberSuffix,    value: _          }
+  - { key: readability-identifier-naming.ProtectedMemberSuffix,  value: _          }
+  - { key: readability-identifier-naming.EnumConstantCase,         value: CamelCase }
+  - { key: readability-identifier-naming.EnumConstantPrefix,       value: k         }
+  - { key: readability-identifier-naming.ConstexprVariableCase,    value: CamelCase }
+  - { key: readability-identifier-naming.ConstexprVariablePrefix,  value: k         }
+  - { key: readability-identifier-naming.GlobalConstantCase,       value: CamelCase }
+  - { key: readability-identifier-naming.GlobalConstantPrefix,     value: k         }
+  - { key: readability-identifier-naming.MemberConstantCase,       value: CamelCase }
+  - { key: readability-identifier-naming.MemberConstantPrefix,     value: k         }
+  - { key: readability-identifier-naming.StaticConstantCase,       value: CamelCase }
+  - { key: readability-identifier-naming.StaticConstantPrefix,     value: k         }
+  - { key: readability-implicit-bool-conversion.AllowIntegerConditions,  value: 1   }
+  - { key: readability-implicit-bool-conversion.AllowPointerConditions,  value: 1   }
+  - { key: google-global-names-in-headers.HeaderFileExtensions,  value: "h,hh,hpp,hxx,"   }
