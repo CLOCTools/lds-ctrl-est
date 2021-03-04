@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GLDS SSID Fit Type.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="lds::gaussian::ssidFit_t" />
+<meta property="og:description" content="GLDS SSID Fit Type." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/" />
+
+<title>lds::gaussian::ssidFit_t | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::gaussian::ssidFit_t</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsgaussianssidfit_t">lds::gaussian::ssidFit_t</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#public-attributes">Public Attributes</a></li>
+        <li><a href="#additional-inherited-members">Additional inherited members</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#ssidfit_t"><strong>ssidFit_t</strong></a></li>
+            <li><a href="#ssidfit_t-1"><strong>ssidFit_t</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#public-attribute-details">Public Attribute Details</a>
+          <ul>
+            <li><a href="#t0"><strong>t0</strong></a></li>
+            <li><a href="#t_startssid"><strong>t_startSSID</strong></a></li>
+            <li><a href="#t_stopssid"><strong>t_stopSSID</strong></a></li>
+            <li><a href="#singvals"><strong>singVals</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsgaussianssidfit_t">
+  lds::gaussian::ssidFit_t
+  <a class="anchor" href="#ldsgaussianssidfit_t">#</a>
+</h1>
+<p>GLDS SSID Fit Type.  <a href="#detailed-description">More&hellip;</a></p>
+<p><br /> <code>#include &lt;lds_gaussian_fit_ssid.h&gt;</code></p>
+<p>Inherits from <a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/">lds::gaussian::fit_t</a>, <a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/">lds::fit_t</a></p>
+<h2 id="public-functions">
+  Public Functions
+  <a class="anchor" href="#public-functions">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/#function-ssidfit_t">ssidFit_t</a></strong>()</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/#function-ssidfit_t">ssidFit_t</a></strong>(armaMat &amp; A, armaMat &amp; B, armaVec &amp; g, armaVec &amp; m, armaMat &amp; Q, armaVec &amp; x0, armaMat &amp; P0, armaMat &amp; C, armaMat &amp; D, armaVec &amp; d, armaMat &amp; R, data_t dt, data_t t_startSSID, data_t t_stopSSID, armaVec &amp; singVals, std::vector&lt; data_t &gt; &amp; t0, std::vector&lt; armaMat &gt; &amp; uTrain, std::vector&lt; armaMat &gt; &amp; zTrain)<br>Constructs a new GLDS SSID fit type.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-attributes">
+  Public Attributes
+  <a class="anchor" href="#public-attributes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::vector&lt; data_t &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/#variable-t0">t0</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/#variable-t_startssid">t_startSSID</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/#variable-t_stopssid">t_stopSSID</a></strong></td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/#variable-singvals">singVals</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="additional-inherited-members">
+  Additional inherited members
+  <a class="anchor" href="#additional-inherited-members">#</a>
+</h2>
+<p><strong>Public Functions inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/">lds::gaussian::fit_t</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/#function-fit_t">fit_t</a></strong>()</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/#function-fit_t">fit_t</a></strong>(armaMat &amp; A, armaMat &amp; B, armaVec &amp; g, armaVec &amp; m, armaMat &amp; Q, armaVec &amp; x0, armaMat &amp; P0, armaMat &amp; C, armaMat &amp; D, armaVec &amp; d, armaMat &amp; R, data_t dt, std::vector&lt; armaMat &gt; &amp; uTrain, std::vector&lt; armaMat &gt; &amp; zTrain)<br>Constructs a new GLDS fit.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/#function-fit_t">fit_t</a></strong>(armaMat &amp; A, armaMat &amp; B, armaVec &amp; g, armaVec &amp; m, armaMat &amp; Q, armaVec &amp; x0, armaMat &amp; P0, armaMat &amp; C, armaVec &amp; d, armaMat &amp; R, data_t dt, std::vector&lt; armaMat &gt; &amp; uTrain, std::vector&lt; armaMat &gt; &amp; zTrain)<br>Constructs a new GLDS fit type.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Attributes inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/">lds::gaussian::fit_t</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/#variable-c">C</a></strong> <br>output matrix</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/#variable-d">D</a></strong> <br>feedthrough matrix</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/#variable-d">d</a></strong> <br>output bias</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/#variable-r">R</a></strong> <br>output noise cov</td>
+</tr>
+<tr>
+<td>std::vector&lt; armaMat &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/#variable-utrain">uTrain</a></strong> <br>input training data</td>
+</tr>
+<tr>
+<td>std::vector&lt; armaMat &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/#variable-ztrain">zTrain</a></strong> <br>measurement training data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Functions inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/">lds::fit_t</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#function-fit_t">fit_t</a></strong>()</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#function-fit_t">fit_t</a></strong>(armaMat &amp; A, armaMat &amp; B, armaVec &amp; g, armaVec &amp; m, armaMat &amp; Q, armaVec &amp; x0, armaMat &amp; P0, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp; dt)<br>Constructs a new LDS fit type.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Attributes inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/">lds::fit_t</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-a">A</a></strong> <br>state matrix</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-b">B</a></strong> <br>input matrix</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-g">g</a></strong> <br>input gain</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-m">m</a></strong> <br>process noise mean</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-q">Q</a></strong> <br>process noise cov</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-x0">x0</a></strong> <br>initial state</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-p0">P0</a></strong> <br>initial covar</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-dt">dt</a></strong> <br>sample period</td>
+</tr>
+</tbody>
+</table>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">lds</span><span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>ssidFit_t;
+</code></pre></div><pre><code>        This type is used in the process of fitting GLDS models by
+        subspace identification (SSID).
+</code></pre><hr>
+<hr>
+<h2 id="public-function-details">
+  Public Function Details
+  <a class="anchor" href="#public-function-details">#</a>
+</h2>
+<h3 id="ssidfit_t">
+  <strong>ssidFit_t</strong>
+  <a class="anchor" href="#ssidfit_t">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> ssidFit_t()
+</code></pre></div><hr>
+<h3 id="ssidfit_t-1">
+  <strong>ssidFit_t</strong>
+  <a class="anchor" href="#ssidfit_t-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">ssidFit_t(
+    armaMat <span style="color:#f92672">&amp;</span> A,
+    armaMat <span style="color:#f92672">&amp;</span> B,
+    armaVec <span style="color:#f92672">&amp;</span> g,
+    armaVec <span style="color:#f92672">&amp;</span> m,
+    armaMat <span style="color:#f92672">&amp;</span> Q,
+    armaVec <span style="color:#f92672">&amp;</span> x0,
+    armaMat <span style="color:#f92672">&amp;</span> P0,
+    armaMat <span style="color:#f92672">&amp;</span> C,
+    armaMat <span style="color:#f92672">&amp;</span> D,
+    armaVec <span style="color:#f92672">&amp;</span> d,
+    armaMat <span style="color:#f92672">&amp;</span> R,
+    data_t dt,
+    data_t t_startSSID,
+    data_t t_stopSSID,
+    armaVec <span style="color:#f92672">&amp;</span> singVals,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> data_t <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> t0,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> uTrain,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> zTrain
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>A</strong> state matrix</li>
+<li><strong>B</strong> input matrix</li>
+<li><strong>g</strong> input gain</li>
+<li><strong>m</strong> process disturbance</li>
+<li><strong>Q</strong> process noise covariance</li>
+<li><strong>x0</strong> initial state estimate</li>
+<li><strong>P0</strong> covariance of initial state estimate</li>
+<li><strong>C</strong> output matrix</li>
+<li><strong>D</strong> feedthrough matrix</li>
+<li><strong>d</strong> output bias</li>
+<li><strong>R</strong> output noise covariance</li>
+<li><strong>dt</strong> sample period</li>
+<li><strong>t_startSSID</strong> start time for the data used in SSID</li>
+<li><strong>t_stopSSID</strong> stop time for the data used in SSID</li>
+<li><strong>singVals</strong> singular values from SSID SVD step</li>
+<li><strong>t0</strong> start times for each trial of input/output data</li>
+<li><strong>uTrain</strong> training input data</li>
+<li><strong>zTrain</strong> training measurement data</li>
+</ul>
+<hr>
+<h2 id="public-attribute-details">
+  Public Attribute Details
+  <a class="anchor" href="#public-attribute-details">#</a>
+</h2>
+<h3 id="t0">
+  <strong>t0</strong>
+  <a class="anchor" href="#t0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> data_t <span style="color:#f92672">&gt;</span> t0;
+</code></pre></div><hr>
+<h3 id="t_startssid">
+  <strong>t_startSSID</strong>
+  <a class="anchor" href="#t_startssid">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">data_t t_startSSID;
+</code></pre></div><hr>
+<h3 id="t_stopssid">
+  <strong>t_stopSSID</strong>
+  <a class="anchor" href="#t_stopssid">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">data_t t_stopSSID;
+</code></pre></div><hr>
+<h3 id="singvals">
+  <strong>singVals</strong>
+  <a class="anchor" href="#singvals">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec singVals;
+</code></pre></div><hr>
+<hr>
+<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsgaussianssidfit_t">lds::gaussian::ssidFit_t</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#public-attributes">Public Attributes</a></li>
+        <li><a href="#additional-inherited-members">Additional inherited members</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#ssidfit_t"><strong>ssidFit_t</strong></a></li>
+            <li><a href="#ssidfit_t-1"><strong>ssidFit_t</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#public-attribute-details">Public Attribute Details</a>
+          <ul>
+            <li><a href="#t0"><strong>t0</strong></a></li>
+            <li><a href="#t_startssid"><strong>t_startSSID</strong></a></li>
+            <li><a href="#t_stopssid"><strong>t_stopSSID</strong></a></li>
+            <li><a href="#singvals"><strong>singVals</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -94,3 +94,7 @@ Thumbs.db
 build/
 cpp.sublime-workspace
 .cache/
+
+!docs/
+!misc/docs-hugo/
+!misc/docs-doxygen/classlds_1_1sys__t__inherit__graph.png

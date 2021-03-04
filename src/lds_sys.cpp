@@ -1,10 +1,35 @@
+//===-- lds_sys.cpp - LDS -------------------------------------------------===//
+//
+// Copyright 2021 [name of copyright owner]
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//===----------------------------------------------------------------------===//
+///
+/// \file
+/// This file implements the base type for linear dynamical systems
+/// (`lds::sys_t`). Note that this class defines the underlying linear dynamics,
+/// but does not have output functions.Gaussian- and Poisson-output variants
+/// will be built upon this class.
+///
+/// \brief LDS base type
+//===----------------------------------------------------------------------===//
+
 #include <ldsCtrlEst>
 
 using namespace std;
 using namespace lds;
 
-//******************* SYS_T *******************
-// Constructor(s) for sys_t class
 lds::sys_t::sys_t(size_t nU, size_t nX, data_t& dt, data_t& p0, data_t& q0)
     : dt(dt), p0(p0), q0(q0) {
   this->nU = nU;
@@ -16,7 +41,6 @@ lds::sys_t::sys_t(size_t nU, size_t nX, data_t& dt, data_t& p0, data_t& q0)
   x0 = armaVec(nX, fill::zeros);  // includes bias (nY) and g (nU)
   x = x0;
   P0 = armaMat(nX, nX, fill::zeros);
-  // P0 = p0*armaMat(nX, nX, fill::eye);
   P = P0;
 
   m0 = x0;
@@ -37,31 +61,27 @@ lds::sys_t::sys_t(size_t nU, size_t nX, data_t& dt, data_t& p0, data_t& q0)
   szChanged = false;
 };
 
-/*
-predict: Given input, predict the state, covar
-*/
+// predict: Given input, predict the state
 void lds::sys_t::predict() {
   // Dynamics: x_{k+1} = f(x_{k},u_{k},w_{k})
   x = A * x + B * (g % u) + m;
-  // P = A*P*A.t() + Q;//going to do this only if calculating estimator gain, Ke
+  // predict estimate **covariance** during the filter step
+  // (unnecessary if not filtering)
 }
 
-/*
-predict: Given input, predict the state, covar
-*/
+// predict: Given input, predict the state, including simulated process noise
 void lds::sys_t::simPredict() {
   // Dynamics: x_{k+1} = f(x_{k},u_{k},w_{k})
   x = A * x + B * (g % u) + m;
-  // x += sqrtmat_sympd(Q) * armaVec(nX, fill::randn);
   x += arma::mvnrnd( armaVec(x.n_elem).fill(0), Q );
 }
 
 void lds::sys_t::reset() {
   // reset to initial conditions
   x = x0;  // mean
-  P = P0;  // cov
-  m = m0;
-  P_m = P0_m;
+  P = P0;  // cov of state estimate
+  m = m0; // process disturbance
+  P_m = P0_m; // cov of disturbance estimate
   szChanged = false;
 }
 
@@ -265,19 +285,6 @@ void lds::sys_t::limit(armaVec& x, data_t& lb, data_t& ub) {
     x[k] = x[k] < lb ? lb : x[k];
     x[k] = x[k] > ub ? ub : x[k];
   }
-}
-
-bool lds::sys_t::limitReset(armaVec& x, data_t& lb, data_t& ub) {
-  bool didReset = false;
-
-  for (size_t k = 0; k < x.n_elem; k++) {
-    if ((x[k] > ub) || (x[k] < lb)) {
-      x[k] = lb;
-      didReset = true;
-    }
-  }
-
-  return didReset;
 }
 
 void lds::sys_t::limit(armaMat& x, data_t& lb, data_t& ub) {

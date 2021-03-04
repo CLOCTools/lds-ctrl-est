@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GLDS Control Tutorial #  This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::ctrl_t). In place of a physical system, another GLDS model (lds::gaussian::sys_t) receives control inputs and provides measurements for the simulated feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="GLDS Control" />
+<meta property="og:description" content="GLDS Control Tutorial #  This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::ctrl_t). In place of a physical system, another GLDS model (lds::gaussian::sys_t) receives control inputs and provides measurements for the simulated feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_glds_control/" />
+
+<title>GLDS Control | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/"class=active>GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>GLDS Control</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#glds-control-tutorial">GLDS Control Tutorial</a>
+      <ul>
+        <li><a href="#preamble">Preamble</a></li>
+        <li><a href="#creating-a-simulated-system">Creating a simulated system</a></li>
+        <li><a href="#creating-the-controller">Creating the controller</a></li>
+        <li><a href="#simulating-control">Simulating control</a></li>
+        <li><a href="#example-simulation-result">Example simulation result</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="glds-control-tutorial">
+  GLDS Control Tutorial
+  <a class="anchor" href="#glds-control-tutorial">#</a>
+</h1>
+<p>This tutorial shows how to use this library to control a system with a Gaussian LDS controller (<code>lds::gaussian::ctrl_t</code>). In place of a physical system, another GLDS model (<code>lds::gaussian::sys_t</code>) receives control inputs and provides measurements for the simulated feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system. A combination of integral action and adaptive estimation of this process disturbance is used to perform control.</p>
+<p>The full code for this can be found <a href="/ldsctrlest/docs/api/examples/eg_glds_ctrl_8cpp-example/">here</a>.</p>
+<h2 id="preamble">
+  Preamble
+  <a class="anchor" href="#preamble">#</a>
+</h2>
+<p>In addition to including the main <code>ldsCtrlEst</code> header, this tutorial will use some shorthand.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>armaMat;
+<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>armaVec;
+<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t;
+<span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>cout;
+<span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>vector;
+</code></pre></div><h2 id="creating-a-simulated-system">
+  Creating a simulated system
+  <a class="anchor" href="#creating-a-simulated-system">#</a>
+</h2>
+<p>A first-order single-input/single-output system will be used for the purposes of this demonstration. The simulation will be run at 1 kHz for 5 seconds.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Make 1st-order SISO system, sampled at 1kHz
+</span><span style="color:#75715e"></span>  data_t dt <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;
+  size_t n_u <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+  size_t n_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+  size_t n_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+
+  <span style="color:#75715e">// no time steps for simulation.
+</span><span style="color:#75715e"></span>  size_t n_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">5.0</span> <span style="color:#f92672">/</span> dt);
+</code></pre></div><p>When a system is initialized, rather than requiring all parameters to be provided at construction, only the dimensions and sample period are required and a default system is created.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// construct ground truth system to be controlled...
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// initializes to random walk model with top-most n_y state observed
+</span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>sys_t controlled_system(n_u, n_x, n_y, dt);
+</code></pre></div><p>This default system is a random walk, where the state matrix is identity, the input matrix is zeros, and the top <code>min(n_x, n_y)</code> states are observed at the output. i.e., for this example,
+
+<link rel="stylesheet" href="/ldsctrlest/katex/katex.min.css" />
+<script defer src="/ldsctrlest/katex/katex.min.js"></script>
+<script defer src="/ldsctrlest/katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script><span>
+  \[x_{t&#43;1} = x_t &#43; w_t\]
+</span>
+</p>
+<span>
+  \[y_{t} = x_t \; .\]
+</span>
+
+<p>Now, we&rsquo;ll create non-default parameters for this model.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Ground-truth parameters for the controlled system
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (stand-in for physical system to be controlled)
+</span><span style="color:#75715e"></span>  armaMat <span style="color:#a6e22e">a_true</span>(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye);
+  a_true[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> exp(<span style="color:#f92672">-</span>dt <span style="color:#f92672">/</span> <span style="color:#ae81ff">0.01</span>);
+  armaMat b_true <span style="color:#f92672">=</span> armaMat(n_x, n_u).fill(<span style="color:#ae81ff">2e-4</span>);
+  <span style="color:#75715e">// control signal to model input unit conversion e.g., V -&gt; mW/mm2:
+</span><span style="color:#75715e"></span>  armaVec g_true <span style="color:#f92672">=</span> armaVec(n_y).fill(<span style="color:#ae81ff">10.0</span>);
+  <span style="color:#75715e">// output noise covariance
+</span><span style="color:#75715e"></span>  armaMat r_true <span style="color:#f92672">=</span> armaMat(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-4</span>;
+</code></pre></div><p>As mentioned above, this example will feature a stochastic disturbance. More specifically, a process disturbance will randomly change between two values.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">/// Going to simulate a switching disturbance (m) acting on system
+</span><span style="color:#75715e"></span>  size_t which_m <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;  <span style="color:#75715e">// whether low or high disturbance (0, 1)
+</span><span style="color:#75715e"></span>  data_t m_low <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> dt <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> a_true[<span style="color:#ae81ff">0</span>]);
+  data_t pr_lo2hi <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;  <span style="color:#75715e">// probability of going from low to high disturb.
+</span><span style="color:#75715e"></span>  data_t m_high <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> dt <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> a_true[<span style="color:#ae81ff">0</span>]);
+  data_t pr_hi2lo <span style="color:#f92672">=</span> pr_lo2hi;
+
+  <span style="color:#75715e">// initially let m be low
+</span><span style="color:#75715e"></span>  armaVec m0_true <span style="color:#f92672">=</span> armaVec(n_y).fill(m_low);
+</code></pre></div><p>Finally, assign the parameters using corresponding set-methods.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Assign params.
+</span><span style="color:#75715e"></span>  controlled_system.setA(a_true);
+  controlled_system.setB(b_true);
+  controlled_system.setM(m0_true);
+  controlled_system.setG(g_true);
+  controlled_system.setR(r_true);
+</code></pre></div><h2 id="creating-the-controller">
+  Creating the controller
+  <a class="anchor" href="#creating-the-controller">#</a>
+</h2>
+<p>Now, create the controller. Similar to creating a system, most parameters are set to defaults at object construction. In additioin to system dimensions and sample period, the controller needs to know the upper and lower bounds on the control signal, past which the control saturates. If your actuator does <strong>not</strong> saturate somehow, simply set the lower and upper bounds to <code>-lds::inf</code> and <code>lds::inf</code>, respectively. Simple saturation is currently the only actuator model in this library.</p>
+<p>Here, the control signal is command voltage sent to a physical driver (e.g., for an LED). Its limits are 0 to 5 V.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// create controller
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// lower and upper bounds on control signal (e.g., in Volts)
+</span><span style="color:#75715e"></span>  data_t u_lb <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;  <span style="color:#75715e">// [=] V
+</span><span style="color:#75715e"></span>  data_t u_ub <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.0</span>;  <span style="color:#75715e">// [=] V
+</span><span style="color:#75715e"></span>  glds<span style="color:#f92672">::</span>ctrl_t controller(n_u, n_x, n_y, u_lb, u_ub, dt);
+</code></pre></div><p>Now, assign non-default parameters to this controller. For the sake of this simulation, the input matrix is set to an incorrect value. We also assume that the controller feedback gains were designed with an actuator whose conversion factor from volts to physical units (e.g., mW/mm2 optical intensity) differed from the actuator being used in the current experiment.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Create **incorrect** model used for control.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (e.g., imperfect model fitting)
+</span><span style="color:#75715e"></span>  armaMat b_controller <span style="color:#f92672">=</span> armaMat(n_x, n_u).fill(<span style="color:#ae81ff">1e-4</span>);
+
+  <span style="color:#75715e">// Let&#39;s say these controller gains were designed assuming g was 9 V/(mW/mm2):
+</span><span style="color:#75715e"></span>  armaVec g_design <span style="color:#f92672">=</span> armaVec(n_u).fill(<span style="color:#ae81ff">9</span>);
+
+  <span style="color:#75715e">// let&#39;s assume zero process disturbance initially
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (will be re-estimating)
+</span><span style="color:#75715e"></span>  armaVec m_controller <span style="color:#f92672">=</span> armaVec(n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+
+  <span style="color:#75715e">// Control variables:
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">// if following enabled, adapts set point with re-estimated process
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// disturbance n.b., should not need integral action if this is enabled as the
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// adaptive estimator minimizes DC error
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">bool</span> do_adaptive_set_point <span style="color:#f92672">=</span> false;
+
+  <span style="color:#75715e">// Reference/target output, controller gains
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// n.b., Can either use armaVec (arma::Col) or std::vector
+</span><span style="color:#75715e"></span>  armaVec y_ref0 <span style="color:#f92672">=</span> armaVec(n_y).fill(<span style="color:#ae81ff">20.0</span> <span style="color:#f92672">*</span> dt);
+  <span style="color:#75715e">// (Can either use arma::Mat or mats flattened into std::vector)
+</span><span style="color:#75715e"></span>  armaMat k_x <span style="color:#f92672">=</span> armaMat(n_u, n_x).fill(<span style="color:#ae81ff">100</span>);     <span style="color:#75715e">// gains on state error
+</span><span style="color:#75715e"></span>  armaMat k_inty <span style="color:#f92672">=</span> armaMat(n_u, n_y).fill(<span style="color:#ae81ff">1e3</span>);  <span style="color:#75715e">// gains on integrated err
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">// setting initial state to target to avoid error at onset:
+</span><span style="color:#75715e"></span>  armaVec x0 <span style="color:#f92672">=</span> armaVec(n_x).fill(y_ref0[<span style="color:#ae81ff">0</span>]);
+
+  <span style="color:#75715e">// set up controller type bit mask so controller knows how to proceed
+</span><span style="color:#75715e"></span>  size_t control_type <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  <span style="color:#66d9ef">if</span> (do_adaptive_set_point) {
+    <span style="color:#75715e">// adapt set point with estimated disturbance
+</span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_ADAPT_M;
+  } <span style="color:#66d9ef">else</span> {
+    <span style="color:#75715e">// use integral action to minimize DC error
+</span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_INTY;
+  }
+
+  <span style="color:#75715e">// Start configuring controller:
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Adaptively re-estimate process disturance (m)
+</span><span style="color:#75715e"></span>  controller.adaptM <span style="color:#f92672">=</span> true;
+
+  <span style="color:#75715e">// set controller type
+</span><span style="color:#75715e"></span>  controller.setControlType(control_type);
+
+  <span style="color:#75715e">// Set params.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// **n.b. using arbitrary defaults for Q, R in this example. Really, these
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// should be set by users, as they tune characteristics of Kalman filter.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Users can also choose not to recursively calculate the estimator gain and
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// supply it (setKe) instead of covariances.**
+</span><span style="color:#75715e"></span>  controller.setYRef(y_ref0);
+  controller.setKc_x(k_x);
+  controller.setKc_inty(k_inty);
+  controller.setA(a_true);
+  controller.setB(b_controller);
+  controller.setM(m_controller);
+  controller.setG(g_true);
+  controller.setGDesign(g_design);
+  controller.setX0(x0);
+  controller.reset();  <span style="color:#75715e">// reset to new initial condition
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">// set adaptation rate by changing covariance of assumed process noise acting
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// on random-walk evolution of m
+</span><span style="color:#75715e"></span>  armaMat q_m <span style="color:#f92672">=</span> armaMat(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-6</span>;
+  controller.setQ_m(q_m);
+</code></pre></div><h2 id="simulating-control">
+  Simulating control
+  <a class="anchor" href="#simulating-control">#</a>
+</h2>
+<p>In this demonstration, we will use the <code>steadyState_fbCtrl</code> method which allows users to simply set the reference output and supply the current measurement <code>z_t</code>. It then calculates the steady-state solution for the reference state/input. In this case, the goal is to regulate the output about a constant reference, so it is appropriate here. This method can also be used for time-varying references as long as this variation is slow compared to the dynamics of the system.</p>
+<p>The control loop is carried out here in a simple for-loop, where a the controlled system is simulated, a measurement taken, and the control signal updated.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">    <span style="color:#75715e">// Simulate the true system.
+</span><span style="color:#75715e"></span>    controlled_system.setU(u_tm1);
+    controlled_system.simPredict();
+    armaVec <span style="color:#a6e22e">z_t</span>(z.colptr(t), z.n_rows, false, true);
+    controlled_system.simMeasurement(z_t);
+
+    <span style="color:#75715e">// This method uses a steady-state solution to control problem to calculate
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// xRef, uRef from reference output yRef. Therefore, it is only applicable
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// to regulation problems or cases where reference trajectory changes slowly
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// compared to system dynamics.
+</span><span style="color:#75715e"></span>    controller.steadyState_fbCtrl(z_t);
+</code></pre></div><h2 id="example-simulation-result">
+  Example simulation result
+  <a class="anchor" href="#example-simulation-result">#</a>
+</h2>
+<p>Below are example results for this simulation, including outputs, latent states, process disturbance, and the control signal. The controller&rsquo;s online estimates of the output, state, and disturbance are given in purple.</p>
+<p><img src="/ldsctrlest/eg_glds_ctrl_output.png" alt="example control output" /></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#glds-control-tutorial">GLDS Control Tutorial</a>
+      <ul>
+        <li><a href="#preamble">Preamble</a></li>
+        <li><a href="#creating-a-simulated-system">Creating a simulated system</a></li>
+        <li><a href="#creating-the-controller">Creating the controller</a></li>
+        <li><a href="#simulating-control">Simulating control</a></li>
+        <li><a href="#example-simulation-result">Example simulation result</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

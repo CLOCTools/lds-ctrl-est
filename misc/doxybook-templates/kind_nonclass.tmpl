@@ -1,0 +1,17 @@
+{% include "header" -%}
+
+{% include "breadcrumbs" -%}
+
+{% if exists("brief") %}{{brief}}{% endif %}<br>{% if hasDetails %} <br>[More...](#detailed-description)
+<br>
+{% endif -%}
+
+{% include "nonclass_members_tables" -%}
+
+{% if hasDetails %}## Detailed Description
+
+{% include "details" %}{% endif -%}
+
+{% include "nonclass_members_details" %}
+
+{% include "footer" %}

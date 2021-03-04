@@ -1,0 +1,208 @@
+---
+title: ldsCtrlEst_h/lds_gaussian_ctrl.h
+summary: GLDS controller type. 
+
+---
+
+# ldsCtrlEst_h/lds_gaussian_ctrl.h
+
+GLDS controller type.  [More...](#detailed-description)
+
+
+
+## Namespaces
+
+| Name           |
+| -------------- |
+| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::gaussian](/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
+
+## Classes
+
+|                | Name           |
+| -------------- | -------------- |
+| class | **[lds::gaussian::ctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/)** <br>GLDS Controller Type.  |
+
+## Detailed Description
+
+
+
+This file declares and partially defines the type for feedback control of a gaussian-output linear dynamical system (`[lds::gaussian::ctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/)`). It inherits functionality from the underlying GLDS model type (`[lds::gaussian::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/)`), including state estimation. 
+
+
+
+
+
+## Source code
+
+```cpp
+//===-- ldsCtrlEst_h/lds_gaussian_ctrl.h - GLDS Controller ------*- C++ -*-===//
+//
+// Copyright 2021 [name of copyright owner]
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//===----------------------------------------------------------------------===//
+//===----------------------------------------------------------------------===//
+
+#ifndef LDSCTRLEST_LDS_GAUSSIAN_CTRL_H
+#define LDSCTRLEST_LDS_GAUSSIAN_CTRL_H
+
+#ifndef LDSCTRLEST
+#include <ldsCtrlEst>
+#endif
+
+namespace lds {
+namespace gaussian {
+class ctrl_t : public sys_t {
+ public:
+  ctrl_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& uLB,
+         data_t& uUB, data_t& dt, data_t& p0 = DEFAULT_P0,
+         data_t& q0 = DEFAULT_Q0, data_t& r0 = DEFAULT_R0,
+         size_t controlType = 0);
+  ctrl_t& operator=(const ctrl_t& sys);
+
+  // These are the workhorse functions:
+
+  void fbCtrl(armaVec& z, bool& gateCtrl = TRUE, bool& gateLock = FALSE,
+              data_t& sigma_softStart = DEFAULT_SOFTSTART,
+              data_t& sigma_uNoise = DATA_T_ZERO, bool& resetAtCtrlOnset = TRUE,
+              bool& doRecurse_Ke = TRUE);
+
+  void steadyState_fbCtrl(armaVec& z, bool& gateCtrl = TRUE,
+                          bool& gateEst = TRUE, bool& gateLock = FALSE,
+                          data_t& sigma_softStart = DEFAULT_SOFTSTART,
+                          data_t& sigma_uNoise = DATA_T_ZERO,
+                          bool& resetAtCtrlOnset = TRUE,
+                          bool& doRecurse_Ke = TRUE);
+
+  void calc_ssSetPt();
+
+  void printSys();
+
+  // set methods
+  void setDims(std::size_t& nU, std::size_t& nX, std::size_t& nY);
+
+  // make sure to override the setU behavior inherited from sys_t!
+  // cannot set u for a controller, as it generates its own.
+  void setU(stdVec& uVec);
+  void setU(armaVec& u);
+
+  void setG(stdVec& gVec);
+  void setG(armaVec& g);
+
+  void setGDesign(stdVec& gVec);
+  void setGDesign(armaVec& g);
+
+  void setURef(stdVec& uRefVec);
+  void setURef(armaVec& uRef);
+
+  void setXRef(stdVec& xRefVec);
+  void setXRef(armaVec& xRef);
+
+  void setYRef(stdVec& yRefVec);
+  void setYRef(armaVec& yRef);
+
+  void setKc_x(stdVec& Kc_x_vec);
+  void setKc_x(armaMat& Kc_x);
+
+  void setKc_u(stdVec& Kc_u_vec);
+  void setKc_u(armaMat& Kc_u);
+
+  void setKc_inty(stdVec& Kc_inty_vec);
+  void setKc_inty(armaMat& Kc_inty);
+
+  void setControlType(size_t controlType);
+  void setTauAntiWindup(data_t& tau);
+
+  armaMat getKc_u() const { return Kc_u; };
+  armaMat getKc_x() const { return Kc_x; };
+  armaMat getKc_inty() const { return Kc_inty; };
+  armaVec getGDesign() const { return gDesign; };
+  armaVec getURef() const { return uRef; };
+  armaVec getXRef() const { return xRef; };
+  armaVec getYRef() const { return yRef; };
+  armaVec getIntE() const { return intE; };
+  size_t getControlType() const { return controlType; };
+
+  void reset();
+
+ protected:
+  armaVec gDesign;  
+
+  //  reference signals
+  armaVec uRef;  
+  // create no set method for this:
+  armaVec uRef_prev;  
+  armaVec xRef;       
+  armaVec yRef;       
+
+  // Controller gains
+  armaMat Kc_x;  
+  armaMat
+      Kc_u;  
+  armaMat Kc_inty;  
+
+  // control after g inversion
+  // do not need set methods for these.
+  armaVec duRef;
+  armaVec dvRef;
+  armaVec vRef;
+  armaVec dv;
+  armaVec v;  
+
+  // integral error
+  // do not need set method for this
+  armaVec intE;            
+  armaVec intE_awuAdjust;  
+  armaVec uSat;            
+
+  bool gateCtrl_prev;
+  bool gateLock_prev;
+
+  // whether the g of system has become inverted from what you think it is
+  // (gainRef)
+  bool uSaturated;  
+
+  // should be safe to have references here bc nothing needs to be done
+  // (like reset vars) when it changes...
+  data_t& uLB;  
+  data_t& uUB;  
+
+  data_t tauAntiWindup;  
+  data_t kAntiWindup;
+
+  void antiWindup();
+
+  data_t t_since_ctrl_onset;  
+  size_t controlType;         
+
+ private:
+  void calc_ctrl(bool& gateCtrl = TRUE, bool& gateEst = TRUE,
+                 bool& gateLock = FALSE,
+                 data_t& sigma_softStart = DEFAULT_SOFTSTART,
+                 data_t& sigma_uNoise = DATA_T_ZERO,
+                 bool& resetAtCtrlOnset = TRUE);
+};
+}  // namespace gaussian
+}  // namespace lds
+
+#include "lds_gaussian_sctrl.h"
+
+#endif
+```
+
+
+-------------------------------
+
+Updated on  3 March 2021 at 23:06:12 CST

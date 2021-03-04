@@ -1,0 +1,8 @@
+<map id="lds::fit_t" name="lds::fit_t">
+<area shape="rect" id="node1" title="LDS Fit Type." alt="" coords="307,5,375,32"/>
+<area shape="rect" id="node2" href="$classlds_1_1gaussian_1_1fit__t.html" title="GLDS Fit Type." alt="" coords="195,80,325,107"/>
+<area shape="rect" id="node5" href="$classlds_1_1poisson_1_1fit__t.html" title="PLDS Fit Type." alt="" coords="362,80,483,107"/>
+<area shape="rect" id="node3" href="$classlds_1_1gaussian_1_1em_fit__t.html" title="GLDS E&#45;M Fit Type." alt="" coords="5,155,157,181"/>
+<area shape="rect" id="node4" href="$classlds_1_1gaussian_1_1ssid_fit__t.html" title="GLDS SSID Fit Type." alt="" coords="181,155,339,181"/>
+<area shape="rect" id="node6" href="$classlds_1_1poisson_1_1ssid_fit__t.html" title="GLDS SSID Fit Type." alt="" coords="363,155,512,181"/>
+</map>

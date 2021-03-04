@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="LDS base type.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="src/lds_sys.cpp" />
+<meta property="og:description" content="LDS base type." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8cpp/" />
+
+<title>src/lds_sys.cpp | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>src/lds_sys.cpp</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#srclds_syscpp">src/lds_sys.cpp</a>
+      <ul>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="srclds_syscpp">
+  src/lds_sys.cpp
+  <a class="anchor" href="#srclds_syscpp">#</a>
+</h1>
+<p>LDS base type.  <a href="#detailed-description">More&hellip;</a></p>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<p>This file implements the base type for linear dynamical systems (<code>[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)</code>). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class.</p>
+<h2 id="source-code">
+  Source code
+  <a class="anchor" href="#source-code">#</a>
+</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- lds_sys.cpp - LDS -------------------------------------------------===//
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+</span><span style="color:#75715e">// you may not use this file except in compliance with the License.
+</span><span style="color:#75715e">// You may obtain a copy of the License at
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">//     http://www.apache.org/licenses/LICENSE-2.0
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Unless required by applicable law or agreed to in writing, software
+</span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span style="color:#75715e">// See the License for the specific language governing permissions and
+</span><span style="color:#75715e">// limitations under the License.
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> lds;
+
+lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>sys_t(size_t nU, size_t nX, data_t<span style="color:#f92672">&amp;</span> dt, data_t<span style="color:#f92672">&amp;</span> p0, data_t<span style="color:#f92672">&amp;</span> q0)
+    <span style="color:#f92672">:</span> dt(dt), p0(p0), q0(q0) {
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU <span style="color:#f92672">=</span> nU;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX <span style="color:#f92672">=</span> nX;
+
+  u <span style="color:#f92672">=</span> armaVec(nU, fill<span style="color:#f92672">::</span>zeros);
+
+  <span style="color:#75715e">// initial conditions.
+</span><span style="color:#75715e"></span>  x0 <span style="color:#f92672">=</span> armaVec(nX, fill<span style="color:#f92672">::</span>zeros);  <span style="color:#75715e">// includes bias (nY) and g (nU)
+</span><span style="color:#75715e"></span>  x <span style="color:#f92672">=</span> x0;
+  P0 <span style="color:#f92672">=</span> armaMat(nX, nX, fill<span style="color:#f92672">::</span>zeros);
+  P <span style="color:#f92672">=</span> P0;
+
+  m0 <span style="color:#f92672">=</span> x0;
+  m <span style="color:#f92672">=</span> m0;
+  P0_m <span style="color:#f92672">=</span> P0;
+  P_m <span style="color:#f92672">=</span> P0_m;
+
+  g <span style="color:#f92672">=</span> armaVec(nU, fill<span style="color:#f92672">::</span>ones);
+
+  <span style="color:#75715e">// By default, random walk where each state is independent
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// In this way, provides independent estimates of rate per channel of output.
+</span><span style="color:#75715e"></span>  A <span style="color:#f92672">=</span> armaMat(nX, nX, fill<span style="color:#f92672">::</span>eye);
+  B <span style="color:#f92672">=</span> armaMat(nX, nU, fill<span style="color:#f92672">::</span>zeros);
+  Q <span style="color:#f92672">=</span> q0 <span style="color:#f92672">*</span> armaMat(nX, nX, fill<span style="color:#f92672">::</span>eye);
+  Q_m <span style="color:#f92672">=</span> Q;
+
+  adaptM <span style="color:#f92672">=</span> false;
+  szChanged <span style="color:#f92672">=</span> false;
+};
+
+<span style="color:#75715e">// predict: Given input, predict the state
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>predict() {
+  <span style="color:#75715e">// Dynamics: x_{k+1} = f(x_{k},u_{k},w_{k})
+</span><span style="color:#75715e"></span>  x <span style="color:#f92672">=</span> A <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> B <span style="color:#f92672">*</span> (g <span style="color:#f92672">%</span> u) <span style="color:#f92672">+</span> m;
+  <span style="color:#75715e">// predict estimate **covariance** during the filter step
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (unnecessary if not filtering)
+</span><span style="color:#75715e"></span>}
+
+<span style="color:#75715e">// predict: Given input, predict the state, including simulated process noise
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>simPredict() {
+  <span style="color:#75715e">// Dynamics: x_{k+1} = f(x_{k},u_{k},w_{k})
+</span><span style="color:#75715e"></span>  x <span style="color:#f92672">=</span> A <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> B <span style="color:#f92672">*</span> (g <span style="color:#f92672">%</span> u) <span style="color:#f92672">+</span> m;
+  x <span style="color:#f92672">+=</span> arma<span style="color:#f92672">::</span>mvnrnd( armaVec(x.n_elem).fill(<span style="color:#ae81ff">0</span>), Q );
+}
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reset() {
+  <span style="color:#75715e">// reset to initial conditions
+</span><span style="color:#75715e"></span>  x <span style="color:#f92672">=</span> x0;  <span style="color:#75715e">// mean
+</span><span style="color:#75715e"></span>  P <span style="color:#f92672">=</span> P0;  <span style="color:#75715e">// cov of state estimate
+</span><span style="color:#75715e"></span>  m <span style="color:#f92672">=</span> m0; <span style="color:#75715e">// process disturbance
+</span><span style="color:#75715e"></span>  P_m <span style="color:#f92672">=</span> P0_m; <span style="color:#75715e">// cov of disturbance estimate
+</span><span style="color:#75715e"></span>  szChanged <span style="color:#f92672">=</span> false;
+}
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setDims(size_t<span style="color:#f92672">&amp;</span> nU, size_t<span style="color:#f92672">&amp;</span> nX) {
+  <span style="color:#66d9ef">if</span> (nU <span style="color:#f92672">!=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU) {
+    szChanged <span style="color:#f92672">=</span> true;
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU <span style="color:#f92672">=</span> nU;
+  }
+
+  <span style="color:#66d9ef">if</span> (nX <span style="color:#f92672">!=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX) {
+    szChanged <span style="color:#f92672">=</span> true;
+    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX <span style="color:#f92672">=</span> nX;
+  }
+
+  <span style="color:#75715e">// this seems a bit heavy-handed, but if any of the dimensions are changed,
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// reset everything.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (szChanged) {
+    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;System dimensions were changed. Resetting object.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+    (<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>) <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>sys_t(nU, nX, dt, p0, q0);
+    szChanged <span style="color:#f92672">=</span> false;
+  }
+}
+
+<span style="color:#75715e">// setting input
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setU(stdVec<span style="color:#f92672">&amp;</span> uVec) { reassign(u, uVec); }
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setU(armaVec<span style="color:#f92672">&amp;</span> u) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>u, u); }
+
+<span style="color:#75715e">// Fall back to default value for Q and reset P
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>defaultQ() {
+  Q.zeros();
+  Q.diag().fill(q0);
+
+  Q_m.zeros();
+  Q_m.diag().fill(q0);
+
+  <span style="color:#75715e">// for good measure...
+</span><span style="color:#75715e"></span>  P <span style="color:#f92672">=</span> P0;
+  P_m <span style="color:#f92672">=</span> P0;
+}
+
+<span style="color:#75715e">// Setting parameter values...
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setA(stdVec<span style="color:#f92672">&amp;</span> aVec) { reassign(A, aVec); }
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setA(armaMat<span style="color:#f92672">&amp;</span> A) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>A, A); }
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setB(stdVec<span style="color:#f92672">&amp;</span> bVec) { reassign(B, bVec); }
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setB(armaMat<span style="color:#f92672">&amp;</span> B) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>B, B); }
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setQ(stdVec<span style="color:#f92672">&amp;</span> qVec) { reassign(Q, qVec); }
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setQ(armaMat<span style="color:#f92672">&amp;</span> Q) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Q, Q); }
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setP0(stdVec<span style="color:#f92672">&amp;</span> p0Vec) { reassign(P0, p0Vec); }
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setP0(armaMat<span style="color:#f92672">&amp;</span> P0) {
+  reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P0, P0);
+  P <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P0;
+}
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setX0(stdVec<span style="color:#f92672">&amp;</span> x0Vec) { reassign(x0, x0Vec); }
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setX0(armaVec<span style="color:#f92672">&amp;</span> x0) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>x0, x0); }
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setG(stdVec<span style="color:#f92672">&amp;</span> gVec) { reassign(g, gVec); }
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setG(armaVec<span style="color:#f92672">&amp;</span> g) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>g, g); }
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setM(stdVec<span style="color:#f92672">&amp;</span> mVec) {
+  reassign(m0, mVec);
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>adaptM) m <span style="color:#f92672">=</span> m0;
+}
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setM(armaVec<span style="color:#f92672">&amp;</span> m) {
+  reassign(m0, m);
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>adaptM) <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>m <span style="color:#f92672">=</span> m0;
+}
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setP0_m(stdVec<span style="color:#f92672">&amp;</span> p0mVec) { reassign(P0_m, p0mVec); }
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setP0_m(armaMat<span style="color:#f92672">&amp;</span> P0_m) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P0_m, P0_m); }
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setQ_m(stdVec<span style="color:#f92672">&amp;</span> qmVec) { reassign(Q_m, qmVec); }
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setQ_m(armaMat<span style="color:#f92672">&amp;</span> Q_m) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Q_m, Q_m); }
+
+<span style="color:#75715e">// Generic functions for re-assigning elements.
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reassign(armaVec<span style="color:#f92672">&amp;</span> oldVar, armaVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> oldVar.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (newVar.n_elem <span style="color:#f92672">&gt;</span> k)
+      oldVar[k] <span style="color:#f92672">=</span> newVar[k];
+    <span style="color:#66d9ef">else</span>
+      oldVar[k] <span style="color:#f92672">=</span> defaultVal;
+  }
+}
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reassign(armaVec<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> oldVar.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (newVar.size() <span style="color:#f92672">&gt;</span> k)
+      oldVar[k] <span style="color:#f92672">=</span> newVar[k];
+    <span style="color:#66d9ef">else</span>
+      oldVar[k] <span style="color:#f92672">=</span> defaultVal;
+  }
+}
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reassign(armaMat<span style="color:#f92672">&amp;</span> oldVar, armaMat<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> oldVar.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (newVar.n_elem <span style="color:#f92672">&gt;</span> k)
+      oldVar[k] <span style="color:#f92672">=</span> newVar[k];
+    <span style="color:#66d9ef">else</span>
+      oldVar[k] <span style="color:#f92672">=</span> defaultVal;
+  }
+}
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reassign(armaMat<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> oldVar.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (newVar.size() <span style="color:#f92672">&gt;</span> k)
+      oldVar[k] <span style="color:#f92672">=</span> newVar[k];
+    <span style="color:#66d9ef">else</span>
+      oldVar[k] <span style="color:#f92672">=</span> defaultVal;
+  }
+}
+
+<span style="color:#75715e">// subviews..
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reassign(armaSubVec<span style="color:#f92672">&amp;</span> oldVar, armaVec<span style="color:#f92672">&amp;</span> newVar,
+                          data_t defaultVal) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> oldVar.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (newVar.n_elem <span style="color:#f92672">&gt;</span> k)
+      oldVar[k] <span style="color:#f92672">=</span> newVar[k];
+    <span style="color:#66d9ef">else</span>
+      oldVar[k] <span style="color:#f92672">=</span> defaultVal;
+  }
+}
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reassign(armaSubVec<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar,
+                          data_t defaultVal) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> oldVar.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (newVar.size() <span style="color:#f92672">&gt;</span> k)
+      oldVar[k] <span style="color:#f92672">=</span> newVar[k];
+    <span style="color:#66d9ef">else</span>
+      oldVar[k] <span style="color:#f92672">=</span> defaultVal;
+  }
+}
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reassign(armaSubMat<span style="color:#f92672">&amp;</span> oldVar, armaMat<span style="color:#f92672">&amp;</span> newVar,
+                          data_t defaultVal) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> oldVar.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (newVar.n_elem <span style="color:#f92672">&gt;</span> k)
+      oldVar[k] <span style="color:#f92672">=</span> newVar[k];
+    <span style="color:#66d9ef">else</span>
+      oldVar[k] <span style="color:#f92672">=</span> defaultVal;
+  }
+}
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reassign(armaSubMat<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar,
+                          data_t defaultVal) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> oldVar.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (newVar.size() <span style="color:#f92672">&gt;</span> k)
+      oldVar[k] <span style="color:#f92672">=</span> newVar[k];
+    <span style="color:#66d9ef">else</span>
+      oldVar[k] <span style="color:#f92672">=</span> defaultVal;
+  }
+}
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>printSys() {
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> ********** SYSTEM ********** </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;x: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> x <span style="color:#f92672">&lt;&lt;</span> endl;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;P: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> P <span style="color:#f92672">&lt;&lt;</span> endl;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;A: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> A <span style="color:#f92672">&lt;&lt;</span> endl;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;B: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> B <span style="color:#f92672">&lt;&lt;</span> endl;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Q: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> Q <span style="color:#f92672">&lt;&lt;</span> endl;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;m: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> m <span style="color:#f92672">&lt;&lt;</span> endl;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;g: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> g <span style="color:#f92672">&lt;&lt;</span> endl;
+}
+
+lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">&amp;</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span><span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(<span style="color:#66d9ef">const</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">&amp;</span> sys) {
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>A <span style="color:#f92672">=</span> sys.A;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>B <span style="color:#f92672">=</span> sys.B;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>g <span style="color:#f92672">=</span> sys.g;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Q <span style="color:#f92672">=</span> sys.Q;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>x0 <span style="color:#f92672">=</span> sys.x0;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P0 <span style="color:#f92672">=</span> sys.P0;
+
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Q_m <span style="color:#f92672">=</span> sys.Q_m;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>m0 <span style="color:#f92672">=</span> sys.m0;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P0_m <span style="color:#f92672">=</span> sys.P0_m;
+
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>u <span style="color:#f92672">=</span> sys.u;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>x <span style="color:#f92672">=</span> sys.x;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P <span style="color:#f92672">=</span> sys.P;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>m <span style="color:#f92672">=</span> sys.m;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P_m <span style="color:#f92672">=</span> sys.P_m;
+
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>dt <span style="color:#f92672">=</span> sys.dt;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>p0 <span style="color:#f92672">=</span> sys.p0;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>q0 <span style="color:#f92672">=</span> sys.q0;
+
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX <span style="color:#f92672">=</span> sys.nX;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU <span style="color:#f92672">=</span> sys.nU;
+  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>szChanged <span style="color:#f92672">=</span> sys.szChanged;
+
+  <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+}
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>limit(stdVec<span style="color:#f92672">&amp;</span> x, data_t<span style="color:#f92672">&amp;</span> lb, data_t<span style="color:#f92672">&amp;</span> ub) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> x.size(); k<span style="color:#f92672">++</span>) {
+    x[k] <span style="color:#f92672">=</span> x[k] <span style="color:#f92672">&lt;</span> lb <span style="color:#f92672">?</span> lb : x[k];
+    x[k] <span style="color:#f92672">=</span> x[k] <span style="color:#f92672">&gt;</span> ub <span style="color:#f92672">?</span> ub : x[k];
+  }
+}
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>limit(armaVec<span style="color:#f92672">&amp;</span> x, data_t<span style="color:#f92672">&amp;</span> lb, data_t<span style="color:#f92672">&amp;</span> ub) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> x.n_elem; k<span style="color:#f92672">++</span>) {
+    x[k] <span style="color:#f92672">=</span> x[k] <span style="color:#f92672">&lt;</span> lb <span style="color:#f92672">?</span> lb : x[k];
+    x[k] <span style="color:#f92672">=</span> x[k] <span style="color:#f92672">&gt;</span> ub <span style="color:#f92672">?</span> ub : x[k];
+  }
+}
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>limit(armaMat<span style="color:#f92672">&amp;</span> x, data_t<span style="color:#f92672">&amp;</span> lb, data_t<span style="color:#f92672">&amp;</span> ub) {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> x.n_elem; k<span style="color:#f92672">++</span>) {
+    x[k] <span style="color:#f92672">=</span> x[k] <span style="color:#f92672">&lt;</span> lb <span style="color:#f92672">?</span> lb : x[k];
+    x[k] <span style="color:#f92672">=</span> x[k] <span style="color:#f92672">&gt;</span> ub <span style="color:#f92672">?</span> ub : x[k];
+  }
+}
+
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>checkP() {
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> P.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (abs(P[k]) <span style="color:#f92672">&gt;</span> plim) {
+      cerr <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74"> P GOT HIGHER THAN PLIM! RESETTING TO P0... </span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+      P <span style="color:#f92672">=</span> P0;
+      <span style="color:#66d9ef">return</span>;
+    }
+  }
+
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> P_m.n_elem; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> (abs(P_m[k]) <span style="color:#f92672">&gt;</span> plim) {
+      cerr <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74"> P_m GOT HIGHER THAN PLIM! RESETTING TO P0... </span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+      P_m <span style="color:#f92672">=</span> P0_m;
+      <span style="color:#66d9ef">return</span>;
+    }
+  }
+}
+<span style="color:#75715e">//******************* SYS_T *******************
+</span></code></pre></div><hr>
+<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#srclds_syscpp">src/lds_sys.cpp</a>
+      <ul>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

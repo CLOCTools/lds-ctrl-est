@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Linear Dynamical Systems (LDS) namespace.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="lds" />
+<meta property="og:description" content="Linear Dynamical Systems (LDS) namespace." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacelds/" />
+
+<title>lds | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lds">lds</a>
+      <ul>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#types">Types</a></li>
+        <li><a href="#attributes">Attributes</a></li>
+        <li><a href="#type-details">Type Details</a>
+          <ul>
+            <li><a href="#ssidwt">ssidWt</a></li>
+            <li><a href="#data_t">data_t</a></li>
+            <li><a href="#stdvec">stdVec</a></li>
+            <li><a href="#armavec">armaVec</a></li>
+            <li><a href="#armamat">armaMat</a></li>
+            <li><a href="#armacube">armaCube</a></li>
+            <li><a href="#armasubvec">armaSubVec</a></li>
+            <li><a href="#armasubmat">armaSubMat</a></li>
+          </ul>
+        </li>
+        <li><a href="#attribute-details">Attribute Details</a>
+          <ul>
+            <li><a href="#control_type_u">CONTROL_TYPE_U</a></li>
+            <li><a href="#control_type_inty">CONTROL_TYPE_INTY</a></li>
+            <li><a href="#control_type_adapt_m">CONTROL_TYPE_ADAPT_M</a></li>
+            <li><a href="#inf">inf</a></li>
+            <li><a href="#neginf">neginf</a></li>
+            <li><a href="#pi">pi</a></li>
+            <li><a href="#default_p0">DEFAULT_P0</a></li>
+            <li><a href="#default_q0">DEFAULT_Q0</a></li>
+            <li><a href="#default_r0">DEFAULT_R0</a></li>
+            <li><a href="#default_t0">DEFAULT_T0</a></li>
+            <li><a href="#data_t_zero">DATA_T_ZERO</a></li>
+            <li><a href="#data_t_one">DATA_T_ONE</a></li>
+            <li><a href="#default_softstart">DEFAULT_SOFTSTART</a></li>
+            <li><a href="#false">FALSE</a></li>
+            <li><a href="#true">TRUE</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="lds">
+  lds
+  <a class="anchor" href="#lds">#</a>
+</h1>
+<p>Linear Dynamical Systems (LDS) namespace. <br></p>
+<h2 id="namespaces">
+  Namespaces
+  <a class="anchor" href="#namespaces">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/">lds::gaussian</a></strong> <br>Linear Dynamical Systems with Gaussian observations.</td>
+</tr>
+<tr>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/">lds::poisson</a></strong> <br>Linear Dynamical Systems with Poisson observations.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="classes">
+  Classes
+  <a class="anchor" href="#classes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/">lds::fit_t</a></strong> <br>LDS Fit Type.</td>
+</tr>
+<tr>
+<td>class</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/">lds::sys_t</a></strong> <br>Linear Dynamical System Type.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="types">
+  Types
+  <a class="anchor" href="#types">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>enum</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enum-ssidwt">ssidWt</a></strong> { NONE, MOESP, CVA}</td>
+</tr>
+<tr>
+<td>typedef double</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></strong></td>
+</tr>
+<tr>
+<td>typedef std::vector&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a></strong> <br>provides fill types for constructing new armadillo vectors, matrices</td>
+</tr>
+<tr>
+<td>typedef arma::Col&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armavec">armaVec</a></strong></td>
+</tr>
+<tr>
+<td>typedef arma::Mat&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armamat">armaMat</a></strong></td>
+</tr>
+<tr>
+<td>typedef arma::Cube&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armacube">armaCube</a></strong></td>
+</tr>
+<tr>
+<td>typedef arma::subview_col&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armasubvec">armaSubVec</a></strong></td>
+</tr>
+<tr>
+<td>typedef arma::subview&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armasubmat">armaSubMat</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="attributes">
+  Attributes
+  <a class="anchor" href="#attributes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>const std::size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_u">CONTROL_TYPE_U</a></strong></td>
+</tr>
+<tr>
+<td>const std::size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_inty">CONTROL_TYPE_INTY</a></strong></td>
+</tr>
+<tr>
+<td>const std::size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_adapt_m">CONTROL_TYPE_ADAPT_M</a></strong> <br>Control setpoint adapted with (re-estimated) process disturbance <code>m</code>.</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#variable-inf">inf</a></strong> <br>Some useful numbers.</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#variable-neginf">neginf</a></strong></td>
+</tr>
+<tr>
+<td>const <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#variable-pi">pi</a></strong></td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_p0">DEFAULT_P0</a></strong></td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_q0">DEFAULT_Q0</a></strong></td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_r0">DEFAULT_R0</a></strong></td>
+</tr>
+<tr>
+<td>std::vector&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_t0">DEFAULT_T0</a></strong></td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-data_t_zero">DATA_T_ZERO</a></strong></td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-data_t_one">DATA_T_ONE</a></strong></td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_softstart">DEFAULT_SOFTSTART</a></strong></td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-false">FALSE</a></strong></td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-true">TRUE</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="type-details">
+  Type Details
+  <a class="anchor" href="#type-details">#</a>
+</h2>
+<h3 id="ssidwt">
+  ssidWt
+  <a class="anchor" href="#ssidwt">#</a>
+</h3>
+<table>
+<thead>
+<tr>
+<th>Enumerator</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NONE</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>MOESP</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>CVA</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Weighting options for singular value decomposition performed during subspace identification (SSID): None, MOESP &ldquo;robust method&rdquo;, CVA &ldquo;Canonical Variate Analysis&rdquo;)</p>
+<h3 id="data_t">
+  data_t
+  <a class="anchor" href="#data_t">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">double</span> lds<span style="color:#f92672">::</span>data_t;
+</code></pre></div><p>Precision/type of all data in library. If need 32b, change <code>double</code> to <code>float</code>.</p>
+<h3 id="stdvec">
+  stdVec
+  <a class="anchor" href="#stdvec">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> lds<span style="color:#f92672">::</span>stdVec;
+</code></pre></div><h3 id="armavec">
+  armaVec
+  <a class="anchor" href="#armavec">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> lds<span style="color:#f92672">::</span>armaVec;
+</code></pre></div><h3 id="armamat">
+  armaMat
+  <a class="anchor" href="#armamat">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> lds<span style="color:#f92672">::</span>armaMat;
+</code></pre></div><h3 id="armacube">
+  armaCube
+  <a class="anchor" href="#armacube">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>Cube<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> lds<span style="color:#f92672">::</span>armaCube;
+</code></pre></div><h3 id="armasubvec">
+  armaSubVec
+  <a class="anchor" href="#armasubvec">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>subview_col<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> lds<span style="color:#f92672">::</span>armaSubVec;
+</code></pre></div><h3 id="armasubmat">
+  armaSubMat
+  <a class="anchor" href="#armasubmat">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>subview<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> lds<span style="color:#f92672">::</span>armaSubMat;
+</code></pre></div><h2 id="attribute-details">
+  Attribute Details
+  <a class="anchor" href="#attribute-details">#</a>
+</h2>
+<h3 id="control_type_u">
+  CONTROL_TYPE_U
+  <a class="anchor" href="#control_type_u">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_U <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1</span>;
+</code></pre></div><p>Control was designed to penalize change in input (i.e., the state was augmented with input <code>u</code>)</p>
+<h3 id="control_type_inty">
+  CONTROL_TYPE_INTY
+  <a class="anchor" href="#control_type_inty">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_INTY <span style="color:#f92672">=</span> CONTROL_TYPE_U <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>;
+</code></pre></div><p>Control using integral action (i.e., the state was augmented with output <code>y</code> during design)</p>
+<h3 id="control_type_adapt_m">
+  CONTROL_TYPE_ADAPT_M
+  <a class="anchor" href="#control_type_adapt_m">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_ADAPT_M <span style="color:#f92672">=</span> CONTROL_TYPE_U <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">2</span>;
+</code></pre></div><h3 id="inf">
+  inf
+  <a class="anchor" href="#inf">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t inf <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>[data_t](<span style="color:#f92672">/</span>ldsctrlest<span style="color:#f92672">/</span>docs<span style="color:#f92672">/</span>api<span style="color:#f92672">/</span>namespaces<span style="color:#f92672">/</span>namespacelds<span style="color:#f92672">/</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">typedef</span><span style="color:#f92672">-</span>data_t)<span style="color:#f92672">&gt;::</span>infinity();
+</code></pre></div><h3 id="neginf">
+  neginf
+  <a class="anchor" href="#neginf">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t neginf <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>inf;
+</code></pre></div><h3 id="pi">
+  pi
+  <a class="anchor" href="#pi">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t pi <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>datum<span style="color:#f92672">::</span>pi;
+</code></pre></div><h3 id="default_p0">
+  DEFAULT_P0
+  <a class="anchor" href="#default_p0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_P0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
+</code></pre></div><h3 id="default_q0">
+  DEFAULT_Q0
+  <a class="anchor" href="#default_q0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_Q0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
+</code></pre></div><h3 id="default_r0">
+  DEFAULT_R0
+  <a class="anchor" href="#default_r0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_R0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-2</span>;
+</code></pre></div><h3 id="default_t0">
+  DEFAULT_T0
+  <a class="anchor" href="#default_t0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> data_t <span style="color:#f92672">&gt;</span> DEFAULT_T0 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>[data_t](<span style="color:#f92672">/</span>ldsctrlest<span style="color:#f92672">/</span>docs<span style="color:#f92672">/</span>api<span style="color:#f92672">/</span>namespaces<span style="color:#f92672">/</span>namespacelds<span style="color:#f92672">/</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">typedef</span><span style="color:#f92672">-</span>data_t)<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.0</span>);
+</code></pre></div><h3 id="data_t_zero">
+  DATA_T_ZERO
+  <a class="anchor" href="#data_t_zero">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DATA_T_ZERO <span style="color:#f92672">=</span> ([data_t](<span style="color:#f92672">/</span>ldsctrlest<span style="color:#f92672">/</span>docs<span style="color:#f92672">/</span>api<span style="color:#f92672">/</span>namespaces<span style="color:#f92672">/</span>namespacelds<span style="color:#f92672">/</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">typedef</span><span style="color:#f92672">-</span>data_t))<span style="color:#ae81ff">0</span>;
+</code></pre></div><h3 id="data_t_one">
+  DATA_T_ONE
+  <a class="anchor" href="#data_t_one">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DATA_T_ONE <span style="color:#f92672">=</span> ([data_t](<span style="color:#f92672">/</span>ldsctrlest<span style="color:#f92672">/</span>docs<span style="color:#f92672">/</span>api<span style="color:#f92672">/</span>namespaces<span style="color:#f92672">/</span>namespacelds<span style="color:#f92672">/</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">typedef</span><span style="color:#f92672">-</span>data_t))<span style="color:#ae81ff">1</span>;
+</code></pre></div><h3 id="default_softstart">
+  DEFAULT_SOFTSTART
+  <a class="anchor" href="#default_softstart">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_SOFTSTART <span style="color:#f92672">=</span> ([data_t](<span style="color:#f92672">/</span>ldsctrlest<span style="color:#f92672">/</span>docs<span style="color:#f92672">/</span>api<span style="color:#f92672">/</span>namespaces<span style="color:#f92672">/</span>namespacelds<span style="color:#f92672">/</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#66d9ef">typedef</span><span style="color:#f92672">-</span>data_t))<span style="color:#ae81ff">0</span>;
+</code></pre></div><h3 id="false">
+  FALSE
+  <a class="anchor" href="#false">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> FALSE <span style="color:#f92672">=</span> false;
+</code></pre></div><h3 id="true">
+  TRUE
+  <a class="anchor" href="#true">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> TRUE <span style="color:#f92672">=</span> true;
+</code></pre></div><hr>
+<p>Updated on  3 March 2021 at 23:06:11 CST</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#lds">lds</a>
+      <ul>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#types">Types</a></li>
+        <li><a href="#attributes">Attributes</a></li>
+        <li><a href="#type-details">Type Details</a>
+          <ul>
+            <li><a href="#ssidwt">ssidWt</a></li>
+            <li><a href="#data_t">data_t</a></li>
+            <li><a href="#stdvec">stdVec</a></li>
+            <li><a href="#armavec">armaVec</a></li>
+            <li><a href="#armamat">armaMat</a></li>
+            <li><a href="#armacube">armaCube</a></li>
+            <li><a href="#armasubvec">armaSubVec</a></li>
+            <li><a href="#armasubmat">armaSubMat</a></li>
+          </ul>
+        </li>
+        <li><a href="#attribute-details">Attribute Details</a>
+          <ul>
+            <li><a href="#control_type_u">CONTROL_TYPE_U</a></li>
+            <li><a href="#control_type_inty">CONTROL_TYPE_INTY</a></li>
+            <li><a href="#control_type_adapt_m">CONTROL_TYPE_ADAPT_M</a></li>
+            <li><a href="#inf">inf</a></li>
+            <li><a href="#neginf">neginf</a></li>
+            <li><a href="#pi">pi</a></li>
+            <li><a href="#default_p0">DEFAULT_P0</a></li>
+            <li><a href="#default_q0">DEFAULT_Q0</a></li>
+            <li><a href="#default_r0">DEFAULT_R0</a></li>
+            <li><a href="#default_t0">DEFAULT_T0</a></li>
+            <li><a href="#data_t_zero">DATA_T_ZERO</a></li>
+            <li><a href="#data_t_one">DATA_T_ONE</a></li>
+            <li><a href="#default_softstart">DEFAULT_SOFTSTART</a></li>
+            <li><a href="#false">FALSE</a></li>
+            <li><a href="#true">TRUE</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

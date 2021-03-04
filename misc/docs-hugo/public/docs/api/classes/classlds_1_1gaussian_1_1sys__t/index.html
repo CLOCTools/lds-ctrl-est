@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Gaussian LDS Type.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="lds::gaussian::sys_t" />
+<meta property="og:description" content="Gaussian LDS Type." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/" />
+
+<title>lds::gaussian::sys_t | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::gaussian::sys_t</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsgaussiansys_t">lds::gaussian::sys_t</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#protected-functions">Protected Functions</a></li>
+        <li><a href="#protected-attributes">Protected Attributes</a></li>
+        <li><a href="#additional-inherited-members">Additional inherited members</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#filter"><strong>filter</strong></a></li>
+            <li><a href="#filter-1"><strong>filter</strong></a></li>
+            <li><a href="#simmeasurement"><strong>simMeasurement</strong></a></li>
+            <li><a href="#sys_t"><strong>sys_t</strong></a></li>
+            <li><a href="#operator"><strong>operator=</strong></a></li>
+            <li><a href="#getny"><strong>getNy</strong></a></li>
+            <li><a href="#getc"><strong>getC</strong></a></li>
+            <li><a href="#getd"><strong>getD</strong></a></li>
+            <li><a href="#getr"><strong>getR</strong></a></li>
+            <li><a href="#gety"><strong>getY</strong></a></li>
+            <li><a href="#getz"><strong>getZ</strong></a></li>
+            <li><a href="#getke"><strong>getKe</strong></a></li>
+            <li><a href="#getke_m"><strong>getKe_m</strong></a></li>
+            <li><a href="#setdims"><strong>setDims</strong></a></li>
+            <li><a href="#setc"><strong>setC</strong></a></li>
+            <li><a href="#setc-1"><strong>setC</strong></a></li>
+            <li><a href="#setd"><strong>setD</strong></a></li>
+            <li><a href="#setd-1"><strong>setD</strong></a></li>
+            <li><a href="#setr"><strong>setR</strong></a></li>
+            <li><a href="#setr-1"><strong>setR</strong></a></li>
+            <li><a href="#setz"><strong>setZ</strong></a></li>
+            <li><a href="#setz-1"><strong>setZ</strong></a></li>
+            <li><a href="#setke"><strong>setKe</strong></a></li>
+            <li><a href="#setke-1"><strong>setKe</strong></a></li>
+            <li><a href="#setke_m"><strong>setKe_m</strong></a></li>
+            <li><a href="#setke_m-1"><strong>setKe_m</strong></a></li>
+            <li><a href="#reset"><strong>reset</strong></a></li>
+            <li><a href="#printsys"><strong>printSys</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-function-details">Protected Function Details</a>
+          <ul>
+            <li><a href="#recurse_ke"><strong>recurse_Ke</strong></a></li>
+            <li><a href="#predict"><strong>predict</strong></a></li>
+            <li><a href="#h"><strong>h</strong></a></li>
+            <li><a href="#defaultr"><strong>defaultR</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-attribute-details">Protected Attribute Details</a>
+          <ul>
+            <li><a href="#ny"><strong>nY</strong></a></li>
+            <li><a href="#c"><strong>C</strong></a></li>
+            <li><a href="#d"><strong>d</strong></a></li>
+            <li><a href="#r"><strong>R</strong></a></li>
+            <li><a href="#r0"><strong>r0</strong></a></li>
+            <li><a href="#y"><strong>y</strong></a></li>
+            <li><a href="#z"><strong>z</strong></a></li>
+            <li><a href="#ke"><strong>Ke</strong></a></li>
+            <li><a href="#ke_m"><strong>Ke_m</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsgaussiansys_t">
+  lds::gaussian::sys_t
+  <a class="anchor" href="#ldsgaussiansys_t">#</a>
+</h1>
+<p>Gaussian LDS Type.
+<br /> <code>#include &lt;lds_gaussian_sys.h&gt;</code></p>
+<p>Inherits from <a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/">lds::sys_t</a></p>
+<p>Inherited by <a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/">lds::gaussian::ctrl_t</a></p>
+<h2 id="public-functions">
+  Public Functions
+  <a class="anchor" href="#public-functions">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-filter">filter</a></strong>(armaVec &amp; u_tm1, armaVec &amp; z_t, bool doRecurse_Ke =true)<br>Filter data to produce causal state estimates.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-filter">filter</a></strong>(armaVec &amp; z, bool doRecurse_Ke =true)<br>Filter data to produce causal state estimates.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-simmeasurement">simMeasurement</a></strong>(armaVec &amp; z)<br>Simulate system measurement.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-sys_t">sys_t</a></strong>(std::size_t nU, std::size_t nX, std::size_t nY, data_t &amp; dt, data_t &amp; p0 =DEFAULT_P0, data_t &amp; q0 =DEFAULT_Q0, data_t &amp; r0 =DEFAULT_R0)<br>Constructs a new GLDS.</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/">sys_t</a> &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-operator=">operator=</a></strong>(const <a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/">sys_t</a> &amp; sys)</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-getny">getNy</a></strong>() const<br>Get number of outputs (y)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-getc">getC</a></strong>() const<br>Get output matrix (C)</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-getd">getD</a></strong>() const<br>Get output bias (d)</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-getr">getR</a></strong>() const<br>Get output noise covariance (R)</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-gety">getY</a></strong>() const<br>Get output (y)</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-getz">getZ</a></strong>() const<br>Get measurement (z)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-getke">getKe</a></strong>() const<br>Get estimator gain (Ke)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-getke_m">getKe_m</a></strong>() const<br>Get estimator gain for process disturbance (Ke_m)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setdims">setDims</a></strong>(std::size_t &amp; nU, std::size_t &amp; nX, std::size_t &amp; nY)<br>Set dimensions of system.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setc">setC</a></strong>(stdVec &amp; cVec)<br>Set output matrix (C)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setc">setC</a></strong>(armaMat &amp; C)<br>Set output matrix (C)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setd">setD</a></strong>(stdVec &amp; dVec)<br>Set output bias (d)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setd">setD</a></strong>(armaVec &amp; d)<br>Set output bias (d)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setr">setR</a></strong>(stdVec &amp; rVec)<br>Set output noise covariance (R)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setr">setR</a></strong>(armaMat &amp; R)<br>Set output noise covariance (R)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setz">setZ</a></strong>(stdVec &amp; zVec)<br>Set measurement (z)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setz">setZ</a></strong>(armaVec &amp; z)<br>Set measurement (z)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setke">setKe</a></strong>(stdVec &amp; keVec)<br>Set estimator gain (Ke)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setke">setKe</a></strong>(armaMat &amp; Ke)<br>Set estimator gain (Ke)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setke_m">setKe_m</a></strong>(stdVec &amp; kemVec)<br>Set disturbance estimator gain (Ke_m)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-setke_m">setKe_m</a></strong>(armaMat &amp; Ke_m)<br>Set disturbance estimator gain (Ke_m)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-reset">reset</a></strong>()<br>Reset system variables.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-printsys">printSys</a></strong>()<br>Print system variables to stdout.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="protected-functions">
+  Protected Functions
+  <a class="anchor" href="#protected-functions">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-recurse_ke">recurse_Ke</a></strong>()<br>Recursively recalculate Kalman estimator gain (Ke)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-predict">predict</a></strong>()<br>One-step prediction.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-h">h</a></strong>()<br>System output function.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#function-defaultr">defaultR</a></strong>()<br>Reset to default R (identity matrix with diagonal elements r0)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="protected-attributes">
+  Protected Attributes
+  <a class="anchor" href="#protected-attributes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#variable-ny">nY</a></strong> <br>number of outputs</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#variable-c">C</a></strong> <br>output matrix</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#variable-d">d</a></strong> <br>output bias</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#variable-r">R</a></strong> <br>covariance of output noise</td>
+</tr>
+<tr>
+<td>data_t &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#variable-r0">r0</a></strong> <br>default values for R</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#variable-y">y</a></strong> <br>output</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#variable-z">z</a></strong> <br>measurement</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#variable-ke">Ke</a></strong> <br>state estimator gain</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/#variable-ke_m">Ke_m</a></strong> <br>disturbance estimator gain</td>
+</tr>
+</tbody>
+</table>
+<h2 id="additional-inherited-members">
+  Additional inherited members
+  <a class="anchor" href="#additional-inherited-members">#</a>
+</h2>
+<p><strong>Public Functions inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/">lds::sys_t</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-simpredict">simPredict</a></strong>()<br>Simulate a one-step prediction.</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getnx">getNx</a></strong>() const<br>Get number of states.</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getnu">getNu</a></strong>() const<br>Get number of inputs.</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getu">getU</a></strong>() const<br>Get current input (u)</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getx">getX</a></strong>()<br>Get current state (x)</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getg">getG</a></strong>() const<br>Get input gain (g)</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getm">getM</a></strong>() const<br>Get current process disturbance/bias (m)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-geta">getA</a></strong>() const<br>Get state matrix (A)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getb">getB</a></strong>() const<br>Get input matrix (B)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getq">getQ</a></strong>() const<br>Get process noise covariance (Q)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getq_m">getQ_m</a></strong>() const<br>Get process noise covariance acting on disturbance evolution (Q_m)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getp">getP</a></strong>() const<br>Get covariance of state estimate (P)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getp_m">getP_m</a></strong>() const<br>Get covariance of process disturbance estimate (P_m)</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getx0">getX0</a></strong>() const<br>Get initial state (x0)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getp0">getP0</a></strong>() const<br>Get initial covariance of state estimate (P0)</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getm0">getM0</a></strong>() const<br>Get initial process disturbance (m0)</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-getp0_m">getP0_m</a></strong>() const<br>Get initial covariance of process disturbance estimate (P0_m)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setu">setU</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; uVec)<br>Set input (u)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setu">setU</a></strong>(armaVec &amp; u)<br>Set input (u)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-seta">setA</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; aVec)<br>Set state matrix (A)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-seta">setA</a></strong>(armaMat &amp; A)<br>Set state matrix (A)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setb">setB</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; bVec)<br>Set input matrix (B)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setb">setB</a></strong>(armaMat &amp; B)<br>Set input matrix (B)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setm">setM</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; mVec)<br>Set process disturbance (m)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setm">setM</a></strong>(armaVec &amp; m)<br>Set process disturbance (m)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setg">setG</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; gVec)<br>Set input gain (g)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setg">setG</a></strong>(armaVec &amp; g)<br>Set input gain (g)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setq">setQ</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; qVec)<br>Set process noise covariance (Q)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setq">setQ</a></strong>(armaMat &amp; Q)<br>Set process noise covariance (Q)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setq_m">setQ_m</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; qmVec)<br>Set process noise covariance of disturbance evoluation (Q_m)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setq_m">setQ_m</a></strong>(armaMat &amp; Q_m)<br>Set process noise covariance of disturbance evoluation (Q_m)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setx0">setX0</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; x0Vec)<br>Set initial state (x0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setx0">setX0</a></strong>(armaVec &amp; x0)<br>Set initial state (x0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setp0">setP0</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; p0Vec)<br>Set covariance of initial state (P0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setp0">setP0</a></strong>(armaMat &amp; P0)<br>Set covariance of initial state (P0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setp0_m">setP0_m</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; p0mVec)<br>Set covariance of initial process disturbance (P0_m)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-setp0_m">setP0_m</a></strong>(armaMat &amp; P0_m)<br>Set covariance of initial process disturbance (P0_m)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Protected Functions inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/">lds::sys_t</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-reassign">reassign</a></strong>(armaVec &amp; oldVar, armaVec &amp; newVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> defaultVal =0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-reassign">reassign</a></strong>(armaVec &amp; oldVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; newVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> defaultVal =0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-reassign">reassign</a></strong>(armaSubVec &amp; oldVar, armaVec &amp; newVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> defaultVal =0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-reassign">reassign</a></strong>(armaSubVec &amp; oldVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; newVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> defaultVal =0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-reassign">reassign</a></strong>(armaMat &amp; oldVar, armaMat &amp; newVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> defaultVal =0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-reassign">reassign</a></strong>(armaMat &amp; oldVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; newVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> defaultVal =0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-reassign">reassign</a></strong>(armaSubMat &amp; oldVar, armaMat &amp; newVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> defaultVal =0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-reassign">reassign</a></strong>(armaSubMat &amp; oldVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; newVar, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> defaultVal =0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-limit">limit</a></strong>(<a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">stdVec</a> &amp; x, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp; lb, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp; ub)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-limit">limit</a></strong>(armaVec &amp; x, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp; lb, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp; ub)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-limit">limit</a></strong>(armaMat &amp; x, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp; lb, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp; ub)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-defaultq">defaultQ</a></strong>()<br>Reset to default Q (identity matrix with diagonal elements q0)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#function-checkp">checkP</a></strong>()<br>check whether estimate covariance fals within plim upper bound</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Attributes inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/">lds::sys_t</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bool</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-adaptm">adaptM</a></strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Protected Attributes inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/">lds::sys_t</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-u">u</a></strong> <br>input</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-x">x</a></strong> <br>state</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-p">P</a></strong> <br>covariance of state estimate</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-m">m</a></strong> <br>process disturbance</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-p_m">P_m</a></strong> <br>covariance of disturbance estimate</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-x0">x0</a></strong> <br>initial state</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-p0">P0</a></strong> <br>covariance of initial state estimate</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-m0">m0</a></strong> <br>initial process disturbance</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-p0_m">P0_m</a></strong> <br>covariance of initial disturbance estimate</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-a">A</a></strong> <br>state matrix</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-b">B</a></strong> <br>input matrix</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-g">g</a></strong> <br>input gain</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-q">Q</a></strong> <br>covariance of process noise</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-q_m">Q_m</a></strong> <br>covoariance of disturbance evolution process</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-dt">dt</a></strong> <br>sample period</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-q0">q0</a></strong> <br>default process noise covariance</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-p0">p0</a></strong> <br>default state estimate covariance</td>
+</tr>
+<tr>
+<td>std::size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-nx">nX</a></strong> <br>number of states</td>
+</tr>
+<tr>
+<td>std::size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-nu">nU</a></strong> <br>number of inputs</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-szchanged">szChanged</a></strong> <br>whether size of system changed (see <code>setDims</code>)</td>
+</tr>
+<tr>
+<td>const <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/#variable-plim">plim</a></strong> <br>limit for state estimate covariance</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<hr>
+<h2 id="public-function-details">
+  Public Function Details
+  <a class="anchor" href="#public-function-details">#</a>
+</h2>
+<h3 id="filter">
+  <strong>filter</strong>
+  <a class="anchor" href="#filter">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> filter(
+    armaVec <span style="color:#f92672">&amp;</span> u_tm1,
+    armaVec <span style="color:#f92672">&amp;</span> z_t,
+    <span style="color:#66d9ef">bool</span> doRecurse_Ke <span style="color:#f92672">=</span>true
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>u_tm1</strong> input at t-minus-1</li>
+<li><strong>z_t</strong> current measurement</li>
+<li><strong>doRecurse_Ke</strong> whether to calculate the Kalman estimator gain (Ke) recursively</li>
+</ul>
+<p>Given current measurment and input, filter data to produce causal state estimates using Kalman filtering, which procedes by predicting the state and subsequently updating.</p>
+<hr>
+<h3 id="filter-1">
+  <strong>filter</strong>
+  <a class="anchor" href="#filter-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> filter(
+    armaVec <span style="color:#f92672">&amp;</span> z,
+    <span style="color:#66d9ef">bool</span> doRecurse_Ke <span style="color:#f92672">=</span>true
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>z</strong> current measurement</li>
+<li><strong>doRecurse_Ke</strong> whether to calculate the Kalman estimator gain (Ke) recursively</li>
+</ul>
+<p>Given current measurment, filter data to produce causal state estimates using Kalman filtering, which procedes by predicting the state and subsequently updating.</p>
+<hr>
+<h3 id="simmeasurement">
+  <strong>simMeasurement</strong>
+  <a class="anchor" href="#simmeasurement">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> simMeasurement(
+    armaVec <span style="color:#f92672">&amp;</span> z
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>z</strong> measurement</li>
+</ul>
+<p>Simulate system measurement: z ~ Poisson(y)</p>
+<p>n.b., In reality, this is only Poisson where rate <code>y</code> and sample period <code>dt</code> are sufficiently small there is only ever 0 or 1 events in a period. If either of those is violated, results will be innacurate.</p>
+<hr>
+<h3 id="sys_t">
+  <strong>sys_t</strong>
+  <a class="anchor" href="#sys_t">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">sys_t(
+    std<span style="color:#f92672">::</span>size_t nU,
+    std<span style="color:#f92672">::</span>size_t nX,
+    std<span style="color:#f92672">::</span>size_t nY,
+    data_t <span style="color:#f92672">&amp;</span> dt,
+    data_t <span style="color:#f92672">&amp;</span> p0 <span style="color:#f92672">=</span>DEFAULT_P0,
+    data_t <span style="color:#f92672">&amp;</span> q0 <span style="color:#f92672">=</span>DEFAULT_Q0,
+    data_t <span style="color:#f92672">&amp;</span> r0 <span style="color:#f92672">=</span>DEFAULT_R0
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>nU</strong> number of inputs (u)</li>
+<li><strong>nX</strong> number of states (x)</li>
+<li><strong>nY</strong> number of outputs (y)</li>
+<li><strong>dt</strong> sample period</li>
+<li><strong>p0</strong> [optional] initial diagonal elements of state estimate covariance (P)</li>
+<li><strong>q0</strong> [optional] initial diagonal elements of process noise covariance (Q)</li>
+<li><strong>r0</strong> [optional] initial diagonal elements of output noise covariance (R)</li>
+</ul>
+<hr>
+<h3 id="operator">
+  <strong>operator=</strong>
+  <a class="anchor" href="#operator">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">sys_t <span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(
+    <span style="color:#66d9ef">const</span> sys_t <span style="color:#f92672">&amp;</span> sys
+)
+</code></pre></div><hr>
+<h3 id="getny">
+  <strong>getNy</strong>
+  <a class="anchor" href="#getny">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> size_t getNy() <span style="color:#66d9ef">const</span>
+</code></pre></div><hr>
+<h3 id="getc">
+  <strong>getC</strong>
+  <a class="anchor" href="#getc">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> armaMat getC() <span style="color:#66d9ef">const</span>
+</code></pre></div><hr>
+<h3 id="getd">
+  <strong>getD</strong>
+  <a class="anchor" href="#getd">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> armaVec getD() <span style="color:#66d9ef">const</span>
+</code></pre></div><hr>
+<h3 id="getr">
+  <strong>getR</strong>
+  <a class="anchor" href="#getr">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> armaVec getR() <span style="color:#66d9ef">const</span>
+</code></pre></div><hr>
+<h3 id="gety">
+  <strong>getY</strong>
+  <a class="anchor" href="#gety">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> armaVec getY() <span style="color:#66d9ef">const</span>
+</code></pre></div><hr>
+<h3 id="getz">
+  <strong>getZ</strong>
+  <a class="anchor" href="#getz">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> armaVec getZ() <span style="color:#66d9ef">const</span>
+</code></pre></div><hr>
+<h3 id="getke">
+  <strong>getKe</strong>
+  <a class="anchor" href="#getke">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> armaMat getKe() <span style="color:#66d9ef">const</span>
+</code></pre></div><hr>
+<h3 id="getke_m">
+  <strong>getKe_m</strong>
+  <a class="anchor" href="#getke_m">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> armaMat getKe_m() <span style="color:#66d9ef">const</span>
+</code></pre></div><hr>
+<h3 id="setdims">
+  <strong>setDims</strong>
+  <a class="anchor" href="#setdims">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setDims(
+    std<span style="color:#f92672">::</span>size_t <span style="color:#f92672">&amp;</span> nU,
+    std<span style="color:#f92672">::</span>size_t <span style="color:#f92672">&amp;</span> nX,
+    std<span style="color:#f92672">::</span>size_t <span style="color:#f92672">&amp;</span> nY
+)
+</code></pre></div><hr>
+<h3 id="setc">
+  <strong>setC</strong>
+  <a class="anchor" href="#setc">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setC(
+    stdVec <span style="color:#f92672">&amp;</span> cVec
+)
+</code></pre></div><hr>
+<h3 id="setc-1">
+  <strong>setC</strong>
+  <a class="anchor" href="#setc-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setC(
+    armaMat <span style="color:#f92672">&amp;</span> C
+)
+</code></pre></div><hr>
+<h3 id="setd">
+  <strong>setD</strong>
+  <a class="anchor" href="#setd">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setD(
+    stdVec <span style="color:#f92672">&amp;</span> dVec
+)
+</code></pre></div><hr>
+<h3 id="setd-1">
+  <strong>setD</strong>
+  <a class="anchor" href="#setd-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setD(
+    armaVec <span style="color:#f92672">&amp;</span> d
+)
+</code></pre></div><hr>
+<h3 id="setr">
+  <strong>setR</strong>
+  <a class="anchor" href="#setr">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setR(
+    stdVec <span style="color:#f92672">&amp;</span> rVec
+)
+</code></pre></div><hr>
+<h3 id="setr-1">
+  <strong>setR</strong>
+  <a class="anchor" href="#setr-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setR(
+    armaMat <span style="color:#f92672">&amp;</span> R
+)
+</code></pre></div><hr>
+<h3 id="setz">
+  <strong>setZ</strong>
+  <a class="anchor" href="#setz">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setZ(
+    stdVec <span style="color:#f92672">&amp;</span> zVec
+)
+</code></pre></div><hr>
+<h3 id="setz-1">
+  <strong>setZ</strong>
+  <a class="anchor" href="#setz-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setZ(
+    armaVec <span style="color:#f92672">&amp;</span> z
+)
+</code></pre></div><hr>
+<h3 id="setke">
+  <strong>setKe</strong>
+  <a class="anchor" href="#setke">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setKe(
+    stdVec <span style="color:#f92672">&amp;</span> keVec
+)
+</code></pre></div><hr>
+<h3 id="setke-1">
+  <strong>setKe</strong>
+  <a class="anchor" href="#setke-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setKe(
+    armaMat <span style="color:#f92672">&amp;</span> Ke
+)
+</code></pre></div><hr>
+<h3 id="setke_m">
+  <strong>setKe_m</strong>
+  <a class="anchor" href="#setke_m">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setKe_m(
+    stdVec <span style="color:#f92672">&amp;</span> kemVec
+)
+</code></pre></div><hr>
+<h3 id="setke_m-1">
+  <strong>setKe_m</strong>
+  <a class="anchor" href="#setke_m-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> setKe_m(
+    armaMat <span style="color:#f92672">&amp;</span> Ke_m
+)
+</code></pre></div><hr>
+<h3 id="reset">
+  <strong>reset</strong>
+  <a class="anchor" href="#reset">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> reset()
+</code></pre></div><hr>
+<h3 id="printsys">
+  <strong>printSys</strong>
+  <a class="anchor" href="#printsys">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> printSys()
+</code></pre></div><hr>
+<h2 id="protected-function-details">
+  Protected Function Details
+  <a class="anchor" href="#protected-function-details">#</a>
+</h2>
+<h3 id="recurse_ke">
+  <strong>recurse_Ke</strong>
+  <a class="anchor" href="#recurse_ke">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> recurse_Ke()
+</code></pre></div><hr>
+<h3 id="predict">
+  <strong>predict</strong>
+  <a class="anchor" href="#predict">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> predict()
+</code></pre></div><hr>
+<h3 id="h">
+  <strong>h</strong>
+  <a class="anchor" href="#h">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> h()
+</code></pre></div><hr>
+<h3 id="defaultr">
+  <strong>defaultR</strong>
+  <a class="anchor" href="#defaultr">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> defaultR()
+</code></pre></div><hr>
+<h2 id="protected-attribute-details">
+  Protected Attribute Details
+  <a class="anchor" href="#protected-attribute-details">#</a>
+</h2>
+<h3 id="ny">
+  <strong>nY</strong>
+  <a class="anchor" href="#ny">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">std<span style="color:#f92672">::</span>size_t nY;
+</code></pre></div><hr>
+<h3 id="c">
+  <strong>C</strong>
+  <a class="anchor" href="#c">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat C;
+</code></pre></div><hr>
+<h3 id="d">
+  <strong>d</strong>
+  <a class="anchor" href="#d">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec d;
+</code></pre></div><hr>
+<h3 id="r">
+  <strong>R</strong>
+  <a class="anchor" href="#r">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat R;
+</code></pre></div><hr>
+<h3 id="r0">
+  <strong>r0</strong>
+  <a class="anchor" href="#r0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">data_t <span style="color:#f92672">&amp;</span> r0;
+</code></pre></div><hr>
+<h3 id="y">
+  <strong>y</strong>
+  <a class="anchor" href="#y">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec y;
+</code></pre></div><hr>
+<h3 id="z">
+  <strong>z</strong>
+  <a class="anchor" href="#z">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec z;
+</code></pre></div><hr>
+<h3 id="ke">
+  <strong>Ke</strong>
+  <a class="anchor" href="#ke">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat Ke;
+</code></pre></div><hr>
+<h3 id="ke_m">
+  <strong>Ke_m</strong>
+  <a class="anchor" href="#ke_m">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat Ke_m;
+</code></pre></div><hr>
+<hr>
+<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsgaussiansys_t">lds::gaussian::sys_t</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#protected-functions">Protected Functions</a></li>
+        <li><a href="#protected-attributes">Protected Attributes</a></li>
+        <li><a href="#additional-inherited-members">Additional inherited members</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#filter"><strong>filter</strong></a></li>
+            <li><a href="#filter-1"><strong>filter</strong></a></li>
+            <li><a href="#simmeasurement"><strong>simMeasurement</strong></a></li>
+            <li><a href="#sys_t"><strong>sys_t</strong></a></li>
+            <li><a href="#operator"><strong>operator=</strong></a></li>
+            <li><a href="#getny"><strong>getNy</strong></a></li>
+            <li><a href="#getc"><strong>getC</strong></a></li>
+            <li><a href="#getd"><strong>getD</strong></a></li>
+            <li><a href="#getr"><strong>getR</strong></a></li>
+            <li><a href="#gety"><strong>getY</strong></a></li>
+            <li><a href="#getz"><strong>getZ</strong></a></li>
+            <li><a href="#getke"><strong>getKe</strong></a></li>
+            <li><a href="#getke_m"><strong>getKe_m</strong></a></li>
+            <li><a href="#setdims"><strong>setDims</strong></a></li>
+            <li><a href="#setc"><strong>setC</strong></a></li>
+            <li><a href="#setc-1"><strong>setC</strong></a></li>
+            <li><a href="#setd"><strong>setD</strong></a></li>
+            <li><a href="#setd-1"><strong>setD</strong></a></li>
+            <li><a href="#setr"><strong>setR</strong></a></li>
+            <li><a href="#setr-1"><strong>setR</strong></a></li>
+            <li><a href="#setz"><strong>setZ</strong></a></li>
+            <li><a href="#setz-1"><strong>setZ</strong></a></li>
+            <li><a href="#setke"><strong>setKe</strong></a></li>
+            <li><a href="#setke-1"><strong>setKe</strong></a></li>
+            <li><a href="#setke_m"><strong>setKe_m</strong></a></li>
+            <li><a href="#setke_m-1"><strong>setKe_m</strong></a></li>
+            <li><a href="#reset"><strong>reset</strong></a></li>
+            <li><a href="#printsys"><strong>printSys</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-function-details">Protected Function Details</a>
+          <ul>
+            <li><a href="#recurse_ke"><strong>recurse_Ke</strong></a></li>
+            <li><a href="#predict"><strong>predict</strong></a></li>
+            <li><a href="#h"><strong>h</strong></a></li>
+            <li><a href="#defaultr"><strong>defaultR</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-attribute-details">Protected Attribute Details</a>
+          <ul>
+            <li><a href="#ny"><strong>nY</strong></a></li>
+            <li><a href="#c"><strong>C</strong></a></li>
+            <li><a href="#d"><strong>d</strong></a></li>
+            <li><a href="#r"><strong>R</strong></a></li>
+            <li><a href="#r0"><strong>r0</strong></a></li>
+            <li><a href="#y"><strong>y</strong></a></li>
+            <li><a href="#z"><strong>z</strong></a></li>
+            <li><a href="#ke"><strong>Ke</strong></a></li>
+            <li><a href="#ke_m"><strong>Ke_m</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

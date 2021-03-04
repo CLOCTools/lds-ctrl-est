@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PLDS controller type.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="ldsCtrlEst_h/lds_poisson_ctrl.h" />
+<meta property="og:description" content="PLDS controller type." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__ctrl_8h/" />
+
+<title>ldsCtrlEst_h/lds_poisson_ctrl.h | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>ldsCtrlEst_h/lds_poisson_ctrl.h</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsctrlest_hlds_poisson_ctrlh">ldsCtrlEst_h/lds_poisson_ctrl.h</a>
+      <ul>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsctrlest_hlds_poisson_ctrlh">
+  ldsCtrlEst_h/lds_poisson_ctrl.h
+  <a class="anchor" href="#ldsctrlest_hlds_poisson_ctrlh">#</a>
+</h1>
+<p>PLDS controller type.  <a href="#detailed-description">More&hellip;</a></p>
+<h2 id="namespaces">
+  Namespaces
+  <a class="anchor" href="#namespaces">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/">lds</a></strong> <br>Linear Dynamical Systems (LDS) namespace.</td>
+</tr>
+<tr>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/">lds::poisson</a></strong> <br>Linear Dynamical Systems with Poisson observations.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="classes">
+  Classes
+  <a class="anchor" href="#classes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ctrl__t/">lds::poisson::ctrl_t</a></strong> <br>PLDS Controller Type.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<p>This file declares and partially defines the type for feedback control of a Poisson-output linear dynamical system (<code>[lds::poisson::ctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ctrl__t/)</code>). It inherits functionality from the underlying PLDS model type (<code>[lds::poisson::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/)</code>), including state estimation.</p>
+<h2 id="source-code">
+  Source code
+  <a class="anchor" href="#source-code">#</a>
+</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_poisson_ctrl.h - PLDS Controller -------*- C++ -*-===//
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+</span><span style="color:#75715e">// you may not use this file except in compliance with the License.
+</span><span style="color:#75715e">// You may obtain a copy of the License at
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">//     http://www.apache.org/licenses/LICENSE-2.0
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Unless required by applicable law or agreed to in writing, software
+</span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span style="color:#75715e">// See the License for the specific language governing permissions and
+</span><span style="color:#75715e">// limitations under the License.
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#ifndef LDSCTRLEST_LDS_POISSON_CTRL_H
+</span><span style="color:#75715e">#define LDSCTRLEST_LDS_POISSON_CTRL_H
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#ifndef LDSCTRLEST
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">namespace</span> lds {
+<span style="color:#66d9ef">namespace</span> poisson {
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ctrl_t</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> sys_t {
+ <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+  ctrl_t(std<span style="color:#f92672">::</span>size_t nU, std<span style="color:#f92672">::</span>size_t nX, std<span style="color:#f92672">::</span>size_t nY, data_t<span style="color:#f92672">&amp;</span> uLB,
+         data_t<span style="color:#f92672">&amp;</span> uUB, data_t<span style="color:#f92672">&amp;</span> dt, data_t<span style="color:#f92672">&amp;</span> p0 <span style="color:#f92672">=</span> DEFAULT_P0,
+         data_t<span style="color:#f92672">&amp;</span> q0 <span style="color:#f92672">=</span> DEFAULT_Q0, size_t controlType <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+  ctrl_t<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(<span style="color:#66d9ef">const</span> ctrl_t<span style="color:#f92672">&amp;</span> sys);
+
+  <span style="color:#75715e">/*
+</span><span style="color:#75715e">   * Perform a single step of feedback control. Note that this performs control
+</span><span style="color:#75715e">   * in the log-output space which is linear given the choice of exponential
+</span><span style="color:#75715e">   * nonlinearity.
+</span><span style="color:#75715e">   *
+</span><span style="color:#75715e">   * n.b., Requires user to have set the controller&#39;s `xRef` and `uRef`
+</span><span style="color:#75715e">   * variables.
+</span><span style="color:#75715e">   *
+</span><span style="color:#75715e">   * @brief      log-linear feedback control (single-step)
+</span><span style="color:#75715e">   *
+</span><span style="color:#75715e">   * @param      z                 measurement
+</span><span style="color:#75715e">   * @param      gateCtrl          [optional] logical gate of control
+</span><span style="color:#75715e">   *                               (high=enabled; low=disabled)
+</span><span style="color:#75715e">   * @param      gateLock          [optional] logical gate of control signal
+</span><span style="color:#75715e">   *                               lock (if high, locks control at current
+</span><span style="color:#75715e">   *                               value)
+</span><span style="color:#75715e">   * @param      sigma_softStart   [optional] standard deviation (sigma) of a
+</span><span style="color:#75715e">   *                               Gaussian soft-start to control
+</span><span style="color:#75715e">   * @param      sigma_uNoise      [optional] standard deviation (sigma) of
+</span><span style="color:#75715e">   *                               Gaussian noise added on top of control signal
+</span><span style="color:#75715e">   * @param      resetAtCtrlOnset  [optional] whether to reset controller at
+</span><span style="color:#75715e">   *                               onset of a new control epoch (gateCtrl from
+</span><span style="color:#75715e">   *                               low to high)
+</span><span style="color:#75715e">   */</span>
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">logLin_fbCtrl</span>(armaVec<span style="color:#f92672">&amp;</span> z, <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> gateCtrl <span style="color:#f92672">=</span> TRUE, <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> gateLock <span style="color:#f92672">=</span> FALSE,
+                     data_t<span style="color:#f92672">&amp;</span> sigma_softStart <span style="color:#f92672">=</span> DEFAULT_SOFTSTART,
+                     data_t<span style="color:#f92672">&amp;</span> sigma_uNoise <span style="color:#f92672">=</span> DATA_T_ZERO,
+                     <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> resetAtCtrlOnset <span style="color:#f92672">=</span> TRUE);
+
+  <span style="color:#75715e">// Steady-state solution to log-linear control problem. Given user-supplied
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// yRef --&gt; steady state sol&#39;z [xRef, uRef] --&gt; control
+</span><span style="color:#75715e"></span>
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">steadyState_logLin_fbCtrl</span>(armaVec<span style="color:#f92672">&amp;</span> z, <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> gateCtrl <span style="color:#f92672">=</span> TRUE,
+                                 <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> gateEst <span style="color:#f92672">=</span> TRUE, <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> gateLock <span style="color:#f92672">=</span> FALSE,
+                                 data_t<span style="color:#f92672">&amp;</span> sigma_softStart <span style="color:#f92672">=</span> DEFAULT_SOFTSTART,
+                                 data_t<span style="color:#f92672">&amp;</span> sigma_uNoise <span style="color:#f92672">=</span> DATA_T_ZERO,
+                                 <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> resetAtCtrlOnset <span style="color:#f92672">=</span> TRUE);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">calc_ssSetPt</span>();
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">printSys</span>();
+
+  <span style="color:#75715e">// set methods
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// make sure to override the setU behavior inherited from sys_t!
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// cannot set u for a controller, as it generates its own.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setU</span>(stdVec<span style="color:#f92672">&amp;</span> uVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setU</span>(armaVec<span style="color:#f92672">&amp;</span> u);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setG</span>(stdVec<span style="color:#f92672">&amp;</span> gVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setG</span>(armaVec<span style="color:#f92672">&amp;</span> g);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setGDesign</span>(stdVec<span style="color:#f92672">&amp;</span> gVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setGDesign</span>(armaVec<span style="color:#f92672">&amp;</span> g);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setURef</span>(stdVec<span style="color:#f92672">&amp;</span> uRefVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setURef</span>(armaVec<span style="color:#f92672">&amp;</span> uRef);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setXRef</span>(stdVec<span style="color:#f92672">&amp;</span> xRefVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setXRef</span>(armaVec<span style="color:#f92672">&amp;</span> xRef);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setYRef</span>(stdVec<span style="color:#f92672">&amp;</span> yRefVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setYRef</span>(armaVec<span style="color:#f92672">&amp;</span> yRef);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_x</span>(stdVec<span style="color:#f92672">&amp;</span> Kc_xVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_x</span>(armaMat<span style="color:#f92672">&amp;</span> Kc_x);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_u</span>(stdVec<span style="color:#f92672">&amp;</span> Kc_uVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_u</span>(armaMat<span style="color:#f92672">&amp;</span> Kc_u);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_inty</span>(stdVec<span style="color:#f92672">&amp;</span> Kc_intyVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_inty</span>(armaMat<span style="color:#f92672">&amp;</span> Kc_inty);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setControlType</span>(size_t controlType);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setTauAntiWindup</span>(data_t<span style="color:#f92672">&amp;</span> tau);
+
+  armaMat <span style="color:#a6e22e">getKc_u</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Kc_u; };
+  armaMat <span style="color:#a6e22e">getKc_x</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Kc_x; };
+  armaMat <span style="color:#a6e22e">getKc_inty</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Kc_inty; };
+  armaVec <span style="color:#a6e22e">getGDesign</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> gDesign; };
+  armaVec <span style="color:#a6e22e">getURef</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> uRef; };
+  armaVec <span style="color:#a6e22e">getXRef</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> xRef; };
+  armaVec <span style="color:#a6e22e">getLogYRef</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> logyRef; };
+  armaVec <span style="color:#a6e22e">getYRef</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> yRef; };
+  armaVec <span style="color:#a6e22e">getLogY</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> logy; };
+  armaVec <span style="color:#a6e22e">getIntE</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> intE; };
+  size_t <span style="color:#a6e22e">getControlType</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> controlType; };
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reset</span>();
+
+ <span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
+  armaVec gDesign;  
+
+  <span style="color:#75715e">//  reference signals
+</span><span style="color:#75715e"></span>  armaVec uRef;       
+  armaVec uRef_prev;  
+  armaVec xRef;       
+  armaVec logyRef;    
+  armaVec yRef;       
+
+  <span style="color:#75715e">// Controller gains
+</span><span style="color:#75715e"></span>  armaMat Kc_x;  
+  armaMat
+      Kc_u;  
+  armaMat Kc_inty;  
+
+  <span style="color:#75715e">// control after g inversion (partial fb linearization)
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// do not need set methods for these.
+</span><span style="color:#75715e"></span>  armaVec duRef;
+  armaVec dvRef;
+  armaVec vRef;
+  armaVec dv;
+  armaVec v;  
+
+  <span style="color:#75715e">// integral error
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// do not need set method for this
+</span><span style="color:#75715e"></span>  armaVec intE;            
+  armaVec intE_awuAdjust;  
+  armaVec uSat;            
+
+  <span style="color:#66d9ef">bool</span> gateCtrl_prev;
+  <span style="color:#66d9ef">bool</span> gateLock_prev;
+
+  data_t yRefLB;  
+
+  <span style="color:#75715e">// I think it should be safe to have references here bc there is nothing I
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// need to do (like reset vars) when it changes...
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">bool</span> uSaturated;  
+
+  data_t<span style="color:#f92672">&amp;</span> uLB;  
+  data_t<span style="color:#f92672">&amp;</span> uUB;  
+
+  data_t tauAntiWindup;  
+  data_t kAntiWindup;
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">antiWindup</span>();
+
+  data_t t_since_ctrl_onset;  
+
+  size_t controlType;  
+
+ <span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+  <span style="color:#66d9ef">void</span> calc_logLinCtrl(<span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> gateCtrl, <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> gateEst, <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> gateLock,
+                       data_t<span style="color:#f92672">&amp;</span> sigma_softStart, data_t<span style="color:#f92672">&amp;</span> sigma_uNoise,
+                       <span style="color:#66d9ef">bool</span><span style="color:#f92672">&amp;</span> resetAtCtrlOnset);
+};
+}  <span style="color:#75715e">// namespace poisson
+</span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace lds
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_poisson_sctrl.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#endif
+</span></code></pre></div><hr>
+<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsctrlest_hlds_poisson_ctrlh">ldsCtrlEst_h/lds_poisson_ctrl.h</a>
+      <ul>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

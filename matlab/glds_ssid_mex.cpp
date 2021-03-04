@@ -1,4 +1,4 @@
-#include <ldsCtrlEst_h/mex_cpp_util.hpp>
+#include <ldsCtrlEst_h/mex_cpp_util.h>
 
 using matlab::data::Array;
 using matlab::data::ArrayFactory;
