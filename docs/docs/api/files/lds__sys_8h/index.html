@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="LDS base type.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="ldsCtrlEst_h/lds_sys.h" />
+<meta property="og:description" content="LDS base type." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8h/" />
+
+<title>ldsCtrlEst_h/lds_sys.h | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>ldsCtrlEst_h/lds_sys.h</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsctrlest_hlds_sysh">ldsCtrlEst_h/lds_sys.h</a>
+      <ul>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsctrlest_hlds_sysh">
+  ldsCtrlEst_h/lds_sys.h
+  <a class="anchor" href="#ldsctrlest_hlds_sysh">#</a>
+</h1>
+<p>LDS base type.  <a href="#detailed-description">More&hellip;</a></p>
+<h2 id="namespaces">
+  Namespaces
+  <a class="anchor" href="#namespaces">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds/">lds</a></strong> <br>Linear Dynamical Systems (LDS) namespace.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="classes">
+  Classes
+  <a class="anchor" href="#classes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/">lds::sys_t</a></strong> <br>Linear Dynamical System Type.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<p>This file declares and partially defines the base type for linear dynamical systems (<code>[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)</code>). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class.</p>
+<h2 id="source-code">
+  Source code
+  <a class="anchor" href="#source-code">#</a>
+</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_sys.h - LDS ----------------------------*- C++ -*-===//
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+</span><span style="color:#75715e">// you may not use this file except in compliance with the License.
+</span><span style="color:#75715e">// You may obtain a copy of the License at
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">//     http://www.apache.org/licenses/LICENSE-2.0
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Unless required by applicable law or agreed to in writing, software
+</span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span style="color:#75715e">// See the License for the specific language governing permissions and
+</span><span style="color:#75715e">// limitations under the License.
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#ifndef LDSCTRLEST_LDS_SYS_H
+</span><span style="color:#75715e">#define LDSCTRLEST_LDS_SYS_H
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#ifndef LDSCTRLEST
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#endif
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">namespace</span> lds {
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">sys_t</span> {
+ <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+  sys_t(std<span style="color:#f92672">::</span>size_t nU, std<span style="color:#f92672">::</span>size_t nX, data_t<span style="color:#f92672">&amp;</span> dt, data_t<span style="color:#f92672">&amp;</span> p0 <span style="color:#f92672">=</span> DEFAULT_P0,
+        data_t<span style="color:#f92672">&amp;</span> q0 <span style="color:#f92672">=</span> DEFAULT_Q0);
+  sys_t<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(<span style="color:#66d9ef">const</span> sys_t<span style="color:#f92672">&amp;</span> sys);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">simPredict</span>();
+
+  size_t <span style="color:#a6e22e">getNx</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> nX; };
+
+  size_t <span style="color:#a6e22e">getNu</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> nU; };
+
+  armaVec <span style="color:#a6e22e">getU</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> u; };
+
+  armaVec <span style="color:#a6e22e">getX</span>() { <span style="color:#66d9ef">return</span> x; };
+
+  armaVec <span style="color:#a6e22e">getG</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> g; };
+
+  armaVec <span style="color:#a6e22e">getM</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m; };
+
+  armaMat <span style="color:#a6e22e">getA</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> A; };
+
+  armaMat <span style="color:#a6e22e">getB</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> B; };
+
+  armaMat <span style="color:#a6e22e">getQ</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Q; };
+
+  armaMat <span style="color:#a6e22e">getQ_m</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Q_m; };
+
+  armaMat <span style="color:#a6e22e">getP</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P; };
+
+  armaMat <span style="color:#a6e22e">getP_m</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P_m; };
+
+  armaVec <span style="color:#a6e22e">getX0</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> x0; };
+
+  armaMat <span style="color:#a6e22e">getP0</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P0; };
+
+  armaVec <span style="color:#a6e22e">getM0</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m0; };
+
+  armaMat <span style="color:#a6e22e">getP0_m</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P0_m; };
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setDims</span>(std<span style="color:#f92672">::</span>size_t<span style="color:#f92672">&amp;</span> nU, std<span style="color:#f92672">::</span>size_t<span style="color:#f92672">&amp;</span> nX);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setU</span>(stdVec<span style="color:#f92672">&amp;</span> uVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setU</span>(armaVec<span style="color:#f92672">&amp;</span> u);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setA</span>(stdVec<span style="color:#f92672">&amp;</span> aVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setA</span>(armaMat<span style="color:#f92672">&amp;</span> A);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setB</span>(stdVec<span style="color:#f92672">&amp;</span> bVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setB</span>(armaMat<span style="color:#f92672">&amp;</span> B);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setM</span>(stdVec<span style="color:#f92672">&amp;</span> mVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setM</span>(armaVec<span style="color:#f92672">&amp;</span> m);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setG</span>(stdVec<span style="color:#f92672">&amp;</span> gVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setG</span>(armaVec<span style="color:#f92672">&amp;</span> g);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ</span>(stdVec<span style="color:#f92672">&amp;</span> qVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ</span>(armaMat<span style="color:#f92672">&amp;</span> Q);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ_m</span>(stdVec<span style="color:#f92672">&amp;</span> qmVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ_m</span>(armaMat<span style="color:#f92672">&amp;</span> Q_m);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setX0</span>(stdVec<span style="color:#f92672">&amp;</span> x0Vec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setX0</span>(armaVec<span style="color:#f92672">&amp;</span> x0);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0</span>(stdVec<span style="color:#f92672">&amp;</span> p0Vec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0</span>(armaMat<span style="color:#f92672">&amp;</span> P0);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0_m</span>(stdVec<span style="color:#f92672">&amp;</span> p0mVec);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0_m</span>(armaMat<span style="color:#f92672">&amp;</span> P0_m);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reset</span>();
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">printSys</span>();
+
+  <span style="color:#66d9ef">bool</span> adaptM;
+
+ <span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
+  armaVec u;    
+  armaVec x;    
+  armaMat P;    
+  armaVec m;    
+  armaMat P_m;  
+
+  <span style="color:#75715e">// Parameters:
+</span><span style="color:#75715e"></span>  armaVec x0;    
+  armaMat P0;    
+  armaVec m0;    
+  armaMat P0_m;  
+
+  armaMat A;    
+  armaMat B;    
+  armaVec g;    
+  armaMat Q;    
+  armaMat Q_m;  
+
+  <span style="color:#75715e">// it should be safe for dt to be a reference. I should not need to control
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// what the set behavior is.
+</span><span style="color:#75715e"></span>  data_t<span style="color:#f92672">&amp;</span> dt;  
+  data_t<span style="color:#f92672">&amp;</span> q0;  
+  data_t<span style="color:#f92672">&amp;</span> p0;  
+
+  <span style="color:#75715e">// dimensions
+</span><span style="color:#75715e"></span>  std<span style="color:#f92672">::</span>size_t nX;  
+  std<span style="color:#f92672">::</span>size_t nU;  
+  <span style="color:#66d9ef">bool</span> szChanged;  
+
+  <span style="color:#75715e">// max val for elements of P before reset for numerical reasons...
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> data_t plim <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e2</span>;  
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">predict</span>();
+
+  <span style="color:#75715e">// TODO(mfbolus): these are very redundant.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Should be able to use templates in some way to make this less type-specific
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaVec<span style="color:#f92672">&amp;</span> oldVar, armaVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaVec<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaSubVec<span style="color:#f92672">&amp;</span> oldVar, armaVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaSubVec<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaMat<span style="color:#f92672">&amp;</span> oldVar, armaMat<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaMat<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaSubMat<span style="color:#f92672">&amp;</span> oldVar, armaMat<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaSubMat<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">limit</span>(stdVec<span style="color:#f92672">&amp;</span> x, data_t<span style="color:#f92672">&amp;</span> lb, data_t<span style="color:#f92672">&amp;</span> ub);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">limit</span>(armaVec<span style="color:#f92672">&amp;</span> x, data_t<span style="color:#f92672">&amp;</span> lb, data_t<span style="color:#f92672">&amp;</span> ub);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">limit</span>(armaMat<span style="color:#f92672">&amp;</span> x, data_t<span style="color:#f92672">&amp;</span> lb, data_t<span style="color:#f92672">&amp;</span> ub);
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">defaultQ</span>();
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">checkP</span>();
+};  <span style="color:#75715e">// sys_t
+</span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace lds
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#endif
+</span></code></pre></div><hr>
+<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsctrlest_hlds_sysh">ldsCtrlEst_h/lds_sys.h</a>
+      <ul>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

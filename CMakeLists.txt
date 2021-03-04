@@ -98,6 +98,8 @@ endif()
 # pkg-config used for libraries that were not installed with CMake config files.
 # provides `pkg_check_modules`
 find_package(PkgConfig REQUIRED)
+find_package(Doxygen COMPONENTS dot
+             OPTIONAL_COMPONENTS mscgen dia)
 
 if(LDSCTRLEST_BUILD_STATIC)
   #statically-linking against openblas in this case
@@ -228,7 +230,7 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   # matlab
   if (Matlab_FOUND)
     file(
-      COPY ${PROJECT_SOURCE_DIR}/include/ldsCtrlEst_h/mex_cpp_util.hpp
+      COPY ${PROJECT_SOURCE_DIR}/include/ldsCtrlEst_h/mex_cpp_util.h
       DESTINATION ${PROJECT_BINARY_DIR}/include/ldsCtrlEst_h/
     )
 
@@ -247,7 +249,7 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   # octave
   if (Octave_FOUND)
     file(
-      COPY ${PROJECT_SOURCE_DIR}/include/ldsCtrlEst_h/mex_c_util.hpp
+      COPY ${PROJECT_SOURCE_DIR}/include/ldsCtrlEst_h/mex_c_util.h
       DESTINATION ${PROJECT_BINARY_DIR}/include/ldsCtrlEst_h/
       )
     file(
@@ -260,6 +262,25 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   else()
     message(STATUS "Octave was not found. Not building Octave oct/mex files.")
   endif()#end Octave_FOUND
+endif()
+
+# build doxygen documention
+# build documentation
+if(DOXYGEN_FOUND)
+  set(DOXYGEN_FULL_PATH_NAMES "NO")
+  set(DOXYGEN_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/doxygen")
+  set(DOXYGEN_HTML_OUTPUT "${PROJECT_BINARY_DIR}/doxygen/html")
+  set(DOXYGEN_GENERATE_XML "YES")
+  set(DOXYGEN_XML_OUTPUT "${PROJECT_BINARY_DIR}/doxygen/xml")
+  set(DOXYGEN_EXAMPLE_PATH "examples")
+  set(DOXYGEN_EXAMPLE_PATTERNS "*.cpp")
+  set(DOXYGEN_EXCLUDE_PATTERNS "*.m")
+
+  doxygen_add_docs(doxygen
+      ${PROJECT_BINARY_DIR}/include/ ${PROJECT_SOURCE_DIR}/src/ ${PROJECT_SOURCE_DIR}/examples/
+      ALL)
+elseif()
+  message("Doxygen not found. Will not generate docs ... ")
 endif()
 
 ################################################################################

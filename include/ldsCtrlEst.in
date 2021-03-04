@@ -1,10 +1,26 @@
-// -*- C++ -*-
-//===------------------------- ldsCtrlEst----------------------------------===//
+//===-- ldsCtrlEst - Library Preamble ---------------------------*- C++ -*-===//
 //
-// INSERT LICENSE + COPYRIGHT INFO
+// Copyright 2021 [name of copyright owner]
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
 //
 //===----------------------------------------------------------------------===//
-//
+///
+/// \file
+/// This file creates the preamble for the ldsCtrlEst library.
+///
+//===----------------------------------------------------------------------===//
+
 #ifndef LDSCTRLEST
 #define LDSCTRLEST
 
@@ -15,55 +31,15 @@
 #cmakedefine Matlab_FOUND
 #cmakedefine Octave_FOUND
 
-#include <matio.h>  //for read/write of matlab
+#include <armadillo> // for linear algebra and more
+#include <iostream> // for printing
+#include <chrono>  //for timing
 
-#include <armadillo>
-#include <chrono>  //for timing.
+// Parent `lds` namespace
+// (contains Gaussian and Poisson output variants)
+#include "ldsCtrlEst_h/lds.h"
 
-// n.b.: The order of these includes is important.
-// Do not call clang-format on this. It may re-order includes.
-
-// namespaces
-#include "ldsCtrlEst_h/lds.hpp"
-#include "ldsCtrlEst_h/lds_gaussian.hpp"
-#include "ldsCtrlEst_h/lds_poisson.hpp"
-
-// namespace-specific simulation, estimation, control
-#include "ldsCtrlEst_h/lds_sys.hpp"             ///< basic LDS type
-#include "ldsCtrlEst_h/lds_gaussian_sys.hpp"    ///< GLDS type (w/ estimation)
-#include "ldsCtrlEst_h/lds_gaussian_ctrl.hpp"   ///< GLDS sys + control
-#include "ldsCtrlEst_h/lds_gaussian_sctrl.hpp"  ///< switched GLDS control
-#include "ldsCtrlEst_h/lds_poisson_sys.hpp"     ///< PLDS type (w/ estimation)
-#include "ldsCtrlEst_h/lds_poisson_ctrl.hpp"    ///< PLDS sys + control
-#include "ldsCtrlEst_h/lds_poisson_sctrl.hpp"   ///< switched PLDS control
-
-// lds fitting
-#ifdef LDSCTRLEST_BUILD_FIT
-#include "ldsCtrlEst_h/lds_fit.hpp"             ///< basic fit type
-#include "ldsCtrlEst_h/lds_gaussian_fit.hpp"    ///< basic Gaussian fit type
-#include "ldsCtrlEst_h/lds_gaussian_em.hpp"     ///< GLDS E-M functionality
-#include "ldsCtrlEst_h/lds_gaussian_ssid.hpp"   ///< GLDS SSID functionality
-#include "ldsCtrlEst_h/lds_poisson_fit.hpp"     ///< basic Poisson fit type
-#include "ldsCtrlEst_h/lds_poisson_ssid.hpp"    ///< PLDS SSID functionality
-#endif
-
-// Matlab/Octave integration:
-// Keep the below commented out.
-// Must include the below directly from end-use mex file.
-// (i.e., `#include <ldsCtrlEst_h/mex_cpp_util.hpp>`)
-// In C++ API, without MexFunction class definition in eventual mex file,
-// complains of "incomplete type" MexFunction. User implementation completes it.
-
-// #ifdef Matlab_FOUND
-// #include "ldsCtrlEst_h/mex_cpp_util.hpp"  ///< utility functions for mex C++
-// // n.b., CANNOT use mex C and C++ API in same project b/c of redefinitions.
-// #else
-// #ifdef Octave_FOUND
-// #include "ldsCtrlEst_h/mex_c_util.hpp"   ///< utility functions for mex C API
-// #endif// if Octave_FOUND
-// #endif// if Matlab_FOUND
-
-// define shortened namespace aliases
+// define shortened namespace aliases for user convenience
 namespace glds = lds::gaussian;
 namespace plds = lds::poisson;
 

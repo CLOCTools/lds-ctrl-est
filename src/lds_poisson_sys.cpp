@@ -1,10 +1,35 @@
+//===-- lds_poisson_sys.cpp - PLDS ----------------------------------------===//
+//
+// Copyright 2021 [name of copyright owner]
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//===----------------------------------------------------------------------===//
+///
+/// \file
+/// This file implements the type for state estimation (filtering) as well as
+/// simulation of Poisson-output linear dynamical systems
+/// (`lds::poisson::sys_t`). It inherits functionality from the underlying
+/// linear dynamical system (`lds::sys_t`).
+///
+/// \brief PLDS base type
+//===----------------------------------------------------------------------===//
+
 #include <ldsCtrlEst>
 
 using namespace std;
 using namespace plds;
 
-// ******************* SYS_T *******************
-/* Constructor(s) for sys class... */
 plds::sys_t::sys_t(size_t nU, size_t nX, size_t nY, data_t& dt, data_t& p0,
                    data_t& q0)
     : lds::sys_t(nU, nX, dt, p0, q0) {
@@ -19,26 +44,26 @@ plds::sys_t::sys_t(size_t nU, size_t nX, size_t nY, data_t& dt, data_t& p0,
                                    // default (as many as possible)
   diag_y = diagmat(y);
 
-  // TODO: for some reason, on my mac, initializing with randu results in bus
-  // error! chance = armaVec(nY, fill::randu);
+  // TODO(mfbolus): for some reason, on my mac, initializing with randu results
+  // in bus error!
+  //
+  // chance = armaVec(nY, fill::randu);
   chance = armaVec(nY, fill::zeros);
 };
 
-/*
-predict: Given input, predict the state, covar
-*/
+// predict: Given input, predict the state, covar
 void plds::sys_t::predict() {
   lds::sys_t::predict();
   h();
 }
 
-/*
-Correct: Given measurement (z) and current input (u), update estimate of the
-state, covar, output. Eden et al. 2004
-*/
+// Correct: Given measurement (z) and current input (u), update estimate of the
+// state, covar, output.
+//
+// see Eden et al. 2004
 void plds::sys_t::filter(armaVec& z) {
   predict();
-  diag_y.diag() = y;
+  diag_y.diag() = y;  // need this for covariance update below
 
   // assign the measurement internal variable.
   setZ(z);
@@ -57,19 +82,16 @@ void plds::sys_t::filter(armaVec& z) {
   h();  // posterior
 }
 
-/*
-Output: y_{k} = h(x_{k})
-*/
+// Output: y_{k} = h(x_{k}) = exp(C * x_{k} + d)
 void plds::sys_t::h() {
   logy = C * x + d;
   y = exp(logy);
 }
 
-/*
-Measurement: z ~ Poiss(y)
-n.b., In reality, this is Poisson where lim_{y->0}.
-If either of those is violated, results will be innacurate.
-*/
+// Measurement: z ~ Poisson(y)
+// n.b., In reality, this is only Poisson where rate `y` and sample period `dt`
+// are sufficiently small there is only ever 0 or 1 events in a period. If
+// either of those is violated, results will be innacurate.
 void plds::sys_t::simMeasurement(armaVec& z) {
   h();
 
@@ -131,14 +153,14 @@ void plds::sys_t::printSys() {
 }
 
 plds::sys_t& plds::sys_t::operator=(const plds::sys_t& sys) {
-  // // would love to be able to re-use the lds code:
+  // TODO(mfbolus): would love to be able to re-use the lds code:
+  //
   // (*this) = lds::sys_t::operator=(sys);
-  // // but this does not work bc the input is plds::sys_t which is a subclass
-  // of lds::sys_t
-  // // Need to figure out if there is a way to write functions to apply to all
-  // subclasses (e.g., <lds::sys_t& sys)
+  //
+  // but this does not work bc the input is glds::sys_t which is a subclass of
+  // lds::sys_t. Need to figure out if there is a way to write functions to
+  // apply to all subclasses (e.g., <lds::sys_t& sys)
 
-  // Just going to copy code for now...
   // FROM LDS
   this->A = sys.A;
   this->B = sys.B;

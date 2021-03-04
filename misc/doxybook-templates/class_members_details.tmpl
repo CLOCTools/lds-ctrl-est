@@ -1,0 +1,151 @@
+---
+---
+{% if exists("publicTypes") %}## Public Type Details
+
+{% for child in publicTypes %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("protectedTypes") %}## Protected Type Details
+
+{% for child in protectedTypes %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("publicSlots") %}## Public Slot Details
+
+{% for child in publicSlots %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("protectedSlots") %}## Protected Slot Details
+
+{% for child in protectedSlots %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("publicSignals") %}## Public Signal Details
+
+{% for child in publicSignals %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("protectedSignals") %}## Protected Signal Details
+
+{% for child in protectedSignals %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("publicEvents") %}## Public Event Details
+
+{% for child in publicEvents %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("protectedEvents") %}## Protected Event Details
+
+{% for child in protectedEvents %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("publicFunctions") %}## Public Function Details
+
+{% for child in publicFunctions %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("protectedFunctions") %}## Protected Function Details
+
+{% for child in protectedFunctions %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("publicProperties") %}## Public Property Details
+
+{% for child in publicProperties %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("protectedProperties") %}## Protected Property  Details
+
+{% for child in protectedProperties %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("publicAttributes") %}## Public Attribute Details
+
+{% for child in publicAttributes %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("protectedAttributes") %}## Protected Attribute Details
+
+{% for child in protectedAttributes %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}
+
+{% if exists("friends") %}## Friend Details
+
+{% for child in friends %}### **{{child.name}}**
+
+{{ render("member_details", child) }}
+---
+{% endfor %}
+
+{% endif -%}

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="LDS Fit Type.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="lds::fit_t" />
+<meta property="og:description" content="LDS Fit Type." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1fit__t/" />
+
+<title>lds::fit_t | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::fit_t</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsfit_t">lds::fit_t</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#public-attributes">Public Attributes</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#fit_t"><strong>fit_t</strong></a></li>
+            <li><a href="#fit_t-1"><strong>fit_t</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#public-attribute-details">Public Attribute Details</a>
+          <ul>
+            <li><a href="#a"><strong>A</strong></a></li>
+            <li><a href="#b"><strong>B</strong></a></li>
+            <li><a href="#g"><strong>g</strong></a></li>
+            <li><a href="#m"><strong>m</strong></a></li>
+            <li><a href="#q"><strong>Q</strong></a></li>
+            <li><a href="#x0"><strong>x0</strong></a></li>
+            <li><a href="#p0"><strong>P0</strong></a></li>
+            <li><a href="#dt"><strong>dt</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsfit_t">
+  lds::fit_t
+  <a class="anchor" href="#ldsfit_t">#</a>
+</h1>
+<p>LDS Fit Type.
+<br /> <code>#include &lt;lds_fit.h&gt;</code></p>
+<p>Inherited by <a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/">lds::gaussian::fit_t</a>, <a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1fit__t/">lds::poisson::fit_t</a></p>
+<h2 id="public-functions">
+  Public Functions
+  <a class="anchor" href="#public-functions">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#function-fit_t">fit_t</a></strong>()</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#function-fit_t">fit_t</a></strong>(armaMat &amp; A, armaMat &amp; B, armaVec &amp; g, armaVec &amp; m, armaMat &amp; Q, armaVec &amp; x0, armaMat &amp; P0, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp; dt)<br>Constructs a new LDS fit type.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="public-attributes">
+  Public Attributes
+  <a class="anchor" href="#public-attributes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-a">A</a></strong> <br>state matrix</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-b">B</a></strong> <br>input matrix</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-g">g</a></strong> <br>input gain</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-m">m</a></strong> <br>process noise mean</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-q">Q</a></strong> <br>process noise cov</td>
+</tr>
+<tr>
+<td>armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-x0">x0</a></strong> <br>initial state</td>
+</tr>
+<tr>
+<td>armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-p0">P0</a></strong> <br>initial covar</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-dt">dt</a></strong> <br>sample period</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<hr>
+<h2 id="public-function-details">
+  Public Function Details
+  <a class="anchor" href="#public-function-details">#</a>
+</h2>
+<h3 id="fit_t">
+  <strong>fit_t</strong>
+  <a class="anchor" href="#fit_t">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> fit_t()
+</code></pre></div><hr>
+<h3 id="fit_t-1">
+  <strong>fit_t</strong>
+  <a class="anchor" href="#fit_t-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">fit_t(
+    armaMat <span style="color:#f92672">&amp;</span> A,
+    armaMat <span style="color:#f92672">&amp;</span> B,
+    armaVec <span style="color:#f92672">&amp;</span> g,
+    armaVec <span style="color:#f92672">&amp;</span> m,
+    armaMat <span style="color:#f92672">&amp;</span> Q,
+    armaVec <span style="color:#f92672">&amp;</span> x0,
+    armaMat <span style="color:#f92672">&amp;</span> P0,
+    data_t <span style="color:#f92672">&amp;</span> dt
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>A</strong> state matrix</li>
+<li><strong>B</strong> input matrix</li>
+<li><strong>g</strong> input gain</li>
+<li><strong>m</strong> process disturbance</li>
+<li><strong>Q</strong> process noise covariance</li>
+<li><strong>x0</strong> initial state estimate</li>
+<li><strong>P0</strong> covariance of initial state estimate</li>
+<li><strong>dt</strong> { parameter_description }</li>
+</ul>
+<hr>
+<h2 id="public-attribute-details">
+  Public Attribute Details
+  <a class="anchor" href="#public-attribute-details">#</a>
+</h2>
+<h3 id="a">
+  <strong>A</strong>
+  <a class="anchor" href="#a">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat A;
+</code></pre></div><hr>
+<h3 id="b">
+  <strong>B</strong>
+  <a class="anchor" href="#b">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat B;
+</code></pre></div><hr>
+<h3 id="g">
+  <strong>g</strong>
+  <a class="anchor" href="#g">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec g;
+</code></pre></div><hr>
+<h3 id="m">
+  <strong>m</strong>
+  <a class="anchor" href="#m">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec m;
+</code></pre></div><hr>
+<h3 id="q">
+  <strong>Q</strong>
+  <a class="anchor" href="#q">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat Q;
+</code></pre></div><hr>
+<h3 id="x0">
+  <strong>x0</strong>
+  <a class="anchor" href="#x0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec x0;
+</code></pre></div><hr>
+<h3 id="p0">
+  <strong>P0</strong>
+  <a class="anchor" href="#p0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat P0;
+</code></pre></div><hr>
+<h3 id="dt">
+  <strong>dt</strong>
+  <a class="anchor" href="#dt">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">data_t dt;
+</code></pre></div><hr>
+<hr>
+<p>Updated on  3 March 2021 at 23:06:11 CST</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsfit_t">lds::fit_t</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#public-attributes">Public Attributes</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#fit_t"><strong>fit_t</strong></a></li>
+            <li><a href="#fit_t-1"><strong>fit_t</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#public-attribute-details">Public Attribute Details</a>
+          <ul>
+            <li><a href="#a"><strong>A</strong></a></li>
+            <li><a href="#b"><strong>B</strong></a></li>
+            <li><a href="#g"><strong>g</strong></a></li>
+            <li><a href="#m"><strong>m</strong></a></li>
+            <li><a href="#q"><strong>Q</strong></a></li>
+            <li><a href="#x0"><strong>x0</strong></a></li>
+            <li><a href="#p0"><strong>P0</strong></a></li>
+            <li><a href="#dt"><strong>dt</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

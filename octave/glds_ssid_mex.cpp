@@ -1,5 +1,5 @@
 #include <iostream>
-#include <ldsCtrlEst_h/mex_c_util.hpp>
+#include <ldsCtrlEst_h/mex_c_util.h>
 
 ///[fit, sing_vals] = glds_ssid_mex(u, z, dt, n_x, [n_h, d0, force_unit_norm_C,
 ///which_wt, wt_g0, t0, t_startSSID, t_stopSSID])

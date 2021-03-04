@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Linear Dynamical Systems with Poisson observations.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="lds::poisson" />
+<meta property="og:description" content="Linear Dynamical Systems with Poisson observations." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/" />
+
+<title>lds::poisson | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::poisson</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldspoisson">lds::poisson</a>
+      <ul>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#types">Types</a></li>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#attributes">Attributes</a></li>
+        <li><a href="#type-details">Type Details</a>
+          <ul>
+            <li><a href="#data_t">data_t</a></li>
+            <li><a href="#stdvec">stdVec</a></li>
+            <li><a href="#armavec">armaVec</a></li>
+            <li><a href="#armamat">armaMat</a></li>
+            <li><a href="#armasubvec">armaSubVec</a></li>
+            <li><a href="#armasubmat">armaSubMat</a></li>
+          </ul>
+        </li>
+        <li><a href="#function-details">Function Details</a>
+          <ul>
+            <li><a href="#ssidfit">ssidFit</a></li>
+            <li><a href="#newtonsolvec_mle">newtonSolveC_mle</a></li>
+            <li><a href="#newtonsolve_rescalec_mle">newtonSolve_rescaleC_mle</a></li>
+            <li><a href="#calcd_mle">calcD_mle</a></li>
+            <li><a href="#calcd_newtonsolve_rescalec_mle">calcD_newtonSolve_rescaleC_mle</a></li>
+            <li><a href="#fitoutput_mle">fitOutput_mle</a></li>
+          </ul>
+        </li>
+        <li><a href="#attribute-details">Attribute Details</a>
+          <ul>
+            <li><a href="#control_type_u">CONTROL_TYPE_U</a></li>
+            <li><a href="#control_type_inty">CONTROL_TYPE_INTY</a></li>
+            <li><a href="#control_type_adapt_m">CONTROL_TYPE_ADAPT_M</a></li>
+            <li><a href="#data_t_zero">DATA_T_ZERO</a></li>
+            <li><a href="#data_t_one">DATA_T_ONE</a></li>
+            <li><a href="#default_softstart">DEFAULT_SOFTSTART</a></li>
+            <li><a href="#false">FALSE</a></li>
+            <li><a href="#true">TRUE</a></li>
+            <li><a href="#pi">pi</a></li>
+            <li><a href="#inf">inf</a></li>
+            <li><a href="#neginf">neginf</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldspoisson">
+  lds::poisson
+  <a class="anchor" href="#ldspoisson">#</a>
+</h1>
+<p>Linear Dynamical Systems with Poisson observations. <br></p>
+<h2 id="classes">
+  Classes
+  <a class="anchor" href="#classes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>class</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ctrl__t/">lds::poisson::ctrl_t</a></strong> <br>PLDS Controller Type.</td>
+</tr>
+<tr>
+<td>class</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1fit__t/">lds::poisson::fit_t</a></strong> <br>PLDS Fit Type.</td>
+</tr>
+<tr>
+<td>class</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ssid_fit__t/">lds::poisson::ssidFit_t</a></strong> <br>GLDS SSID Fit Type.</td>
+</tr>
+<tr>
+<td>class</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sctrl__t/">lds::poisson::sctrl_t</a></strong> <br>Switched PLDS Controller Type.</td>
+</tr>
+<tr>
+<td>class</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/">lds::poisson::sys_t</a></strong> <br>Poisson LDS Type.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="types">
+  Types
+  <a class="anchor" href="#types">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>typedef <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">lds::data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#typedef-data_t">data_t</a></strong></td>
+</tr>
+<tr>
+<td>typedef <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec">lds::stdVec</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#typedef-stdvec">stdVec</a></strong></td>
+</tr>
+<tr>
+<td>typedef lds::armaVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#typedef-armavec">armaVec</a></strong></td>
+</tr>
+<tr>
+<td>typedef lds::armaMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#typedef-armamat">armaMat</a></strong></td>
+</tr>
+<tr>
+<td>typedef lds::armaSubVec</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#typedef-armasubvec">armaSubVec</a></strong></td>
+</tr>
+<tr>
+<td>typedef lds::armaSubMat</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#typedef-armasubmat">armaSubMat</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="functions">
+  Functions
+  <a class="anchor" href="#functions">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::tuple&lt; <a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ssid_fit__t/">ssidFit_t</a>, <a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/">lds::gaussian::ssidFit_t</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#function-ssidfit">ssidFit</a></strong>(std::vector&lt; armaMat &gt; &amp; u, std::vector&lt; armaMat &gt; &amp; z, data_t dt, size_t nX, size_t nH =25, armaVec d0 =armaVec(1).fill(-inf), <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enum-ssidwt">ssidWt</a> wt =NONE, data_t wtG0 =0.0, std::vector&lt; data_t &gt; &amp; t0 =DEFAULT_T0, data_t t_startSSID =-std::numeric_limits&lt; data_t &gt;::infinity(), data_t t_stopSSID =std::numeric_limits&lt; data_t &gt;::infinity(), bool assumeGaussian =true)<br>Fit a PLDS model using subspace identification (SSID)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#function-newtonsolvec_mle">newtonSolveC_mle</a></strong>(armaMat &amp; C, armaVec &amp; d, std::vector&lt; armaMat &gt; &amp; x, std::vector&lt; armaMat &gt; &amp; n, data_t &amp; dt)<br>Solve for output matrix by Poisson MLE.</td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#function-newtonsolve_rescalec_mle">newtonSolve_rescaleC_mle</a></strong>(armaMat &amp; C, armaVec &amp; d, std::vector&lt; armaMat &gt; &amp; x, std::vector&lt; armaMat &gt; &amp; n, data_t &amp; dt)<br>Solve for rescaled output matrix by Poisson MLE.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#function-calcd_mle">calcD_mle</a></strong>(armaMat &amp; C, armaVec &amp; d, std::vector&lt; armaMat &gt; &amp; x, std::vector&lt; armaMat &gt; &amp; n, data_t &amp; dt)<br>Calculates output bias by Poisson MLE.</td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#function-calcd_newtonsolve_rescalec_mle">calcD_newtonSolve_rescaleC_mle</a></strong>(armaMat &amp; C, armaVec &amp; d, std::vector&lt; armaMat &gt; &amp; x, std::vector&lt; armaMat &gt; &amp; n, data_t &amp; dt)<br>Calculates output bias and rescaled output matrix by Poisson MLE.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#function-fitoutput_mle">fitOutput_mle</a></strong>(armaMat &amp; C, armaVec &amp; d, std::vector&lt; armaMat &gt; &amp; x, std::vector&lt; armaMat &gt; &amp; n, data_t &amp; dt)<br>Calculates exponential output function by Poisson MLE.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="attributes">
+  Attributes
+  <a class="anchor" href="#attributes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>const std::size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-control_type_u">CONTROL_TYPE_U</a></strong></td>
+</tr>
+<tr>
+<td>const std::size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-control_type_inty">CONTROL_TYPE_INTY</a></strong></td>
+</tr>
+<tr>
+<td>const std::size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-control_type_adapt_m">CONTROL_TYPE_ADAPT_M</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-data_t_zero">DATA_T_ZERO</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-data_t_one">DATA_T_ONE</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-default_softstart">DEFAULT_SOFTSTART</a></strong></td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-false">FALSE</a></strong></td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-true">TRUE</a></strong></td>
+</tr>
+<tr>
+<td>const data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-pi">pi</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-inf">inf</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/#variable-neginf">neginf</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="type-details">
+  Type Details
+  <a class="anchor" href="#type-details">#</a>
+</h2>
+<h3 id="data_t">
+  data_t
+  <a class="anchor" href="#data_t">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>data_t lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>data_t;
+</code></pre></div><h3 id="stdvec">
+  stdVec
+  <a class="anchor" href="#stdvec">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>stdVec lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>stdVec;
+</code></pre></div><h3 id="armavec">
+  armaVec
+  <a class="anchor" href="#armavec">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>armaVec lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>armaVec;
+</code></pre></div><h3 id="armamat">
+  armaMat
+  <a class="anchor" href="#armamat">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>armaMat lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>armaMat;
+</code></pre></div><h3 id="armasubvec">
+  armaSubVec
+  <a class="anchor" href="#armasubvec">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>armaSubVec lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>armaSubVec;
+</code></pre></div><h3 id="armasubmat">
+  armaSubMat
+  <a class="anchor" href="#armasubmat">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>armaSubMat lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>armaSubMat;
+</code></pre></div><h2 id="function-details">
+  Function Details
+  <a class="anchor" href="#function-details">#</a>
+</h2>
+<h3 id="ssidfit">
+  ssidFit
+  <a class="anchor" href="#ssidfit">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span> ssidFit_t, lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>ssidFit_t <span style="color:#f92672">&gt;</span> ssidFit(
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> u,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> z,
+    data_t dt,
+    size_t nX,
+    size_t nH <span style="color:#f92672">=</span><span style="color:#ae81ff">25</span>,
+    armaVec d0 <span style="color:#f92672">=</span>armaVec(<span style="color:#ae81ff">1</span>).fill(<span style="color:#f92672">-</span>inf),
+    ssidWt wt <span style="color:#f92672">=</span>NONE,
+    data_t wtG0 <span style="color:#f92672">=</span><span style="color:#ae81ff">0.0</span>,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> data_t <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> t0 <span style="color:#f92672">=</span>DEFAULT_T0,
+    data_t t_startSSID <span style="color:#f92672">=-</span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span> data_t <span style="color:#f92672">&gt;::</span>infinity(),
+    data_t t_stopSSID <span style="color:#f92672">=</span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span> data_t <span style="color:#f92672">&gt;::</span>infinity(),
+    <span style="color:#66d9ef">bool</span> assumeGaussian <span style="color:#f92672">=</span>true
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>u</strong> inputs</li>
+<li><strong>n</strong> { parameter_description }</li>
+<li><strong>dt</strong> sample period</li>
+<li><strong>nX</strong> number of states</li>
+<li><strong>nH</strong> block-Hankel data matrix size</li>
+<li><strong>d0</strong> previous estimate of output bias (d)</li>
+<li><strong>wt</strong> chosen weighting for SSID singular value \ decomposition (NONE, MOESP, CVA)</li>
+<li><strong>wtG0</strong> chosen weighting for minimizing model error at \ DC</li>
+<li><strong>t0</strong> start times for each trial of input/output data</li>
+<li><strong>t_startSSID</strong> start time for the data used in SSID</li>
+<li><strong>t_stopSSID</strong> stop time for the data used in SSID</li>
+<li><strong>assumeGaussian</strong> [NONFUNCTIONAL] whether to assume Gaussian observation model and fit by linear SSID first, then fit output nonlinearity by Poisson MLE</li>
+<li><strong>z</strong> measurements</li>
+</ul>
+<p><strong>Return</strong>: tuple&lt;PLDS fit, GLDS fit&gt;</p>
+<p>Fit PLDS model by subspace identification (SSID). System matrices (A,B,C) are fit by SSID assuming gaussian observations. Iteratively refits output function parameters (C, d) by Poisson MLE using Newton&rsquo;s method.</p>
+<h3 id="newtonsolvec_mle">
+  newtonSolveC_mle
+  <a class="anchor" href="#newtonsolvec_mle">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> newtonSolveC_mle(
+    armaMat <span style="color:#f92672">&amp;</span> C,
+    armaVec <span style="color:#f92672">&amp;</span> d,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> x,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> n,
+    data_t <span style="color:#f92672">&amp;</span> dt
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>C</strong> output matrix</li>
+<li><strong>d</strong> output bias</li>
+<li><strong>x</strong> state data</li>
+<li><strong>n</strong> measured count data</li>
+<li><strong>dt</strong> sample period</li>
+</ul>
+<p>Given dynamics and initial guess of output, solves for output matrix (C) by maximizing Poisson maximum likelihood using Newton&rsquo;s method.</p>
+<h3 id="newtonsolve_rescalec_mle">
+  newtonSolve_rescaleC_mle
+  <a class="anchor" href="#newtonsolve_rescalec_mle">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">data_t newtonSolve_rescaleC_mle(
+    armaMat <span style="color:#f92672">&amp;</span> C,
+    armaVec <span style="color:#f92672">&amp;</span> d,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> x,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> n,
+    data_t <span style="color:#f92672">&amp;</span> dt
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>C</strong> output matrix</li>
+<li><strong>d</strong> output bias</li>
+<li><strong>x</strong> state data</li>
+<li><strong>n</strong> measured count data</li>
+<li><strong>dt</strong> sample period</li>
+</ul>
+<p><strong>Return</strong>: negative log-likelihood</p>
+<p>Given dynamics and initial guess of output, solves for a scaling factor to apply to output matrix (C) by maximizing Poisson maximum likelihood using Newton&rsquo;s method.</p>
+<p>n.b., see Bussgang theorem (1952)</p>
+<h3 id="calcd_mle">
+  calcD_mle
+  <a class="anchor" href="#calcd_mle">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> calcD_mle(
+    armaMat <span style="color:#f92672">&amp;</span> C,
+    armaVec <span style="color:#f92672">&amp;</span> d,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> x,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> n,
+    data_t <span style="color:#f92672">&amp;</span> dt
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>C</strong> output matrix</li>
+<li><strong>d</strong> output bias</li>
+<li><strong>x</strong> state data</li>
+<li><strong>n</strong> measured count data</li>
+<li><strong>dt</strong> sample period</li>
+</ul>
+<h3 id="calcd_newtonsolve_rescalec_mle">
+  calcD_newtonSolve_rescaleC_mle
+  <a class="anchor" href="#calcd_newtonsolve_rescalec_mle">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">data_t calcD_newtonSolve_rescaleC_mle(
+    armaMat <span style="color:#f92672">&amp;</span> C,
+    armaVec <span style="color:#f92672">&amp;</span> d,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> x,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> n,
+    data_t <span style="color:#f92672">&amp;</span> dt
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>C</strong> output matrix</li>
+<li><strong>d</strong> output bias</li>
+<li><strong>x</strong> state data</li>
+<li><strong>n</strong> measured count data</li>
+<li><strong>dt</strong> sample period</li>
+</ul>
+<p><strong>Return</strong>: negative log-likelihood</p>
+<h3 id="fitoutput_mle">
+  fitOutput_mle
+  <a class="anchor" href="#fitoutput_mle">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> fitOutput_mle(
+    armaMat <span style="color:#f92672">&amp;</span> C,
+    armaVec <span style="color:#f92672">&amp;</span> d,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> x,
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> armaMat <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> n,
+    data_t <span style="color:#f92672">&amp;</span> dt
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>C</strong> output matrix</li>
+<li><strong>d</strong> output bias</li>
+<li><strong>x</strong> state data</li>
+<li><strong>n</strong> measured count data</li>
+<li><strong>dt</strong> sample period</li>
+</ul>
+<h2 id="attribute-details">
+  Attribute Details
+  <a class="anchor" href="#attribute-details">#</a>
+</h2>
+<h3 id="control_type_u">
+  CONTROL_TYPE_U
+  <a class="anchor" href="#control_type_u">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_U <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_U;
+</code></pre></div><h3 id="control_type_inty">
+  CONTROL_TYPE_INTY
+  <a class="anchor" href="#control_type_inty">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_INTY <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_INTY;
+</code></pre></div><h3 id="control_type_adapt_m">
+  CONTROL_TYPE_ADAPT_M
+  <a class="anchor" href="#control_type_adapt_m">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_ADAPT_M <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_ADAPT_M;
+</code></pre></div><h3 id="data_t_zero">
+  DATA_T_ZERO
+  <a class="anchor" href="#data_t_zero">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DATA_T_ZERO <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>DATA_T_ZERO;
+</code></pre></div><h3 id="data_t_one">
+  DATA_T_ONE
+  <a class="anchor" href="#data_t_one">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DATA_T_ONE <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>DATA_T_ZERO;
+</code></pre></div><h3 id="default_softstart">
+  DEFAULT_SOFTSTART
+  <a class="anchor" href="#default_softstart">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_SOFTSTART <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>DEFAULT_SOFTSTART;
+</code></pre></div><h3 id="false">
+  FALSE
+  <a class="anchor" href="#false">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> FALSE <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>FALSE;
+</code></pre></div><h3 id="true">
+  TRUE
+  <a class="anchor" href="#true">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> TRUE <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>TRUE;
+</code></pre></div><h3 id="pi">
+  pi
+  <a class="anchor" href="#pi">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t pi <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>pi;
+</code></pre></div><h3 id="inf">
+  inf
+  <a class="anchor" href="#inf">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t inf <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>inf;
+</code></pre></div><h3 id="neginf">
+  neginf
+  <a class="anchor" href="#neginf">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t neginf <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>neginf;
+</code></pre></div><hr>
+<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldspoisson">lds::poisson</a>
+      <ul>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#types">Types</a></li>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#attributes">Attributes</a></li>
+        <li><a href="#type-details">Type Details</a>
+          <ul>
+            <li><a href="#data_t">data_t</a></li>
+            <li><a href="#stdvec">stdVec</a></li>
+            <li><a href="#armavec">armaVec</a></li>
+            <li><a href="#armamat">armaMat</a></li>
+            <li><a href="#armasubvec">armaSubVec</a></li>
+            <li><a href="#armasubmat">armaSubMat</a></li>
+          </ul>
+        </li>
+        <li><a href="#function-details">Function Details</a>
+          <ul>
+            <li><a href="#ssidfit">ssidFit</a></li>
+            <li><a href="#newtonsolvec_mle">newtonSolveC_mle</a></li>
+            <li><a href="#newtonsolve_rescalec_mle">newtonSolve_rescaleC_mle</a></li>
+            <li><a href="#calcd_mle">calcD_mle</a></li>
+            <li><a href="#calcd_newtonsolve_rescalec_mle">calcD_newtonSolve_rescaleC_mle</a></li>
+            <li><a href="#fitoutput_mle">fitOutput_mle</a></li>
+          </ul>
+        </li>
+        <li><a href="#attribute-details">Attribute Details</a>
+          <ul>
+            <li><a href="#control_type_u">CONTROL_TYPE_U</a></li>
+            <li><a href="#control_type_inty">CONTROL_TYPE_INTY</a></li>
+            <li><a href="#control_type_adapt_m">CONTROL_TYPE_ADAPT_M</a></li>
+            <li><a href="#data_t_zero">DATA_T_ZERO</a></li>
+            <li><a href="#data_t_one">DATA_T_ONE</a></li>
+            <li><a href="#default_softstart">DEFAULT_SOFTSTART</a></li>
+            <li><a href="#false">FALSE</a></li>
+            <li><a href="#true">TRUE</a></li>
+            <li><a href="#pi">pi</a></li>
+            <li><a href="#inf">inf</a></li>
+            <li><a href="#neginf">neginf</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

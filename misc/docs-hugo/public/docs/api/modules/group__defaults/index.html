@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Defaults #  
+More&hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q0   data_t DEFAULT_R0   std::vector&lt; data_t &gt; DEFAULT_T0   data_t DATA_T_ZERO   data_t DATA_T_ONE   data_t DEFAULT_SOFTSTART   bool FALSE   bool TRUE    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances in case there is need to resolve dimension mismatch)">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Defaults" />
+<meta property="og:description" content="Defaults #  
+More&hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q0   data_t DEFAULT_R0   std::vector&lt; data_t &gt; DEFAULT_T0   data_t DATA_T_ZERO   data_t DATA_T_ONE   data_t DEFAULT_SOFTSTART   bool FALSE   bool TRUE    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances in case there is need to resolve dimension mismatch)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__defaults/" />
+
+<title>Defaults | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Defaults</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#defaults">Defaults</a>
+      <ul>
+        <li><a href="#attributes">Attributes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#attribute-details">Attribute Details</a>
+          <ul>
+            <li><a href="#default_p0">DEFAULT_P0</a></li>
+            <li><a href="#default_q0">DEFAULT_Q0</a></li>
+            <li><a href="#default_r0">DEFAULT_R0</a></li>
+            <li><a href="#default_t0">DEFAULT_T0</a></li>
+            <li><a href="#data_t_zero">DATA_T_ZERO</a></li>
+            <li><a href="#data_t_one">DATA_T_ONE</a></li>
+            <li><a href="#default_softstart">DEFAULT_SOFTSTART</a></li>
+            <li><a href="#false">FALSE</a></li>
+            <li><a href="#true">TRUE</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="defaults">
+  Defaults
+  <a class="anchor" href="#defaults">#</a>
+</h1>
+<p><br> <br><a href="#detailed-description">More&hellip;</a>
+<br></p>
+<h2 id="attributes">
+  Attributes
+  <a class="anchor" href="#attributes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_p0">DEFAULT_P0</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_q0">DEFAULT_Q0</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_r0">DEFAULT_R0</a></strong></td>
+</tr>
+<tr>
+<td>std::vector&lt; data_t &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_t0">DEFAULT_T0</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-data_t_zero">DATA_T_ZERO</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-data_t_one">DATA_T_ONE</a></strong></td>
+</tr>
+<tr>
+<td>data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_softstart">DEFAULT_SOFTSTART</a></strong></td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-false">FALSE</a></strong></td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-true">TRUE</a></strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<p>Default values for common variables (e.g., default diagonal elements of covariances in case there is need to resolve dimension mismatch)</p>
+<h2 id="attribute-details">
+  Attribute Details
+  <a class="anchor" href="#attribute-details">#</a>
+</h2>
+<h3 id="default_p0">
+  DEFAULT_P0
+  <a class="anchor" href="#default_p0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_P0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
+</code></pre></div><h3 id="default_q0">
+  DEFAULT_Q0
+  <a class="anchor" href="#default_q0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_Q0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
+</code></pre></div><h3 id="default_r0">
+  DEFAULT_R0
+  <a class="anchor" href="#default_r0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_R0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-2</span>;
+</code></pre></div><h3 id="default_t0">
+  DEFAULT_T0
+  <a class="anchor" href="#default_t0">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> data_t <span style="color:#f92672">&gt;</span> DEFAULT_T0 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.0</span>);
+</code></pre></div><h3 id="data_t_zero">
+  DATA_T_ZERO
+  <a class="anchor" href="#data_t_zero">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DATA_T_ZERO <span style="color:#f92672">=</span> (data_t)<span style="color:#ae81ff">0</span>;
+</code></pre></div><h3 id="data_t_one">
+  DATA_T_ONE
+  <a class="anchor" href="#data_t_one">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DATA_T_ONE <span style="color:#f92672">=</span> (data_t)<span style="color:#ae81ff">1</span>;
+</code></pre></div><h3 id="default_softstart">
+  DEFAULT_SOFTSTART
+  <a class="anchor" href="#default_softstart">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_SOFTSTART <span style="color:#f92672">=</span> (data_t)<span style="color:#ae81ff">0</span>;
+</code></pre></div><h3 id="false">
+  FALSE
+  <a class="anchor" href="#false">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> FALSE <span style="color:#f92672">=</span> false;
+</code></pre></div><h3 id="true">
+  TRUE
+  <a class="anchor" href="#true">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> TRUE <span style="color:#f92672">=</span> true;
+</code></pre></div><hr>
+<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#defaults">Defaults</a>
+      <ul>
+        <li><a href="#attributes">Attributes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#attribute-details">Attribute Details</a>
+          <ul>
+            <li><a href="#default_p0">DEFAULT_P0</a></li>
+            <li><a href="#default_q0">DEFAULT_Q0</a></li>
+            <li><a href="#default_r0">DEFAULT_R0</a></li>
+            <li><a href="#default_t0">DEFAULT_T0</a></li>
+            <li><a href="#data_t_zero">DATA_T_ZERO</a></li>
+            <li><a href="#data_t_one">DATA_T_ONE</a></li>
+            <li><a href="#default_softstart">DEFAULT_SOFTSTART</a></li>
+            <li><a href="#false">FALSE</a></li>
+            <li><a href="#true">TRUE</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

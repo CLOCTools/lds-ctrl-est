@@ -1,59 +1,28 @@
 # ldsCtrlEst
-A C++ library for estimation and control of linear dynamical systems (LDS) with Gaussian, Poisson observations.
+`ldsCtrlEst` is a C++ library for estimation and control of linear dynamical systems (LDS) with Gaussian or Poisson observations. It is meant to provide the functionality necessary to implement feedback control of linear dynamical systems experimentally. This library was originally developed for the task of controlling neuronal activity using spike count data as feedback and optogenetic inputs for control. However, the methods are generally applicable.
 
 This library currently provides three namespaces.
- - `lds` : linear dynamical systems (no output/observation)
+ - `lds` : linear dynamical systems (without output/observations)
  - `lds::gaussian` (AKA `glds`) : linear dynamical systems with Gaussian observations
  - `lds::poisson` (AKA `plds`) : linear dynamical systems with Poisson observations
 
-*Future iterations may include an additional namespace for LDS with Bernoulli (`blds`) observations.*
+*Future iterations may include an additional namespace for LDS with Bernoulli observations (`lds::bernoulli`).*
 
-# Library Terminology
-## Linear Dynamical System (lds)
-	x[t+1] = f( x[t], u[t] ) = A x[t] + B v[t] + m[t] + w[t]
+# Project Scope
+The goal of this project is to provide necessary functions to implement feedback control of linear dynamical systems experimentally: *i.e.*, online estimation of state feedback and calculation of control signal updates. Given its intended use in experiments, the library seeks to be **practical** in all things and thus includes optional features such as adaptive estimation of a process disturbance to improve robustness in state estimation and a mechanism for combatting integrator windup with control signal saturation. For cases where the system to be controlled is not adequately modeled as having linear dynamics but has multiple quasi-linear operating modes, a "switched" control scheme is also implemented. It switches between multiple controllers tuned for each operating mode of the physical system as it changes. It also includes options to toggle on/off feedback control and state estimation independently, which can be practically useful when testing the components of the control system. Moreover, to avoid the need for numerical integration of continuous-time models, all state-space models used here are discrete-time.
 
-where
+Generally, the `ldsCtrlEst` library does **not** endeavor to provide functionality for things that can be carried out offline/before experiments. For example, it does not design controller gains. Given a model of the system to be controlled, these parameters may be optimized before experimental application in most cases, and there are numerous options available to scientists/engineers in languages such as Matlab and Python for design. An exception to this guiding principle to project scope is the included code for fitting state-space models to data. Currently this fitting portion of the library is a configurable option, but in future releases this may migrate to a separate project as it is not intended for online use.
 
-	t           : time index
-	x           : state
-	v = g%u     : input (e.g., in physical units used for model fit)
-	u           : control signal sent to actuator
-	m           : process disturbance/bias
-	w ~ N(0, Q) : process noise/disturbance
-
-	A           : state transition matrix
-	B           : input coupling matrix
-	g           : input gain (e.g., for converting to control signal actuator voltage)
-	              n.b., assumes this conversion is linear
-
-	%           : element-wise multiplication
-
-## Output (y) & Measurement (z)
-### Gaussian
-	y[t] = h( x[t] ) = C x[t] + d
-	z[t] ~ N(y[t], R)
-
-where
-
-	y           : output
-	z           : measurement
-	d           : output bias
-
-	C           : output matrix
-	R           : measurement noise covariance
-
-### Poisson
-	y[t] = h( x[t] ) = exp( C x[t] + d )
-	z[t] ~ Poisson(y[t])
-
-*n.b., only an exponential nonlinearity is provided currently.*
+Among other things, this project also does not provide methods for trajectory optimization, linearization of nonlinear models, or other methods related to nonlinear control, with the exception of the nonlinear state estimator for Poisson-output LDS models.
 
 # Repository Design
+![class hierarchy](misc/docs-doxygen/classlds_1_1sys__t__inherit__graph.png)
+
 - All dynamical systems *with observations* (Gaussian, Poisson) are built upon class definitions for the underlying linear dynamical system (`lds::sys_t`).
-- In each namespace, there are generic system types defined (`lds::sys_t`, `glds::sys_t`, `plds::sys_t`) that include functionality for one-step prediction, etc.
-- Additionally, in namespaces with observation equations (`glds`,`plds`), system types include functionality for updating estimates of states/parameters, given current measurements (*i.e.*, filtering).
-- In namespaces for systems with observation equations (`glds`,`plds`), controller types (`ctrl_t`) are built on top of that namespace's system type. Feedback control functionality (as well as previously-defined online state estimation) is provided by these controller types.
-- In order to ensure dimensionalities always match internally and to use intention in handling any mismatches that may be present in parameters, signals, etc., every property of a system/controller class is `protected`. Set methods are defined so users can define parameters in a safe way. Get methods are also provided for most signals/parameters.
+- In each namespace, there are generic system types defined (`lds::sys_t`, `lds::gaussian::sys_t`, `lds::poisson::sys_t`) that include functionality for one-step prediction, etc.
+- Additionally, in namespaces with observation equations (`lds::gaussian`,`lds::poisson`), system types include functionality for updating estimates of states, given current measurements (*i.e.*, filtering).
+- In namespaces for systems with observation equations (`lds::gaussian`,`lds::poisson`), controller types (`ctrl_t`) are built on top of that namespace's system type. Feedback control functionality (as well as previously-defined online state estimation) is provided by these controller types.
+- In order to ensure dimensionalities always match internally and to use intention in handling any mismatches that may be present in parameters, signals, etc., every property of a system/controller class is `protected`. Where appropriate, set methods are defined so users can define parameters in a safe way. Get methods are also provided for most signals/parameters.
 
 # Repository Organization
 - Header files are located under `include/ldsEstCtrl_h`.
@@ -68,8 +37,8 @@ Note that the primary dependencies of this project listed below must be installe
 
 - For project configuration, install [`cmake`](https://cmake.org/) as well as [`pkg-config`](https://gitlab.freedesktop.org/pkg-config/pkg-config). The latter is optional.
 - The linear algebra library [`armadillo`](http://arma.sourceforge.net/) is used throughout this repository.
-- For use of this library in Matlab executables (mex) on Linux operating systems, you will need to install [OpenBlas](http://www.openblas.net/), ensuring the *static* library `libopenblas.a` is installed. You will also need to install [`gfortran`](https://gcc.gnu.org/fortran/).
 - The [HDF5](https://www.hdfgroup.org/downloads/hdf5/) library is used to save output from example test programs.
+- For use of this library in Matlab executables (mex) on Linux operating systems, you will need [OpenBlas](http://www.openblas.net/), ensuring the *static* library `libopenblas.a` is installed. You will also need to install [`gfortran`](https://gcc.gnu.org/fortran/).
 
 # Compilation + Installation
 This project is configured/compiled/installed by way of CMake and (on Unix-based operating systems) GNU Make. For configuration with CMake, there are three available options.
@@ -134,3 +103,7 @@ Below are example usages of `cmake`/`make` to configure/build the library.
 	export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:/your/install/prefix
 	export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/your/install/prefix
 	```
+
+# Acknowledgements
+
+Development and publication of this library was supported in part by the NIH/NINDS Collaborative Research in Computational Neuroscience (CRCNS)/BRAIN Grant 5R01NS115327-02.

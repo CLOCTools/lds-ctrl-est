@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Classes on LDS C&amp;E</title>
+    <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/</link>
+    <description>Recent content in Classes on LDS C&amp;E</description>
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://mfbolus.github.io/ldsctrlest/docs/api/classes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>lds::fit_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1fit__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1fit__t/</guid>
+      <description>LDS Fit Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::gaussian::ctrl_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/</guid>
+      <description>GLDS Controller Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::gaussian::emFit_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1em_fit__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1em_fit__t/</guid>
+      <description>GLDS E-M Fit Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::gaussian::fit_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/</guid>
+      <description>GLDS Fit Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::gaussian::sctrl_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sctrl__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sctrl__t/</guid>
+      <description>Switched GLDS Controller Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::gaussian::ssidFit_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/</guid>
+      <description>GLDS SSID Fit Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::gaussian::sys_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/</guid>
+      <description>Gaussian LDS Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::poisson::ctrl_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ctrl__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ctrl__t/</guid>
+      <description>PLDS Controller Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::poisson::fit_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1fit__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1fit__t/</guid>
+      <description>PLDS Fit Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::poisson::sctrl_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sctrl__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sctrl__t/</guid>
+      <description>Switched PLDS Controller Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::poisson::ssidFit_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ssid_fit__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ssid_fit__t/</guid>
+      <description>GLDS SSID Fit Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::poisson::sys_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/</guid>
+      <description>Poisson LDS Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::sys_t</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1sys__t/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1sys__t/</guid>
+      <description>Linear Dynamical System Type.</description>
+    </item>
+    
+  </channel>
+</rss>

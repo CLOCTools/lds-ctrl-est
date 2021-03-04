@@ -1,0 +1,39 @@
+---
+title: LDS Control & Estimation
+type: docs
+---
+
+# `ldsCtrlEst`: LDS Control & Estimation
+`ldsCtrlEst` is a C++ library for estimation and control of linear dynamical systems (LDS) with Gaussian or Poisson observations. It is meant to provide the functionality necessary to implement feedback control of linear dynamical systems experimentally. This library was originally developed for the task of controlling neuronal activity using spike count data as feedback and optogenetic inputs for control. However, the methods are generally applicable.
+
+This library currently provides three namespaces.
+ - `lds` : linear dynamical systems (without output/observations)
+ - `lds::gaussian` (AKA `glds`) : linear dynamical systems with Gaussian observations
+ - `lds::poisson` (AKA `plds`) : linear dynamical systems with Poisson observations
+
+*Future iterations may include an additional namespace for LDS with Bernoulli observations (`lds::bernoulli`).*
+
+# Project Scope
+The goal of this project is to provide necessary functions to implement feedback control of linear dynamical systems experimentally: *i.e.*, online estimation of state feedback and calculation of control signal updates. Given its intended use in experiments, the library seeks to be **practical** in all things and thus includes optional features such as adaptive estimation of a process disturbance to improve robustness in state estimation and a mechanism for combatting integrator windup with control signal saturation. For cases where the system to be controlled is not adequately modeled as having linear dynamics but has multiple quasi-linear operating modes, a "switched" control scheme is also implemented. It switches between multiple controllers tuned for each operating mode of the physical system as it changes. It also includes options to toggle on/off feedback control and state estimation independently, which can be practically useful when testing the components of the control system. Moreover, to avoid the need for numerical integration of continuous-time models, all state-space models used here are discrete-time.
+
+Generally, the `ldsCtrlEst` library does **not** endeavor to provide functionality for things that can be carried out offline/before experiments. For example, it does not design controller gains. Given a model of the system to be controlled, these parameters may be optimized before experimental application in most cases, and there are numerous options available to scientists/engineers in languages such as Matlab and Python for design. An exception to this guiding principle to project scope is the included code for fitting state-space models to data. Currently this fitting portion of the library is a configurable option, but in future releases this may migrate to a separate project as it is not intended for online use.
+
+Among other things, this project also does not provide methods for trajectory optimization, linearization of nonlinear models, or other methods related to nonlinear control, with the exception of the nonlinear state estimator for Poisson-output LDS models.
+
+# Repository Design
+![class hierarchy](/ldsctrlest/classlds_1_1sys__t__inherit__graph.png)
+
+- All dynamical systems *with observations* (Gaussian, Poisson) are built upon class definitions for the underlying linear dynamical system (`lds::sys_t`).
+- In each namespace, there are generic system types defined (`lds::sys_t`, `lds::gaussian::sys_t`, `lds::poisson::sys_t`) that include functionality for one-step prediction, etc.
+- Additionally, in namespaces with observation equations (`lds::gaussian`,`lds::poisson`), system types include functionality for updating estimates of states, given current measurements (*i.e.*, filtering).
+- In namespaces for systems with observation equations (`lds::gaussian`,`lds::poisson`), controller types (`ctrl_t`) are built on top of that namespace's system type. Feedback control functionality (as well as previously-defined online state estimation) is provided by these controller types.
+- In order to ensure dimensionalities always match internally and to use intention in handling any mismatches that may be present in parameters, signals, etc., every property of a system/controller class is `protected`. Where appropriate, set methods are defined so users can define parameters in a safe way. Get methods are also provided for most signals/parameters.
+
+# Repository Organization
+- Header files are located under `include/ldsEstCtrl_h`.
+- Source files are located under `src/` (main source code) and `src-fit/` (model fitting-related source code).
+- Wrappers for exposing functions to Matlab as executables (mex) are located under `matlab/`. Currently, only fitting functions of the library are exposed for use in Matlab.
+- Complimentary Matlab functions for control and estimation are also located under `matlab/`. They are provided as methods of `GLDS` and `PLDS` class definitions.
+- Example programs and visualization scripts are located under `examples/`.
+- Example programs that demonstrate how to use ldsCtrlEst in other projects are provided in `misc/`. See `misc/test-cmake-installation` for a project that uses `cmake` to configure your project build and `misc/test-pkgconfig-installation` which is the same but uses a hand-written Makefile and calls to pkg-config. As the names suggest, building these programs is a simple way to test your installation of ldsCtrlEst.
+
