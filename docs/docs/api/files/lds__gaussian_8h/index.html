@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -209,7 +209,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_gaussian.h - LDS with Gaussian Output --*- C++ -*-===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -229,48 +229,18 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#75715e">#ifndef LDSCTRLEST_LDS_GAUSSIAN_H
 </span><span style="color:#75715e">#define LDSCTRLEST_LDS_GAUSSIAN_H
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#ifndef LDSCTRLEST
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
+<span style="color:#75715e">// namespace
+</span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">namespace</span> lds {
 <span style="color:#66d9ef">namespace</span> gaussian {
-<span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>data_t data_t;
-<span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>stdVec stdVec;
-<span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>armaVec armaVec;
-<span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>armaMat armaMat;
-<span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>armaSubVec armaSubVec;
-<span style="color:#66d9ef">typedef</span> lds<span style="color:#f92672">::</span>armaSubMat armaSubMat;
-
-<span style="color:#66d9ef">namespace</span> fill <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>fill;
-
-<span style="color:#75715e">// CONTROL BIT MASKS
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_U <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_U;
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_INTY <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_INTY;
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_ADAPT_M <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_ADAPT_M;
-
-<span style="color:#75715e">// default values
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> data_t DATA_T_ZERO <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>DATA_T_ZERO;
-<span style="color:#66d9ef">static</span> data_t DATA_T_ONE <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>DATA_T_ZERO;
-<span style="color:#66d9ef">static</span> data_t DEFAULT_SOFTSTART <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>DEFAULT_SOFTSTART;
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> FALSE <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>FALSE;
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> TRUE <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>TRUE;
-
-<span style="color:#75715e">// static const data_t inf = lds::inf;
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t pi <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>pi;
-<span style="color:#66d9ef">static</span> data_t inf <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>inf;
-<span style="color:#66d9ef">static</span> data_t neginf <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>neginf;
-}  <span style="color:#75715e">// namespace gaussian
+<span style="color:#75715e">// insert any Gaussian-specific things here...
+</span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace gaussian
 </span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace lds
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_gaussian_sys.h&#34;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#ifdef LDSCTRLEST_BUILD_FIT
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_gaussian_fit.h&#34;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

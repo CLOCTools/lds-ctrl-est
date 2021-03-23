@@ -31,7 +31,7 @@ This file defines utility functions for interoperability between armadillo and M
 ```cpp
 //===-- ldsCtrlEst_h/mex_c_util.h - Mex C API Utilities ---------*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,9 +51,7 @@ This file defines utility functions for interoperability between armadillo and M
 #ifndef LDSCTRLEST_MEXC_UTIL_H
 #define LDSCTRLEST_MEXC_UTIL_H
 
-#ifndef LDSCTRLEST
 #include <ldsCtrlEst>
-#endif
 
 #include "mex.h"
 
@@ -79,7 +77,7 @@ inline auto m2a_mat(const mxArray *matlab_mat, bool copy_aux_mem = false,
   if (mxGetData(matlab_mat)) {
     const mwSize n_dim = mxGetNumberOfDimensions(matlab_mat);
     if (n_dim == 2) {
-      return arma::Mat<T>(static_cast<double *>(mxGetData(matlab_mat)),
+      return arma::Mat<T>(static_cast<T *>(mxGetData(matlab_mat)),
                           mxGetM(matlab_mat), mxGetN(matlab_mat), copy_aux_mem,
                           strict);
     }
@@ -92,28 +90,30 @@ inline auto m2a_mat(const mxArray *matlab_mat, bool copy_aux_mem = false,
 
 // TODO(mfbolus): make these templated.
 
-inline auto a2m_mat(arma::Mat<double> const &arma_mat) -> mxArray * {
+template <typename T>
+inline auto a2m_mat(arma::Mat<T> const &arma_mat) -> mxArray * {
   mxArray *matlab_mat = mxCreateNumericMatrix(arma_mat.n_rows, arma_mat.n_cols,
                                               mxDOUBLE_CLASS, mxREAL);
   if (matlab_mat) {
-    auto *dst_pointer = static_cast<double *>(mxGetData(matlab_mat));
-    const auto *src_pointer = const_cast<double *>(arma_mat.memptr());
+    auto *dst_pointer = static_cast<T *>(mxGetData(matlab_mat));
+    const auto *src_pointer = const_cast<T *>(arma_mat.memptr());
     // TODO(mfbolus): I just want to MOVE the data, not copy.
-    std::memcpy(dst_pointer, src_pointer, sizeof(double) * arma_mat.n_elem);
+    std::memcpy(dst_pointer, src_pointer, sizeof(T) * arma_mat.n_elem);
     return matlab_mat;
   }
   mexErrMsgTxt("Failed to create matlab mat from arma::Mat.");
   return nullptr;
 }
 
-inline auto a2m_vec(arma::Col<double> const &arma_vec) -> mxArray * {
+template <typename T>
+inline auto a2m_vec(arma::Col<T> const &arma_vec) -> mxArray * {
   mxArray *matlab_mat =
       mxCreateNumericMatrix(arma_vec.n_elem, 1, mxDOUBLE_CLASS, mxREAL);
   if (matlab_mat) {
-    auto *dst_pointer = static_cast<double *>(mxGetData(matlab_mat));
-    const auto *src_pointer = const_cast<double *>(arma_vec.memptr());
+    auto *dst_pointer = static_cast<T *>(mxGetData(matlab_mat));
+    const auto *src_pointer = const_cast<T *>(arma_vec.memptr());
     // TODO(mfbolus): I just want to MOVE the data, not copy.
-    std::memcpy(dst_pointer, src_pointer, sizeof(double) * arma_vec.n_elem);
+    std::memcpy(dst_pointer, src_pointer, sizeof(T) * arma_vec.n_elem);
     return matlab_mat;
   }
   mexErrMsgTxt("Failed to create matlab mat from arma::Col.");
@@ -128,4 +128,4 @@ inline auto a2m_vec(arma::Col<double> const &arma_vec) -> mxArray * {
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

@@ -1,9 +1,0 @@
-<map id="lds::poisson::sctrl_t" name="lds::poisson::sctrl_t">
-<area shape="rect" id="node1" title="Switched PLDS Controller Type." alt="" coords="177,497,313,524"/>
-<area shape="rect" id="node2" href="$classlds_1_1poisson_1_1ctrl__t.html" title="PLDS Controller Type." alt="" coords="181,421,310,448"/>
-<area shape="rect" id="node3" href="$classlds_1_1poisson_1_1sys__t.html" title="Poisson LDS Type." alt="" coords="96,221,227,247"/>
-<area shape="rect" id="node4" href="$classlds_1_1sys__t.html" title="Linear Dynamical System Type." alt="" coords="123,5,200,32"/>
-<area shape="rect" id="node5" title=" " alt="" coords="5,5,80,32"/>
-<area shape="rect" id="node6" title=" " alt="" coords="230,5,306,32"/>
-<area shape="rect" id="node7" title=" " alt="" coords="391,221,449,247"/>
-</map>

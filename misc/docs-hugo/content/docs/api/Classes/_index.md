@@ -21,72 +21,96 @@ title: Classes
 
 
 
+- **[lds::Controller](/ldsctrlest/docs/api/classes/classlds_1_1_controller/)** 
 
 
 
-
-- **[lds::fit_t](/ldsctrlest/docs/api/classes/classlds_1_1fit__t/)** <br>LDS Fit Type. 
-
+- **[lds::EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/)** 
 
 
 
-
-
-- **[lds::gaussian::ctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/)** <br>GLDS Controller Type. 
-
-
-
-- **[lds::gaussian::emFit_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1em_fit__t/)** <br>GLDS E-M Fit Type. 
+- **[lds::Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/)** <br>LDS [Fit]() Type. 
 
 
 
-- **[lds::gaussian::fit_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/)** <br>GLDS Fit Type. 
+- **[lds::SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)** 
 
 
 
-- **[lds::gaussian::sctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sctrl__t/)** <br>Switched GLDS Controller Type. 
+- **[lds::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1_switched_controller/)** <br>[SwitchedController]() Type. 
 
 
 
-- **[lds::gaussian::ssidFit_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/)** <br>GLDS SSID Fit Type. 
+- **[lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)** <br>Linear Dynamical [System]() Type. 
 
 
 
-- **[lds::gaussian::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/)** <br>Gaussian LDS Type. 
+- **[lds::UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)** 
 
 
 
+- **[lds::UniformSystemList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_system_list/)** 
 
 
 
-
-
-
-- **[lds::poisson::ctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ctrl__t/)** <br>PLDS Controller Type. 
-
-
-
-- **[lds::poisson::fit_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1fit__t/)** <br>PLDS Fit Type. 
-
-
-
-- **[lds::poisson::sctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sctrl__t/)** <br>Switched PLDS Controller Type. 
-
-
-
-- **[lds::poisson::ssidFit_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ssid_fit__t/)** <br>GLDS SSID Fit Type. 
-
-
-
-- **[lds::poisson::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/)** <br>Poisson LDS Type. 
+- **[lds::UniformVectorList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_vector_list/)** 
 
 
 
 
 
 
-- **[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)** <br>Linear Dynamical System Type. 
+- **[lds::gaussian::Controller](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/)** <br>Gaussian-observation [Controller]() Type. 
 
+
+
+- **[lds::gaussian::Fit](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/)** <br>GLDS [Fit]() Type. 
+
+
+
+- **[lds::gaussian::FitEM](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/)** <br>GLDS E-M [Fit](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/) Type. 
+
+
+
+- **[lds::gaussian::FitSSID](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/)** <br>Subspace Identification ([SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)) for GLDS. 
+
+
+
+- **[lds::gaussian::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)** <br>Gaussian-observation [SwitchedController]() Type. 
+
+
+
+- **[lds::gaussian::System](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/)** <br>Gaussian LDS Type. 
+
+
+
+
+
+
+
+
+
+- **[lds::poisson::Controller](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_controller/)** <br>PLDS [Controller]() Type. 
+
+
+
+- **[lds::poisson::Fit](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit/)** <br>PLDS [Fit]() Type. 
+
+
+
+- **[lds::poisson::FitEM](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/)** <br>PLDS E-M [Fit](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit/) Type. 
+
+
+
+- **[lds::poisson::FitSSID](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/)** <br>Subspace Identification ([SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)) for PLDS. 
+
+
+
+- **[lds::poisson::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/)** <br>Poisson-observation [SwitchedController]() Type. 
+
+
+
+- **[lds::poisson::System](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/)** <br>Poisson [System]() type. 
 
 
 
@@ -103,4 +127,4 @@ title: Classes
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

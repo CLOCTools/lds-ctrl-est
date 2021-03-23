@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -206,7 +206,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds.h - Linear Dynmical System Namespace ---*- C++ -*-===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -226,63 +226,132 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#75715e">#ifndef LDSCTRLEST_LDS_H
 </span><span style="color:#75715e">#define LDSCTRLEST_LDS_H
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#ifndef LDSCTRLEST
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
+<span style="color:#75715e">// #ifndef LDSCTRLEST
+</span><span style="color:#75715e">// #include &lt;ldsCtrlEst&gt;
+</span><span style="color:#75715e">// #endif
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;armadillo&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">namespace</span> lds {
-<span style="color:#66d9ef">typedef</span> <span style="color:#66d9ef">double</span> data_t;
+<span style="color:#66d9ef">using</span> data_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">double</span>;  <span style="color:#75715e">// may change to float (but breaks mex functions)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> Vector <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>;
+<span style="color:#66d9ef">using</span> Matrix <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>;
+<span style="color:#66d9ef">using</span> Cube <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>Cube<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>;
+<span style="color:#66d9ef">using</span> View <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>subview<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>;
 
 <span style="color:#66d9ef">namespace</span> fill <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>fill;
 
-<span style="color:#66d9ef">typedef</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> stdVec;
-<span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> armaVec;
-<span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> armaMat;
-<span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>Cube<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> armaCube;
-<span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>subview_col<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> armaSubVec;
-<span style="color:#66d9ef">typedef</span> arma<span style="color:#f92672">::</span>subview<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> armaSubMat;
 
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t kControlTypeDeltaU <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1</span>;
 
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_U <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1</span>;
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t kControlTypeIntY <span style="color:#f92672">=</span> kControlTypeDeltaU <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>;
 
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_INTY <span style="color:#f92672">=</span> CONTROL_TYPE_U <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>;
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t kControlTypeAdaptM <span style="color:#f92672">=</span> kControlTypeDeltaU <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">2</span>;
 
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_ADAPT_M <span style="color:#f92672">=</span> CONTROL_TYPE_U <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">2</span>;
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t kInf <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;::</span>infinity();
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t kPi <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>datum<span style="color:#f92672">::</span>pi;
 
-<span style="color:#66d9ef">static</span> data_t inf <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;::</span>infinity();
-<span style="color:#66d9ef">static</span> data_t neginf <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>inf;
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t pi <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>datum<span style="color:#f92672">::</span>pi;
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t kDefaultP0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;  
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t kDefaultQ0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;  
+<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t kDefaultR0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-2</span>;  
 
-<span style="color:#66d9ef">static</span> data_t DEFAULT_P0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
-<span style="color:#66d9ef">static</span> data_t DEFAULT_Q0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
-<span style="color:#66d9ef">static</span> data_t DEFAULT_R0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-2</span>;
-<span style="color:#66d9ef">static</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> DEFAULT_T0 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.0</span>);
+<span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">SSIDWt</span> {
+  kSSIDNone,   
+  kSSIDMOESP,  
+  kSSIDCVA     
+};
 
-<span style="color:#75715e">// Ideally these should be const, but trying to pass reference which means its
-</span><span style="color:#75715e">// val implicitly must be allowed to change. hopefully no one will try to
-</span><span style="color:#75715e">// reassign their vals...
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> data_t DATA_T_ZERO <span style="color:#f92672">=</span> (data_t)<span style="color:#ae81ff">0</span>;
-<span style="color:#66d9ef">static</span> data_t DATA_T_ONE <span style="color:#f92672">=</span> (data_t)<span style="color:#ae81ff">1</span>;
-<span style="color:#66d9ef">static</span> data_t DEFAULT_SOFTSTART <span style="color:#f92672">=</span> (data_t)<span style="color:#ae81ff">0</span>;
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> FALSE <span style="color:#f92672">=</span> false;
-<span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> TRUE <span style="color:#f92672">=</span> true;
+<span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">MatrixListFreeDim</span> {
+  kMatFreeDimNone,  
+  kMatFreeDim1,     
+  kMatFreeDim2      
+};
 
-<span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">ssidWt</span> { NONE, MOESP, CVA };
+<span style="color:#75715e">// TODO(mfbolus): for SwitchedController, may want systems to have differing
+</span><span style="color:#75715e">// numbers of states. Use this enum as template parameter?
+</span><span style="color:#75715e">// enum SystemListFreeDim {
+</span><span style="color:#75715e">//   kSysFreeDimNone,
+</span><span style="color:#75715e">//   kSysFreeDimX  ///&lt; allow state dim (x) of systems in list to be hetero
+</span><span style="color:#75715e">// };
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// place hard limits on contents of vecors/mats
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Limit</span>(std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;&amp;</span> x, data_t lb, data_t ub);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Limit</span>(Vector<span style="color:#f92672">&amp;</span> x, data_t lb, data_t ub);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Limit</span>(Matrix<span style="color:#f92672">&amp;</span> x, data_t lb, data_t ub);
+
+<span style="color:#75715e">// in-place assign that errs if there are dimension mismatches:
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Reassign</span>(Vector<span style="color:#f92672">&amp;</span> some, <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> other,
+              <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string<span style="color:#f92672">&amp;</span> parenthetical <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Reassign&#34;</span>);
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Reassign</span>(Matrix<span style="color:#f92672">&amp;</span> some, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> other,
+              <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string<span style="color:#f92672">&amp;</span> parenthetical <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Reassign&#34;</span>);
+
+<span style="color:#75715e">// TODO(mfbolus): this is a fudge, but for some reason, cov mats often going
+</span><span style="color:#75715e">// numerically asymm.
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ForceSymPD</span>(Matrix<span style="color:#f92672">&amp;</span> X);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ForceSymMinEig</span>(Matrix<span style="color:#f92672">&amp;</span> X, data_t eig_min <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">lq</span>(Matrix<span style="color:#f92672">&amp;</span> L, Matrix<span style="color:#f92672">&amp;</span> Qt, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> X);
+
+Matrix <span style="color:#a6e22e">calcCov</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> A, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> B);
+
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Limit</span>(std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;&amp;</span> x, data_t lb, data_t ub) {
+  <span style="color:#66d9ef">for</span> (data_t<span style="color:#f92672">&amp;</span> el : x) {
+    el <span style="color:#f92672">=</span> el <span style="color:#f92672">&lt;</span> lb <span style="color:#f92672">?</span> lb : el;
+    el <span style="color:#f92672">=</span> el <span style="color:#f92672">&gt;</span> ub <span style="color:#f92672">?</span> ub : el;
+  }
+}
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Limit</span>(Vector<span style="color:#f92672">&amp;</span> x, data_t lb, data_t ub) {
+  <span style="color:#66d9ef">for</span> (data_t<span style="color:#f92672">&amp;</span> el : x) {
+    el <span style="color:#f92672">=</span> el <span style="color:#f92672">&lt;</span> lb <span style="color:#f92672">?</span> lb : el;
+    el <span style="color:#f92672">=</span> el <span style="color:#f92672">&gt;</span> ub <span style="color:#f92672">?</span> ub : el;
+  }
+}
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Limit</span>(Matrix<span style="color:#f92672">&amp;</span> x, data_t lb, data_t ub) {
+  <span style="color:#66d9ef">for</span> (data_t<span style="color:#f92672">&amp;</span> el : x) {
+    el <span style="color:#f92672">=</span> el <span style="color:#f92672">&lt;</span> lb <span style="color:#f92672">?</span> lb : el;
+    el <span style="color:#f92672">=</span> el <span style="color:#f92672">&gt;</span> ub <span style="color:#f92672">?</span> ub : el;
+  }
+}
+
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Reassign</span>(Vector<span style="color:#f92672">&amp;</span> some, <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> other,
+                     <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string<span style="color:#f92672">&amp;</span> parenthetical) {
+  <span style="color:#75715e">// check dimensions
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (other.n_elem <span style="color:#f92672">!=</span> some.n_elem) {
+    std<span style="color:#f92672">::</span>ostringstream ss;
+    ss <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;cannot reassign vector of size &#34;</span> <span style="color:#f92672">&lt;&lt;</span> some.n_elem
+       <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; with vector of size &#34;</span> <span style="color:#f92672">&lt;&lt;</span> other.n_elem <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;(&#34;</span> <span style="color:#f92672">&lt;&lt;</span> parenthetical
+       <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;)&#34;</span>;
+    <span style="color:#66d9ef">throw</span> std<span style="color:#f92672">::</span>runtime_error(ss.str());
+  }
+
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> some.n_elem; k<span style="color:#f92672">++</span>) {
+    some[k] <span style="color:#f92672">=</span> other[k];
+  }
+}
+
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Reassign</span>(Matrix<span style="color:#f92672">&amp;</span> some, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> other,
+                     <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>string<span style="color:#f92672">&amp;</span> parenthetical) {
+  <span style="color:#75715e">// check dimensions
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> ((other.n_rows <span style="color:#f92672">!=</span> some.n_rows) <span style="color:#f92672">||</span> (other.n_cols <span style="color:#f92672">!=</span> some.n_cols)) {
+    std<span style="color:#f92672">::</span>ostringstream ss;
+    ss <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;cannot reassign matrix of size &#34;</span> <span style="color:#f92672">&lt;&lt;</span> some.n_rows <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;x&#34;</span> <span style="color:#f92672">&lt;&lt;</span> some.n_cols
+       <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; with matrix of size &#34;</span> <span style="color:#f92672">&lt;&lt;</span> other.n_rows <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;x&#34;</span> <span style="color:#f92672">&lt;&lt;</span> other.n_cols <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;(&#34;</span>
+       <span style="color:#f92672">&lt;&lt;</span> parenthetical <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;)&#34;</span>;
+    <span style="color:#66d9ef">throw</span> std<span style="color:#f92672">::</span>runtime_error(ss.str());
+  }
+
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> some.n_elem; k<span style="color:#f92672">++</span>) {
+    some[k] <span style="color:#f92672">=</span> other[k];
+  }
+}
+
 }  <span style="color:#75715e">// namespace lds
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// fit and sys with dynamics only
-</span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_sys.h&#34;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#ifdef LDSCTRLEST_BUILD_FIT
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_fit.h&#34;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">// Pull in output equation variants
-</span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_gaussian.h&#34;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_poisson.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

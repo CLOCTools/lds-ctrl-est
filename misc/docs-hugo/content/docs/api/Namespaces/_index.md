@@ -18,10 +18,6 @@ title: Namespaces
 
 
 
-- **[glds](/ldsctrlest/docs/api/namespaces/namespaceglds/)** 
-
-
-
 
 
 
@@ -36,10 +32,6 @@ title: Namespaces
 
 
 
-- **[plds](/ldsctrlest/docs/api/namespaces/namespaceplds/)** 
-
-
-
 - **[std](/ldsctrlest/docs/api/namespaces/namespacestd/)** 
 
 
@@ -47,4 +39,4 @@ title: Namespaces
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

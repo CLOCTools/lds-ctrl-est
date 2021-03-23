@@ -1,15 +1,17 @@
 var searchData=
 [
-  ['c_7',['C',['../classlds_1_1gaussian_1_1fit__t.html#af57d15cc4a0287900996d3c8da4e75d0',1,'lds::gaussian::fit_t::C()'],['../classlds_1_1gaussian_1_1sys__t.html#a0c06b84e5be741625d7ac3cd0b96030f',1,'lds::gaussian::sys_t::C()'],['../classlds_1_1poisson_1_1fit__t.html#a77e2b842ab767279becfcc2b6a06664d',1,'lds::poisson::fit_t::C()'],['../classlds_1_1poisson_1_1sys__t.html#aa838c0f62a0f9661c42c8e7d8518905c',1,'lds::poisson::sys_t::C()']]],
-  ['calc_5fsssetpt_8',['calc_ssSetPt',['../classlds_1_1gaussian_1_1ctrl__t.html#aa24c126c69a3bb55736d8ae9f4fbe546',1,'lds::gaussian::ctrl_t::calc_ssSetPt()'],['../classlds_1_1poisson_1_1ctrl__t.html#a294fa9b20874d26db9cb7f27b648d14f',1,'lds::poisson::ctrl_t::calc_ssSetPt()']]],
-  ['calccov_9',['calcCov',['../namespacelds_1_1gaussian.html#a89c379d5c15f291fc1805b49e02cbf1e',1,'lds::gaussian']]],
-  ['calcd_5fmle_10',['calcD_mle',['../namespacelds_1_1poisson.html#a9d1ad566143a3cb1e5b9352a17dde79c',1,'lds::poisson']]],
-  ['calcd_5fnewtonsolve_5frescalec_5fmle_11',['calcD_newtonSolve_rescaleC_mle',['../namespacelds_1_1poisson.html#a0a4377ac64128d009b035a32eac907ed',1,'lds::poisson']]],
-  ['calcd_5fsilence_12',['calcD_silence',['../namespacelds_1_1gaussian.html#ad382c336a5e196f556aaa75172ced2c8',1,'lds::gaussian']]],
-  ['chance_13',['chance',['../classlds_1_1poisson_1_1sys__t.html#a65315010e0fe24eeab147b530b087d0a',1,'lds::poisson::sys_t']]],
-  ['checkp_14',['checkP',['../classlds_1_1sys__t.html#a9044f50f59a0958898ac415985b3af78',1,'lds::sys_t']]],
+  ['c_9',['C',['../classlds_1_1_fit.html#a7eac32d42543217c311973a55ab5d839',1,'lds::Fit::C()'],['../classlds_1_1_system.html#a9c9cbeaf6a0a2cc885104c852a817581',1,'lds::System::C()']]],
+  ['c_5f_10',['C_',['../classlds_1_1_fit.html#a6b3ad518f9df9010d6782ab3a937ea15',1,'lds::Fit::C_()'],['../classlds_1_1_system.html#a90cbfee463eab088d148882406b1151f',1,'lds::System::C_()']]],
+  ['calccov_11',['calcCov',['../namespacelds.html#af7a6dbf144c48684c3df458fe4f902d0',1,'lds']]],
+  ['calcd_12',['CalcD',['../classlds_1_1_s_s_i_d.html#a8e41051d60cdd7d335ac97a4e6a7165d',1,'lds::SSID']]],
+  ['calcsvd_13',['CalcSVD',['../classlds_1_1_s_s_i_d.html#a471ac28cd0e48c5107cc5be4557815cd',1,'lds::SSID']]],
+  ['control_14',['Control',['../classlds_1_1_controller.html#aa3b74bbae163dc35835dadf89c873a93',1,'lds::Controller']]],
   ['control_20mode_20bit_20masks_15',['Control Mode Bit Masks',['../group__control__masks.html',1,'']]],
-  ['controltype_16',['controlType',['../classlds_1_1gaussian_1_1ctrl__t.html#a3a298b773b89de370e0513e8525f7803',1,'lds::gaussian::ctrl_t::controlType()'],['../classlds_1_1poisson_1_1ctrl__t.html#ab985b6942582cc045035c901ab6c1ca6',1,'lds::poisson::ctrl_t::controlType()']]],
-  ['createhankelmat_5fn4sid_17',['createHankelMat_n4sid',['../namespacelds_1_1gaussian.html#a0f377ec58e312a67369a2dc6af08bd57',1,'lds::gaussian']]],
-  ['ctrl_5ft_18',['ctrl_t',['../classlds_1_1gaussian_1_1ctrl__t.html#a319b9dac06a2c069190fe707c55bc75c',1,'lds::gaussian::ctrl_t::ctrl_t()'],['../classlds_1_1poisson_1_1ctrl__t.html#a83049e960b44db5a6e6172b3e42eafdb',1,'lds::poisson::ctrl_t::ctrl_t()'],['../classlds_1_1gaussian_1_1ctrl__t.html',1,'lds::gaussian::ctrl_t'],['../classlds_1_1poisson_1_1ctrl__t.html',1,'lds::poisson::ctrl_t']]]
+  ['control_5ftype_16',['control_type',['../classlds_1_1_controller.html#a91facc5162e37527b5e45e752fd29369',1,'lds::Controller']]],
+  ['control_5ftype_5f_17',['control_type_',['../classlds_1_1_controller.html#acfc93a83029bdb57124796e2cfc4e8df',1,'lds::Controller']]],
+  ['controller_18',['Controller',['../classlds_1_1_controller.html#a5ec4e145ebb48a9dfc00df33f2bc420b',1,'lds::Controller::Controller()=default'],['../classlds_1_1_controller.html#af95e4ae26bb6ff894b27299245268e8a',1,'lds::Controller::Controller(const System &amp;sys, data_t u_lb, data_t u_ub, size_t control_type=0)'],['../classlds_1_1_controller.html#a9678d0cf90641648c719f661c958e7bc',1,'lds::Controller::Controller(System &amp;&amp;sys, data_t u_lb, data_t u_ub, size_t control_type=0)'],['../classlds_1_1_controller.html',1,'lds::Controller&lt; System &gt;'],['../classlds_1_1gaussian_1_1_controller.html',1,'lds::gaussian::Controller'],['../classlds_1_1poisson_1_1_controller.html',1,'lds::poisson::Controller']]],
+  ['controloutputreference_19',['ControlOutputReference',['../classlds_1_1_controller.html#a880631c357fef0af33b197ae2d44675b',1,'lds::Controller']]],
+  ['createhankeldatamat_20',['CreateHankelDataMat',['../classlds_1_1_s_s_i_d.html#a2acf6ee53851d738a700dbd4cce334c8',1,'lds::SSID']]],
+  ['cx_21',['cx',['../classlds_1_1_system.html#a58d528f377ba0047d5fed199757502a0',1,'lds::System']]],
+  ['cx_5f_22',['cx_',['../classlds_1_1_system.html#a5828e87a44c5388a4f92207e220ed08b',1,'lds::System']]]
 ];

@@ -16,8 +16,8 @@ arma/mex interface using Matlab C API <br> <br>[More...](#detailed-description)
 | -------------- | -------------- |
 | template <class T \> <br>auto | **[m2T_scalar](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-m2t_scalar)**(const mxArray * matlab_scalar)<br>Convert Matlab mxArray to scalar of type T.  |
 | template <class T \> <br>auto | **[m2a_mat](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-m2a_mat)**(const mxArray * matlab_mat, bool copy_aux_mem =false, bool strict =true)<br>Convert matlab matrix to armadillo.  |
-| auto | **[a2m_mat](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_mat)**(arma::Mat< double > const & arma_mat)<br>Convert armadillo to matlab matrix.  |
-| auto | **[a2m_vec](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_vec)**(arma::Col< double > const & arma_vec)<br>Convert armadillo to matlab vector.  |
+| template <typename T \> <br>auto | **[a2m_mat](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_mat)**(arma::Mat< T > const & arma_mat)<br>Convert armadillo to matlab matrix.  |
+| template <typename T \> <br>auto | **[a2m_vec](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_vec)**(arma::Col< T > const & arma_vec)<br>Convert armadillo to matlab vector.  |
 
 ## Detailed Description
 
@@ -81,8 +81,9 @@ inline auto m2a_mat(
 ### a2m_mat
 
 ```cpp
+template <typename T >
 inline auto a2m_mat(
-    arma::Mat< double > const & arma_mat
+    arma::Mat< T > const & arma_mat
 )
 ```
 
@@ -98,8 +99,9 @@ inline auto a2m_mat(
 ### a2m_vec
 
 ```cpp
+template <typename T >
 inline auto a2m_vec(
-    arma::Col< double > const & arma_vec
+    arma::Col< T > const & arma_vec
 )
 ```
 
@@ -119,4 +121,4 @@ inline auto a2m_vec(
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:11 CST
+Updated on 23 March 2021 at 09:14:14 CDT

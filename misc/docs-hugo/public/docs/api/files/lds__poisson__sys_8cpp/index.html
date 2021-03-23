@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -182,14 +182,14 @@ https://github.com/alex-shpak/hugo-book
   Detailed Description
   <a class="anchor" href="#detailed-description">#</a>
 </h2>
-<p>This file implements the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (<code>[lds::poisson::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/)</code>). It inherits functionality from the underlying linear dynamical system (<code>[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)</code>).</p>
+<p>This file implements the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (<code>lds::poisson::sys_t</code>). It inherits functionality from the underlying linear dynamical system (<code>lds::sys_t</code>).</p>
 <h2 id="source-code">
   Source code
   <a class="anchor" href="#source-code">#</a>
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- lds_poisson_sys.cpp - PLDS ----------------------------------------===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -208,183 +208,52 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> plds;
-
-plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>sys_t(size_t nU, size_t nX, size_t nY, data_t<span style="color:#f92672">&amp;</span> dt, data_t<span style="color:#f92672">&amp;</span> p0,
-                   data_t<span style="color:#f92672">&amp;</span> q0)
-    <span style="color:#f92672">:</span> lds<span style="color:#f92672">::</span>sys_t(nU, nX, dt, p0, q0) {
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nY <span style="color:#f92672">=</span> nY;
-
-  y <span style="color:#f92672">=</span> armaVec(nY, fill<span style="color:#f92672">::</span>zeros);
-  logy <span style="color:#f92672">=</span> armaVec(nY, fill<span style="color:#f92672">::</span>zeros);
-  z <span style="color:#f92672">=</span> armaVec(nY, fill<span style="color:#f92672">::</span>zeros);
-  d <span style="color:#f92672">=</span> armaVec(nY, fill<span style="color:#f92672">::</span>zeros);
-
-  C <span style="color:#f92672">=</span> armaMat(nY, nX, fill<span style="color:#f92672">::</span>eye);  <span style="color:#75715e">// each state will map to an output by
-</span><span style="color:#75715e"></span>                                   <span style="color:#75715e">// default (as many as possible)
-</span><span style="color:#75715e"></span>  diag_y <span style="color:#f92672">=</span> diagmat(y);
-
-  <span style="color:#75715e">// TODO(mfbolus): for some reason, on my mac, initializing with randu results
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// in bus error!
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// chance = armaVec(nY, fill::randu);
-</span><span style="color:#75715e"></span>  chance <span style="color:#f92672">=</span> armaVec(nY, fill<span style="color:#f92672">::</span>zeros);
+lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>System(size_t n_u, size_t n_x, size_t n_y, data_t dt,
+                             data_t p0, data_t q0)
+    <span style="color:#f92672">:</span> lds<span style="color:#f92672">::</span>System(n_u, n_x, n_y, dt, p0, q0) {
+  diag_y_ <span style="color:#f92672">=</span> diagmat(y_);
+  chance_ <span style="color:#f92672">=</span> Vector(n_y, fill<span style="color:#f92672">::</span>randu);
 };
-
-<span style="color:#75715e">// predict: Given input, predict the state, covar
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>predict() {
-  lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>predict();
-  h();
-}
 
 <span style="color:#75715e">// Correct: Given measurement (z) and current input (u), update estimate of the
 </span><span style="color:#75715e">// state, covar, output.
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// see Eden et al. 2004
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>filter(armaVec<span style="color:#f92672">&amp;</span> z) {
-  predict();
-  diag_y.diag() <span style="color:#f92672">=</span> y;  <span style="color:#75715e">// need this for covariance update below
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// assign the measurement internal variable.
-</span><span style="color:#75715e"></span>  setZ(z);
-
-  <span style="color:#75715e">// predict covariance (took this out of generic predict step...)
-</span><span style="color:#75715e"></span>  P <span style="color:#f92672">=</span> A <span style="color:#f92672">*</span> P <span style="color:#f92672">*</span> A.t() <span style="color:#f92672">+</span> Q;
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>RecurseKe() {
+  <span style="color:#75715e">// predict covariance
+</span><span style="color:#75715e"></span>  P_ <span style="color:#f92672">=</span> A_ <span style="color:#f92672">*</span> P_ <span style="color:#f92672">*</span> A_.t() <span style="color:#f92672">+</span> Q_;
 
   <span style="color:#75715e">// update cov
-</span><span style="color:#75715e"></span>  P <span style="color:#f92672">=</span> pinv(pinv(P) <span style="color:#f92672">+</span> C.t() <span style="color:#f92672">*</span> diag_y <span style="color:#f92672">*</span> C);
-  x <span style="color:#f92672">=</span> x <span style="color:#f92672">+</span> P <span style="color:#f92672">*</span> C.t() <span style="color:#f92672">*</span> (z <span style="color:#f92672">-</span> y);  <span style="color:#75715e">// posterior
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (adaptM) {
-    P_m <span style="color:#f92672">+=</span> Q_m;  <span style="color:#75715e">// A_m = I
-</span><span style="color:#75715e"></span>    P_m <span style="color:#f92672">=</span> pinv(pinv(P_m) <span style="color:#f92672">+</span> C.t() <span style="color:#f92672">*</span> diag_y <span style="color:#f92672">*</span> C);
-    m <span style="color:#f92672">=</span> m <span style="color:#f92672">+</span> P_m <span style="color:#f92672">*</span> C.t() <span style="color:#f92672">*</span> (z <span style="color:#f92672">-</span> y);
+</span><span style="color:#75715e"></span>  P_ <span style="color:#f92672">=</span> pinv(pinv(P_) <span style="color:#f92672">+</span> C_.t() <span style="color:#f92672">*</span> diag_y_ <span style="color:#f92672">*</span> C_);
+  Ke_ <span style="color:#f92672">=</span> P_ <span style="color:#f92672">*</span> C_.t();
+  <span style="color:#66d9ef">if</span> (do_adapt_m) {
+    P_m_ <span style="color:#f92672">+=</span> Q_m_;                                     <span style="color:#75715e">// predict (A_m = I)
+</span><span style="color:#75715e"></span>    P_m_ <span style="color:#f92672">=</span> pinv(pinv(P_m_) <span style="color:#f92672">+</span> C_.t() <span style="color:#f92672">*</span> diag_y_ <span style="color:#f92672">*</span> C_);  <span style="color:#75715e">// update
+</span><span style="color:#75715e"></span>    Ke_m_ <span style="color:#f92672">=</span> P_m_ <span style="color:#f92672">*</span> C_.t();
   }
-  h();  <span style="color:#75715e">// posterior
-</span><span style="color:#75715e"></span>}
-
-<span style="color:#75715e">// Output: y_{k} = h(x_{k}) = exp(C * x_{k} + d)
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>h() {
-  logy <span style="color:#f92672">=</span> C <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> d;
-  y <span style="color:#f92672">=</span> exp(logy);
 }
 
 <span style="color:#75715e">// Measurement: z ~ Poisson(y)
 </span><span style="color:#75715e">// n.b., In reality, this is only Poisson where rate `y` and sample period `dt`
 </span><span style="color:#75715e">// are sufficiently small there is only ever 0 or 1 events in a period. If
 </span><span style="color:#75715e">// either of those is violated, results will be innacurate.
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>simMeasurement(armaVec<span style="color:#f92672">&amp;</span> z) {
-  h();
-
-  <span style="color:#75715e">// roll the dice.
-</span><span style="color:#75715e"></span>  chance.randu(y.n_elem);
-
-  <span style="color:#75715e">// Compare.
-</span><span style="color:#75715e"></span>  z.zeros();
-  <span style="color:#66d9ef">for</span> (std<span style="color:#f92672">::</span>size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> y.n_elem; k<span style="color:#f92672">++</span>) {
-    <span style="color:#66d9ef">if</span> ((y[k]) <span style="color:#f92672">&gt;</span> chance[k]) z[k] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>;
-  }
-}
-
-<span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reset() {
-  lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reset();
-  h();
-  diag_y <span style="color:#f92672">=</span> diagmat(y);
-}
-
-<span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setDims(size_t<span style="color:#f92672">&amp;</span> nU, size_t<span style="color:#f92672">&amp;</span> nX, size_t<span style="color:#f92672">&amp;</span> nY) {
-  <span style="color:#66d9ef">if</span> (nU <span style="color:#f92672">!=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU) {
-    szChanged <span style="color:#f92672">=</span> true;
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU <span style="color:#f92672">=</span> nU;
-  }
-
-  <span style="color:#66d9ef">if</span> (nX <span style="color:#f92672">!=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX) {
-    szChanged <span style="color:#f92672">=</span> true;
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX <span style="color:#f92672">=</span> nX;
-  }
-
-  <span style="color:#66d9ef">if</span> (nY <span style="color:#f92672">!=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nY) {
-    szChanged <span style="color:#f92672">=</span> true;
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nY <span style="color:#f92672">=</span> nY;
-  }
-
-  <span style="color:#75715e">// this seems a bit heavy-handed, but if any of the dimensions are changed,
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// reset everything.
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (szChanged) {
-    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;System dimensions were changed. Resetting object.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-    (<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>) <span style="color:#f92672">=</span> plds<span style="color:#f92672">::</span>sys_t(nU, nX, nY, dt, p0, q0);
-    szChanged <span style="color:#f92672">=</span> false;
-  }
-}
-
-<span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setC(stdVec<span style="color:#f92672">&amp;</span> cVec) { reassign(C, cVec); }
-<span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setC(armaMat<span style="color:#f92672">&amp;</span> C) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>C, C); }
-
-<span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setD(stdVec<span style="color:#f92672">&amp;</span> dVec) { reassign(d, dVec); }
-<span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setD(armaVec<span style="color:#f92672">&amp;</span> d) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>d, d); }
-
-<span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setZ(stdVec<span style="color:#f92672">&amp;</span> zVec) { reassign(z, zVec); }
-<span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setZ(armaVec<span style="color:#f92672">&amp;</span> z) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>z, z); }
-
-<span style="color:#66d9ef">void</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>printSys() {
-  lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>printSys();
-  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;d: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> d <span style="color:#f92672">&lt;&lt;</span> endl;
-  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;C: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> C <span style="color:#f92672">&lt;&lt;</span> endl;
-  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;y: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> y <span style="color:#f92672">&lt;&lt;</span> endl;
-}
-
-plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">&amp;</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span><span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(<span style="color:#66d9ef">const</span> plds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">&amp;</span> sys) {
-  <span style="color:#75715e">// TODO(mfbolus): would love to be able to re-use the lds code:
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (*this) = lds::sys_t::operator=(sys);
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// but this does not work bc the input is glds::sys_t which is a subclass of
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// lds::sys_t. Need to figure out if there is a way to write functions to
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// apply to all subclasses (e.g., &lt;lds::sys_t&amp; sys)
+</span><span style="color:#75715e">// Simulate
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> lds<span style="color:#f92672">::</span>Vector<span style="color:#f92672">&amp;</span> lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Simulate(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> u_tm1) {
+  f(u_tm1, true);  <span style="color:#75715e">// simulate dynamics with noise added
+</span><span style="color:#75715e"></span>  h();             <span style="color:#75715e">// output
 </span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// FROM LDS
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>A <span style="color:#f92672">=</span> sys.A;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>B <span style="color:#f92672">=</span> sys.B;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>g <span style="color:#f92672">=</span> sys.g;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Q <span style="color:#f92672">=</span> sys.Q;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>x0 <span style="color:#f92672">=</span> sys.x0;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P0 <span style="color:#f92672">=</span> sys.P0;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Q_m <span style="color:#f92672">=</span> sys.Q_m;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>m0 <span style="color:#f92672">=</span> sys.m0;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P0_m <span style="color:#f92672">=</span> sys.P0_m;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>u <span style="color:#f92672">=</span> sys.u;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>x <span style="color:#f92672">=</span> sys.x;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P <span style="color:#f92672">=</span> sys.P;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>m <span style="color:#f92672">=</span> sys.m;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P_m <span style="color:#f92672">=</span> sys.P_m;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>dt <span style="color:#f92672">=</span> sys.dt;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>p0 <span style="color:#f92672">=</span> sys.p0;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>q0 <span style="color:#f92672">=</span> sys.q0;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX <span style="color:#f92672">=</span> sys.nX;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU <span style="color:#f92672">=</span> sys.nU;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>szChanged <span style="color:#f92672">=</span> sys.szChanged;
-  <span style="color:#75715e">// END FROM LDS
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// PLDS
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>C <span style="color:#f92672">=</span> sys.C;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>d <span style="color:#f92672">=</span> sys.d;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>logy <span style="color:#f92672">=</span> sys.logy;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>y <span style="color:#f92672">=</span> sys.y;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>z <span style="color:#f92672">=</span> sys.z;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nY <span style="color:#f92672">=</span> sys.nY;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>diag_y <span style="color:#f92672">=</span> sys.diag_y;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>chance <span style="color:#f92672">=</span> sys.chance;
-  <span style="color:#75715e">// END FROM PLDS
-</span><span style="color:#75715e"></span>
-  <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+  chance_.randu(n_y_);
+  z_.zeros();
+  <span style="color:#66d9ef">for</span> (std<span style="color:#f92672">::</span>size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> n_y_; k<span style="color:#f92672">++</span>) {
+    <span style="color:#66d9ef">if</span> ((y_[k]) <span style="color:#f92672">&gt;</span> chance_[k]) {
+      z_[k] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>;
+    }
+  }
+  <span style="color:#66d9ef">return</span> z_;
 }
 <span style="color:#75715e">// ******************* SYS_T *******************
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

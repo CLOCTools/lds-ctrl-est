@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['kc_5finty_383',['Kc_inty',['../classlds_1_1gaussian_1_1ctrl__t.html#a6182b16a8e88b74518ed8fe068390aa8',1,'lds::gaussian::ctrl_t::Kc_inty()'],['../classlds_1_1poisson_1_1ctrl__t.html#a6084322fdc9063ef111c4149c0a2b122',1,'lds::poisson::ctrl_t::Kc_inty()']]],
-  ['kc_5fu_384',['Kc_u',['../classlds_1_1gaussian_1_1ctrl__t.html#a898e1b2d7af526b69f46cfc0ce162a6d',1,'lds::gaussian::ctrl_t::Kc_u()'],['../classlds_1_1poisson_1_1ctrl__t.html#a7e51bd808eeaf72630b547e5a7ca8655',1,'lds::poisson::ctrl_t::Kc_u()']]],
-  ['kc_5fx_385',['Kc_x',['../classlds_1_1gaussian_1_1ctrl__t.html#aed1eccb8d378d7b8c3c31bdb560dd458',1,'lds::gaussian::ctrl_t::Kc_x()'],['../classlds_1_1poisson_1_1ctrl__t.html#abb3dac6ee56e34c58297fb5374c1ca87',1,'lds::poisson::ctrl_t::Kc_x()']]],
-  ['ke_386',['Ke',['../classlds_1_1gaussian_1_1sys__t.html#a526582c6c29a6710d9c71db0e5145939',1,'lds::gaussian::sys_t']]],
-  ['ke_5fm_387',['Ke_m',['../classlds_1_1gaussian_1_1sys__t.html#a40cd868613c68adb7974f0b5cb76c3ec',1,'lds::gaussian::sys_t']]]
+  ['g_5f_397',['g_',['../classlds_1_1_fit.html#a77722939fc7999c40005fcb6e573c3a9',1,'lds::Fit::g_()'],['../classlds_1_1_system.html#a2fc7de58a019ea153352ac7b47e415aa',1,'lds::System::g_()']]],
+  ['g_5fdc_5f_398',['g_dc_',['../classlds_1_1_s_s_i_d.html#a770ec7d968c4e78d24276a6637dbdf7d',1,'lds::SSID']]],
+  ['g_5fdesign_5f_399',['g_design_',['../classlds_1_1_controller.html#a1e43c087d8153ed3f8df2d46f84d0dd3',1,'lds::Controller']]]
 ];

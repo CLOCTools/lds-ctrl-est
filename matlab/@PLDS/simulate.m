@@ -1,5 +1,5 @@
-function [y, x] = simulate(this, u, addNoise)
-	% [y, x] = simulate(this, u, addNoise)
+function [y, x, z] = simulate(this, u, addNoise)
+	% [y, x, z] = simulate(this, u, addNoise)
 
 	if ~iscell(u)
 		error('Inputs (u) must be a cell array.')
@@ -22,13 +22,12 @@ function [y, x] = simulate(this, u, addNoise)
 	nY = this.nY;
 
 	if addNoise
-		% q = sqrtmat_svd(this.Q);
-		% noiseX = cellfun(@(u) randn(nX, size(u,2)), u, 'uniformoutput', false);
 		noiseX = cellfun(@(u) mvnrnd(zeros(nX,1), this.Q, size(u,2))', u, 'uniformoutput', false);
 	end
 
 	x0 = this.x0;
 
+	z = cell(size(u));
 	y = cell(size(u));
 	x = cell(size(u));
 	for trial=1:numel(u)
@@ -46,6 +45,7 @@ function [y, x] = simulate(this, u, addNoise)
 				x{trial}(:,k) = x{trial}(:,k) + noiseX{trial}(:,k-1);
 			end
 			y{trial}(:,k) = exp(C*x{trial}(:,k) + d);
+			z{trial}(:,k) = poissrnd(y{trial}(:,k));
 		end
 	end
 end

@@ -11,9 +11,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__control__masks/</guid>
-      <description>Control Mode Bit Masks #  
-More&amp;hellip; Attributes #      Name     const std::size_t CONTROL_TYPE_U   const std::size_t CONTROL_TYPE_INTY   const std::size_t CONTROL_TYPE_ADAPT_M Control setpoint adapted with (re-estimated) process disturbance m.    Detailed Description #  Control mode bit masks. These can be bit-wise OR&amp;rsquo;d to use in combination.
-Attribute Details #  CONTROL_TYPE_U #  static const std::size_t CONTROL_TYPE_U = 0x1; Control was designed to penalize change in input (i.</description>
+      <description>provides fill types for constructing new armadillo vectors, matrices</description>
     </item>
     
     <item>
@@ -23,7 +21,8 @@ Attribute Details #  CONTROL_TYPE_U #  static const std::size_t CONTROL_TYPE_U =
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__defaults/</guid>
       <description>Defaults #  
-More&amp;hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q0   data_t DEFAULT_R0   std::vector&amp;lt; data_t &amp;gt; DEFAULT_T0   data_t DATA_T_ZERO   data_t DATA_T_ONE   data_t DEFAULT_SOFTSTART   bool FALSE   bool TRUE    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances in case there is need to resolve dimension mismatch)</description>
+More&amp;hellip; Attributes #      Name     const data_t kDefaultP0 default state estimate covar   const data_t kDefaultQ0 default process noise covar   const data_t kDefaultR0 default output noise covar    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances)
+Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
   </channel>

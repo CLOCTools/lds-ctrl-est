@@ -1,4 +1,12 @@
 <map id="lds_poisson_fit_ssid.h" name="lds_poisson_fit_ssid.h">
-<area shape="rect" id="node1" title="PLDS SSID fit type." alt="" coords="5,5,157,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="42,80,121,107"/>
+<area shape="rect" id="node1" title="PLDS SSID fit type." alt="" coords="57,5,209,32"/>
+<area shape="rect" id="node2" href="$lds__fit__ssid_8h.html" title="subspace identification" alt="" coords="151,80,250,107"/>
+<area shape="rect" id="node9" href="$lds__poisson__fit_8h.html" title="PLDS base fit type." alt="" coords="5,80,127,107"/>
+<area shape="rect" id="node3" href="$lds__fit_8h.html" title="LDS base fit type." alt="" coords="144,155,212,181"/>
+<area shape="rect" id="node4" href="$lds_8h.html" title="lds namespace" alt="" coords="130,304,181,331"/>
+<area shape="rect" id="node6" href="$lds__uniform__mats_8h.html" title="List of uniformly sized matrices." alt="" coords="193,229,331,256"/>
+<area shape="rect" id="node5" title=" " alt="" coords="117,379,193,405"/>
+<area shape="rect" id="node7" title=" " alt="" coords="220,304,272,331"/>
+<area shape="rect" id="node8" title=" " alt="" coords="297,304,355,331"/>
+<area shape="rect" id="node10" href="$lds__poisson_8h.html" title="plds namespace" alt="" coords="14,229,118,256"/>
 </map>

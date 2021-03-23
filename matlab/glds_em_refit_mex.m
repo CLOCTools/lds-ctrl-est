@@ -1,4 +1,4 @@
-% [yHat, xHat, sum_E_xu_tm1_xu_tm1, sum_E_xu_t_xu_tm1, sum_E_xu_t_xu_t, T] = glds_em_refit_mex(fit, u, z, calcAB, calcQ, calcInitial, calcC, calcd, calcR, maxIter, tol)
+% [y_hat, x_hat, sum_E_xu_tm1_xu_tm1, sum_E_xu_t_xu_tm1, sum_E_xu_t_xu_t, T] = glds_em_refit_mex(fit, u, z, calc_dynamics, calc_Q, calc_init, calc_output, calc_measurement, max_iter, tol)
 %
 % Refit a Gaussian Linear Dynamical System (GLDS) by expectation-maximization.
 %
@@ -6,10 +6,10 @@
 % fit: initial fit being refit
 % u: input, cellarray(nTrials,1), where each trial is numericarray{double}(nU, nSamps)
 % z: measurement, cellarray(nTrials,1), where each trial is numericarray{double}(nY, nSamps)
-% t0: initial time for [u; n], numericarray{double}(nTrials,1)
 % dt: sample period (double)
-% calcAB, calcQ, calcInitial, calcC, calcd, calcR: whether to calculate new values for respective parameters
-% maxIter: max number of interations of E-M alg
+% calc_dynamics, calc_Q, calc_init, calc_output, calc_measurement: whether to calculate new values for respective parameters
+% max_iter: max number of interations of E-M alg
 % tol: parameter convergence tolerance
 %
-% 2020/04 : mfbolus
+% 2020/04 (mfbolus)
+% 2021/03 (mfbolus): removed unused parameters

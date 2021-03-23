@@ -1,6 +1,6 @@
 //===-- lds_sys.cpp - LDS -------------------------------------------------===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@
 ///
 /// \file
 /// This file implements the base type for linear dynamical systems
-/// (`lds::sys_t`). Note that this class defines the underlying linear dynamics,
+/// (lds::System). Note that this class defines the underlying linear dynamics,
 /// but does not have output functions.Gaussian- and Poisson-output variants
 /// will be built upon this class.
 ///
@@ -27,288 +27,90 @@
 
 #include <ldsCtrlEst>
 
-using namespace std;
-using namespace lds;
+lds::System::System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0,
+                    data_t q0)
+    : n_u_(n_u), n_x_(n_x), n_y_(n_y), dt_(dt) {
+  InitVars(p0, q0);
+}
 
-lds::sys_t::sys_t(size_t nU, size_t nX, data_t& dt, data_t& p0, data_t& q0)
-    : dt(dt), p0(p0), q0(q0) {
-  this->nU = nU;
-  this->nX = nX;
-
-  u = armaVec(nU, fill::zeros);
-
+void lds::System::InitVars(data_t p0, data_t q0) {
   // initial conditions.
-  x0 = armaVec(nX, fill::zeros);  // includes bias (nY) and g (nU)
-  x = x0;
-  P0 = armaMat(nX, nX, fill::zeros);
-  P = P0;
+  x0_ = Vector(n_x_, fill::zeros);  // includes bias (nY) and g (nU)
+  P0_ = p0 * Matrix(n_x_, n_x_, fill::eye);
 
-  m0 = x0;
-  m = m0;
-  P0_m = P0;
-  P_m = P0_m;
+  m0_ = x0_;
+  P0_m_ = P0_;
 
-  g = armaVec(nU, fill::ones);
+  // signals
+  x_ = x0_;
+  P_ = P0_;
+  m_ = m0_;
+  P_m_ = P0_m_;
+  y_ = Vector(n_y_, fill::zeros);
+  cx_ = Vector(n_y_, fill::zeros);
+  z_ = Vector(n_y_, fill::zeros);
 
   // By default, random walk where each state is independent
   // In this way, provides independent estimates of rate per channel of output.
-  A = armaMat(nX, nX, fill::eye);
-  B = armaMat(nX, nU, fill::zeros);
-  Q = q0 * armaMat(nX, nX, fill::eye);
-  Q_m = Q;
+  A_ = Matrix(n_x_, n_x_, fill::eye);
+  B_ = Matrix(n_x_, n_u_, fill::zeros);
+  g_ = Vector(n_u_, fill::ones);
+  Q_ = q0 * Matrix(n_x_, n_x_, fill::eye);
+  Q_m_ = Q_;
 
-  adaptM = false;
-  szChanged = false;
-};
+  C_ = Matrix(n_y_, n_x_, fill::eye);  // each state will map to an output by
+  d_ = Vector(n_y_, fill::zeros);
 
-// predict: Given input, predict the state
-void lds::sys_t::predict() {
-  // Dynamics: x_{k+1} = f(x_{k},u_{k},w_{k})
-  x = A * x + B * (g % u) + m;
-  // predict estimate **covariance** during the filter step
-  // (unnecessary if not filtering)
+  Ke_ = Matrix(n_x_, n_y_, fill::zeros);    // estimator gain.
+  Ke_m_ = Matrix(n_x_, n_y_, fill::zeros);  // estimator gain for m adaptation.
+
+  do_adapt_m = false;
 }
 
-// predict: Given input, predict the state, including simulated process noise
-void lds::sys_t::simPredict() {
-  // Dynamics: x_{k+1} = f(x_{k},u_{k},w_{k})
-  x = A * x + B * (g % u) + m;
-  x += arma::mvnrnd( armaVec(x.n_elem).fill(0), Q );
+// Filter: Given measurement (`z`) and previous input (`u_tm1`), predict state
+// and update estimate of the state, covar, output using Kalman filter
+void lds::System::Filter(const Vector& u_tm1, const Vector& z_t) {
+  // predict mean
+  f(u_tm1);  // dynamics
+
+  h();  // output
+
+  // recursively calculate esimator gains (or just keep existing values)
+  // (also predicts+updates estimate covariance)
+  RecurseKe();
+
+  // update
+  x_ += Ke_ * (z_t - y_);
+  if (do_adapt_m) {
+    m_ += Ke_m_ * (z_t - y_);  // adaptively estimating disturbance
+  }
+
+  // With new state, estimate output.
+  h();  // --> posterior
 }
 
-void lds::sys_t::reset() {
+void lds::System::Reset() {
   // reset to initial conditions
-  x = x0;  // mean
-  P = P0;  // cov of state estimate
-  m = m0; // process disturbance
-  P_m = P0_m; // cov of disturbance estimate
-  szChanged = false;
+  x_ = x0_;      // mean
+  P_ = P0_;      // cov of state estimate
+  m_ = m0_;      // process disturbance
+  P_m_ = P0_m_;  // cov of disturbance estimate
+  h();
 }
 
-void lds::sys_t::setDims(size_t& nU, size_t& nX) {
-  if (nU != this->nU) {
-    szChanged = true;
-    this->nU = nU;
-  }
-
-  if (nX != this->nX) {
-    szChanged = true;
-    this->nX = nX;
-  }
-
-  // this seems a bit heavy-handed, but if any of the dimensions are changed,
-  // reset everything.
-  if (szChanged) {
-    cout << "System dimensions were changed. Resetting object.\n";
-    (*this) = lds::sys_t(nU, nX, dt, p0, q0);
-    szChanged = false;
-  }
+void lds::System::Print() {
+  std::cout << "\n ********** SYSTEM ********** \n";
+  std::cout << "x: \n" << x_ << "\n";
+  std::cout << "P: \n" << P_ << "\n";
+  std::cout << "A: \n" << A_ << "\n";
+  std::cout << "B: \n" << B_ << "\n";
+  std::cout << "g: \n" << g_ << "\n";
+  std::cout << "m: \n" << m_ << "\n";
+  std::cout << "Q: \n" << Q_ << "\n";
+  std::cout << "Q_m: \n" << Q_m_ << "\n";
+  std::cout << "d: \n" << d_ << "\n";
+  std::cout << "C: \n" << C_ << "\n";
+  std::cout << "y: \n" << y_ << "\n";
 }
 
-// setting input
-void lds::sys_t::setU(stdVec& uVec) { reassign(u, uVec); }
-void lds::sys_t::setU(armaVec& u) { reassign(this->u, u); }
-
-// Fall back to default value for Q and reset P
-void lds::sys_t::defaultQ() {
-  Q.zeros();
-  Q.diag().fill(q0);
-
-  Q_m.zeros();
-  Q_m.diag().fill(q0);
-
-  // for good measure...
-  P = P0;
-  P_m = P0;
-}
-
-// Setting parameter values...
-void lds::sys_t::setA(stdVec& aVec) { reassign(A, aVec); }
-void lds::sys_t::setA(armaMat& A) { reassign(this->A, A); }
-
-void lds::sys_t::setB(stdVec& bVec) { reassign(B, bVec); }
-
-void lds::sys_t::setB(armaMat& B) { reassign(this->B, B); }
-
-void lds::sys_t::setQ(stdVec& qVec) { reassign(Q, qVec); }
-
-void lds::sys_t::setQ(armaMat& Q) { reassign(this->Q, Q); }
-
-void lds::sys_t::setP0(stdVec& p0Vec) { reassign(P0, p0Vec); }
-void lds::sys_t::setP0(armaMat& P0) {
-  reassign(this->P0, P0);
-  P = this->P0;
-}
-
-void lds::sys_t::setX0(stdVec& x0Vec) { reassign(x0, x0Vec); }
-void lds::sys_t::setX0(armaVec& x0) { reassign(this->x0, x0); }
-
-void lds::sys_t::setG(stdVec& gVec) { reassign(g, gVec); }
-void lds::sys_t::setG(armaVec& g) { reassign(this->g, g); }
-
-void lds::sys_t::setM(stdVec& mVec) {
-  reassign(m0, mVec);
-  if (!adaptM) m = m0;
-}
-void lds::sys_t::setM(armaVec& m) {
-  reassign(m0, m);
-  if (!adaptM) this->m = m0;
-}
-
-void lds::sys_t::setP0_m(stdVec& p0mVec) { reassign(P0_m, p0mVec); }
-void lds::sys_t::setP0_m(armaMat& P0_m) { reassign(this->P0_m, P0_m); }
-
-void lds::sys_t::setQ_m(stdVec& qmVec) { reassign(Q_m, qmVec); }
-void lds::sys_t::setQ_m(armaMat& Q_m) { reassign(this->Q_m, Q_m); }
-
-// Generic functions for re-assigning elements.
-void lds::sys_t::reassign(armaVec& oldVar, armaVec& newVar, data_t defaultVal) {
-  for (size_t k = 0; k < oldVar.n_elem; k++) {
-    if (newVar.n_elem > k)
-      oldVar[k] = newVar[k];
-    else
-      oldVar[k] = defaultVal;
-  }
-}
-void lds::sys_t::reassign(armaVec& oldVar, stdVec& newVar, data_t defaultVal) {
-  for (size_t k = 0; k < oldVar.n_elem; k++) {
-    if (newVar.size() > k)
-      oldVar[k] = newVar[k];
-    else
-      oldVar[k] = defaultVal;
-  }
-}
-void lds::sys_t::reassign(armaMat& oldVar, armaMat& newVar, data_t defaultVal) {
-  for (size_t k = 0; k < oldVar.n_elem; k++) {
-    if (newVar.n_elem > k)
-      oldVar[k] = newVar[k];
-    else
-      oldVar[k] = defaultVal;
-  }
-}
-void lds::sys_t::reassign(armaMat& oldVar, stdVec& newVar, data_t defaultVal) {
-  for (size_t k = 0; k < oldVar.n_elem; k++) {
-    if (newVar.size() > k)
-      oldVar[k] = newVar[k];
-    else
-      oldVar[k] = defaultVal;
-  }
-}
-
-// subviews..
-void lds::sys_t::reassign(armaSubVec& oldVar, armaVec& newVar,
-                          data_t defaultVal) {
-  for (size_t k = 0; k < oldVar.n_elem; k++) {
-    if (newVar.n_elem > k)
-      oldVar[k] = newVar[k];
-    else
-      oldVar[k] = defaultVal;
-  }
-}
-void lds::sys_t::reassign(armaSubVec& oldVar, stdVec& newVar,
-                          data_t defaultVal) {
-  for (size_t k = 0; k < oldVar.n_elem; k++) {
-    if (newVar.size() > k)
-      oldVar[k] = newVar[k];
-    else
-      oldVar[k] = defaultVal;
-  }
-}
-void lds::sys_t::reassign(armaSubMat& oldVar, armaMat& newVar,
-                          data_t defaultVal) {
-  for (size_t k = 0; k < oldVar.n_elem; k++) {
-    if (newVar.n_elem > k)
-      oldVar[k] = newVar[k];
-    else
-      oldVar[k] = defaultVal;
-  }
-}
-void lds::sys_t::reassign(armaSubMat& oldVar, stdVec& newVar,
-                          data_t defaultVal) {
-  for (size_t k = 0; k < oldVar.n_elem; k++) {
-    if (newVar.size() > k)
-      oldVar[k] = newVar[k];
-    else
-      oldVar[k] = defaultVal;
-  }
-}
-
-void lds::sys_t::printSys() {
-  cout << "\n ********** SYSTEM ********** \n";
-  cout << "x: \n" << x << endl;
-  cout << "P: \n" << P << endl;
-  cout << "A: \n" << A << endl;
-  cout << "B: \n" << B << endl;
-  cout << "Q: \n" << Q << endl;
-  cout << "m: \n" << m << endl;
-  cout << "g: \n" << g << endl;
-}
-
-lds::sys_t& lds::sys_t::operator=(const lds::sys_t& sys) {
-  this->A = sys.A;
-  this->B = sys.B;
-  this->g = sys.g;
-  this->Q = sys.Q;
-  this->x0 = sys.x0;
-  this->P0 = sys.P0;
-
-  this->Q_m = sys.Q_m;
-  this->m0 = sys.m0;
-  this->P0_m = sys.P0_m;
-
-  this->u = sys.u;
-  this->x = sys.x;
-  this->P = sys.P;
-  this->m = sys.m;
-  this->P_m = sys.P_m;
-
-  this->dt = sys.dt;
-  this->p0 = sys.p0;
-  this->q0 = sys.q0;
-
-  this->nX = sys.nX;
-  this->nU = sys.nU;
-  this->szChanged = sys.szChanged;
-
-  return *this;
-}
-
-void lds::sys_t::limit(stdVec& x, data_t& lb, data_t& ub) {
-  for (size_t k = 0; k < x.size(); k++) {
-    x[k] = x[k] < lb ? lb : x[k];
-    x[k] = x[k] > ub ? ub : x[k];
-  }
-}
-
-void lds::sys_t::limit(armaVec& x, data_t& lb, data_t& ub) {
-  for (size_t k = 0; k < x.n_elem; k++) {
-    x[k] = x[k] < lb ? lb : x[k];
-    x[k] = x[k] > ub ? ub : x[k];
-  }
-}
-
-void lds::sys_t::limit(armaMat& x, data_t& lb, data_t& ub) {
-  for (size_t k = 0; k < x.n_elem; k++) {
-    x[k] = x[k] < lb ? lb : x[k];
-    x[k] = x[k] > ub ? ub : x[k];
-  }
-}
-
-void lds::sys_t::checkP() {
-  for (size_t k = 0; k < P.n_elem; k++) {
-    if (abs(P[k]) > plim) {
-      cerr << "\n\n P GOT HIGHER THAN PLIM! RESETTING TO P0... \n\n";
-      P = P0;
-      return;
-    }
-  }
-
-  for (size_t k = 0; k < P_m.n_elem; k++) {
-    if (abs(P_m[k]) > plim) {
-      cerr << "\n\n P_m GOT HIGHER THAN PLIM! RESETTING TO P0... \n\n";
-      P_m = P0_m;
-      return;
-    }
-  }
-}
 //******************* SYS_T *******************

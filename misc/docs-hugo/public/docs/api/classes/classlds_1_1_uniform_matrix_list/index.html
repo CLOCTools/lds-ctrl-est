@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="lds::UniformMatrixList #  More&hellip;
+Inherits from std::vector&lt; Matrix &gt;
+Public Functions #      Name      UniformMatrixList() =default
+Constructs a new UniformMatrixList.    UniformMatrixList(const std::vector&lt; Matrix &gt; &amp; mats, std::array&lt; size_t, 2 &gt; dim ={0, 0})
+Constructs a new UniformMatrixList by copying existing vector of Matrix if dimensions consistent.    UniformMatrixList(std::vector&lt; Matrix &gt; &amp;&amp; mats, std::array&lt; size_t, 2 &gt; dim ={0, 0})">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="lds::UniformMatrixList" />
+<meta property="og:description" content="lds::UniformMatrixList #  More&hellip;
+Inherits from std::vector&lt; Matrix &gt;
+Public Functions #      Name      UniformMatrixList() =default
+Constructs a new UniformMatrixList.    UniformMatrixList(const std::vector&lt; Matrix &gt; &amp; mats, std::array&lt; size_t, 2 &gt; dim ={0, 0})
+Constructs a new UniformMatrixList by copying existing vector of Matrix if dimensions consistent.    UniformMatrixList(std::vector&lt; Matrix &gt; &amp;&amp; mats, std::array&lt; size_t, 2 &gt; dim ={0, 0})" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/" />
+
+<title>lds::UniformMatrixList | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::UniformMatrixList</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsuniformmatrixlist">lds::UniformMatrixList</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#uniformmatrixlist"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-1"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-2"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-3"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-4"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-5"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-6"><strong>~UniformMatrixList</strong></a></li>
+            <li><a href="#dim"><strong>dim</strong></a></li>
+            <li><a href="#size"><strong>size</strong></a></li>
+            <li><a href="#at"><strong>at</strong></a></li>
+            <li><a href="#swap"><strong>Swap</strong></a></li>
+            <li><a href="#operator"><strong>operator=</strong></a></li>
+            <li><a href="#operator-1"><strong>operator=</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsuniformmatrixlist">
+  lds::UniformMatrixList
+  <a class="anchor" href="#ldsuniformmatrixlist">#</a>
+</h1>
+<p><a href="#detailed-description">More&hellip;</a></p>
+<p>Inherits from std::vector&lt; Matrix &gt;</p>
+<h2 id="public-functions">
+  Public Functions
+  <a class="anchor" href="#public-functions">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist">UniformMatrixList</a></strong>() =default<br>Constructs a new <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist">UniformMatrixList</a></strong>(const std::vector&lt; Matrix &gt; &amp; mats, std::array&lt; size_t, 2 &gt; dim ={0, 0})<br>Constructs a new <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a> by copying existing vector of Matrix if dimensions consistent.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist">UniformMatrixList</a></strong>(std::vector&lt; Matrix &gt; &amp;&amp; mats, std::array&lt; size_t, 2 &gt; dim ={0, 0})<br>Constructs a new <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a> by moving existing vector of Matrix if dimensions consistent.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist">UniformMatrixList</a></strong>(std::initializer_list&lt; Matrix &gt; mats, std::array&lt; size_t, 2 &gt; dim ={0, 0})<br>Constructs a new <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a> from initializer_list of Matrix if dimensions consistent.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist">UniformMatrixList</a></strong>(const <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; D &gt; &amp; that)<br>Constructs a new <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a> (copy).</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist">UniformMatrixList</a></strong>(<a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; D &gt; &amp;&amp; that)<br>Constructs a new <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a> (move).</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-~uniformmatrixlist">~UniformMatrixList</a></strong>() =default<br>Destroys the object.</td>
+</tr>
+<tr>
+<td>const std::array&lt; size_t, 2 &gt; &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-dim">dim</a></strong>(size_t n =0) const<br>gets dimensions of uniformly sized matrices</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-size">size</a></strong>()<br>size of container</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-at">at</a></strong>(size_t n)<br>gets reference to n^th element</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-swap">Swap</a></strong>(Matrix &amp; that, size_t n)<br>swaps input matrix with n^th matrix of list</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; D &gt; &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-operator=">operator=</a></strong>(const <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; D &gt; &amp; that)<br>assigns the contents (copy)</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; D &gt; &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-operator=">operator=</a></strong>(<a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; D &gt; &amp;&amp; that)<br>assigns the contents (move)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span>MatrixListFreeDim D <span style="color:#f92672">=</span>kMatFreeDimNone<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">lds</span><span style="color:#f92672">::</span>UniformMatrixList;
+</code></pre></div><hr>
+<hr>
+<h2 id="public-function-details">
+  Public Function Details
+  <a class="anchor" href="#public-function-details">#</a>
+</h2>
+<h3 id="uniformmatrixlist">
+  <strong>UniformMatrixList</strong>
+  <a class="anchor" href="#uniformmatrixlist">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">UniformMatrixList() <span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>
+</code></pre></div><hr>
+<h3 id="uniformmatrixlist-1">
+  <strong>UniformMatrixList</strong>
+  <a class="anchor" href="#uniformmatrixlist-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">explicit</span> UniformMatrixList(
+    <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> Matrix <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> mats,
+    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span> size_t, <span style="color:#ae81ff">2</span> <span style="color:#f92672">&gt;</span> dim <span style="color:#f92672">=</span>{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>}
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>mats</strong> input matrices</li>
+<li><strong>dim</strong> dimensions</li>
+</ul>
+<hr>
+<h3 id="uniformmatrixlist-2">
+  <strong>UniformMatrixList</strong>
+  <a class="anchor" href="#uniformmatrixlist-2">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">explicit</span> UniformMatrixList(
+    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> Matrix <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> mats,
+    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span> size_t, <span style="color:#ae81ff">2</span> <span style="color:#f92672">&gt;</span> dim <span style="color:#f92672">=</span>{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>}
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>mats</strong> input matrices</li>
+<li><strong>dim</strong> dimensions</li>
+</ul>
+<hr>
+<h3 id="uniformmatrixlist-3">
+  <strong>UniformMatrixList</strong>
+  <a class="anchor" href="#uniformmatrixlist-3">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">UniformMatrixList(
+    std<span style="color:#f92672">::</span>initializer_list<span style="color:#f92672">&lt;</span> Matrix <span style="color:#f92672">&gt;</span> mats,
+    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span> size_t, <span style="color:#ae81ff">2</span> <span style="color:#f92672">&gt;</span> dim <span style="color:#f92672">=</span>{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>}
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>mats</strong> input matrices</li>
+<li><strong>dim</strong> dimensions</li>
+</ul>
+<hr>
+<h3 id="uniformmatrixlist-4">
+  <strong>UniformMatrixList</strong>
+  <a class="anchor" href="#uniformmatrixlist-4">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">UniformMatrixList(
+    <span style="color:#66d9ef">const</span> UniformMatrixList<span style="color:#f92672">&lt;</span> D <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> that
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> another <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a></li>
+</ul>
+<hr>
+<h3 id="uniformmatrixlist-5">
+  <strong>UniformMatrixList</strong>
+  <a class="anchor" href="#uniformmatrixlist-5">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">UniformMatrixList(
+    UniformMatrixList<span style="color:#f92672">&lt;</span> D <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> that
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> another <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a></li>
+</ul>
+<hr>
+<h3 id="uniformmatrixlist-6">
+  <strong>~UniformMatrixList</strong>
+  <a class="anchor" href="#uniformmatrixlist-6">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#f92672">~</span>UniformMatrixList() <span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>
+</code></pre></div><hr>
+<h3 id="dim">
+  <strong>dim</strong>
+  <a class="anchor" href="#dim">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span> size_t, <span style="color:#ae81ff">2</span> <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> dim(
+    size_t n <span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+) <span style="color:#66d9ef">const</span>
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>n</strong> [optional] index in list of matrices</li>
+</ul>
+<p><strong>Return</strong>: dimensions</p>
+<hr>
+<h3 id="size">
+  <strong>size</strong>
+  <a class="anchor" href="#size">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> size_t size()
+</code></pre></div><hr>
+<h3 id="at">
+  <strong>at</strong>
+  <a class="anchor" href="#at">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> at(
+    size_t n
+)
+</code></pre></div><hr>
+<h3 id="swap">
+  <strong>Swap</strong>
+  <a class="anchor" href="#swap">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> Swap(
+    Matrix <span style="color:#f92672">&amp;</span> that,
+    size_t n
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> input matrix</li>
+<li><strong>n</strong> index where the matrix is moved</li>
+</ul>
+<hr>
+<h3 id="operator">
+  <strong>operator=</strong>
+  <a class="anchor" href="#operator">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> UniformMatrixList<span style="color:#f92672">&lt;</span> D <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(
+    <span style="color:#66d9ef">const</span> UniformMatrixList<span style="color:#f92672">&lt;</span> D <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> that
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> another <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a></li>
+</ul>
+<p><strong>Return</strong>: reference to object</p>
+<hr>
+<h3 id="operator-1">
+  <strong>operator=</strong>
+  <a class="anchor" href="#operator-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> UniformMatrixList<span style="color:#f92672">&lt;</span> D <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(
+    UniformMatrixList<span style="color:#f92672">&lt;</span> D <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> that
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> another <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a></li>
+</ul>
+<p><strong>Return</strong>: reference to object</p>
+<hr>
+<hr>
+<p>Updated on 23 March 2021 at 09:14:14 CDT</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsuniformmatrixlist">lds::UniformMatrixList</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#uniformmatrixlist"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-1"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-2"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-3"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-4"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-5"><strong>UniformMatrixList</strong></a></li>
+            <li><a href="#uniformmatrixlist-6"><strong>~UniformMatrixList</strong></a></li>
+            <li><a href="#dim"><strong>dim</strong></a></li>
+            <li><a href="#size"><strong>size</strong></a></li>
+            <li><a href="#at"><strong>at</strong></a></li>
+            <li><a href="#swap"><strong>Swap</strong></a></li>
+            <li><a href="#operator"><strong>operator=</strong></a></li>
+            <li><a href="#operator-1"><strong>operator=</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

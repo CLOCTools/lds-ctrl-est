@@ -1,4 +1,9 @@
 <map id="lds_gaussian.h" name="lds_gaussian.h">
-<area shape="rect" id="node1" title="glds namespace" alt="" coords="5,5,116,32"/>
-<area shape="rect" id="node2" href="$lds_8h.html" title="lds namespace" alt="" coords="35,80,86,107"/>
+<area shape="rect" id="node1" title="glds namespace" alt="" coords="80,5,191,32"/>
+<area shape="rect" id="node2" href="$lds__gaussian__ctrl_8h.html" title="GLDS Controller." alt="" coords="9,155,145,181"/>
+<area shape="rect" id="node4" href="$lds__gaussian__fit_8h.html" title="GLDS fit type." alt="" coords="229,80,359,107"/>
+<area shape="rect" id="node7" href="$lds__gaussian__sys_8h.html" title="GLDS base type." alt="" coords="66,80,205,107"/>
+<area shape="rect" id="node3" href="$lds__gaussian__sctrl_8h.html" title="GLDS switched controller type." alt="" coords="5,229,148,256"/>
+<area shape="rect" id="node5" href="$lds__gaussian__fit__em_8h.html" title="GLDS E&#45;M fit type." alt="" coords="193,155,347,181"/>
+<area shape="rect" id="node6" href="$lds__gaussian__fit__ssid_8h.html" title="GLDS SSID fit type." alt="" coords="371,155,531,181"/>
 </map>

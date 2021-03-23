@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ldsCtrlEst
-   &#160;<span id="projectnumber">0.5.0</span>
+   &#160;<span id="projectnumber">0.6.0</span>
    </div>
   </td>
  </tr>
@@ -76,14 +76,15 @@ $(function() {
 
 <p>LDS base type.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;ldsCtrlEst&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="lds_8h_source.html">lds.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for lds_sys.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="lds__sys_8h__incl.png" border="0" usemap="#alds__sys_8h" alt=""/></div>
 <map name="alds__sys_8h" id="alds__sys_8h">
-<area shape="rect" title="LDS base type." alt="" coords="6,5,83,32"/>
-<area shape="rect" title=" " alt="" coords="5,80,84,107"/>
+<area shape="rect" title="LDS base type." alt="" coords="5,5,83,32"/>
+<area shape="rect" href="lds_8h.html" title="lds namespace" alt="" coords="19,80,69,107"/>
+<area shape="rect" title=" " alt="" coords="6,155,82,181"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -91,8 +92,16 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="lds__sys_8h__dep__incl.png" border="0" usemap="#alds__sys_8hdep" alt=""/></div>
 <map name="alds__sys_8hdep" id="alds__sys_8hdep">
-<area shape="rect" title="LDS base type." alt="" coords="5,5,83,32"/>
-<area shape="rect" href="lds_8h.html" title="lds namespace" alt="" coords="19,80,69,107"/>
+<area shape="rect" title="LDS base type." alt="" coords="232,5,309,32"/>
+<area shape="rect" href="lds__ctrl_8h.html" title="Controller." alt="" coords="169,80,245,107"/>
+<area shape="rect" href="lds__gaussian__sys_8h.html" title="GLDS base type." alt="" coords="5,80,144,107"/>
+<area shape="rect" href="lds__poisson__sys_8h.html" title="PLDS base type." alt="" coords="269,80,400,107"/>
+<area shape="rect" href="lds__uniform__systems_8h.html" title="List of uniformly sized Systems." alt="" coords="425,80,583,107"/>
+<area shape="rect" href="lds__gaussian__ctrl_8h.html" title="GLDS Controller." alt="" coords="5,155,141,181"/>
+<area shape="rect" href="lds__poisson__ctrl_8h.html" title="PLDS controller type." alt="" coords="273,155,402,181"/>
+<area shape="rect" href="lds__sctrl_8h.html" title="SwitchedController type." alt="" coords="165,155,248,181"/>
+<area shape="rect" href="lds__gaussian__sctrl_8h.html" title="GLDS switched controller type." alt="" coords="53,229,195,256"/>
+<area shape="rect" href="lds__poisson__sctrl_8h.html" title="PLDS switched controller type." alt="" coords="269,229,405,256"/>
 </map>
 </div>
 </div>
@@ -100,8 +109,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlds_1_1sys__t.html">lds::sys_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linear Dynamical System Type.  <a href="classlds_1_1sys__t.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlds_1_1_system.html">lds::System</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linear Dynamical <a class="el" href="classlds_1_1_system.html" title="Linear Dynamical System Type.">System</a> Type.  <a href="classlds_1_1_system.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -112,7 +121,7 @@ Namespaces</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>LDS base type. </p>
-<p>This file declares and partially defines the base type for linear dynamical systems (<code><a class="el" href="classlds_1_1sys__t.html" title="Linear Dynamical System Type.">lds::sys_t</a></code>). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. </p>
+<p>This file declares and partially defines the base type for linear dynamical systems (<code><a class="el" href="classlds_1_1_system.html" title="Linear Dynamical System Type.">lds::System</a></code>). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

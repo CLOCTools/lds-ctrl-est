@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['v_426',['v',['../classlds_1_1gaussian_1_1ctrl__t.html#abc959a01f58f6d3307344d041be1d3aa',1,'lds::gaussian::ctrl_t::v()'],['../classlds_1_1poisson_1_1ctrl__t.html#a0a6521ab8224d08a72f6a3ee17bc832f',1,'lds::poisson::ctrl_t::v()']]]
+  ['t_5fsince_5fcontrol_5fonset_5f_432',['t_since_control_onset_',['../classlds_1_1_controller.html#a72f640863586c5be7608c22e27dbb56d',1,'lds::Controller']]],
+  ['tau_5fawu_5f_433',['tau_awu_',['../classlds_1_1_controller.html#ae7ec7c763e03995f7933d06bc490c685',1,'lds::Controller']]]
 ];

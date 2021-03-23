@@ -1,6 +1,6 @@
 //===-- ldsCtrlEst_h/lds_poisson_fit.h - Fit Type for PLDS ------*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,50 +27,56 @@
 #ifndef LDSCTRLEST_LDS_POISSON_FIT_H
 #define LDSCTRLEST_LDS_POISSON_FIT_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+// namespace
+#include "lds_poisson.h"
+// fit
+#include "lds_fit.h"
 
 namespace lds {
 namespace poisson {
-///
-/// @brief      PLDS Fit Type
-///
-class fit_t : public lds::fit_t {
+/// PLDS Fit Type
+class Fit : public lds::Fit {
  public:
-  fit_t(){};
+  Fit() = default;
+
   /**
-   * @brief      Constructs a new PLDS fit.
+   * @brief      Constructs a new Fit.
    *
-   * @param      A       state matrix
-   * @param      B       input matrix
-   * @param      g       input gain
-   * @param      m       process disturbance
-   * @param      Q       process noise covariance
-   * @param      x0      initial state estimate
-   * @param      P0      covariance of initial state estimate
-   * @param      C       output matrix
-   * @param      d       output bias
-   * @param      dt      sample period
-   * @param      uTrain  input training data
-   * @param      zTrain  measurement training data
+   * @param  n_u   number of inputs
+   * @param  n_x   number of states
+   * @param  n_y   number of outputs
+   * @param  dt    sample period
    */
-  fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0,
-        armaMat& P0, armaMat& C, armaVec& d, data_t dt,
-        std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+  Fit(size_t n_u, size_t n_x, size_t n_y, data_t dt)
+      : lds::Fit(n_u, n_x, n_y, dt){};
 
-  // Output
-  armaMat C;  ///< output matrix
-  armaVec d;  ///< output bias
+  /**
+   * @brief      output function
+   *
+   * @param      y     output estimate (over time)
+   * @param      x     state estimate (over time)
+   * @param      t     time index
+   *
+   * @return     output
+   */
+  View h(Matrix& y, const Matrix& x, size_t t) override {
+    y.col(t) = exp(C_ * x.col(t) + d_);
+    return y.col(t);
+  };
 
-  // input/output training data
-  std::vector<armaMat> uTrain;  ///< input training data
-  std::vector<armaMat> zTrain;  ///< measurement training data
+  void set_R(const Matrix& R) override {
+    std::cerr
+        << "WARNING: Cannot set R (R[0] = " << R.at(0)
+        << "). No Gaussian measurement noise in Poisson observation model.\n";
+  };
+
+  const Matrix& R() const override {
+    return R_;
+  };
+
 };
 
 };  // namespace poisson
 }  // namespace lds
-
-#include "lds_poisson_fit_ssid.h"
 
 #endif

@@ -35,7 +35,7 @@ Going to simulate a switching disturbance (m) acting on system
 ```cpp
 //===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -54,11 +54,10 @@ Going to simulate a switching disturbance (m) acting on system
 
 #include <ldsCtrlEst>
 
-using lds::armaMat;
-using lds::armaVec;
+using lds::Matrix;
+using lds::Vector;
 using lds::data_t;
 using std::cout;
-using std::vector;
 
 auto main() -> int {
   cout << " ********** Example Gaussian LDS Control ********** \n\n";
@@ -70,22 +69,22 @@ auto main() -> int {
   size_t n_y = 1;
 
   // no time steps for simulation.
-  size_t n_t = static_cast<size_t>(5.0 / dt);
+  auto n_t = static_cast<size_t>(5.0 / dt);
 
   // construct ground truth system to be controlled...
   // initializes to random walk model with top-most n_y state observed
-  lds::gaussian::sys_t controlled_system(n_u, n_x, n_y, dt);
+  lds::gaussian::System controlled_system(n_u, n_x, n_y, dt);
 
   // Ground-truth parameters for the controlled system
   // (stand-in for physical system to be controlled)
-  armaMat a_true(n_x, n_x, arma::fill::eye);
+  Matrix a_true(n_x, n_x, arma::fill::eye);
   a_true[0] = exp(-dt / 0.01);
-  armaMat b_true = armaMat(n_x, n_u).fill(2e-4);
+  Matrix b_true = Matrix(n_x, n_u).fill(2e-4);
   // control signal to model input unit conversion e.g., V -> mW/mm2:
-  armaVec g_true = armaVec(n_y).fill(10.0);
+  Vector g_true = Vector(n_y).fill(10.0);
 
   // output noise covariance
-  armaMat r_true = armaMat(n_y, n_y, arma::fill::eye) * 1e-4;
+  Matrix r_true = Matrix(n_y, n_y, arma::fill::eye) * 1e-4;
 
   size_t which_m = 0;  // whether low or high disturbance (0, 1)
   data_t m_low = 5 * dt * (1 - a_true[0]);
@@ -94,174 +93,174 @@ auto main() -> int {
   data_t pr_hi2lo = pr_lo2hi;
 
   // initially let m be low
-  armaVec m0_true = armaVec(n_y).fill(m_low);
+  Vector m0_true = Vector(n_y).fill(m_low);
 
   // Assign params.
-  controlled_system.setA(a_true);
-  controlled_system.setB(b_true);
-  controlled_system.setM(m0_true);
-  controlled_system.setG(g_true);
-  controlled_system.setR(r_true);
+  controlled_system.set_A(a_true);
+  controlled_system.set_B(b_true);
+  controlled_system.set_m(m0_true);
+  controlled_system.set_g(g_true);
+  controlled_system.set_R(r_true);
 
   cout << ".....................................\n";
   cout << "controlled_system:\n";
   cout << ".....................................\n";
-  controlled_system.printSys();
+  controlled_system.Print();
   cout << ".....................................\n";
 
-  // create controller
-  // lower and upper bounds on control signal (e.g., in Volts)
-  data_t u_lb = 0.0;  // [=] V
-  data_t u_ub = 5.0;  // [=] V
-  glds::ctrl_t controller(n_u, n_x, n_y, u_lb, u_ub, dt);
+  // make a controller
+  lds::gaussian::Controller controller;
+  {
+    // Create **incorrect** model used for control.
+    // (e.g., imperfect model fitting)
+    Matrix b_controller = b_true / 2;
 
-  // Create **incorrect** model used for control.
-  // (e.g., imperfect model fitting)
-  armaMat b_controller = armaMat(n_x, n_u).fill(1e-4);
+    // let's assume zero process disturbance initially
+    // (will be re-estimating)
+    Vector m_controller = Vector(n_x, arma::fill::zeros);
 
-  // Let's say these controller gains were designed assuming g was 9 V/(mW/mm2):
-  armaVec g_design = armaVec(n_u).fill(9);
+    // for this demo, just use arbitrary default R
+    Matrix r_controller = Matrix(n_y, n_y, arma::fill::eye) * lds::kDefaultR0;
 
-  // let's assume zero process disturbance initially
-  // (will be re-estimating)
-  armaVec m_controller = armaVec(n_x, arma::fill::zeros);
+    lds::gaussian::System controller_system(controlled_system);
+    controller_system.set_B(b_controller);
+    controller_system.set_m(m_controller);
+    controller_system.set_R(r_controller);
+    controller_system.Reset();  // reset to new m
+    controller_system.Print();
+
+    // going to adaptively re-estimate the disturbance
+    controller_system.do_adapt_m = true;
+
+    // set adaptation rate by changing covariance of assumed process noise
+    // acting on random-walk evolution of m
+    Matrix q_m = Matrix(n_x, n_x, arma::fill::eye) * 1e-6;
+    controller_system.set_Q_m(q_m);
+
+    // create controller
+    // lower and upper bounds on control signal (e.g., in Volts)
+    data_t u_lb = 0.0;  // [=] V
+    data_t u_ub = 5.0;  // [=] V
+    controller = std::move(
+        lds::gaussian::Controller(std::move(controller_system), u_lb, u_ub));
+  }
 
   // Control variables:
-
   // if following enabled, adapts set point with re-estimated process
   // disturbance n.b., should not need integral action if this is enabled as the
   // adaptive estimator minimizes DC error
   bool do_adaptive_set_point = false;
 
   // Reference/target output, controller gains
-  // n.b., Can either use armaVec (arma::Col) or std::vector
-  armaVec y_ref0 = armaVec(n_y).fill(20.0 * dt);
-  // (Can either use arma::Mat or mats flattened into std::vector)
-  armaMat k_x = armaMat(n_u, n_x).fill(100);     // gains on state error
-  armaMat k_inty = armaMat(n_u, n_y).fill(1e3);  // gains on integrated err
+  Vector y_ref0 = Vector(n_y).fill(20.0 * dt);
+  Matrix k_x = Matrix(n_u, n_x).fill(100);     // gains on state error
+  Matrix k_inty = Matrix(n_u, n_y).fill(1e3);  // gains on integrated err
 
   // setting initial state to target to avoid error at onset:
-  armaVec x0 = armaVec(n_x).fill(y_ref0[0]);
+  Vector x0 = Vector(n_x).fill(y_ref0[0]);
 
   // set up controller type bit mask so controller knows how to proceed
   size_t control_type = 0;
   if (do_adaptive_set_point) {
     // adapt set point with estimated disturbance
-    control_type = control_type | lds::CONTROL_TYPE_ADAPT_M;
+    control_type = control_type | lds::kControlTypeAdaptM;
   } else {
     // use integral action to minimize DC error
-    control_type = control_type | lds::CONTROL_TYPE_INTY;
+    control_type = control_type | lds::kControlTypeIntY;
   }
 
-  // Start configuring controller:
-  // Adaptively re-estimate process disturance (m)
-  controller.adaptM = true;
-
   // set controller type
-  controller.setControlType(control_type);
+  controller.set_control_type(control_type);
+
+  // Let's say these controller gains were designed assuming g was 9 V/(mW/mm2):
+  Vector g_design = Vector(n_u).fill(9);
 
   // Set params.
   // **n.b. using arbitrary defaults for Q, R in this example. Really, these
   // should be set by users, as they tune characteristics of Kalman filter.
   // Users can also choose not to recursively calculate the estimator gain and
   // supply it (setKe) instead of covariances.**
-  controller.setYRef(y_ref0);
-  controller.setKc_x(k_x);
-  controller.setKc_inty(k_inty);
-  controller.setA(a_true);
-  controller.setB(b_controller);
-  controller.setM(m_controller);
-  controller.setG(g_true);
-  controller.setGDesign(g_design);
-  controller.setX0(x0);
-  controller.reset();  // reset to new initial condition
-
-  // set adaptation rate by changing covariance of assumed process noise acting
-  // on random-walk evolution of m
-  armaMat q_m = armaMat(n_x, n_x, arma::fill::eye) * 1e-6;
-  controller.setQ_m(q_m);
+  controller.set_y_ref(y_ref0);
+  controller.set_Kc(k_x);
+  controller.set_Kc_inty(k_inty);
+  controller.set_g_design(g_design);
 
   cout << ".....................................\n";
   cout << "control system:\n";
   cout << ".....................................\n";
-  controller.printSys();
+  controller.Print();
   cout << ".....................................\n";
 
   // set up variables for simulation
-  // create armaMatrix to save outputs in...
-  armaMat y_ref = armaMat(n_y, n_t, arma::fill::ones) * y_ref0[0];
+  // create Matrixrix to save outputs in...
+  Matrix y_ref = Matrix(n_y, n_t, arma::fill::ones) * y_ref0[0];
 
   // Simulated measurements
-  armaMat z(n_y, n_t, arma::fill::zeros);
+  Matrix z(n_y, n_t, arma::fill::zeros);
 
   // simulated control signal ([=] V)
-  armaMat u(n_u, n_t, arma::fill::zeros);
+  Matrix u(n_u, n_t, arma::fill::zeros);
 
   // outputs, states and gain/disturbance params
   // *_hat indicates online estimates
-  armaMat y_hat(n_y, n_t, arma::fill::zeros);
-  armaMat x_hat(n_x, n_t, arma::fill::zeros);
-  armaMat m_hat(n_y, n_t, arma::fill::zeros);
+  Matrix y_hat(n_y, n_t, arma::fill::zeros);
+  Matrix x_hat(n_x, n_t, arma::fill::zeros);
+  Matrix m_hat(n_y, n_t, arma::fill::zeros);
 
   // *_true indicates ground truth (system being controlled)
-  armaMat y_true(n_y, n_t, arma::fill::zeros);
-  armaMat x_true(n_x, n_t, arma::fill::zeros);
-  armaMat m_true(n_y, n_t, arma::fill::zeros);
+  Matrix y_true(n_y, n_t, arma::fill::zeros);
+  Matrix x_true(n_x, n_t, arma::fill::zeros);
+  Matrix m_true(n_y, n_t, arma::fill::zeros);
 
   // get initial val
-  y_hat.submat(0, 0, n_y - 1, 0) = controller.getY();
-  y_true.submat(0, 0, n_y - 1, 0) = controlled_system.getY();
+  y_hat.submat(0, 0, n_y - 1, 0) = controller.sys().y();
+  y_true.submat(0, 0, n_y - 1, 0) = controlled_system.y();
 
-  x_hat.submat(0, 0, n_x - 1, 0) = controller.getX();
-  x_true.submat(0, 0, n_x - 1, 0) = controlled_system.getX();
+  x_hat.submat(0, 0, n_x - 1, 0) = controller.sys().x();
+  x_true.submat(0, 0, n_x - 1, 0) = controlled_system.x();
 
-  m_hat.submat(0, 0, n_x - 1, 0) = controller.getM();
-  m_true.submat(0, 0, n_x - 1, 0) = controlled_system.getM();
+  m_hat.submat(0, 0, n_x - 1, 0) = controller.sys().m();
+  m_true.submat(0, 0, n_x - 1, 0) = controlled_system.m();
 
   cout << "Starting " << n_t * dt << " sec simulation ... \n";
   auto start = std::chrono::high_resolution_clock::now();
   for (size_t t = 1; t < n_t; t++) {
     // simulate a stochastically switched disturbance
-    armaVec chance = arma::randu<arma::vec>(1);
+    Vector chance = arma::randu<Vector>(1);
     if (which_m == 0)  // low disturbance
     {
       if (chance[0] < pr_lo2hi) {  // switches low -> high disturbance
-        m0_true = vector<data_t>(n_y, m_high);
+        m0_true = std::vector<data_t>(n_y, m_high);
         which_m = 1;
       }
     } else {                       // high disturbance
       if (chance[0] < pr_hi2lo) {  // swithces high -> low disturbance
-        m0_true = vector<data_t>(n_y, m_low);
+        m0_true = std::vector<data_t>(n_y, m_low);
         which_m = 0;
       }
     }
-    controlled_system.setM(m0_true);
+    controlled_system.set_m(m0_true);
 
     // input
-    armaVec u_tm1(u.colptr(t - 1), u.n_rows, false, true);
+    Vector u_tm1(u.colptr(t - 1), u.n_rows, false, true);
 
     // Simulate the true system.
-    controlled_system.setU(u_tm1);
-    controlled_system.simPredict();
-    armaVec z_t(z.colptr(t), z.n_rows, false, true);
-    controlled_system.simMeasurement(z_t);
+    z.col(t) = controlled_system.Simulate(u_tm1);
 
     // This method uses a steady-state solution to control problem to calculate
-    // xRef, uRef from reference output yRef. Therefore, it is only applicable
-    // to regulation problems or cases where reference trajectory changes slowly
-    // compared to system dynamics.
-    controller.steadyState_fbCtrl(z_t);
+    // x_ref, u_ref from reference output y_ref. Therefore, it is only
+    // applicable to regulation problems or cases where reference trajectory
+    // changes slowly compared to system dynamics.
+    u.col(t) = controller.ControlOutputReference(z.col(t));
 
     // save the signals
-    y_true.col(t) = controlled_system.getY();
-    x_true.col(t) = controlled_system.getX();
-    m_true.col(t) = controlled_system.getM();
+    y_true.col(t) = controlled_system.y();
+    x_true.col(t) = controlled_system.x();
+    m_true.col(t) = controlled_system.m();
 
-    y_hat.col(t) = controller.getY();
-    x_hat.col(t) = controller.getX();
-    m_hat.col(t) = controller.getM();
-
-    u.col(t) = controller.getU();
+    y_hat.col(t) = controller.sys().y();
+    x_hat.col(t) = controller.sys().x();
+    m_hat.col(t) = controller.sys().m();
   }
 
   auto finish = std::chrono::high_resolution_clock::now();
@@ -275,7 +274,7 @@ auto main() -> int {
   // xTrue, mTrue saving with hdf5 via armadillo
   arma::hdf5_opts::opts replace = arma::hdf5_opts::replace;
 
-  auto dt_vec = arma::vec(1).fill(dt);
+  auto dt_vec = Vector(1).fill(dt);
   dt_vec.save(arma::hdf5_name("eg_glds_ctrl.h5", "dt"));
   y_ref.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_ref", replace));
   u.save(arma::hdf5_name("eg_glds_ctrl.h5", "u", replace));
@@ -295,4 +294,4 @@ auto main() -> int {
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

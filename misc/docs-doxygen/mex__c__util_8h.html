@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ldsCtrlEst
-   &#160;<span id="projectnumber">0.5.0</span>
+   &#160;<span id="projectnumber">0.6.0</span>
    </div>
   </td>
  </tr>
@@ -107,12 +107,14 @@ Functions</h2></td></tr>
 <tr class="memitem:ab4a496385f93615d22ebe6286f6f5088"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearmamexc.html#ab4a496385f93615d22ebe6286f6f5088">armamexc::m2a_mat</a> (const mxArray *matlab_mat, bool copy_aux_mem=false, bool strict=true) -&gt; arma::Mat&lt; T &gt;</td></tr>
 <tr class="memdesc:ab4a496385f93615d22ebe6286f6f5088"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert matlab matrix to armadillo.  <a href="namespacearmamexc.html#ab4a496385f93615d22ebe6286f6f5088">More...</a><br /></td></tr>
 <tr class="separator:ab4a496385f93615d22ebe6286f6f5088"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3c6ff7acef91460ae76cf0a8ef4917f"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearmamexc.html#ab3c6ff7acef91460ae76cf0a8ef4917f">armamexc::a2m_mat</a> (arma::Mat&lt; double &gt; const &amp;arma_mat) -&gt; mxArray *</td></tr>
-<tr class="memdesc:ab3c6ff7acef91460ae76cf0a8ef4917f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert armadillo to matlab matrix.  <a href="namespacearmamexc.html#ab3c6ff7acef91460ae76cf0a8ef4917f">More...</a><br /></td></tr>
-<tr class="separator:ab3c6ff7acef91460ae76cf0a8ef4917f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20d0c6889d13093f8c2ba542347b4589"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacearmamexc.html#a20d0c6889d13093f8c2ba542347b4589">armamexc::a2m_vec</a> (arma::Col&lt; double &gt; const &amp;arma_vec) -&gt; mxArray *</td></tr>
-<tr class="memdesc:a20d0c6889d13093f8c2ba542347b4589"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert armadillo to matlab vector.  <a href="namespacearmamexc.html#a20d0c6889d13093f8c2ba542347b4589">More...</a><br /></td></tr>
-<tr class="separator:a20d0c6889d13093f8c2ba542347b4589"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e40bcd190f345097b224499001271e2"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a4e40bcd190f345097b224499001271e2"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearmamexc.html#a4e40bcd190f345097b224499001271e2">armamexc::a2m_mat</a> (arma::Mat&lt; T &gt; const &amp;arma_mat) -&gt; mxArray *</td></tr>
+<tr class="memdesc:a4e40bcd190f345097b224499001271e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert armadillo to matlab matrix.  <a href="namespacearmamexc.html#a4e40bcd190f345097b224499001271e2">More...</a><br /></td></tr>
+<tr class="separator:a4e40bcd190f345097b224499001271e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef8ac4b5034533ca6cdfd188abae5488"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aef8ac4b5034533ca6cdfd188abae5488"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacearmamexc.html#aef8ac4b5034533ca6cdfd188abae5488">armamexc::a2m_vec</a> (arma::Col&lt; T &gt; const &amp;arma_vec) -&gt; mxArray *</td></tr>
+<tr class="memdesc:aef8ac4b5034533ca6cdfd188abae5488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert armadillo to matlab vector.  <a href="namespacearmamexc.html#aef8ac4b5034533ca6cdfd188abae5488">More...</a><br /></td></tr>
+<tr class="separator:aef8ac4b5034533ca6cdfd188abae5488"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>arma &lt;-&gt; mex interoperability utilities (Matlab C API) </p>

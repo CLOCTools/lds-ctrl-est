@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <link rel="alternate" type="application/rss+xml" href="https://mfbolus.github.io/ldsctrlest/index.xml" title="LDS C&E" />
 <!--
 Made with Book Theme
@@ -180,28 +180,30 @@ https://github.com/alex-shpak/hugo-book
 <p>This library currently provides three namespaces.</p>
 <ul>
 <li><code>lds</code> : linear dynamical systems (without output/observations)</li>
-<li><code>lds::gaussian</code> (AKA <code>glds</code>) : linear dynamical systems with Gaussian observations</li>
-<li><code>lds::poisson</code> (AKA <code>plds</code>) : linear dynamical systems with Poisson observations</li>
+<li><code>lds::gaussian</code>: linear dynamical systems with Gaussian observations</li>
+<li><code>lds::poisson</code>: linear dynamical systems with Poisson observations</li>
 </ul>
 <p><em>Future iterations may include an additional namespace for LDS with Bernoulli observations (<code>lds::bernoulli</code>).</em></p>
 <h1 id="project-scope">
   Project Scope
   <a class="anchor" href="#project-scope">#</a>
 </h1>
-<p>The goal of this project is to provide necessary functions to implement feedback control of linear dynamical systems experimentally: <em>i.e.</em>, online estimation of state feedback and calculation of control signal updates. Given its intended use in experiments, the library seeks to be <strong>practical</strong> in all things and thus includes optional features such as adaptive estimation of a process disturbance to improve robustness in state estimation and a mechanism for combatting integrator windup with control signal saturation. For cases where the system to be controlled is not adequately modeled as having linear dynamics but has multiple quasi-linear operating modes, a &ldquo;switched&rdquo; control scheme is also implemented. It switches between multiple controllers tuned for each operating mode of the physical system as it changes. It also includes options to toggle on/off feedback control and state estimation independently, which can be practically useful when testing the components of the control system. Moreover, to avoid the need for numerical integration of continuous-time models, all state-space models used here are discrete-time.</p>
-<p>Generally, the <code>ldsCtrlEst</code> library does <strong>not</strong> endeavor to provide functionality for things that can be carried out offline/before experiments. For example, it does not design controller gains. Given a model of the system to be controlled, these parameters may be optimized before experimental application in most cases, and there are numerous options available to scientists/engineers in languages such as Matlab and Python for design. An exception to this guiding principle to project scope is the included code for fitting state-space models to data. Currently this fitting portion of the library is a configurable option, but in future releases this may migrate to a separate project as it is not intended for online use.</p>
+<p>The goal of this project is to provide necessary functions to implement feedback control of linear dynamical systems experimentally: <em>i.e.</em>, online estimation of state feedback and calculation of control signal updates. Given its intended use in experiments, the library seeks to be <strong>practical</strong> in all things and thus includes optional features such as adaptive estimation of a process disturbance to improve robustness in state estimation and a mechanism for combatting integrator windup with control signal saturation. For cases where the system to be controlled is not adequately modeled as having linear dynamics but has multiple quasi-linear operating modes, a switched control scheme is also implemented. It switches between multiple controllers designed for each operating mode of the physical system as it changes. It also includes options to toggle on/off feedback control and state estimation independently, which can be practically useful when testing the components of the control system. Moreover, to avoid the need for numerical integration of continuous-time models, all state-space models used here are discrete-time.</p>
+<p>Generally, the <code>ldsCtrlEst</code> library does <strong>not</strong> endeavor to provide functionality for things that can be carried out offline/before experiments. For example, it does not design controller gains. Given a model of the system to be controlled, these parameters may be optimized before experimental application in most cases, and there are numerous options available to scientists/engineers in languages such as Matlab and Python for design. An exception to this guiding principle to project scope is the included code for fitting state-space models to data. Currently, this fitting portion of the library is a configurable option, but in future releases this may migrate to a separate project as it is not intended for online use.</p>
 <p>Among other things, this project also does not provide methods for trajectory optimization, linearization of nonlinear models, or other methods related to nonlinear control, with the exception of the nonlinear state estimator for Poisson-output LDS models.</p>
 <h1 id="repository-design">
   Repository Design
   <a class="anchor" href="#repository-design">#</a>
 </h1>
-<p><img src="/ldsctrlest/classlds_1_1sys__t__inherit__graph.png" alt="class hierarchy" /></p>
+<p><img src="/ldsctrlest/classlds_1_1_system__inherit__graph.png" alt="system class hierarchy" /></p>
 <ul>
-<li>All dynamical systems <em>with observations</em> (Gaussian, Poisson) are built upon class definitions for the underlying linear dynamical system (<code>lds::sys_t</code>).</li>
-<li>In each namespace, there are generic system types defined (<code>lds::sys_t</code>, <code>lds::gaussian::sys_t</code>, <code>lds::poisson::sys_t</code>) that include functionality for one-step prediction, etc.</li>
-<li>Additionally, in namespaces with observation equations (<code>lds::gaussian</code>,<code>lds::poisson</code>), system types include functionality for updating estimates of states, given current measurements (<em>i.e.</em>, filtering).</li>
-<li>In namespaces for systems with observation equations (<code>lds::gaussian</code>,<code>lds::poisson</code>), controller types (<code>ctrl_t</code>) are built on top of that namespace&rsquo;s system type. Feedback control functionality (as well as previously-defined online state estimation) is provided by these controller types.</li>
-<li>In order to ensure dimensionalities always match internally and to use intention in handling any mismatches that may be present in parameters, signals, etc., every property of a system/controller class is <code>protected</code>. Where appropriate, set methods are defined so users can define parameters in a safe way. Get methods are also provided for most signals/parameters.</li>
+<li>All dynamical systems <em>with observations</em> (<code>lds::gaussian::System</code>, <code>lds::poisson::System</code>) are derived from a prototypical linear dynamical system abstract type (<code>lds::System</code>).</li>
+<li>These Gaussian and Poisson system types include user-accessible functions for one-step filtering for one-step simulation, etc.</li>
+</ul>
+<p><img src="/ldsctrlest/classlds_1_1_controller__inherit__graph.png" alt="controller class hierarchy" /></p>
+<ul>
+<li>The controller types for Gaussian- and Poisson-output systems (<code>lds::gaussian::Controller</code>, <code>lds::gaussian::SwitchedController</code>, <code>lds::poisson::Controller</code>, <code>lds::poisson::SwitchedController</code>) are derived from an abstract class template (<code>lds::Controller</code>) that is generic over LDS types derived from <code>lds::System</code> (here, <code>lds::gaussian::System</code> and <code>lds::poisson::System</code>). <code>lds::Controller</code> provides functions for one-step updates of the control signal, based on feedback and a target/reference signal. For the common problem of output reference tracking, the controller uses the underlying system model to estimate the control signal required to track the target, effectively providing model-based open-loop control if the estimator is disabled.</li>
+<li>In order to ensure dimensionalities always match internally, every property of a system/controller class is <code>protected</code> or <code>private</code>. Get methods provide read-only references for most signals/parameters. Where appropriate, set methods are defined so users can change hidden parameters if and only if the new parameter has the correct dimensions.</li>
 </ul>
 <h1 id="repository-organization">
   Repository Organization

@@ -27,7 +27,7 @@ sys = struct(...
   'A', A, ...
   'B', B, ...
   'C', C, ...
-  'D', D, ...
+  'd', d, ...
   'm', m, ...
   'g', g, ...
   'x0', x0, ...
@@ -58,27 +58,27 @@ for trial=1:n_trials
 end
 
 x{trial}(:,1) = x0;
-z{trial}(:,1) = C*x{trial}(:,1) + D*u{trial}(:,1) + d;
+z{trial}(:,1) = C*x{trial}(:,1) + d;
 mu = zeros(1, n_x);
 for trial = 1:n_trials
   noise_x = mvnrnd(mu, Q, n_samp)';
   noise_y = mvnrnd(mu, R, n_samp)';
   for k = 2:n_samp
     x{trial}(:,k) = A*x{trial}(:,k-1) + B*g*u{trial}(:,k-1) + m + noise_x(:,k-1);
-    z{trial}(:,k) = C*x{trial}(:,k) + D*u{trial}(:,k) + d + noise_y(:,k-1);
+    z{trial}(:,k) = C*x{trial}(:,k) + d + noise_y(:,k-1);
   end
 end
 
 %% fit model
 n_x_fit = 2; %n_x
-% [fit, sing_vals] = glds_ssid_mex(u, z, dt, nX, [nH, d0, force_unitNorm_C, which_wt, wt_g0, t0, t_startSSID, t_stopSSID])
+% [fit, sing_vals] = glds_ssid_mex(u, z, dt, nX, [nH, d0, which_wt])
 tic()
-[sys_hat, sing_vals] = glds_ssid_mex(u, z, dt, n_x_fit, 25, d, false, 1, 0);
+[sys_hat, sing_vals] = glds_ssid_mex(u, z, dt, n_x_fit, 50, d, 1);
 toc()
 
 %% compare fit to original
-sys_mat = ss(sys.A, sys.B, sys.C, sys.D, dt);
-sys_hat_mat = ss(sys_hat.A, sys_hat.B, sys_hat.C, sys_hat.D, dt);
+sys_mat = ss(sys.A, sys.B, sys.C, D, dt);
+sys_hat_mat = ss(sys_hat.A, sys_hat.B, sys_hat.C, D, dt);
 
 t_imp = 0:dt:0.1;
 [y_imp] = impulse(sys_mat, t_imp);
@@ -102,12 +102,12 @@ xlabel('Time (s)')
 x_hat = repmat({zeros(n_x, n_samp)}, [n_trials, 1]);
 y_hat = repmat({zeros(n_y, n_samp)}, [n_trials, 1]);
 x_hat{trial}(:,1) = x0;
-y_hat{trial}(:,1) = C*x_hat{trial}(:,1) + D*u{trial}(:,1) + d;
+y_hat{trial}(:,1) = C*x_hat{trial}(:,1) + d;
 mu = zeros(1, n_x);
 for trial = 1:n_trials
   for k = 2:n_samp
     x_hat{trial}(:,k) = A*x_hat{trial}(:,k-1) + B*g*u{trial}(:,k-1) + m;
-    y_hat{trial}(:,k) = C*x_hat{trial}(:,k) + D*u{trial}(:,k) + d;
+    y_hat{trial}(:,k) = C*x_hat{trial}(:,k) + d;
   end
 end
 

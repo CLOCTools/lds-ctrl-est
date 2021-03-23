@@ -32,7 +32,7 @@ This file declares and partially defines the namespace for linear dynamical syst
 ```cpp
 //===-- ldsCtrlEst_h/lds_poisson.h - LDS with Poisson Output ----*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -52,44 +52,13 @@ This file declares and partially defines the namespace for linear dynamical syst
 #ifndef LDSCTRLEST_LDS_POISSON_H
 #define LDSCTRLEST_LDS_POISSON_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+#include "lds.h"
 
 namespace lds {
 namespace poisson {
-typedef lds::data_t data_t;
-typedef lds::stdVec stdVec;
-typedef lds::armaVec armaVec;
-typedef lds::armaMat armaMat;
-typedef lds::armaSubVec armaSubVec;
-typedef lds::armaSubMat armaSubMat;
-
-namespace fill = lds::fill;
-
-// CONTROL BIT MASKS
-static const std::size_t CONTROL_TYPE_U = lds::CONTROL_TYPE_U;
-static const std::size_t CONTROL_TYPE_INTY = lds::CONTROL_TYPE_INTY;
-static const std::size_t CONTROL_TYPE_ADAPT_M = lds::CONTROL_TYPE_ADAPT_M;
-
-// default values
-static data_t DATA_T_ZERO = lds::DATA_T_ZERO;
-static data_t DATA_T_ONE = lds::DATA_T_ZERO;
-static data_t DEFAULT_SOFTSTART = lds::DEFAULT_SOFTSTART;
-static bool FALSE = lds::FALSE;
-static bool TRUE = lds::TRUE;
-
-// static const data_t inf = lds::inf;
-static const data_t pi = lds::pi;
-static data_t inf = lds::inf;
-static data_t neginf = lds::neginf;
+// insert any Poisson-specific things here...
 }  // namespace poisson
 }  // namespace lds
-
-#include "lds_poisson_sys.h"
-#ifdef LDSCTRLEST_BUILD_FIT
-#include "lds_poisson_fit.h"
-#endif
 
 #endif
 ```
@@ -97,4 +66,4 @@ static data_t neginf = lds::neginf;
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

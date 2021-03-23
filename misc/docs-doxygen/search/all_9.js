@@ -1,10 +1,19 @@
 var searchData=
 [
-  ['kalmanfilt_76',['kalmanFilt',['../classlds_1_1gaussian_1_1em_fit__t.html#a6c13ee555e3e19d51c0295288915e6f1',1,'lds::gaussian::emFit_t']]],
-  ['kalmansmooth_77',['kalmanSmooth',['../classlds_1_1gaussian_1_1em_fit__t.html#a96b803ec335faf45e1d7f58cd6cb50b1',1,'lds::gaussian::emFit_t']]],
-  ['kc_5finty_78',['Kc_inty',['../classlds_1_1gaussian_1_1ctrl__t.html#a6182b16a8e88b74518ed8fe068390aa8',1,'lds::gaussian::ctrl_t::Kc_inty()'],['../classlds_1_1poisson_1_1ctrl__t.html#a6084322fdc9063ef111c4149c0a2b122',1,'lds::poisson::ctrl_t::Kc_inty()']]],
-  ['kc_5fu_79',['Kc_u',['../classlds_1_1gaussian_1_1ctrl__t.html#a898e1b2d7af526b69f46cfc0ce162a6d',1,'lds::gaussian::ctrl_t::Kc_u()'],['../classlds_1_1poisson_1_1ctrl__t.html#a7e51bd808eeaf72630b547e5a7ca8655',1,'lds::poisson::ctrl_t::Kc_u()']]],
-  ['kc_5fx_80',['Kc_x',['../classlds_1_1gaussian_1_1ctrl__t.html#aed1eccb8d378d7b8c3c31bdb560dd458',1,'lds::gaussian::ctrl_t::Kc_x()'],['../classlds_1_1poisson_1_1ctrl__t.html#abb3dac6ee56e34c58297fb5374c1ca87',1,'lds::poisson::ctrl_t::Kc_x()']]],
-  ['ke_81',['Ke',['../classlds_1_1gaussian_1_1sys__t.html#a526582c6c29a6710d9c71db0e5145939',1,'lds::gaussian::sys_t']]],
-  ['ke_5fm_82',['Ke_m',['../classlds_1_1gaussian_1_1sys__t.html#a40cd868613c68adb7974f0b5cb76c3ec',1,'lds::gaussian::sys_t']]]
+  ['kc_55',['Kc',['../classlds_1_1_controller.html#af00c199ed55eb7e7351943091041d357',1,'lds::Controller']]],
+  ['kc_5f_56',['Kc_',['../classlds_1_1_controller.html#ab2cade4215cdfef8a38caeebddca2a13',1,'lds::Controller']]],
+  ['kc_5finty_57',['Kc_inty',['../classlds_1_1_controller.html#a3daba18a5b4390be56e16822fb5dad10',1,'lds::Controller']]],
+  ['kc_5finty_5f_58',['Kc_inty_',['../classlds_1_1_controller.html#ab2673f10535ff57a29b274f502a70c81',1,'lds::Controller']]],
+  ['kc_5fu_59',['Kc_u',['../classlds_1_1_controller.html#a4161d8251cb96b743cd0537bbdbea883',1,'lds::Controller']]],
+  ['kc_5fu_5f_60',['Kc_u_',['../classlds_1_1_controller.html#af8b4baf15a5e426188da333768b48d57',1,'lds::Controller']]],
+  ['ke_61',['Ke',['../classlds_1_1_system.html#a4f4543f18d2fefbcab4e9ba6d94cf988',1,'lds::System']]],
+  ['ke_5f_62',['Ke_',['../classlds_1_1_system.html#ae300345c38da424d587ddf78d9e04cd3',1,'lds::System']]],
+  ['ke_5fm_63',['Ke_m',['../classlds_1_1_system.html#a01175bcd982f3639f4113aa43ba7a636',1,'lds::System']]],
+  ['ke_5fm_5f_64',['Ke_m_',['../classlds_1_1_system.html#a8fc7bdfe7adfd80bc08c77254e04c4f7',1,'lds::System']]],
+  ['kmatfreedim1_65',['kMatFreeDim1',['../namespacelds.html#aa737426b8f32055dbaa65033eebff5c6aecee37b08965876e2666fa7a40faf0ea',1,'lds']]],
+  ['kmatfreedim2_66',['kMatFreeDim2',['../namespacelds.html#aa737426b8f32055dbaa65033eebff5c6a2ca7b67d733d5aeb930aa20f5b546fc2',1,'lds']]],
+  ['kmatfreedimnone_67',['kMatFreeDimNone',['../namespacelds.html#aa737426b8f32055dbaa65033eebff5c6a477f9be0e5b862f9a642933537d79ed4',1,'lds']]],
+  ['kssidcva_68',['kSSIDCVA',['../namespacelds.html#a7729e766699eb8dd6c88cb05cc65d1b0afc418a75fc934e765b88c02435d48da7',1,'lds']]],
+  ['kssidmoesp_69',['kSSIDMOESP',['../namespacelds.html#a7729e766699eb8dd6c88cb05cc65d1b0a69963670d5f30ce5dbf235a4349fccb8',1,'lds']]],
+  ['kssidnone_70',['kSSIDNone',['../namespacelds.html#a7729e766699eb8dd6c88cb05cc65d1b0a81cd266ae5ee02beb38ef992f3bc13af',1,'lds']]]
 ];

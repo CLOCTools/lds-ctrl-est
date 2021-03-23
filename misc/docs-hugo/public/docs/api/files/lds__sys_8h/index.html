@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -210,7 +210,7 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td>class</td>
-<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1sys__t/">lds::sys_t</a></strong> <br>Linear Dynamical System Type.</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_system/">lds::System</a></strong> <br>Linear Dynamical <a href="">System</a> Type.</td>
 </tr>
 </tbody>
 </table>
@@ -218,14 +218,14 @@ https://github.com/alex-shpak/hugo-book
   Detailed Description
   <a class="anchor" href="#detailed-description">#</a>
 </h2>
-<p>This file declares and partially defines the base type for linear dynamical systems (<code>[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)</code>). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class.</p>
+<p>This file declares and partially defines the base type for linear dynamical systems (<code>[lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)</code>). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class.</p>
 <h2 id="source-code">
   Source code
   <a class="anchor" href="#source-code">#</a>
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_sys.h - LDS ----------------------------*- C++ -*-===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -237,7 +237,7 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
 </span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 </span><span style="color:#75715e">// See the License for the specific language governing permissions and
-</span><span style="color:#75715e">// limitations under the License.
+</span><span style="color:#75715e">// Limitations under the License.
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">//===----------------------------------------------------------------------===//
 </span><span style="color:#75715e">//===----------------------------------------------------------------------===//
@@ -245,149 +245,115 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#75715e">#ifndef LDSCTRLEST_LDS_SYS_H
 </span><span style="color:#75715e">#define LDSCTRLEST_LDS_SYS_H
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#ifndef LDSCTRLEST
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">namespace</span> lds {
-
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">sys_t</span> {
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">System</span> {
  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-  sys_t(std<span style="color:#f92672">::</span>size_t nU, std<span style="color:#f92672">::</span>size_t nX, data_t<span style="color:#f92672">&amp;</span> dt, data_t<span style="color:#f92672">&amp;</span> p0 <span style="color:#f92672">=</span> DEFAULT_P0,
-        data_t<span style="color:#f92672">&amp;</span> q0 <span style="color:#f92672">=</span> DEFAULT_Q0);
-  sys_t<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(<span style="color:#66d9ef">const</span> sys_t<span style="color:#f92672">&amp;</span> sys);
+  System() <span style="color:#f92672">=</span> <span style="color:#66d9ef">default</span>;
 
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">simPredict</span>();
+  System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0 <span style="color:#f92672">=</span> kDefaultP0,
+         data_t q0 <span style="color:#f92672">=</span> kDefaultQ0);
 
-  size_t <span style="color:#a6e22e">getNx</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> nX; };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Filter</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> u_tm1, <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> z);
 
-  size_t <span style="color:#a6e22e">getNu</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> nU; };
+  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> Simulate(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> u_tm1) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 
-  armaVec <span style="color:#a6e22e">getU</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> u; };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">f</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> u, <span style="color:#66d9ef">bool</span> do_add_noise <span style="color:#f92672">=</span> false) {
+    x_ <span style="color:#f92672">=</span> A_ <span style="color:#f92672">*</span> x_ <span style="color:#f92672">+</span> B_ <span style="color:#f92672">*</span> (g_ <span style="color:#f92672">%</span> u) <span style="color:#f92672">+</span> m_;
+    <span style="color:#66d9ef">if</span> (do_add_noise) {
+      x_ <span style="color:#f92672">+=</span> arma<span style="color:#f92672">::</span>mvnrnd(Vector(n_x_).fill(<span style="color:#ae81ff">0</span>), Q_);
+    }
+  };
 
-  armaVec <span style="color:#a6e22e">getX</span>() { <span style="color:#66d9ef">return</span> x; };
+  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">h</span>() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 
-  armaVec <span style="color:#a6e22e">getG</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> g; };
+  size_t <span style="color:#a6e22e">n_u</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> n_u_; };
+  size_t <span style="color:#a6e22e">n_x</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> n_x_; };
+  size_t <span style="color:#a6e22e">n_y</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> n_y_; };
+  data_t <span style="color:#a6e22e">dt</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> dt_; };
 
-  armaVec <span style="color:#a6e22e">getM</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> x() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> x_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> P() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> m() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> P_m() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P_m_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> cx() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> cx_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> y() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> y_; };
 
-  armaMat <span style="color:#a6e22e">getA</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> A; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> x0() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> x0_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> m0() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m0_; };
 
-  armaMat <span style="color:#a6e22e">getB</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> B; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> A() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> A_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> B() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> B_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> g() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> g_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> C() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> C_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> d() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> d_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> Ke() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Ke_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> Ke_m() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Ke_m_; };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_A</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> A) { Reassign(A_, A); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_B</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> B) { Reassign(B_, B); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_m</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> m) {
+    Reassign(m0_, m);
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>do_adapt_m) {
+      Reassign(m_, m);
+    }
+  };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_g</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> g) { Reassign(g_, g); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_Q</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> Q) { Reassign(Q_, Q); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_Q_m</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> Q_m) { Reassign(Q_m_, Q_m); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_x0</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> x0) { Reassign(x0_, x0); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_P0</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> P0) { Reassign(P0_, P0); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_P0_m</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> P0_m) { Reassign(P0_m_, P0_m); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_C</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> C) { Reassign(C_, C); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_d</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> d) { Reassign(d_, d); };
 
-  armaMat <span style="color:#a6e22e">getQ</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Q; };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Reset</span>();
 
-  armaMat <span style="color:#a6e22e">getQ_m</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Q_m; };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Print</span>();
 
-  armaMat <span style="color:#a6e22e">getP</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P; };
-
-  armaMat <span style="color:#a6e22e">getP_m</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P_m; };
-
-  armaVec <span style="color:#a6e22e">getX0</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> x0; };
-
-  armaMat <span style="color:#a6e22e">getP0</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P0; };
-
-  armaVec <span style="color:#a6e22e">getM0</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m0; };
-
-  armaMat <span style="color:#a6e22e">getP0_m</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P0_m; };
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setDims</span>(std<span style="color:#f92672">::</span>size_t<span style="color:#f92672">&amp;</span> nU, std<span style="color:#f92672">::</span>size_t<span style="color:#f92672">&amp;</span> nX);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setU</span>(stdVec<span style="color:#f92672">&amp;</span> uVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setU</span>(armaVec<span style="color:#f92672">&amp;</span> u);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setA</span>(stdVec<span style="color:#f92672">&amp;</span> aVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setA</span>(armaMat<span style="color:#f92672">&amp;</span> A);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setB</span>(stdVec<span style="color:#f92672">&amp;</span> bVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setB</span>(armaMat<span style="color:#f92672">&amp;</span> B);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setM</span>(stdVec<span style="color:#f92672">&amp;</span> mVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setM</span>(armaVec<span style="color:#f92672">&amp;</span> m);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setG</span>(stdVec<span style="color:#f92672">&amp;</span> gVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setG</span>(armaVec<span style="color:#f92672">&amp;</span> g);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ</span>(stdVec<span style="color:#f92672">&amp;</span> qVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ</span>(armaMat<span style="color:#f92672">&amp;</span> Q);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ_m</span>(stdVec<span style="color:#f92672">&amp;</span> qmVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ_m</span>(armaMat<span style="color:#f92672">&amp;</span> Q_m);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setX0</span>(stdVec<span style="color:#f92672">&amp;</span> x0Vec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setX0</span>(armaVec<span style="color:#f92672">&amp;</span> x0);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0</span>(stdVec<span style="color:#f92672">&amp;</span> p0Vec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0</span>(armaMat<span style="color:#f92672">&amp;</span> P0);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0_m</span>(stdVec<span style="color:#f92672">&amp;</span> p0mVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0_m</span>(armaMat<span style="color:#f92672">&amp;</span> P0_m);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reset</span>();
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">printSys</span>();
-
-  <span style="color:#66d9ef">bool</span> adaptM;
+  <span style="color:#75715e">// safe to leave this public and non-const
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">bool</span> do_adapt_m{};  
 
  <span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
-  armaVec u;    
-  armaVec x;    
-  armaMat P;    
-  armaVec m;    
-  armaMat P_m;  
+  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> RecurseKe() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">InitVars</span>(data_t p0 <span style="color:#f92672">=</span> kDefaultP0, data_t q0 <span style="color:#f92672">=</span> kDefaultQ0);
+
+  std<span style="color:#f92672">::</span>size_t n_x_{};  
+  std<span style="color:#f92672">::</span>size_t n_u_{};  
+  std<span style="color:#f92672">::</span>size_t n_y_{};  
+  data_t dt_{};        
+
+  <span style="color:#75715e">// Signals:
+</span><span style="color:#75715e"></span>  Vector x_;    
+  Matrix P_;    
+  Vector m_;    
+  Matrix P_m_;  
+  Vector cx_;   
+  Vector y_;    
+  Vector z_;    
 
   <span style="color:#75715e">// Parameters:
-</span><span style="color:#75715e"></span>  armaVec x0;    
-  armaMat P0;    
-  armaVec m0;    
-  armaMat P0_m;  
+</span><span style="color:#75715e"></span>  Vector x0_;    
+  Matrix P0_;    
+  Vector m0_;    
+  Matrix P0_m_;  
+  Matrix A_;     
+  Matrix B_;     
+  Vector g_;     
+  Matrix Q_;     
+  Matrix Q_m_;   
+  Matrix C_;     
+  Vector d_;     
 
-  armaMat A;    
-  armaMat B;    
-  armaVec g;    
-  armaMat Q;    
-  armaMat Q_m;  
-
-  <span style="color:#75715e">// it should be safe for dt to be a reference. I should not need to control
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// what the set behavior is.
-</span><span style="color:#75715e"></span>  data_t<span style="color:#f92672">&amp;</span> dt;  
-  data_t<span style="color:#f92672">&amp;</span> q0;  
-  data_t<span style="color:#f92672">&amp;</span> p0;  
-
-  <span style="color:#75715e">// dimensions
-</span><span style="color:#75715e"></span>  std<span style="color:#f92672">::</span>size_t nX;  
-  std<span style="color:#f92672">::</span>size_t nU;  
-  <span style="color:#66d9ef">bool</span> szChanged;  
-
-  <span style="color:#75715e">// max val for elements of P before reset for numerical reasons...
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> data_t plim <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e2</span>;  
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">predict</span>();
-
-  <span style="color:#75715e">// TODO(mfbolus): these are very redundant.
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Should be able to use templates in some way to make this less type-specific
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaVec<span style="color:#f92672">&amp;</span> oldVar, armaVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaVec<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaSubVec<span style="color:#f92672">&amp;</span> oldVar, armaVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaSubVec<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaMat<span style="color:#f92672">&amp;</span> oldVar, armaMat<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaMat<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaSubMat<span style="color:#f92672">&amp;</span> oldVar, armaMat<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reassign</span>(armaSubMat<span style="color:#f92672">&amp;</span> oldVar, stdVec<span style="color:#f92672">&amp;</span> newVar, data_t defaultVal <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">limit</span>(stdVec<span style="color:#f92672">&amp;</span> x, data_t<span style="color:#f92672">&amp;</span> lb, data_t<span style="color:#f92672">&amp;</span> ub);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">limit</span>(armaVec<span style="color:#f92672">&amp;</span> x, data_t<span style="color:#f92672">&amp;</span> lb, data_t<span style="color:#f92672">&amp;</span> ub);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">limit</span>(armaMat<span style="color:#f92672">&amp;</span> x, data_t<span style="color:#f92672">&amp;</span> lb, data_t<span style="color:#f92672">&amp;</span> ub);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">defaultQ</span>();
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">checkP</span>();
-};  <span style="color:#75715e">// sys_t
-</span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace lds
+  Matrix Ke_;    
+  Matrix Ke_m_;  
+};               <span style="color:#75715e">// System
+</span><span style="color:#75715e"></span>
+}  <span style="color:#75715e">// namespace lds
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

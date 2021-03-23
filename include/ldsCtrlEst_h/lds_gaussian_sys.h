@@ -1,6 +1,6 @@
 //===-- ldsCtrlEst_h/lds_gaussian_sys.h - GLDS ------------------*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@
 /// This file declares and partially defines the type for state estimation
 /// (filtering) as well as simulation of Gaussian-output linear dynamical
 /// systems
-/// (`lds::gaussian::sys_t`). It inherits functionality from the underlying
-/// linear dynamical system (`lds::sys_t`).
+/// (`lds::gaussian::System`). It inherits functionality from the underlying
+/// linear dynamical system (`lds::System`).
 ///
 /// \brief GLDS base type
 //===----------------------------------------------------------------------===//
@@ -29,61 +29,27 @@
 #ifndef LDSCTRLEST_LDS_GAUSSIAN_SYS_H
 #define LDSCTRLEST_LDS_GAUSSIAN_SYS_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+// namespace
+#include "lds_gaussian.h"
+// system
+#include "lds_sys.h"
 
 namespace lds {
 namespace gaussian {
 /// Gaussian LDS Type
-class sys_t : public lds::sys_t {
+class System : public lds::System {
  public:
   /**
-   * Given current measurment and input, filter data to produce causal state
-   * estimates using Kalman filtering, which procedes by predicting the state
-   * and subsequently updating.
-   *
-   * @brief      Filter data to produce causal state estimates
-   *
-   * @param      u_tm1         input at t-minus-1
-   * @param      z_t           current measurement
-   * @param      doRecurse_Ke  whether to calculate the Kalman estimator gain
-   *                           (Ke) recursively
+   * @brief      Constructs a new System.
    */
-  void filter(armaVec& u_tm1, armaVec& z_t, bool doRecurse_Ke = true);
+  System() = default;
 
   /**
-   * Given current measurment, filter data to produce causal state estimates
-   * using Kalman filtering, which procedes by predicting the state and
-   * subsequently updating.
+   * @brief      Constructs a new Gaussian System.
    *
-   * @brief      Filter data to produce causal state estimates
-   *
-   * @param      z             current measurement
-   * @param      doRecurse_Ke  whether to calculate the Kalman estimator gain
-   *                           (Ke) recursively
-   */
-  void filter(armaVec& z, bool doRecurse_Ke = true);
-
-  /**
-   * Simulate system measurement: z ~ Poisson(y)
-   *
-   * n.b., In reality, this is only Poisson where rate `y` and sample period
-   * `dt` are sufficiently small there is only ever 0 or 1 events in a period.
-   * If either of those is violated, results will be innacurate.
-   *
-   * @brief      Simulate system measurement
-   *
-   * @param      z     measurement
-   */
-  void simMeasurement(armaVec& z);
-
-  /**
-   * @brief      Constructs a new GLDS.
-   *
-   * @param      nU    number of inputs (u)
-   * @param      nX    number of states (x)
-   * @param      nY    number of outputs (y)
+   * @param      n_u    number of inputs (u)
+   * @param      n_x    number of states (x)
+   * @param      n_y    number of outputs (y)
    * @param      dt    sample period
    * @param      p0    [optional] initial diagonal elements of state estimate
    *                   covariance (P)
@@ -92,103 +58,68 @@ class sys_t : public lds::sys_t {
    * @param      r0    [optional] initial diagonal elements of output noise
    *                   covariance (R)
    */
-  sys_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& dt,
-        data_t& p0 = DEFAULT_P0, data_t& q0 = DEFAULT_Q0,
-        data_t& r0 = DEFAULT_R0);
-  sys_t& operator=(const sys_t& sys);
+  System(std::size_t n_u, std::size_t n_x, std::size_t n_y, data_t dt,
+         data_t p0 = kDefaultP0, data_t q0 = kDefaultQ0,
+         data_t r0 = kDefaultR0);
+
+  /**
+   * Simulate system and produce measurement
+   *
+   *
+   * @brief      Simulate system measurement
+   *
+   * @param      u_tm1  input at t-1
+   *
+   * @return     z      measurement
+   */
+  const Vector& Simulate(const Vector& u_tm1) override;
 
   // get methods
-  /// Get number of outputs (y)
-  size_t getNy() const { return nY; };
-
-  /// Get output matrix (C)
-  armaMat getC() const { return C; };
-
-  /// Get output bias (d)
-  armaVec getD() const { return d; };
-
-  /// Get output noise covariance (R)
-  armaVec getR() const { return R; };
-
-  /// Get output (y)
-  armaVec getY() const { return y; };
-
-  /// Get measurement (z)
-  armaVec getZ() const { return z; };
-
-  /// Get estimator gain (Ke)
-  armaMat getKe() const { return Ke; };
-  /// Get estimator gain for process disturbance (Ke_m)
-  armaMat getKe_m() const { return Ke_m; };
+  /// Get output noise covariance
+  const Matrix& R() const { return R_; };
 
   // set methods
-  /// Set dimensions of system
-  void setDims(std::size_t& nU, std::size_t& nX, std::size_t& nY);
+  void set_Q(const Matrix& Q) {
+    lds::System::set_Q(Q);
+    do_recurse_Ke_ = true;
+  }
+  /// Set output noise covariance
+  void set_R(const Matrix& R) {
+    Reassign(R_,R);
+    do_recurse_Ke_ = true;
+  };
 
-  /// Set output matrix (C)
-  void setC(stdVec& cVec);
-  /// Set output matrix (C)
-  void setC(armaMat& C);
-
-  /// Set output bias (d)
-  void setD(stdVec& dVec);
-  /// Set output bias (d)
-  void setD(armaVec& d);
-
-  /// Set output noise covariance (R)
-  void setR(stdVec& rVec);
-  /// Set output noise covariance (R)
-  void setR(armaMat& R);
-
-  /// Set measurement (z)
-  void setZ(stdVec& zVec);
-  /// Set measurement (z)
-  void setZ(armaVec& z);
-
-  /// Set estimator gain (Ke)
-  void setKe(stdVec& keVec);
-  /// Set estimator gain (Ke)
-  void setKe(armaMat& Ke);
-
-  /// Set disturbance estimator gain (Ke_m)
-  void setKe_m(stdVec& kemVec);
-  /// Set disturbance estimator gain (Ke_m)
-  void setKe_m(armaMat& Ke_m);
-
-  /// Reset system variables
-  void reset();
+  /// Set estimator gain
+  void set_Ke(const Matrix& Ke) {
+    Reassign(Ke_,Ke);
+    // if users have set Ke, they must not want to calculate it online.
+    do_recurse_Ke_ = false;
+  };
+  /// Set disturbance estimator gain
+  void set_Ke_m(const Matrix& Ke_m) {
+    Reassign(Ke_m_,Ke_m);
+    // if users have set Ke, they must not want to calculate it online.
+    do_recurse_Ke_ = false;
+  };
 
   /// Print system variables to stdout
-  void printSys();
+  void Print();
 
  protected:
-  /// Recursively recalculate Kalman estimator gain (Ke)
-  void recurse_Ke();
-
-  /// One-step prediction
-  void predict();
-
   /// System output function
-  void h();
+  void h() override {
+    cx_ = C_ * x_;
+    y_ = cx_ + d_;
+  };
 
-  /// Reset to default R (identity matrix with diagonal elements r0)
-  void defaultR();
+  /// Recursively update estimator gain
+  void RecurseKe() override;
 
-  // output-specific stuff
-  std::size_t nY;  ///< number of outputs
-  armaMat C;       ///< output matrix
-  armaVec d;       ///< output bias
-  armaMat R;       ///< covariance of output noise
-  data_t& r0;      ///< default values for R
-  armaVec y;       ///< output
-  armaVec z;       ///< measurement
-
-  armaMat Ke;    ///< state estimator gain
-  armaMat Ke_m;  ///< disturbance estimator gain
-};               // sys_t
+  // Gaussian-output-specific
+  Matrix R_;           ///< covariance of output noise
+  bool do_recurse_Ke_{};  ///< whether to recursively calculate estimator gain
+};                      // System
 }  // namespace gaussian
 }  // namespace lds
-
-#include "lds_gaussian_ctrl.h"
 
 #endif

@@ -1,0 +1,5 @@
+<map id="lds::Fit" name="lds::Fit">
+<area shape="rect" id="node1" title="LDS Fit Type." alt="" coords="107,5,168,32"/>
+<area shape="rect" id="node2" href="$classlds_1_1gaussian_1_1_fit.html" title="GLDS Fit Type." alt="" coords="5,80,128,107"/>
+<area shape="rect" id="node3" href="$classlds_1_1poisson_1_1_fit.html" title="PLDS Fit Type." alt="" coords="152,80,267,107"/>
+</map>

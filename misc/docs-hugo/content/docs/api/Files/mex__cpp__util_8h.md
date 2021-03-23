@@ -31,7 +31,7 @@ This file defines utility functions for interoperability between armadillo and M
 ```cpp
 //===-- ldsCtrlEst_h/mex_cpp_util.h - Mex C++ API Utilities -----*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,9 +51,7 @@ This file defines utility functions for interoperability between armadillo and M
 #ifndef LDSCTRLEST_MEXCPP_UTIL_H
 #define LDSCTRLEST_MEXCPP_UTIL_H
 
-#ifndef LDSCTRLEST
 #include <ldsCtrlEst>
-#endif
 
 #include "mex.hpp"
 #include "mexAdapter.hpp"
@@ -64,7 +62,7 @@ auto m2a_cellmat(matlab::data::CellArray& matlab_cell)
     -> std::vector<arma::Mat<T>> {
   size_t n_cells = matlab_cell.getNumberOfElements();
   std::vector<arma::Mat<T>> arma_mat(n_cells,
-                                     arma::mat(1, 1, arma::fill::zeros));
+                                     arma::Mat<T>(1, 1, arma::fill::zeros));
   for (size_t k = 0; k < n_cells; k++) {
     matlab::data::TypedArray<T> matlab_mat = matlab_cell[k];
     auto dims = matlab_mat.getDimensions();
@@ -76,7 +74,7 @@ auto m2a_cellmat(matlab::data::CellArray& matlab_cell)
 template <class T>
 auto m2s_vec(matlab::data::TypedArray<T>& matlab_array) -> std::vector<T> {
   size_t n_elem = matlab_array.getNumberOfElements();
-  double* ptr = matlab_array.release().get();
+  T* ptr = matlab_array.release().get();
   std::vector<T> vec(ptr, ptr + n_elem);
   return vec;
 };
@@ -101,7 +99,7 @@ auto m2a_mat(matlab::data::TypedArray<T> matlab_array) -> arma::Mat<T> {
 };
 
 template <class T>
-auto a2m_mat(arma::Mat<T>& arma_mat, matlab::data::ArrayFactory& factory)
+auto a2m_mat(const arma::Mat<T>& arma_mat, matlab::data::ArrayFactory& factory)
     -> matlab::data::TypedArray<T> {
   const matlab::data::TypedArray<T> matlab_mat = factory.createArray<T>(
       {arma_mat.n_rows, arma_mat.n_cols}, arma_mat.memptr(),
@@ -110,7 +108,7 @@ auto a2m_mat(arma::Mat<T>& arma_mat, matlab::data::ArrayFactory& factory)
 };
 
 template <class T>
-auto a2m_vec(arma::Col<T>& arma_vec, matlab::data::ArrayFactory& factory)
+auto a2m_vec(const arma::Col<T>& arma_vec, matlab::data::ArrayFactory& factory)
     -> matlab::data::TypedArray<T> {
   const matlab::data::TypedArray<T> matlab_mat =
       factory.createArray<T>({arma_vec.n_elem, 1}, arma_vec.memptr(),
@@ -119,7 +117,7 @@ auto a2m_vec(arma::Col<T>& arma_vec, matlab::data::ArrayFactory& factory)
 };
 
 template <class T>
-auto s2m_vec(std::vector<T>& std_vec, matlab::data::ArrayFactory& factory)
+auto s2m_vec(const std::vector<T>& std_vec, matlab::data::ArrayFactory& factory)
     -> matlab::data::TypedArray<T> {
   const matlab::data::TypedArray<T> matlab_mat = factory.createArray<T>(
       {std_vec.size(), 1}, std_vec.data(), std_vec.data() + std_vec.size());
@@ -133,4 +131,4 @@ auto s2m_vec(std::vector<T>& std_vec, matlab::data::ArrayFactory& factory)
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

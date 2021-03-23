@@ -6,7 +6,7 @@ git clone https://github.com/stanley-rozell/ldsCtrlEst.git
 By default, this would check out the master branch. In most cases, we suggest downloading or checking out the latest release instead.
 ```shell
 cd /path/to/ldsCtrlEst
-git checkout 0.5.0
+git checkout 0.6.0
 ```
 
 # Dependencies

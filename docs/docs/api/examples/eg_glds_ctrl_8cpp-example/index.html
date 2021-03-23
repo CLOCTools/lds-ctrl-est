@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -175,7 +175,7 @@ https://github.com/alex-shpak/hugo-book
 <p>Example GLDS Control</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -194,11 +194,10 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>armaMat;
-<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>armaVec;
+<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Matrix;
+<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Vector;
 <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t;
 <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>cout;
-<span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>vector;
 
 <span style="color:#66d9ef">auto</span> <span style="color:#a6e22e">main</span>() <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">int</span> {
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; ********** Example Gaussian LDS Control ********** </span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
@@ -210,22 +209,22 @@ https://github.com/alex-shpak/hugo-book
   size_t n_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
 
   <span style="color:#75715e">// no time steps for simulation.
-</span><span style="color:#75715e"></span>  size_t n_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">5.0</span> <span style="color:#f92672">/</span> dt);
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> n_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">5.0</span> <span style="color:#f92672">/</span> dt);
 
   <span style="color:#75715e">// construct ground truth system to be controlled...
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// initializes to random walk model with top-most n_y state observed
-</span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>sys_t controlled_system(n_u, n_x, n_y, dt);
+</span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System controlled_system(n_u, n_x, n_y, dt);
 
   <span style="color:#75715e">// Ground-truth parameters for the controlled system
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// (stand-in for physical system to be controlled)
-</span><span style="color:#75715e"></span>  armaMat a_true(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye);
+</span><span style="color:#75715e"></span>  Matrix a_true(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye);
   a_true[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> exp(<span style="color:#f92672">-</span>dt <span style="color:#f92672">/</span> <span style="color:#ae81ff">0.01</span>);
-  armaMat b_true <span style="color:#f92672">=</span> armaMat(n_x, n_u).fill(<span style="color:#ae81ff">2e-4</span>);
+  Matrix b_true <span style="color:#f92672">=</span> Matrix(n_x, n_u).fill(<span style="color:#ae81ff">2e-4</span>);
   <span style="color:#75715e">// control signal to model input unit conversion e.g., V -&gt; mW/mm2:
-</span><span style="color:#75715e"></span>  armaVec g_true <span style="color:#f92672">=</span> armaVec(n_y).fill(<span style="color:#ae81ff">10.0</span>);
+</span><span style="color:#75715e"></span>  Vector g_true <span style="color:#f92672">=</span> Vector(n_y).fill(<span style="color:#ae81ff">10.0</span>);
 
   <span style="color:#75715e">// output noise covariance
-</span><span style="color:#75715e"></span>  armaMat r_true <span style="color:#f92672">=</span> armaMat(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-4</span>;
+</span><span style="color:#75715e"></span>  Matrix r_true <span style="color:#f92672">=</span> Matrix(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-4</span>;
 
   size_t which_m <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;  <span style="color:#75715e">// whether low or high disturbance (0, 1)
 </span><span style="color:#75715e"></span>  data_t m_low <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> dt <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> a_true[<span style="color:#ae81ff">0</span>]);
@@ -234,174 +233,174 @@ https://github.com/alex-shpak/hugo-book
   data_t pr_hi2lo <span style="color:#f92672">=</span> pr_lo2hi;
 
   <span style="color:#75715e">// initially let m be low
-</span><span style="color:#75715e"></span>  armaVec m0_true <span style="color:#f92672">=</span> armaVec(n_y).fill(m_low);
+</span><span style="color:#75715e"></span>  Vector m0_true <span style="color:#f92672">=</span> Vector(n_y).fill(m_low);
 
   <span style="color:#75715e">// Assign params.
-</span><span style="color:#75715e"></span>  controlled_system.setA(a_true);
-  controlled_system.setB(b_true);
-  controlled_system.setM(m0_true);
-  controlled_system.setG(g_true);
-  controlled_system.setR(r_true);
+</span><span style="color:#75715e"></span>  controlled_system.set_A(a_true);
+  controlled_system.set_B(b_true);
+  controlled_system.set_m(m0_true);
+  controlled_system.set_g(g_true);
+  controlled_system.set_R(r_true);
 
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;controlled_system:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-  controlled_system.printSys();
+  controlled_system.Print();
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
 
-  <span style="color:#75715e">// create controller
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// lower and upper bounds on control signal (e.g., in Volts)
-</span><span style="color:#75715e"></span>  data_t u_lb <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;  <span style="color:#75715e">// [=] V
-</span><span style="color:#75715e"></span>  data_t u_ub <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.0</span>;  <span style="color:#75715e">// [=] V
-</span><span style="color:#75715e"></span>  glds<span style="color:#f92672">::</span>ctrl_t controller(n_u, n_x, n_y, u_lb, u_ub, dt);
+  <span style="color:#75715e">// make a controller
+</span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>Controller controller;
+  {
+    <span style="color:#75715e">// Create **incorrect** model used for control.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// (e.g., imperfect model fitting)
+</span><span style="color:#75715e"></span>    Matrix b_controller <span style="color:#f92672">=</span> b_true <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
 
-  <span style="color:#75715e">// Create **incorrect** model used for control.
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (e.g., imperfect model fitting)
-</span><span style="color:#75715e"></span>  armaMat b_controller <span style="color:#f92672">=</span> armaMat(n_x, n_u).fill(<span style="color:#ae81ff">1e-4</span>);
+    <span style="color:#75715e">// let&#39;s assume zero process disturbance initially
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// (will be re-estimating)
+</span><span style="color:#75715e"></span>    Vector m_controller <span style="color:#f92672">=</span> Vector(n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
 
-  <span style="color:#75715e">// Let&#39;s say these controller gains were designed assuming g was 9 V/(mW/mm2):
-</span><span style="color:#75715e"></span>  armaVec g_design <span style="color:#f92672">=</span> armaVec(n_u).fill(<span style="color:#ae81ff">9</span>);
+    <span style="color:#75715e">// for this demo, just use arbitrary default R
+</span><span style="color:#75715e"></span>    Matrix r_controller <span style="color:#f92672">=</span> Matrix(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> lds<span style="color:#f92672">::</span>kDefaultR0;
 
-  <span style="color:#75715e">// let&#39;s assume zero process disturbance initially
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (will be re-estimating)
-</span><span style="color:#75715e"></span>  armaVec m_controller <span style="color:#f92672">=</span> armaVec(n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+    lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System controller_system(controlled_system);
+    controller_system.set_B(b_controller);
+    controller_system.set_m(m_controller);
+    controller_system.set_R(r_controller);
+    controller_system.Reset();  <span style="color:#75715e">// reset to new m
+</span><span style="color:#75715e"></span>    controller_system.Print();
+
+    <span style="color:#75715e">// going to adaptively re-estimate the disturbance
+</span><span style="color:#75715e"></span>    controller_system.do_adapt_m <span style="color:#f92672">=</span> true;
+
+    <span style="color:#75715e">// set adaptation rate by changing covariance of assumed process noise
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// acting on random-walk evolution of m
+</span><span style="color:#75715e"></span>    Matrix q_m <span style="color:#f92672">=</span> Matrix(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-6</span>;
+    controller_system.set_Q_m(q_m);
+
+    <span style="color:#75715e">// create controller
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// lower and upper bounds on control signal (e.g., in Volts)
+</span><span style="color:#75715e"></span>    data_t u_lb <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;  <span style="color:#75715e">// [=] V
+</span><span style="color:#75715e"></span>    data_t u_ub <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.0</span>;  <span style="color:#75715e">// [=] V
+</span><span style="color:#75715e"></span>    controller <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(
+        lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>Controller(std<span style="color:#f92672">::</span>move(controller_system), u_lb, u_ub));
+  }
 
   <span style="color:#75715e">// Control variables:
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// if following enabled, adapts set point with re-estimated process
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// if following enabled, adapts set point with re-estimated process
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// disturbance n.b., should not need integral action if this is enabled as the
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// adaptive estimator minimizes DC error
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">bool</span> do_adaptive_set_point <span style="color:#f92672">=</span> false;
 
   <span style="color:#75715e">// Reference/target output, controller gains
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// n.b., Can either use armaVec (arma::Col) or std::vector
-</span><span style="color:#75715e"></span>  armaVec y_ref0 <span style="color:#f92672">=</span> armaVec(n_y).fill(<span style="color:#ae81ff">20.0</span> <span style="color:#f92672">*</span> dt);
-  <span style="color:#75715e">// (Can either use arma::Mat or mats flattened into std::vector)
-</span><span style="color:#75715e"></span>  armaMat k_x <span style="color:#f92672">=</span> armaMat(n_u, n_x).fill(<span style="color:#ae81ff">100</span>);     <span style="color:#75715e">// gains on state error
-</span><span style="color:#75715e"></span>  armaMat k_inty <span style="color:#f92672">=</span> armaMat(n_u, n_y).fill(<span style="color:#ae81ff">1e3</span>);  <span style="color:#75715e">// gains on integrated err
+</span><span style="color:#75715e"></span>  Vector y_ref0 <span style="color:#f92672">=</span> Vector(n_y).fill(<span style="color:#ae81ff">20.0</span> <span style="color:#f92672">*</span> dt);
+  Matrix k_x <span style="color:#f92672">=</span> Matrix(n_u, n_x).fill(<span style="color:#ae81ff">100</span>);     <span style="color:#75715e">// gains on state error
+</span><span style="color:#75715e"></span>  Matrix k_inty <span style="color:#f92672">=</span> Matrix(n_u, n_y).fill(<span style="color:#ae81ff">1e3</span>);  <span style="color:#75715e">// gains on integrated err
 </span><span style="color:#75715e"></span>
   <span style="color:#75715e">// setting initial state to target to avoid error at onset:
-</span><span style="color:#75715e"></span>  armaVec x0 <span style="color:#f92672">=</span> armaVec(n_x).fill(y_ref0[<span style="color:#ae81ff">0</span>]);
+</span><span style="color:#75715e"></span>  Vector x0 <span style="color:#f92672">=</span> Vector(n_x).fill(y_ref0[<span style="color:#ae81ff">0</span>]);
 
   <span style="color:#75715e">// set up controller type bit mask so controller knows how to proceed
 </span><span style="color:#75715e"></span>  size_t control_type <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
   <span style="color:#66d9ef">if</span> (do_adaptive_set_point) {
     <span style="color:#75715e">// adapt set point with estimated disturbance
-</span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_ADAPT_M;
+</span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>kControlTypeAdaptM;
   } <span style="color:#66d9ef">else</span> {
     <span style="color:#75715e">// use integral action to minimize DC error
-</span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>CONTROL_TYPE_INTY;
+</span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>kControlTypeIntY;
   }
 
-  <span style="color:#75715e">// Start configuring controller:
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Adaptively re-estimate process disturance (m)
-</span><span style="color:#75715e"></span>  controller.adaptM <span style="color:#f92672">=</span> true;
-
   <span style="color:#75715e">// set controller type
-</span><span style="color:#75715e"></span>  controller.setControlType(control_type);
+</span><span style="color:#75715e"></span>  controller.set_control_type(control_type);
+
+  <span style="color:#75715e">// Let&#39;s say these controller gains were designed assuming g was 9 V/(mW/mm2):
+</span><span style="color:#75715e"></span>  Vector g_design <span style="color:#f92672">=</span> Vector(n_u).fill(<span style="color:#ae81ff">9</span>);
 
   <span style="color:#75715e">// Set params.
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// **n.b. using arbitrary defaults for Q, R in this example. Really, these
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// should be set by users, as they tune characteristics of Kalman filter.
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// Users can also choose not to recursively calculate the estimator gain and
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// supply it (setKe) instead of covariances.**
-</span><span style="color:#75715e"></span>  controller.setYRef(y_ref0);
-  controller.setKc_x(k_x);
-  controller.setKc_inty(k_inty);
-  controller.setA(a_true);
-  controller.setB(b_controller);
-  controller.setM(m_controller);
-  controller.setG(g_true);
-  controller.setGDesign(g_design);
-  controller.setX0(x0);
-  controller.reset();  <span style="color:#75715e">// reset to new initial condition
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// set adaptation rate by changing covariance of assumed process noise acting
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// on random-walk evolution of m
-</span><span style="color:#75715e"></span>  armaMat q_m <span style="color:#f92672">=</span> armaMat(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-6</span>;
-  controller.setQ_m(q_m);
+</span><span style="color:#75715e"></span>  controller.set_y_ref(y_ref0);
+  controller.set_Kc(k_x);
+  controller.set_Kc_inty(k_inty);
+  controller.set_g_design(g_design);
 
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;control system:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-  controller.printSys();
+  controller.Print();
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
 
   <span style="color:#75715e">// set up variables for simulation
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// create armaMatrix to save outputs in...
-</span><span style="color:#75715e"></span>  armaMat y_ref <span style="color:#f92672">=</span> armaMat(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>ones) <span style="color:#f92672">*</span> y_ref0[<span style="color:#ae81ff">0</span>];
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// create Matrixrix to save outputs in...
+</span><span style="color:#75715e"></span>  Matrix y_ref <span style="color:#f92672">=</span> Matrix(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>ones) <span style="color:#f92672">*</span> y_ref0[<span style="color:#ae81ff">0</span>];
 
   <span style="color:#75715e">// Simulated measurements
-</span><span style="color:#75715e"></span>  armaMat z(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span><span style="color:#75715e"></span>  Matrix z(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
 
   <span style="color:#75715e">// simulated control signal ([=] V)
-</span><span style="color:#75715e"></span>  armaMat u(n_u, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span><span style="color:#75715e"></span>  Matrix u(n_u, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
 
   <span style="color:#75715e">// outputs, states and gain/disturbance params
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// *_hat indicates online estimates
-</span><span style="color:#75715e"></span>  armaMat y_hat(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
-  armaMat x_hat(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
-  armaMat m_hat(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span><span style="color:#75715e"></span>  Matrix y_hat(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  Matrix x_hat(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  Matrix m_hat(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
 
   <span style="color:#75715e">// *_true indicates ground truth (system being controlled)
-</span><span style="color:#75715e"></span>  armaMat y_true(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
-  armaMat x_true(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
-  armaMat m_true(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span><span style="color:#75715e"></span>  Matrix y_true(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  Matrix x_true(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  Matrix m_true(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
 
   <span style="color:#75715e">// get initial val
-</span><span style="color:#75715e"></span>  y_hat.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_y <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controller.getY();
-  y_true.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_y <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.getY();
+</span><span style="color:#75715e"></span>  y_hat.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_y <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controller.sys().y();
+  y_true.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_y <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.y();
 
-  x_hat.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controller.getX();
-  x_true.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.getX();
+  x_hat.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controller.sys().x();
+  x_true.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.x();
 
-  m_hat.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controller.getM();
-  m_true.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.getM();
+  m_hat.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controller.sys().m();
+  m_true.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.m();
 
   cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Starting &#34;</span> <span style="color:#f92672">&lt;&lt;</span> n_t <span style="color:#f92672">*</span> dt <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; sec simulation ... </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
   <span style="color:#66d9ef">auto</span> start <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">::</span>now();
   <span style="color:#66d9ef">for</span> (size_t t <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; t <span style="color:#f92672">&lt;</span> n_t; t<span style="color:#f92672">++</span>) {
     <span style="color:#75715e">// simulate a stochastically switched disturbance
-</span><span style="color:#75715e"></span>    armaVec chance <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>randu<span style="color:#f92672">&lt;</span>arma<span style="color:#f92672">::</span>vec<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1</span>);
+</span><span style="color:#75715e"></span>    Vector chance <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>randu<span style="color:#f92672">&lt;</span>Vector<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1</span>);
     <span style="color:#66d9ef">if</span> (which_m <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)  <span style="color:#75715e">// low disturbance
 </span><span style="color:#75715e"></span>    {
       <span style="color:#66d9ef">if</span> (chance[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> pr_lo2hi) {  <span style="color:#75715e">// switches low -&gt; high disturbance
-</span><span style="color:#75715e"></span>        m0_true <span style="color:#f92672">=</span> vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(n_y, m_high);
+</span><span style="color:#75715e"></span>        m0_true <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(n_y, m_high);
         which_m <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
       }
     } <span style="color:#66d9ef">else</span> {                       <span style="color:#75715e">// high disturbance
 </span><span style="color:#75715e"></span>      <span style="color:#66d9ef">if</span> (chance[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> pr_hi2lo) {  <span style="color:#75715e">// swithces high -&gt; low disturbance
-</span><span style="color:#75715e"></span>        m0_true <span style="color:#f92672">=</span> vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(n_y, m_low);
+</span><span style="color:#75715e"></span>        m0_true <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(n_y, m_low);
         which_m <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
       }
     }
-    controlled_system.setM(m0_true);
+    controlled_system.set_m(m0_true);
 
     <span style="color:#75715e">// input
-</span><span style="color:#75715e"></span>    armaVec u_tm1(u.colptr(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>), u.n_rows, false, true);
+</span><span style="color:#75715e"></span>    Vector u_tm1(u.colptr(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>), u.n_rows, false, true);
 
     <span style="color:#75715e">// Simulate the true system.
-</span><span style="color:#75715e"></span>    controlled_system.setU(u_tm1);
-    controlled_system.simPredict();
-    armaVec z_t(z.colptr(t), z.n_rows, false, true);
-    controlled_system.simMeasurement(z_t);
+</span><span style="color:#75715e"></span>    z.col(t) <span style="color:#f92672">=</span> controlled_system.Simulate(u_tm1);
 
     <span style="color:#75715e">// This method uses a steady-state solution to control problem to calculate
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// xRef, uRef from reference output yRef. Therefore, it is only applicable
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// to regulation problems or cases where reference trajectory changes slowly
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// compared to system dynamics.
-</span><span style="color:#75715e"></span>    controller.steadyState_fbCtrl(z_t);
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// x_ref, u_ref from reference output y_ref. Therefore, it is only
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// applicable to regulation problems or cases where reference trajectory
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// changes slowly compared to system dynamics.
+</span><span style="color:#75715e"></span>    u.col(t) <span style="color:#f92672">=</span> controller.ControlOutputReference(z.col(t));
 
     <span style="color:#75715e">// save the signals
-</span><span style="color:#75715e"></span>    y_true.col(t) <span style="color:#f92672">=</span> controlled_system.getY();
-    x_true.col(t) <span style="color:#f92672">=</span> controlled_system.getX();
-    m_true.col(t) <span style="color:#f92672">=</span> controlled_system.getM();
+</span><span style="color:#75715e"></span>    y_true.col(t) <span style="color:#f92672">=</span> controlled_system.y();
+    x_true.col(t) <span style="color:#f92672">=</span> controlled_system.x();
+    m_true.col(t) <span style="color:#f92672">=</span> controlled_system.m();
 
-    y_hat.col(t) <span style="color:#f92672">=</span> controller.getY();
-    x_hat.col(t) <span style="color:#f92672">=</span> controller.getX();
-    m_hat.col(t) <span style="color:#f92672">=</span> controller.getM();
-
-    u.col(t) <span style="color:#f92672">=</span> controller.getU();
+    y_hat.col(t) <span style="color:#f92672">=</span> controller.sys().y();
+    x_hat.col(t) <span style="color:#f92672">=</span> controller.sys().x();
+    m_hat.col(t) <span style="color:#f92672">=</span> controller.sys().m();
   }
 
   <span style="color:#66d9ef">auto</span> finish <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">::</span>now();
@@ -415,7 +414,7 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// xTrue, mTrue saving with hdf5 via armadillo
 </span><span style="color:#75715e"></span>  arma<span style="color:#f92672">::</span>hdf5_opts<span style="color:#f92672">::</span>opts replace <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>hdf5_opts<span style="color:#f92672">::</span>replace;
 
-  <span style="color:#66d9ef">auto</span> dt_vec <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>vec(<span style="color:#ae81ff">1</span>).fill(dt);
+  <span style="color:#66d9ef">auto</span> dt_vec <span style="color:#f92672">=</span> Vector(<span style="color:#ae81ff">1</span>).fill(dt);
   dt_vec.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;dt&#34;</span>));
   y_ref.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;y_ref&#34;</span>, replace));
   u.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;u&#34;</span>, replace));
@@ -432,7 +431,7 @@ https://github.com/alex-shpak/hugo-book
 }
 </code></pre></div><p><em>Filename: eg_glds_ctrl.cpp</em></p>
 <hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

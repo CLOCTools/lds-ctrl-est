@@ -13,7 +13,10 @@ Checks: >
   llvm-include-order,
   clang-analyzer-cplusplus.InnerPointer,
   cppcoreguidelines-*,
-# -google-runtime-references,
+  -modernize-use-trailing-return-type,
+  -cppcoreguidelines-avoid-magic-numbers,
+  -readability-magic-numbers,
+  -google-runtime-references,
 # Add this last one to *remove* this check.
 # It prevents passing arguments as non-const reference for editing w/o return.
 # Idea is using const ref makes it clear it is an INPUT rather than output.
@@ -22,8 +25,8 @@ Checks: >
 # Turn almost all the warnings from the checks above into errors.
 WarningsAsErrors: >
   *,
-  -google-runtime-references,
   -cppcoreguidelines-*,
+  -google-runtime-references,
 
 CheckOptions:
   - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }

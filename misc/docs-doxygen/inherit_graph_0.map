@@ -1,8 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classlds_1_1fit__t.html" title="LDS Fit Type." alt="" coords="5,81,73,108"/>
-<area shape="rect" id="node2" href="$classlds_1_1gaussian_1_1fit__t.html" title="GLDS Fit Type." alt="" coords="121,56,251,83"/>
-<area shape="rect" id="node5" href="$classlds_1_1poisson_1_1fit__t.html" title="PLDS Fit Type." alt="" coords="125,107,247,133"/>
-<area shape="rect" id="node3" href="$classlds_1_1gaussian_1_1em_fit__t.html" title="GLDS E&#45;M Fit Type." alt="" coords="301,5,453,32"/>
-<area shape="rect" id="node4" href="$classlds_1_1gaussian_1_1ssid_fit__t.html" title="GLDS SSID Fit Type." alt="" coords="299,56,456,83"/>
-<area shape="rect" id="node6" href="$classlds_1_1poisson_1_1ssid_fit__t.html" title="GLDS SSID Fit Type." alt="" coords="303,107,452,133"/>
+<area shape="rect" id="node1" href="$classlds_1_1_controller.html" title=" " alt="" coords="5,89,177,116"/>
+<area shape="rect" id="node2" href="$classlds_1_1_switched_controller.html" title="SwitchedController Type." alt="" coords="229,23,387,65"/>
+<area shape="rect" id="node5" href="$classlds_1_1gaussian_1_1_controller.html" title="Gaussian&#45;observation Controller Type." alt="" coords="225,89,391,116"/>
+<area shape="rect" id="node6" href="$classlds_1_1poisson_1_1_controller.html" title="PLDS Controller Type." alt="" coords="229,140,387,167"/>
+<area shape="rect" id="node3" href="$classlds_1_1gaussian_1_1_switched_controller.html" title="Gaussian&#45;observation SwitchedController Type." alt="" coords="439,5,657,32"/>
+<area shape="rect" id="node4" href="$classlds_1_1poisson_1_1_switched_controller.html" title="Poisson&#45;observation SwitchedController Type." alt="" coords="442,56,654,83"/>
 </map>

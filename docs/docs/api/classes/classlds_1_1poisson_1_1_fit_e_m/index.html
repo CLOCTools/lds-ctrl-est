@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="PLDS E-M Fit Type.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="lds::poisson::FitEM" />
+<meta property="og:description" content="PLDS E-M Fit Type." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/" />
+
+<title>lds::poisson::FitEM | LDS C&amp;E</title>
+<link rel="manifest" href="/ldsctrlest/manifest.json">
+<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
+<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
+<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
+<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::poisson::FitEM</strong>
+
+  <label for="toc-control">
+    
+    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldspoissonfitem">lds::poisson::FitEM</a>
+      <ul>
+        <li><a href="#additional-inherited-members">Additional inherited members</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldspoissonfitem">
+  lds::poisson::FitEM
+  <a class="anchor" href="#ldspoissonfitem">#</a>
+</h1>
+<p>PLDS E-M <a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit/">Fit</a> Type.  <a href="#detailed-description">More&hellip;</a></p>
+<p><br /> <code>#include &lt;lds_poisson_fit_em.h&gt;</code></p>
+<p>Inherits from <a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/">lds::EM&lt; Fit &gt;</a></p>
+<h2 id="additional-inherited-members">
+  Additional inherited members
+  <a class="anchor" href="#additional-inherited-members">#</a>
+</h2>
+<p><strong>Public Functions inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/">lds::EM&lt; Fit &gt;</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-em">EM</a></strong>() =default<br>Constructs a new <a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/">EM</a><a href="/ldsctrlest/docs/api/classes/classlds_1_1_fit/">Fit</a> type.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-em">EM</a></strong>(size_t n_x, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t">data_t</a> dt, <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &amp;&amp; u_train, <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &amp;&amp; z_train)<br>Constructs a new <a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/">EM</a><a href="/ldsctrlest/docs/api/classes/classlds_1_1_fit/">Fit</a> type.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-em">EM</a></strong>(const <a href="/ldsctrlest/docs/api/classes/classlds_1_1_fit/">Fit</a> &amp; fit0, <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &amp;&amp; u_train, <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &amp;&amp; z_train)<br>Constructs a new <a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/">EM</a><a href="/ldsctrlest/docs/api/classes/classlds_1_1_fit/">Fit</a> type.</td>
+</tr>
+<tr>
+<td>const <a href="/ldsctrlest/docs/api/classes/classlds_1_1_fit/">Fit</a> &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-run">Run</a></strong>(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =true, bool calc_output =true, bool calc_measurement =true, size_t max_iter =100, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t">data_t</a> tol =1e-2)<br>Runs fitting by Expectation(E)-Maximization(M)</td>
+</tr>
+<tr>
+<td>std::tuple&lt; <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt;, <a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-returndata">ReturnData</a></strong>()<br>Returns the input/output data to caller.</td>
+</tr>
+<tr>
+<td>const std::vector&lt; Matrix &gt; &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-x">x</a></strong>() const<br>gets estimated state (over time)</td>
+</tr>
+<tr>
+<td>const std::vector&lt; Matrix &gt; &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-y">y</a></strong>() const<br>gets estimated output (over time)</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-sum_e_x_t_x_t">sum_E_x_t_x_t</a></strong>() const<br>gets state-input covariance</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-sum_e_xu_tm1_xu_tm1">sum_E_xu_tm1_xu_tm1</a></strong>() const<br>gets state-input covariance (t-minus-1)</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-sum_e_xu_t_xu_tm1">sum_E_xu_t_xu_tm1</a></strong>() const<br>gets single lag state-input covariance</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-n_t_tot">n_t_tot</a></strong>()<br>total number of time samples</td>
+</tr>
+<tr>
+<td>const Vector &amp;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-theta">theta</a></strong>() const<br>gets parameters updated in M step</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Protected Functions inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/">lds::EM&lt; Fit &gt;</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-expectation">Expectation</a></strong>(bool force_common_initial =false)<br>Expectation step.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximization">Maximization</a></strong>(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =false, bool calc_output =false, bool calc_measurement =false)<br>Maximization step.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximizedynamics">MaximizeDynamics</a></strong>()</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximizeq">MaximizeQ</a></strong>()</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximizeinitial">MaximizeInitial</a></strong>()</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-smooth">Smooth</a></strong>(bool force_common_initial)<br>get smoothed estimates</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-reset">Reset</a></strong>()<br>reset to initial conditions</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-initvars">InitVars</a></strong>()<br>Initializes the variables.</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-updatetheta">UpdateTheta</a></strong>()<br>updates parameter list, theta</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Protected Attributes inherited from <a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/">lds::EM&lt; Fit &gt;</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-u_">u_</a></strong> <br>input training data</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-z_">z_</a></strong> <br>measurement training data</td>
+</tr>
+<tr>
+<td>std::vector&lt; Matrix &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-x_">x_</a></strong> <br>state estimate</td>
+</tr>
+<tr>
+<td>std::vector&lt; Cube &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-p_">P_</a></strong> <br>state estimate cov</td>
+</tr>
+<tr>
+<td>std::vector&lt; Cube &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-p_t_tm1_">P_t_tm1_</a></strong> <br>single-lag state covariance</td>
+</tr>
+<tr>
+<td>std::vector&lt; Matrix &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-y_">y_</a></strong> <br>output estimate</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-diag_y_">diag_y_</a></strong></td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-sum_e_x_t_x_t_">sum_E_x_t_x_t_</a></strong> <br>state covariance (current time)</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-sum_e_xu_tm1_xu_tm1_">sum_E_xu_tm1_xu_tm1_</a></strong> <br>state-input covariance (t-minus-1)</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-sum_e_xu_t_xu_tm1_">sum_E_xu_t_xu_tm1_</a></strong> <br>single lag state-input covariance</td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/classes/classlds_1_1_fit/">Fit</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-fit_">fit_</a></strong></td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-theta_">theta_</a></strong></td>
+</tr>
+<tr>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t">data_t</a></td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-dt_">dt_</a></strong> <br>sample period</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_u_">n_u_</a></strong> <br>number of inputs</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_x_">n_x_</a></strong> <br>number of states</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_y_">n_y_</a></strong> <br>number of outputs</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_trials_">n_trials_</a></strong> <br>number of input/output data sequences</td>
+</tr>
+<tr>
+<td>std::vector&lt; size_t &gt;</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_t_">n_t_</a></strong> <br>number of time steps</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_t_tot_">n_t_tot_</a></strong> <br>total number of time steps across trials</td>
+</tr>
+</tbody>
+</table>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">lds</span><span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>FitEM;
+</code></pre></div><pre><code>        This type is used in the process of fitting PLDS models by
+        expectation-maximization (EM).
+</code></pre><hr>
+<hr>
+<hr>
+<p>Updated on 23 March 2021 at 09:14:14 CDT</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldspoissonfitem">lds::poisson::FitEM</a>
+      <ul>
+        <li><a href="#additional-inherited-members">Additional inherited members</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

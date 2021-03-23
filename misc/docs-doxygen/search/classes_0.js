@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ctrl_5ft_218',['ctrl_t',['../classlds_1_1gaussian_1_1ctrl__t.html',1,'lds::gaussian::ctrl_t'],['../classlds_1_1poisson_1_1ctrl__t.html',1,'lds::poisson::ctrl_t']]]
+  ['controller_225',['Controller',['../classlds_1_1_controller.html',1,'lds::Controller&lt; System &gt;'],['../classlds_1_1gaussian_1_1_controller.html',1,'lds::gaussian::Controller'],['../classlds_1_1poisson_1_1_controller.html',1,'lds::poisson::Controller']]]
 ];

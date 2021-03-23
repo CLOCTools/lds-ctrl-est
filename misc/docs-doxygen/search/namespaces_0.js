@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['armamexc_224',['armamexc',['../namespacearmamexc.html',1,'']]],
-  ['armamexcpp_225',['armamexcpp',['../namespacearmamexcpp.html',1,'']]]
+  ['armamexc_237',['armamexc',['../namespacearmamexc.html',1,'']]],
+  ['armamexcpp_238',['armamexcpp',['../namespacearmamexcpp.html',1,'']]]
 ];

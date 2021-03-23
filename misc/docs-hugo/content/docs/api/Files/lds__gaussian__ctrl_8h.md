@@ -1,12 +1,12 @@
 ---
 title: ldsCtrlEst_h/lds_gaussian_ctrl.h
-summary: GLDS controller type. 
+summary: GLDS Controller. 
 
 ---
 
 # ldsCtrlEst_h/lds_gaussian_ctrl.h
 
-GLDS controller type.  [More...](#detailed-description)
+GLDS Controller.  [More...](#detailed-description)
 
 
 
@@ -21,13 +21,13 @@ GLDS controller type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::ctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/)** <br>GLDS Controller Type.  |
+| class | **[lds::gaussian::Controller](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/)** <br>Gaussian-observation [Controller]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for feedback control of a gaussian-output linear dynamical system (`[lds::gaussian::ctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/)`). It inherits functionality from the underlying GLDS model type (`[lds::gaussian::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/)`), including state estimation. 
+This file declares and partially defines the type for control of a gaussian-observation linear dynamical system ([lds::gaussian::Controller](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/)). It inherits functionality from the underlying GLDS model type ([lds::gaussian::System](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/)), including state estimation. 
 
 
 
@@ -38,7 +38,7 @@ This file declares and partially defines the type for feedback control of a gaus
 ```cpp
 //===-- ldsCtrlEst_h/lds_gaussian_ctrl.h - GLDS Controller ------*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,146 +58,53 @@ This file declares and partially defines the type for feedback control of a gaus
 #ifndef LDSCTRLEST_LDS_GAUSSIAN_CTRL_H
 #define LDSCTRLEST_LDS_GAUSSIAN_CTRL_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+// namespace
+#include "lds_gaussian.h"
+// system
+#include "lds_gaussian_sys.h"
+// controller
+#include "lds_ctrl.h"
 
 namespace lds {
 namespace gaussian {
-class ctrl_t : public sys_t {
+class Controller : public lds::Controller<System> {
  public:
-  ctrl_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& uLB,
-         data_t& uUB, data_t& dt, data_t& p0 = DEFAULT_P0,
-         data_t& q0 = DEFAULT_Q0, data_t& r0 = DEFAULT_R0,
-         size_t controlType = 0);
-  ctrl_t& operator=(const ctrl_t& sys);
+  void set_y_ref(const Vector& y_ref) override {
+    Reassign(y_ref_,y_ref);
+    cx_ref_ = y_ref - sys_.d();
+  };
 
-  // These are the workhorse functions:
+  // make sure base class template methods available
+  using lds::Controller<System>::Controller;
+  using lds::Controller<System>::Control;
+  using lds::Controller<System>::ControlOutputReference;
 
-  void fbCtrl(armaVec& z, bool& gateCtrl = TRUE, bool& gateLock = FALSE,
-              data_t& sigma_softStart = DEFAULT_SOFTSTART,
-              data_t& sigma_uNoise = DATA_T_ZERO, bool& resetAtCtrlOnset = TRUE,
-              bool& doRecurse_Ke = TRUE);
+  using lds::Controller<System>::sys;
+  using lds::Controller<System>::Kc;
+  using lds::Controller<System>::Kc_inty;
+  using lds::Controller<System>::Kc_u;
+  using lds::Controller<System>::g_design;
+  using lds::Controller<System>::u_ref;
+  using lds::Controller<System>::x_ref;
+  using lds::Controller<System>::y_ref;
+  using lds::Controller<System>::control_type;
 
-  void steadyState_fbCtrl(armaVec& z, bool& gateCtrl = TRUE,
-                          bool& gateEst = TRUE, bool& gateLock = FALSE,
-                          data_t& sigma_softStart = DEFAULT_SOFTSTART,
-                          data_t& sigma_uNoise = DATA_T_ZERO,
-                          bool& resetAtCtrlOnset = TRUE,
-                          bool& doRecurse_Ke = TRUE);
+  using lds::Controller<System>::set_sys;
+  using lds::Controller<System>::set_g_design;
+  using lds::Controller<System>::set_u_ref;
+  using lds::Controller<System>::set_x_ref;
+  using lds::Controller<System>::set_y_ref;
+  using lds::Controller<System>::set_Kc;
+  using lds::Controller<System>::set_Kc_inty;
+  using lds::Controller<System>::set_Kc_u;
+  using lds::Controller<System>::set_tau_awu;
+  using lds::Controller<System>::set_control_type;
 
-  void calc_ssSetPt();
-
-  void printSys();
-
-  // set methods
-  void setDims(std::size_t& nU, std::size_t& nX, std::size_t& nY);
-
-  // make sure to override the setU behavior inherited from sys_t!
-  // cannot set u for a controller, as it generates its own.
-  void setU(stdVec& uVec);
-  void setU(armaVec& u);
-
-  void setG(stdVec& gVec);
-  void setG(armaVec& g);
-
-  void setGDesign(stdVec& gVec);
-  void setGDesign(armaVec& g);
-
-  void setURef(stdVec& uRefVec);
-  void setURef(armaVec& uRef);
-
-  void setXRef(stdVec& xRefVec);
-  void setXRef(armaVec& xRef);
-
-  void setYRef(stdVec& yRefVec);
-  void setYRef(armaVec& yRef);
-
-  void setKc_x(stdVec& Kc_x_vec);
-  void setKc_x(armaMat& Kc_x);
-
-  void setKc_u(stdVec& Kc_u_vec);
-  void setKc_u(armaMat& Kc_u);
-
-  void setKc_inty(stdVec& Kc_inty_vec);
-  void setKc_inty(armaMat& Kc_inty);
-
-  void setControlType(size_t controlType);
-  void setTauAntiWindup(data_t& tau);
-
-  armaMat getKc_u() const { return Kc_u; };
-  armaMat getKc_x() const { return Kc_x; };
-  armaMat getKc_inty() const { return Kc_inty; };
-  armaVec getGDesign() const { return gDesign; };
-  armaVec getURef() const { return uRef; };
-  armaVec getXRef() const { return xRef; };
-  armaVec getYRef() const { return yRef; };
-  armaVec getIntE() const { return intE; };
-  size_t getControlType() const { return controlType; };
-
-  void reset();
-
- protected:
-  armaVec gDesign;  
-
-  //  reference signals
-  armaVec uRef;  
-  // create no set method for this:
-  armaVec uRef_prev;  
-  armaVec xRef;       
-  armaVec yRef;       
-
-  // Controller gains
-  armaMat Kc_x;  
-  armaMat
-      Kc_u;  
-  armaMat Kc_inty;  
-
-  // control after g inversion
-  // do not need set methods for these.
-  armaVec duRef;
-  armaVec dvRef;
-  armaVec vRef;
-  armaVec dv;
-  armaVec v;  
-
-  // integral error
-  // do not need set method for this
-  armaVec intE;            
-  armaVec intE_awuAdjust;  
-  armaVec uSat;            
-
-  bool gateCtrl_prev;
-  bool gateLock_prev;
-
-  // whether the g of system has become inverted from what you think it is
-  // (gainRef)
-  bool uSaturated;  
-
-  // should be safe to have references here bc nothing needs to be done
-  // (like reset vars) when it changes...
-  data_t& uLB;  
-  data_t& uUB;  
-
-  data_t tauAntiWindup;  
-  data_t kAntiWindup;
-
-  void antiWindup();
-
-  data_t t_since_ctrl_onset;  
-  size_t controlType;         
-
- private:
-  void calc_ctrl(bool& gateCtrl = TRUE, bool& gateEst = TRUE,
-                 bool& gateLock = FALSE,
-                 data_t& sigma_softStart = DEFAULT_SOFTSTART,
-                 data_t& sigma_uNoise = DATA_T_ZERO,
-                 bool& resetAtCtrlOnset = TRUE);
+  using lds::Controller<System>::Reset;
+  using lds::Controller<System>::Print;
 };
 }  // namespace gaussian
 }  // namespace lds
-
-#include "lds_gaussian_sctrl.h"
 
 #endif
 ```
@@ -205,4 +112,4 @@ class ctrl_t : public sys_t {
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

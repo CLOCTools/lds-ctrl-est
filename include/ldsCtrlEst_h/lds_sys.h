@@ -1,6 +1,6 @@
 //===-- ldsCtrlEst_h/lds_sys.h - LDS ----------------------------*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,13 +12,13 @@
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
-// limitations under the License.
+// Limitations under the License.
 //
 //===----------------------------------------------------------------------===//
 ///
 /// \file
 /// This file declares and partially defines the base type for linear dynamical
-/// systems (`lds::sys_t`). Note that this class defines the underlying linear
+/// systems (`lds::System`). Note that this class defines the underlying linear
 /// dynamics, but does not have output functions.Gaussian- and Poisson-output
 /// variants will be built upon this class.
 ///
@@ -28,199 +28,183 @@
 #ifndef LDSCTRLEST_LDS_SYS_H
 #define LDSCTRLEST_LDS_SYS_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+#include "lds.h"
 
 namespace lds {
-
 /// Linear Dynamical System Type
-class sys_t {
+class System {
  public:
   /**
-   * @brief      Constructs a new LDS.
-   *
-   * @param      nU    number if inputs (u)
-   * @param      nX    number of state (x)
-   * @param      dt    sample period
-   * @param      p0    [optional] initial diagonal elements of state estimate
-   *                   covariance (P)
-   * @param      q0    [optional] initial diagonal elements of process noise
-   *                   covariance (Q)
+   * @brief      Constructs a new System.
    */
-  sys_t(std::size_t nU, std::size_t nX, data_t& dt, data_t& p0 = DEFAULT_P0,
-        data_t& q0 = DEFAULT_Q0);
-  sys_t& operator=(const sys_t& sys);
+  System() = default;
 
-  /// Simulate a one-step prediction
-  void simPredict();
+  /**
+   * @brief      constructs a new System
+   *
+   * @param      n_u   number of inputs
+   * @param      n_x   number of states
+   * @param      n_y   number of outputs
+   * @param      dt    sample period
+   * @param      p0    diagonal elements for state estimate covariance
+   * @param      q0    diagonal elements for process noise covariance
+   */
+  System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0 = kDefaultP0,
+         data_t q0 = kDefaultQ0);
 
-  /// Get number of states
-  size_t getNx() const { return nX; };
+  /**
+   * Given current measurment and input, filter data to produce causal state
+   * estimates using Kalman filtering, which procedes by predicting the state
+   * and subsequently updating.
+   *
+   * @brief      Filter data to produce causal state estimates
+   *
+   * @param      u_tm1  input at t-minus-1
+   * @param      z_t    current measurement
+   */
+  void Filter(const Vector& u_tm1, const Vector& z);
+
+  /**
+   * @brief      simulates system (single time step)
+   *
+   * @param      u_tm1  input at time t-1
+   *
+   * @return     simulated measurement at time t
+   */
+  virtual const Vector& Simulate(const Vector& u_tm1) = 0;
+
+  /**
+   * @brief      system dynamics function
+   *
+   * @param      u             input
+   * @param      do_add_noise  whether to add simulated process noise
+   */
+  void f(const Vector& u, bool do_add_noise = false) {
+    x_ = A_ * x_ + B_ * (g_ % u) + m_;
+    if (do_add_noise) {
+      x_ += arma::mvnrnd(Vector(n_x_).fill(0), Q_);
+    }
+  };
+
+  /**
+   * @brief      system output function
+   */
+  virtual void h() = 0;
 
   /// Get number of inputs
-  size_t getNu() const { return nU; };
+  size_t n_u() const { return n_u_; };
+  /// Get number of states
+  size_t n_x() const { return n_x_; };
+  /// Get number of outputs
+  size_t n_y() const { return n_y_; };
+  /// Get sample period
+  data_t dt() const { return dt_; };
 
-  /// Get current input (u)
-  armaVec getU() const { return u; };
+  /// Get current state
+  const Vector& x() const { return x_; };
+  /// Get covariance of state estimate
+  const Matrix& P() const { return P_; };
+  /// Get current process disturbance/bias
+  const Vector& m() const { return m_; };
+  /// Get covariance of process disturbance estimate
+  const Matrix& P_m() const { return P_m_; };
+  /// Get C*x
+  const Vector& cx() const { return cx_; };
+  /// Get output
+  const Vector& y() const { return y_; };
 
-  /// Get current state (x)
-  armaVec getX() { return x; };
+  /// Get initial state
+  const Vector& x0() const { return x0_; };
+  /// Get initial disturbance
+  const Vector& m0() const { return m0_; };
 
-  /// Get input gain (g)
-  armaVec getG() const { return g; };
-
-  /// Get current process disturbance/bias (m)
-  armaVec getM() const { return m; };
-
-  /// Get state matrix (A)
-  armaMat getA() const { return A; };
-
-  /// Get input matrix (B)
-  armaMat getB() const { return B; };
-
-  /// Get process noise covariance (Q)
-  armaMat getQ() const { return Q; };
-
-  /// Get process noise covariance acting on disturbance evolution (Q_m)
-  armaMat getQ_m() const { return Q_m; };
-
-  /// Get covariance of state estimate (P)
-  armaMat getP() const { return P; };
-
-  /// Get covariance of process disturbance estimate (P_m)
-  armaMat getP_m() const { return P_m; };
-
-  /// Get initial state (x0)
-  armaVec getX0() const { return x0; };
-
-  /// Get initial covariance of state estimate (P0)
-  armaMat getP0() const { return P0; };
-
-  /// Get initial process disturbance (m0)
-  armaVec getM0() const { return m0; };
-
-  /// Get initial covariance of process disturbance estimate (P0_m)
-  armaMat getP0_m() const { return P0_m; };
-
-  /// Set dimensions of system
-  void setDims(std::size_t& nU, std::size_t& nX);
-
-  /// Set input (u)
-  void setU(stdVec& uVec);
-  /// Set input (u)
-  void setU(armaVec& u);
-
-  /// Set state matrix (A)
-  void setA(stdVec& aVec);
-  /// Set state matrix (A)
-  void setA(armaMat& A);
-
-  /// Set input matrix (B)
-  void setB(stdVec& bVec);
-  /// Set input matrix (B)
-  void setB(armaMat& B);
-
-  /// Set process disturbance (m)
-  void setM(stdVec& mVec);
-  /// Set process disturbance (m)
-  void setM(armaVec& m);
-
-  /// Set input gain (g)
-  void setG(stdVec& gVec);
-  /// Set input gain (g)
-  void setG(armaVec& g);
-
-  /// Set process noise covariance (Q)
-  void setQ(stdVec& qVec);
-  /// Set process noise covariance (Q)
-  void setQ(armaMat& Q);
-
-  /// Set process noise covariance of disturbance evoluation (Q_m)
-  void setQ_m(stdVec& qmVec);
-  /// Set process noise covariance of disturbance evoluation (Q_m)
-  void setQ_m(armaMat& Q_m);
-
-  /// Set initial state (x0)
-  void setX0(stdVec& x0Vec);
-  /// Set initial state (x0)
-  void setX0(armaVec& x0);
-
-  /// Set covariance of initial state (P0)
-  void setP0(stdVec& p0Vec);
-  /// Set covariance of initial state (P0)
-  void setP0(armaMat& P0);
-
-  /// Set covariance of initial process disturbance (P0_m)
-  void setP0_m(stdVec& p0mVec);
-  /// Set covariance of initial process disturbance (P0_m)
-  void setP0_m(armaMat& P0_m);
+  /// Get state matrix
+  const Matrix& A() const { return A_; };
+  /// Get input matrix
+  const Matrix& B() const { return B_; };
+  /// Get input gain/conversion factor
+  const Vector& g() const { return g_; };
+  /// Get output matrix
+  const Matrix& C() const { return C_; };
+  /// Get output bias
+  const Vector& d() const { return d_; };
+  /// Get estimator gain
+  const Matrix& Ke() const { return Ke_; };
+  /// Get estimator gain for process disturbance (m)
+  const Matrix& Ke_m() const { return Ke_m_; };
+  /// Set state matrix
+  void set_A(const Matrix& A) { Reassign(A_, A); };
+  /// Set input matrix
+  void set_B(const Matrix& B) { Reassign(B_, B); };
+  /// Set process disturbance
+  void set_m(const Vector& m) {
+    Reassign(m0_, m);
+    if (!do_adapt_m) {
+      Reassign(m_, m);
+    }
+  };
+  /// Set input gain
+  void set_g(const Vector& g) { Reassign(g_, g); };
+  /// Set process noise covariance
+  void set_Q(const Matrix& Q) { Reassign(Q_, Q); };
+  /// Set process noise covariance of disturbance evoluation
+  void set_Q_m(const Matrix& Q_m) { Reassign(Q_m_, Q_m); };
+  /// Set initial state
+  void set_x0(const Vector& x0) { Reassign(x0_, x0); };
+  /// Set covariance of initial state
+  void set_P0(const Matrix& P0) { Reassign(P0_, P0); };
+  /// Set covariance of initial process disturbance
+  void set_P0_m(const Matrix& P0_m) { Reassign(P0_m_, P0_m); };
+  /// Set output matrix
+  void set_C(const Matrix& C) { Reassign(C_, C); };
+  /// Set output bias
+  void set_d(const Vector& d) { Reassign(d_, d); };
 
   /// Reset system variables
-  void reset();
+  void Reset();
 
   /// Print system variables to stdout
-  void printSys();
+  void Print();
 
-  bool adaptM;
+  // safe to leave this public and non-const
+  bool do_adapt_m{};  ///< whether to adaptively estimate disturbance m
 
  protected:
-  armaVec u;    ///< input
-  armaVec x;    ///< state
-  armaMat P;    ///< covariance of state estimate
-  armaVec m;    ///< process disturbance
-  armaMat P_m;  ///< covariance of disturbance estimate
+  /// Recursively recalculate estimator gain (Ke)
+  virtual void RecurseKe() = 0;
+  void InitVars(data_t p0 = kDefaultP0, data_t q0 = kDefaultQ0);
+
+  std::size_t n_x_{};  ///< number of states
+  std::size_t n_u_{};  ///< number of inputs
+  std::size_t n_y_{};  ///< number of outputs
+  data_t dt_{};        ///< sample period
+
+  // Signals:
+  Vector x_;    ///< state
+  Matrix P_;    ///< covariance of state estimate
+  Vector m_;    ///< process disturbance
+  Matrix P_m_;  ///< covariance of disturbance estimate
+  Vector cx_;   ///< C*x
+  Vector y_;    ///< output
+  Vector z_;    ///< measurement
 
   // Parameters:
-  armaVec x0;    ///< initial state
-  armaMat P0;    ///< covariance of initial state estimate
-  armaVec m0;    ///< initial process disturbance
-  armaMat P0_m;  ///< covariance of initial disturbance estimate
+  Vector x0_;    ///< initial state
+  Matrix P0_;    ///< covariance of initial state estimate
+  Vector m0_;    ///< initial process disturbance
+  Matrix P0_m_;  ///< covariance of initial disturbance est.
+  Matrix A_;     ///< state matrix
+  Matrix B_;     ///< input matrix
+  Vector g_;     ///< input gain
+  Matrix Q_;     ///< covariance of process noise
+  Matrix Q_m_;   ///< covariance of disturbance random walk
+  Matrix C_;     ///< output matrix
+  Vector d_;     ///< output bias
 
-  armaMat A;    ///< state matrix
-  armaMat B;    ///< input matrix
-  armaVec g;    ///< input gain
-  armaMat Q;    ///< covariance of process noise
-  armaMat Q_m;  ///< covoariance of disturbance evolution process
+  Matrix Ke_;    ///< estimator gain
+  Matrix Ke_m_;  ///< estimator gain for process disturbance
+};               // System
 
-  // it should be safe for dt to be a reference. I should not need to control
-  // what the set behavior is.
-  data_t& dt;  ///< sample period
-  data_t& q0;  ///< default process noise covariance
-  data_t& p0;  ///< default state estimate covariance
-
-  // dimensions
-  std::size_t nX;  ///< number of states
-  std::size_t nU;  ///< number of inputs
-  bool szChanged;  ///< whether size of system changed (see `setDims`)
-
-  // max val for elements of P before reset for numerical reasons...
-  const data_t plim = 1e2;  ///< limit for state estimate covariance
-
-  /// one-step prediction of state
-  void predict();
-
-  // TODO(mfbolus): these are very redundant.
-  // Should be able to use templates in some way to make this less type-specific
-  void reassign(armaVec& oldVar, armaVec& newVar, data_t defaultVal = 0);
-  void reassign(armaVec& oldVar, stdVec& newVar, data_t defaultVal = 0);
-  void reassign(armaSubVec& oldVar, armaVec& newVar, data_t defaultVal = 0);
-  void reassign(armaSubVec& oldVar, stdVec& newVar, data_t defaultVal = 0);
-  void reassign(armaMat& oldVar, armaMat& newVar, data_t defaultVal = 0);
-  void reassign(armaMat& oldVar, stdVec& newVar, data_t defaultVal = 0);
-  void reassign(armaSubMat& oldVar, armaMat& newVar, data_t defaultVal = 0);
-  void reassign(armaSubMat& oldVar, stdVec& newVar, data_t defaultVal = 0);
-
-  void limit(stdVec& x, data_t& lb, data_t& ub);
-  void limit(armaVec& x, data_t& lb, data_t& ub);
-  void limit(armaMat& x, data_t& lb, data_t& ub);
-
-  /// Reset to default Q (identity matrix with diagonal elements q0)
-  void defaultQ();
-
-  /// check whether estimate covariance fals within plim upper bound
-  void checkP();
-};  // sys_t
 }  // namespace lds
 
 #endif

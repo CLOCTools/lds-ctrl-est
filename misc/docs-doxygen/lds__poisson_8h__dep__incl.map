@@ -1,4 +1,9 @@
 <map id="lds_poisson.h" name="lds_poisson.h">
-<area shape="rect" id="node1" title="plds namespace" alt="" coords="5,5,109,32"/>
-<area shape="rect" id="node2" href="$lds_8h.html" title="lds namespace" alt="" coords="32,80,83,107"/>
+<area shape="rect" id="node1" title="plds namespace" alt="" coords="79,5,183,32"/>
+<area shape="rect" id="node2" href="$lds__poisson__ctrl_8h.html" title="PLDS controller type." alt="" coords="9,155,138,181"/>
+<area shape="rect" id="node4" href="$lds__poisson__fit_8h.html" title="PLDS base fit type." alt="" coords="221,80,342,107"/>
+<area shape="rect" id="node7" href="$lds__poisson__sys_8h.html" title="PLDS base type." alt="" coords="65,80,196,107"/>
+<area shape="rect" id="node3" href="$lds__poisson__sctrl_8h.html" title="PLDS switched controller type." alt="" coords="5,229,141,256"/>
+<area shape="rect" id="node5" href="$lds__poisson__fit__em_8h.html" title="PLDS E&#45;M fit type." alt="" coords="185,155,332,181"/>
+<area shape="rect" id="node6" href="$lds__poisson__fit__ssid_8h.html" title="PLDS SSID fit type." alt="" coords="356,155,508,181"/>
 </map>

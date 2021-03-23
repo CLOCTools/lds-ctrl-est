@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -210,7 +210,7 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td>class</td>
-<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/">lds::fit_t</a></strong> <br>LDS Fit Type.</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1_fit/">lds::Fit</a></strong> <br>LDS <a href="">Fit</a> Type.</td>
 </tr>
 </tbody>
 </table>
@@ -225,7 +225,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_fit.h - Fit Type for LDS ---------------*- C++ -*-===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -245,33 +245,91 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#75715e">#ifndef LDS_FIT_HPP
 </span><span style="color:#75715e">#define LDS_FIT_HPP
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#ifndef LDSCTRLEST
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
+<span style="color:#75715e">// namespace
+</span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_uniform_mats.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">namespace</span> lds {
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">fit_t</span> {
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Fit</span> {
  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-  fit_t(){};
-  fit_t(armaMat<span style="color:#f92672">&amp;</span> A, armaMat<span style="color:#f92672">&amp;</span> B, armaVec<span style="color:#f92672">&amp;</span> g, armaVec<span style="color:#f92672">&amp;</span> m, armaMat<span style="color:#f92672">&amp;</span> Q, armaVec<span style="color:#f92672">&amp;</span> x0,
-        armaMat<span style="color:#f92672">&amp;</span> P0, data_t<span style="color:#f92672">&amp;</span> dt);
+  Fit() <span style="color:#f92672">=</span> <span style="color:#66d9ef">default</span>;
+  Fit(size_t n_u, size_t n_x, size_t n_y, data_t dt);
+
+  <span style="color:#75715e">// get methods
+</span><span style="color:#75715e"></span>  size_t <span style="color:#a6e22e">n_u</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> n_u_; };
+  size_t <span style="color:#a6e22e">n_x</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> n_x_; };
+  size_t <span style="color:#a6e22e">n_y</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> n_y_; };
+  data_t <span style="color:#a6e22e">dt</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> dt_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> A() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> A_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> B() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> B_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> g() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> g_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> m() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> m_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> Q() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> Q_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> x0() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> x0_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> P0() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> P0_; };
+  <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> C() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> C_; };
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> d() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> d_; };
+  <span style="color:#75715e">// gets measurement noise
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> R() <span style="color:#66d9ef">const</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+  <span style="color:#75715e">// set methods (e.g., seeding initial fit values)
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_A</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> A) { Reassign(A_, A); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_B</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> B) { Reassign(B_, B); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_g</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> g) { Reassign(g_, g); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_m</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> m) { Reassign(m_, m); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_Q</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> Q) {
+    Reassign(Q_, Q);
+    ForceSymPD(Q_);
+  };
+  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_R</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> R) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_x0</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> x0) { Reassign(x0_, x0); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_P0</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> P0) {
+    Reassign(P0_, P0);
+    ForceSymPD(P0_);
+  };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_C</span>(<span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> C) { Reassign(C_, C); };
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set_d</span>(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> d) { Reassign(d_, d); };
+
+  View <span style="color:#a6e22e">f</span>(Matrix<span style="color:#f92672">&amp;</span> x, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> u, size_t t) {
+    x.col(t) <span style="color:#f92672">=</span> A_ <span style="color:#f92672">*</span> x.col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> B_ <span style="color:#f92672">*</span> (g_ <span style="color:#f92672">%</span> u.col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">+</span> m_;
+    <span style="color:#66d9ef">return</span> x.col(t);
+  };
+
+  View <span style="color:#a6e22e">f</span>(Matrix<span style="color:#f92672">&amp;</span> x_pre, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> x_post, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> u, size_t t) {
+    x_pre.col(t) <span style="color:#f92672">=</span> A_ <span style="color:#f92672">*</span> x_post.col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> B_ <span style="color:#f92672">*</span> (g_ <span style="color:#f92672">%</span> u.col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">+</span> m_;
+    <span style="color:#66d9ef">return</span> x_pre.col(t);
+  };
+
+  <span style="color:#66d9ef">virtual</span> View <span style="color:#a6e22e">h</span>(Matrix<span style="color:#f92672">&amp;</span> y, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> x, size_t t) <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+
+ <span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
+  data_t dt_{};  
 
   <span style="color:#75715e">// Dynamics
-</span><span style="color:#75715e"></span>  armaMat A;   
-  armaMat B;   
-  armaVec g;   
-  armaVec m;   
-  armaMat Q;   
-  armaVec x0;  
-  armaMat P0;  
+</span><span style="color:#75715e"></span>  Matrix A_;  
+  Matrix B_;  
+  Vector g_;  
+  Vector m_;  
+  Matrix Q_;  
 
-  data_t dt;  
+  <span style="color:#75715e">// Output
+</span><span style="color:#75715e"></span>  Matrix C_;  
+  Vector d_;  
+  Matrix R_; 
+
+  <span style="color:#75715e">// initial conditions
+</span><span style="color:#75715e"></span>  Vector x0_;  
+  Matrix P0_;  
+
+  size_t n_u_{};  
+  size_t n_x_{};  
+  size_t n_y_{};  
 };
 
 }  <span style="color:#75715e">// namespace lds
 </span><span style="color:#75715e"></span><span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       
