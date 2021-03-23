@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['b_6',['B',['../classlds_1_1fit__t.html#aaee32946152fc3d033ebca8f10c60953',1,'lds::fit_t::B()'],['../classlds_1_1sys__t.html#afc95a30c159e0f3413590a8cf9157c25',1,'lds::sys_t::B()']]]
+  ['b_7',['B',['../classlds_1_1_fit.html#a45930f202a31b9ddc721e58a012a5585',1,'lds::Fit::B()'],['../classlds_1_1_system.html#a09c336ac78a03bf06dc1fe56517244ad',1,'lds::System::B()']]],
+  ['b_5f_8',['B_',['../classlds_1_1_fit.html#a78a5d07042093ca24ac613363bdf2c9f',1,'lds::Fit::B_()'],['../classlds_1_1_system.html#ac934385e29b96ccd8406aef6cd699c5e',1,'lds::System::B_()']]]
 ];

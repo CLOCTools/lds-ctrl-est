@@ -1,6 +1,6 @@
 //===-- lds_gaussian_fit.cpp - Fit Type for GLDS --------------------------===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,35 +26,13 @@
 
 #include <ldsCtrlEst>
 
-using namespace std;
-using namespace glds;
+namespace lds {
+namespace gaussian {
 
-lds::gaussian::fit_t::fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m,
-                            armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C,
-                            armaMat& D, armaVec& d, armaMat& R, data_t dt,
-                            vector<armaMat>& uTrain, vector<armaMat>& zTrain)
-    : lds::fit_t(A, B, g, m, Q, x0, P0, dt) {
-  // output
-  this->C = C;
-  this->D = D;
-  this->d = d;
-  this->R = R;
-
-  this->uTrain = uTrain;
-  this->zTrain = zTrain;
+Fit::Fit(size_t n_u, size_t n_x, size_t n_y, data_t dt)
+    : lds::Fit(n_u, n_x, n_y, dt) {
+  R_ = kDefaultR0 * Matrix(n_y_, n_y_, fill::eye);
 }
 
-lds::gaussian::fit_t::fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m,
-                            armaMat& Q, armaVec& x0, armaMat& P0, armaMat& C,
-                            armaVec& d, armaMat& R, data_t dt,
-                            vector<armaMat>& uTrain, vector<armaMat>& zTrain)
-    : lds::fit_t(A, B, g, m, Q, x0, P0, dt) {
-  // output
-  this->C = C;
-  this->D = armaMat(C.n_rows, B.n_cols, fill::zeros);
-  this->d = d;
-  this->R = R;
-
-  this->uTrain = uTrain;
-  this->zTrain = zTrain;
-}
+}  // namespace gaussian
+}  // namespace lds

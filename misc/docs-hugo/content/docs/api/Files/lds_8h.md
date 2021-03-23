@@ -31,7 +31,7 @@ This file defines the `lds` namespace, which will be an umbrella for linear dyna
 ```cpp
 //===-- ldsCtrlEst_h/lds.h - Linear Dynmical System Namespace ---*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -51,59 +51,128 @@ This file defines the `lds` namespace, which will be an umbrella for linear dyna
 #ifndef LDSCTRLEST_LDS_H
 #define LDSCTRLEST_LDS_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+// #ifndef LDSCTRLEST
+// #include <ldsCtrlEst>
+// #endif
+
+#include <armadillo>
 
 namespace lds {
-typedef double data_t;
+using data_t = double;  // may change to float (but breaks mex functions)
+using Vector = arma::Col<data_t>;
+using Matrix = arma::Mat<data_t>;
+using Cube = arma::Cube<data_t>;
+using View = arma::subview<data_t>;
 
 namespace fill = arma::fill;
 
-typedef std::vector<data_t> stdVec;
-typedef arma::Col<data_t> armaVec;
-typedef arma::Mat<data_t> armaMat;
-typedef arma::Cube<data_t> armaCube;
-typedef arma::subview_col<data_t> armaSubVec;
-typedef arma::subview<data_t> armaSubMat;
 
+static const std::size_t kControlTypeDeltaU = 0x1;
 
-static const std::size_t CONTROL_TYPE_U = 0x1;
+static const std::size_t kControlTypeIntY = kControlTypeDeltaU << 1;
 
-static const std::size_t CONTROL_TYPE_INTY = CONTROL_TYPE_U << 1;
+static const std::size_t kControlTypeAdaptM = kControlTypeDeltaU << 2;
 
-static const std::size_t CONTROL_TYPE_ADAPT_M = CONTROL_TYPE_U << 2;
+static const data_t kInf = std::numeric_limits<data_t>::infinity();
+static const data_t kPi = arma::datum::pi;
 
-static data_t inf = std::numeric_limits<data_t>::infinity();
-static data_t neginf = -inf;
-static const data_t pi = arma::datum::pi;
+static const data_t kDefaultP0 = 1e-6;  
+static const data_t kDefaultQ0 = 1e-6;  
+static const data_t kDefaultR0 = 1e-2;  
 
-static data_t DEFAULT_P0 = 1e-6;
-static data_t DEFAULT_Q0 = 1e-6;
-static data_t DEFAULT_R0 = 1e-2;
-static std::vector<data_t> DEFAULT_T0 = std::vector<data_t>(1, 0.0);
+enum SSIDWt {
+  kSSIDNone,   
+  kSSIDMOESP,  
+  kSSIDCVA     
+};
 
-// Ideally these should be const, but trying to pass reference which means its
-// val implicitly must be allowed to change. hopefully no one will try to
-// reassign their vals...
-static data_t DATA_T_ZERO = (data_t)0;
-static data_t DATA_T_ONE = (data_t)1;
-static data_t DEFAULT_SOFTSTART = (data_t)0;
-static bool FALSE = false;
-static bool TRUE = true;
+enum MatrixListFreeDim {
+  kMatFreeDimNone,  
+  kMatFreeDim1,     
+  kMatFreeDim2      
+};
 
-enum ssidWt { NONE, MOESP, CVA };
+// TODO(mfbolus): for SwitchedController, may want systems to have differing
+// numbers of states. Use this enum as template parameter?
+// enum SystemListFreeDim {
+//   kSysFreeDimNone,
+//   kSysFreeDimX  ///< allow state dim (x) of systems in list to be hetero
+// };
+
+// place hard limits on contents of vecors/mats
+void Limit(std::vector<data_t>& x, data_t lb, data_t ub);
+void Limit(Vector& x, data_t lb, data_t ub);
+void Limit(Matrix& x, data_t lb, data_t ub);
+
+// in-place assign that errs if there are dimension mismatches:
+void Reassign(Vector& some, const Vector& other,
+              const std::string& parenthetical = "Reassign");
+void Reassign(Matrix& some, const Matrix& other,
+              const std::string& parenthetical = "Reassign");
+
+// TODO(mfbolus): this is a fudge, but for some reason, cov mats often going
+// numerically asymm.
+
+void ForceSymPD(Matrix& X);
+
+void ForceSymMinEig(Matrix& X, data_t eig_min = 0);
+
+void lq(Matrix& L, Matrix& Qt, const Matrix& X);
+
+Matrix calcCov(const Matrix& A, const Matrix& B);
+
+inline void Limit(std::vector<data_t>& x, data_t lb, data_t ub) {
+  for (data_t& el : x) {
+    el = el < lb ? lb : el;
+    el = el > ub ? ub : el;
+  }
+}
+inline void Limit(Vector& x, data_t lb, data_t ub) {
+  for (data_t& el : x) {
+    el = el < lb ? lb : el;
+    el = el > ub ? ub : el;
+  }
+}
+inline void Limit(Matrix& x, data_t lb, data_t ub) {
+  for (data_t& el : x) {
+    el = el < lb ? lb : el;
+    el = el > ub ? ub : el;
+  }
+}
+
+inline void Reassign(Vector& some, const Vector& other,
+                     const std::string& parenthetical) {
+  // check dimensions
+  if (other.n_elem != some.n_elem) {
+    std::ostringstream ss;
+    ss << "cannot reassign vector of size " << some.n_elem
+       << " with vector of size " << other.n_elem << "(" << parenthetical
+       << ")";
+    throw std::runtime_error(ss.str());
+  }
+
+  for (size_t k = 0; k < some.n_elem; k++) {
+    some[k] = other[k];
+  }
+}
+
+inline void Reassign(Matrix& some, const Matrix& other,
+                     const std::string& parenthetical) {
+  // check dimensions
+  if ((other.n_rows != some.n_rows) || (other.n_cols != some.n_cols)) {
+    std::ostringstream ss;
+    ss << "cannot reassign matrix of size " << some.n_rows << "x" << some.n_cols
+       << " with matrix of size " << other.n_rows << "x" << other.n_cols << "("
+       << parenthetical << ")";
+    throw std::runtime_error(ss.str());
+  }
+
+  for (size_t k = 0; k < some.n_elem; k++) {
+    some[k] = other[k];
+  }
+}
+
 }  // namespace lds
-
-// fit and sys with dynamics only
-#include "lds_sys.h"
-#ifdef LDSCTRLEST_BUILD_FIT
-#include "lds_fit.h"
-#endif
-
-// Pull in output equation variants
-#include "lds_gaussian.h"
-#include "lds_poisson.h"
 
 #endif
 ```
@@ -111,4 +180,4 @@ enum ssidWt { NONE, MOESP, CVA };
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

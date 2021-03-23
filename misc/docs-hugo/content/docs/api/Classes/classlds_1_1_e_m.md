@@ -1,0 +1,583 @@
+---
+title: lds::EM
+
+---
+
+# lds::EM
+
+
+
+ [More...](#detailed-description)
+
+Inherited by [lds::gaussian::FitEM](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/), [lds::poisson::FitEM](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/)
+
+## Public Functions
+
+|                | Name           |
+| -------------- | -------------- |
+| | **[EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-em)**() =default<br>Constructs a new [EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/)[Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/) type.  |
+| | **[EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-em)**(size_t n_x, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) dt, [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > && u_train, [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > && z_train)<br>Constructs a new [EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/)[Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/) type.  |
+| | **[EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-em)**(const [Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/) & fit0, [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > && u_train, [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > && z_train)<br>Constructs a new [EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/)[Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/) type.  |
+| const [Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/) & | **[Run](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-run)**(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =true, bool calc_output =true, bool calc_measurement =true, size_t max_iter =100, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) tol =1e-2)<br>Runs fitting by Expectation(E)-Maximization(M)  |
+| std::tuple< [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) >, [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > > | **[ReturnData](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-returndata)**()<br>Returns the input/output data to caller.  |
+| const std::vector< Matrix > & | **[x](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-x)**() const<br>gets estimated state (over time)  |
+| const std::vector< Matrix > & | **[y](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-y)**() const<br>gets estimated output (over time)  |
+| const Matrix & | **[sum_E_x_t_x_t](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-sum_e_x_t_x_t)**() const<br>gets state-input covariance  |
+| const Matrix & | **[sum_E_xu_tm1_xu_tm1](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-sum_e_xu_tm1_xu_tm1)**() const<br>gets state-input covariance (t-minus-1)  |
+| const Matrix & | **[sum_E_xu_t_xu_tm1](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-sum_e_xu_t_xu_tm1)**() const<br>gets single lag state-input covariance  |
+| size_t | **[n_t_tot](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-n_t_tot)**()<br>total number of time samples  |
+| const Vector & | **[theta](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-theta)**() const<br>gets parameters updated in M step  |
+
+## Protected Functions
+
+|                | Name           |
+| -------------- | -------------- |
+| void | **[Expectation](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-expectation)**(bool force_common_initial =false)<br>Expectation step.  |
+| void | **[Maximization](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximization)**(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =false, bool calc_output =false, bool calc_measurement =false)<br>Maximization step.  |
+| void | **[MaximizeDynamics](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximizedynamics)**() |
+| void | **[MaximizeQ](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximizeq)**() |
+| void | **[MaximizeInitial](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximizeinitial)**() |
+| virtual void | **[MaximizeOutput](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximizeoutput)**() =0 |
+| virtual void | **[MaximizeMeasurement](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-maximizemeasurement)**() =0 |
+| void | **[Smooth](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-smooth)**(bool force_common_initial)<br>get smoothed estimates  |
+| virtual void | **[RecurseKe](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-recurseke)**(Matrix & Ke, Cube & P_pre, Cube & P_post, size_t t) =0<br>recursively update estimator gain Ke  |
+| void | **[Reset](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-reset)**()<br>reset to initial conditions  |
+| void | **[InitVars](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-initvars)**()<br>Initializes the variables.  |
+| Vector | **[UpdateTheta](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#function-updatetheta)**()<br>updates parameter list, theta  |
+
+## Protected Attributes
+
+|                | Name           |
+| -------------- | -------------- |
+| [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > | **[u_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-u_)** <br>input training data  |
+| [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > | **[z_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-z_)** <br>measurement training data  |
+| std::vector< Matrix > | **[x_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-x_)** <br>state estimate  |
+| std::vector< Cube > | **[P_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-p_)** <br>state estimate cov  |
+| std::vector< Cube > | **[P_t_tm1_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-p_t_tm1_)** <br>single-lag state covariance  |
+| std::vector< Matrix > | **[y_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-y_)** <br>output estimate  |
+| Matrix | **[diag_y_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-diag_y_)**  |
+| Matrix | **[sum_E_x_t_x_t_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-sum_e_x_t_x_t_)** <br>state covariance (current time)  |
+| Matrix | **[sum_E_xu_tm1_xu_tm1_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-sum_e_xu_tm1_xu_tm1_)** <br>state-input covariance (t-minus-1)  |
+| Matrix | **[sum_E_xu_t_xu_tm1_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-sum_e_xu_t_xu_tm1_)** <br>single lag state-input covariance  |
+| [Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/) | **[fit_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-fit_)**  |
+| Vector | **[theta_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-theta_)**  |
+| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) | **[dt_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-dt_)** <br>sample period  |
+| size_t | **[n_u_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_u_)** <br>number of inputs  |
+| size_t | **[n_x_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_x_)** <br>number of states  |
+| size_t | **[n_y_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_y_)** <br>number of outputs  |
+| size_t | **[n_trials_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_trials_)** <br>number of input/output data sequences  |
+| std::vector< size_t > | **[n_t_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_t_)** <br>number of time steps  |
+| size_t | **[n_t_tot_](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/#variable-n_t_tot_)** <br>total number of time steps across trials  |
+
+## Detailed Description
+
+```cpp
+template <typename Fit >
+class lds::EM;
+```
+
+
+---
+---
+## Public Function Details
+
+### **EM**
+
+```cpp
+EM() =default
+```
+
+
+
+---
+### **EM**
+
+```cpp
+EM(
+    size_t n_x,
+    data_t dt,
+    UniformMatrixList< kMatFreeDim2 > && u_train,
+    UniformMatrixList< kMatFreeDim2 > && z_train
+)
+```
+
+
+
+**Parameters**:
+
+  * **n_x** number of states 
+  * **dt** sample period 
+  * **u_train** input training data 
+  * **z_train** measurement training data 
+
+
+---
+### **EM**
+
+```cpp
+EM(
+    const Fit & fit0,
+    UniformMatrixList< kMatFreeDim2 > && u_train,
+    UniformMatrixList< kMatFreeDim2 > && z_train
+)
+```
+
+
+
+**Parameters**:
+
+  * **fit0** initial fit 
+  * **u_train** input training data 
+  * **z_train** measurement training data 
+
+
+---
+### **Run**
+
+```cpp
+const Fit & Run(
+    bool calc_dynamics =true,
+    bool calc_Q =true,
+    bool calc_init =true,
+    bool calc_output =true,
+    bool calc_measurement =true,
+    size_t max_iter =100,
+    data_t tol =1e-2
+)
+```
+
+
+
+**Parameters**:
+
+  * **calc_dynamics** [optional] whether to caclulate dynamics (A, B) 
+  * **calc_Q** [optional] whether to calculate process noise covariance 
+  * **calc_init** [optional] whether to calculate initial conditions 
+  * **calc_output** [optional] whether to calculate output function 
+  * **calc_measurement** [optional] whether to calculate parameters for measurement/observation law 
+  * **max_iter** max number of iterations 
+  * **tol** convergence tolerance (max fractional abs change)
+
+
+**Return**: [Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/)
+
+---
+### **ReturnData**
+
+```cpp
+inline std::tuple< UniformMatrixList< kMatFreeDim2 >, UniformMatrixList< kMatFreeDim2 > > ReturnData()
+```
+
+
+
+**Return**: tuple(input data, output data) 
+
+---
+### **x**
+
+```cpp
+inline const std::vector< Matrix > & x() const
+```
+
+
+
+---
+### **y**
+
+```cpp
+inline const std::vector< Matrix > & y() const
+```
+
+
+
+---
+### **sum_E_x_t_x_t**
+
+```cpp
+inline const Matrix & sum_E_x_t_x_t() const
+```
+
+
+
+---
+### **sum_E_xu_tm1_xu_tm1**
+
+```cpp
+inline const Matrix & sum_E_xu_tm1_xu_tm1() const
+```
+
+
+
+---
+### **sum_E_xu_t_xu_tm1**
+
+```cpp
+inline const Matrix & sum_E_xu_t_xu_tm1() const
+```
+
+
+
+---
+### **n_t_tot**
+
+```cpp
+inline size_t n_t_tot()
+```
+
+
+
+---
+### **theta**
+
+```cpp
+inline const Vector & theta() const
+```
+
+
+
+---
+
+
+## Protected Function Details
+
+### **Expectation**
+
+```cpp
+void Expectation(
+    bool force_common_initial =false
+)
+```
+
+
+
+**Parameters**:
+
+  * **force_common_initial** whether to force common initial condition for all trials 
+
+
+---
+### **Maximization**
+
+```cpp
+void Maximization(
+    bool calc_dynamics =true,
+    bool calc_Q =true,
+    bool calc_init =false,
+    bool calc_output =false,
+    bool calc_measurement =false
+)
+```
+
+
+
+**Parameters**:
+
+  * **calc_dynamics** [optional] whether to caclulate dynamics (A, B) 
+  * **calc_Q** [optional] whether to calculate process noise covariance 
+  * **calc_init** [optional] whether to calculate initial conditions 
+  * **calc_output** [optional] whether to calculate output function 
+  * **calc_measurement** [optional] whether to calculate parameters for measurement/observation law 
+
+
+---
+### **MaximizeDynamics**
+
+```cpp
+void MaximizeDynamics()
+```
+
+
+
+---
+### **MaximizeQ**
+
+```cpp
+void MaximizeQ()
+```
+
+
+
+---
+### **MaximizeInitial**
+
+```cpp
+void MaximizeInitial()
+```
+
+
+
+---
+### **MaximizeOutput**
+
+```cpp
+virtual void MaximizeOutput() =0
+```
+
+
+
+**Reimplemented by**: [lds::gaussian::FitEM::MaximizeOutput](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/#function-maximizeoutput), [lds::poisson::FitEM::MaximizeOutput](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/#function-maximizeoutput)
+
+
+---
+### **MaximizeMeasurement**
+
+```cpp
+virtual void MaximizeMeasurement() =0
+```
+
+
+
+**Reimplemented by**: [lds::gaussian::FitEM::MaximizeMeasurement](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/#function-maximizemeasurement), [lds::poisson::FitEM::MaximizeMeasurement](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/#function-maximizemeasurement)
+
+
+---
+### **Smooth**
+
+```cpp
+void Smooth(
+    bool force_common_initial
+)
+```
+
+
+
+**Parameters**:
+
+  * **force_common_initial** whether to force common initial conditions 
+
+
+---
+### **RecurseKe**
+
+```cpp
+virtual void RecurseKe(
+    Matrix & Ke,
+    Cube & P_pre,
+    Cube & P_post,
+    size_t t
+) =0
+```
+
+
+
+**Parameters**:
+
+  * **Ke** estimator gain 
+  * **P_pre** cov of predicted state est. 
+  * **P_post** cov of postior sate est. 
+  * **t** time 
+
+
+**Reimplemented by**: [lds::gaussian::FitEM::RecurseKe](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/#function-recurseke), [lds::poisson::FitEM::RecurseKe](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/#function-recurseke)
+
+
+---
+### **Reset**
+
+```cpp
+void Reset()
+```
+
+
+
+---
+### **InitVars**
+
+```cpp
+void InitVars()
+```
+
+
+
+---
+### **UpdateTheta**
+
+```cpp
+Vector UpdateTheta()
+```
+
+
+
+**Return**: parameter list 
+
+---
+
+
+## Protected Attribute Details
+
+### **u_**
+
+```cpp
+UniformMatrixList< kMatFreeDim2 > u_;
+```
+
+
+
+---
+### **z_**
+
+```cpp
+UniformMatrixList< kMatFreeDim2 > z_;
+```
+
+
+
+---
+### **x_**
+
+```cpp
+std::vector< Matrix > x_;
+```
+
+
+
+---
+### **P_**
+
+```cpp
+std::vector< Cube > P_;
+```
+
+
+
+---
+### **P_t_tm1_**
+
+```cpp
+std::vector< Cube > P_t_tm1_;
+```
+
+
+
+---
+### **y_**
+
+```cpp
+std::vector< Matrix > y_;
+```
+
+
+
+---
+### **diag_y_**
+
+```cpp
+Matrix diag_y_;
+```
+
+
+
+---
+### **sum_E_x_t_x_t_**
+
+```cpp
+Matrix sum_E_x_t_x_t_;
+```
+
+
+
+---
+### **sum_E_xu_tm1_xu_tm1_**
+
+```cpp
+Matrix sum_E_xu_tm1_xu_tm1_;
+```
+
+
+
+---
+### **sum_E_xu_t_xu_tm1_**
+
+```cpp
+Matrix sum_E_xu_t_xu_tm1_;
+```
+
+
+
+---
+### **fit_**
+
+```cpp
+Fit fit_;
+```
+
+
+
+---
+### **theta_**
+
+```cpp
+Vector theta_;
+```
+
+
+
+---
+### **dt_**
+
+```cpp
+data_t dt_ {};
+```
+
+
+
+---
+### **n_u_**
+
+```cpp
+size_t n_u_ {};
+```
+
+
+
+---
+### **n_x_**
+
+```cpp
+size_t n_x_ {};
+```
+
+
+
+---
+### **n_y_**
+
+```cpp
+size_t n_y_ {};
+```
+
+
+
+---
+### **n_trials_**
+
+```cpp
+size_t n_trials_ {};
+```
+
+
+
+---
+### **n_t_**
+
+```cpp
+std::vector< size_t > n_t_;
+```
+
+
+
+---
+### **n_t_tot_**
+
+```cpp
+size_t n_t_tot_ {};
+```
+
+
+
+---
+
+
+-------------------------------
+
+Updated on 23 March 2021 at 09:14:14 CDT

@@ -19,126 +19,285 @@ Linear Dynamical Systems (LDS) namespace. <br>
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::fit_t](/ldsctrlest/docs/api/classes/classlds_1_1fit__t/)** <br>LDS Fit Type.  |
-| class | **[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)** <br>Linear Dynamical System Type.  |
+| class | **[lds::Controller](/ldsctrlest/docs/api/classes/classlds_1_1_controller/)**  |
+| class | **[lds::Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/)** <br>LDS [Fit]() Type.  |
+| class | **[lds::EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/)**  |
+| class | **[lds::SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)**  |
+| class | **[lds::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1_switched_controller/)** <br>[SwitchedController]() Type.  |
+| class | **[lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)** <br>Linear Dynamical [System]() Type.  |
+| class | **[lds::UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)**  |
+| class | **[lds::UniformSystemList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_system_list/)**  |
+| class | **[lds::UniformVectorList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_vector_list/)**  |
 
 ## Types
 
 |                | Name           |
 | -------------- | -------------- |
-| enum| **[ssidWt](/ldsctrlest/docs/api/namespaces/namespacelds/#enum-ssidwt)** { NONE, MOESP, CVA} |
-| typedef double | **[data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t)**  |
-| typedef std::vector< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) > | **[stdVec](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-stdvec)** <br>provides fill types for constructing new armadillo vectors, matrices  |
-| typedef arma::Col< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) > | **[armaVec](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armavec)**  |
-| typedef arma::Mat< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) > | **[armaMat](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armamat)**  |
-| typedef arma::Cube< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) > | **[armaCube](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armacube)**  |
-| typedef arma::subview_col< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) > | **[armaSubVec](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armasubvec)**  |
-| typedef arma::subview< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) > | **[armaSubMat](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-armasubmat)**  |
+| enum| **[SSIDWt](/ldsctrlest/docs/api/namespaces/namespacelds/#enum-ssidwt)** { kSSIDNone, kSSIDMOESP, kSSIDCVA}<br>weighting options for [SSID]() |
+| enum| **[MatrixListFreeDim](/ldsctrlest/docs/api/namespaces/namespacelds/#enum-matrixlistfreedim)** { kMatFreeDimNone, kMatFreeDim1, kMatFreeDim2} |
+| using double | **[data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t)**  |
+| using arma::Col< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) > | **[Vector](/ldsctrlest/docs/api/namespaces/namespacelds/#using-vector)**  |
+| using arma::Mat< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) > | **[Matrix](/ldsctrlest/docs/api/namespaces/namespacelds/#using-matrix)**  |
+| using arma::Cube< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) > | **[Cube](/ldsctrlest/docs/api/namespaces/namespacelds/#using-cube)**  |
+| using arma::subview< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) > | **[View](/ldsctrlest/docs/api/namespaces/namespacelds/#using-view)**  |
+
+## Functions
+
+|                | Name           |
+| -------------- | -------------- |
+| void | **[Limit](/ldsctrlest/docs/api/namespaces/namespacelds/#function-limit)**(std::vector< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) > & x, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) lb, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) ub) |
+| void | **[Limit](/ldsctrlest/docs/api/namespaces/namespacelds/#function-limit)**(Vector & x, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) lb, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) ub) |
+| void | **[Limit](/ldsctrlest/docs/api/namespaces/namespacelds/#function-limit)**(Matrix & x, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) lb, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) ub) |
+| void | **[Reassign](/ldsctrlest/docs/api/namespaces/namespacelds/#function-reassign)**(Vector & some, const Vector & other, const std::string & parenthetical ="Reassign")<br>reassigns contents of some Vector in place  |
+| void | **[Reassign](/ldsctrlest/docs/api/namespaces/namespacelds/#function-reassign)**(Matrix & some, const Matrix & other, const std::string & parenthetical ="Reassign")<br>reassigns contents of some Matrix in place  |
+| void | **[ForceSymPD](/ldsctrlest/docs/api/namespaces/namespacelds/#function-forcesympd)**(Matrix & X)<br>forces matrix to be symmetric positive-definite  |
+| void | **[ForceSymMinEig](/ldsctrlest/docs/api/namespaces/namespacelds/#function-forcesymmineig)**(Matrix & X, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) eig_min =0)<br>forces matrix to be symmetric and have a minimum eigenvalue  |
+| void | **[lq](/ldsctrlest/docs/api/namespaces/namespacelds/#function-lq)**(Matrix & L, Matrix & Qt, const Matrix & X)<br>LQ decomposition.  |
+| Matrix | **[calcCov](/ldsctrlest/docs/api/namespaces/namespacelds/#function-calccov)**(const Matrix & A, const Matrix & B)<br>Calculate covariance matrix.  |
 
 ## Attributes
 
 |                | Name           |
 | -------------- | -------------- |
-| const std::size_t | **[CONTROL_TYPE_U](/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_u)**  |
-| const std::size_t | **[CONTROL_TYPE_INTY](/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_inty)**  |
-| const std::size_t | **[CONTROL_TYPE_ADAPT_M](/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_adapt_m)** <br>Control setpoint adapted with (re-estimated) process disturbance `m`.  |
-| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) | **[inf](/ldsctrlest/docs/api/namespaces/namespacelds/#variable-inf)** <br>Some useful numbers.  |
-| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) | **[neginf](/ldsctrlest/docs/api/namespaces/namespacelds/#variable-neginf)**  |
-| const [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) | **[pi](/ldsctrlest/docs/api/namespaces/namespacelds/#variable-pi)**  |
-| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) | **[DEFAULT_P0](/ldsctrlest/docs/api/modules/group__defaults/#variable-default_p0)**  |
-| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) | **[DEFAULT_Q0](/ldsctrlest/docs/api/modules/group__defaults/#variable-default_q0)**  |
-| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) | **[DEFAULT_R0](/ldsctrlest/docs/api/modules/group__defaults/#variable-default_r0)**  |
-| std::vector< [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) > | **[DEFAULT_T0](/ldsctrlest/docs/api/modules/group__defaults/#variable-default_t0)**  |
-| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) | **[DATA_T_ZERO](/ldsctrlest/docs/api/modules/group__defaults/#variable-data_t_zero)**  |
-| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) | **[DATA_T_ONE](/ldsctrlest/docs/api/modules/group__defaults/#variable-data_t_one)**  |
-| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t) | **[DEFAULT_SOFTSTART](/ldsctrlest/docs/api/modules/group__defaults/#variable-default_softstart)**  |
-| bool | **[FALSE](/ldsctrlest/docs/api/modules/group__defaults/#variable-false)**  |
-| bool | **[TRUE](/ldsctrlest/docs/api/modules/group__defaults/#variable-true)**  |
+| const std::size_t | **[kControlTypeDeltaU](/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypedeltau)** <br>control designed to penalize change in input  |
+| const std::size_t | **[kControlTypeIntY](/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypeinty)** <br>control using integral action  |
+| const std::size_t | **[kControlTypeAdaptM](/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypeadaptm)** <br>adapt control setpoint with re-estimated disturbance `m` |
+| const [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) | **[kInf](/ldsctrlest/docs/api/namespaces/namespacelds/#variable-kinf)** <br>Some useful numbers.  |
+| const [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) | **[kPi](/ldsctrlest/docs/api/namespaces/namespacelds/#variable-kpi)**  |
+| const [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) | **[kDefaultP0](/ldsctrlest/docs/api/modules/group__defaults/#variable-kdefaultp0)** <br>default state estimate covar  |
+| const [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) | **[kDefaultQ0](/ldsctrlest/docs/api/modules/group__defaults/#variable-kdefaultq0)** <br>default process noise covar  |
+| const [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) | **[kDefaultR0](/ldsctrlest/docs/api/modules/group__defaults/#variable-kdefaultr0)** <br>default output noise covar  |
 
 ## Type Details
 
-### ssidWt
+### SSIDWt
 
 | Enumerator | Value | Description |
 | ---------- | ----- | ----------- |
-| NONE | |   |
-| MOESP | |   |
-| CVA | |   |
+| kSSIDNone | | None.   |
+| kSSIDMOESP | | MOESP (AKA "robust method" in van Overschee 1996)   |
+| kSSIDCVA | | CVA "Canonical Variate Analysis".   |
 
 
 
 
 
-Weighting options for singular value decomposition performed during subspace identification (SSID): None, MOESP "robust method", CVA "Canonical Variate Analysis") 
+Weighting options for singular value decomposition performed during subspace identification ([SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/))
+
+Reference:
+
+van Overschee, de Moor. 1996. Subspace Identification for Linear Systems. 
+
+
+### MatrixListFreeDim
+
+| Enumerator | Value | Description |
+| ---------- | ----- | ----------- |
+| kMatFreeDimNone | | neither dim free to be hetero in mat list   |
+| kMatFreeDim1 | | allow 1st dim of mats in list to be hetero   |
+| kMatFreeDim2 | | allow 2nd dim of mats in list to be hetero   |
+
+
+
 
 
 ### data_t
 
 ```cpp
-typedef double lds::data_t;
+using lds::data_t = typedef double;
 ```
 
 
 
-Precision/type of all data in library. If need 32b, change `double` to `float`. 
+Type of all data in library. If need 32b, change `double` to `float`. This could be potentially useful for large scale problems where there are memory constraints. 
 
 
-### stdVec
+### Vector
 
 ```cpp
-typedef std::vector<data_t> lds::stdVec;
+using lds::Vector = typedef arma::Col<data_t>;
 ```
 
 
 
-### armaVec
+### Matrix
 
 ```cpp
-typedef arma::Col<data_t> lds::armaVec;
+using lds::Matrix = typedef arma::Mat<data_t>;
 ```
 
 
 
-### armaMat
+### Cube
 
 ```cpp
-typedef arma::Mat<data_t> lds::armaMat;
+using lds::Cube = typedef arma::Cube<data_t>;
 ```
 
 
 
-### armaCube
+### View
 
 ```cpp
-typedef arma::Cube<data_t> lds::armaCube;
+using lds::View = typedef arma::subview<data_t>;
 ```
 
 
 
-### armaSubVec
+
+## Function Details
+
+### Limit
 
 ```cpp
-typedef arma::subview_col<data_t> lds::armaSubVec;
+inline void Limit(
+    std::vector< data_t > & x,
+    data_t lb,
+    data_t ub
+)
 ```
 
 
 
-### armaSubMat
+### Limit
 
 ```cpp
-typedef arma::subview<data_t> lds::armaSubMat;
+inline void Limit(
+    Vector & x,
+    data_t lb,
+    data_t ub
+)
 ```
 
 
 
+### Limit
+
+```cpp
+inline void Limit(
+    Matrix & x,
+    data_t lb,
+    data_t ub
+)
+```
+
+
+
+### Reassign
+
+```cpp
+inline void Reassign(
+    Vector & some,
+    const Vector & other,
+    const std::string & parenthetical ="Reassign"
+)
+```
+
+
+
+**Parameters**:
+
+  * **some** some Vector 
+  * **other** other Vector 
+  * **parenthetical** optional description provided by caller to ease debugging 
+
+
+### Reassign
+
+```cpp
+inline void Reassign(
+    Matrix & some,
+    const Matrix & other,
+    const std::string & parenthetical ="Reassign"
+)
+```
+
+
+
+**Parameters**:
+
+  * **some** some Matrix 
+  * **other** other Matrix 
+  * **parenthetical** optional description provided by caller to ease debugging 
+
+
+### ForceSymPD
+
+```cpp
+void ForceSymPD(
+    Matrix & X
+)
+```
+
+
+
+**Parameters**:
+
+  * **X** mutated matrix 
+
+
+### ForceSymMinEig
+
+```cpp
+void ForceSymMinEig(
+    Matrix & X,
+    data_t eig_min =0
+)
+```
+
+
+
+**Parameters**:
+
+  * **X** mutated matrix 
+  * **eig_min** [optional] minimum eigen value 
+
+
+### lq
+
+```cpp
+void lq(
+    Matrix & L,
+    Matrix & Qt,
+    const Matrix & X
+)
+```
+
+
+
+**Parameters**:
+
+  * **L** lower triangle matrix 
+  * **Qt** orthonormal matrix (transposed cf QR decomp) 
+  * **X** matrix being decomposed 
+
+
+### calcCov
+
+```cpp
+Matrix calcCov(
+    const Matrix & A,
+    const Matrix & B
+)
+```
+
+
+
+**Parameters**:
+
+  * **A** some matrix 
+  * **B** some other matrix
+
+
+**Return**: covariance 
 
 
 ## Attribute Details
 
-### CONTROL_TYPE_U
+### kControlTypeDeltaU
 
 ```cpp
-static const std::size_t CONTROL_TYPE_U = 0x1;
+static const std::size_t kControlTypeDeltaU = 0x1;
 ```
 
 
@@ -146,10 +305,10 @@ static const std::size_t CONTROL_TYPE_U = 0x1;
 Control was designed to penalize change in input (i.e., the state was augmented with input `u`) 
 
 
-### CONTROL_TYPE_INTY
+### kControlTypeIntY
 
 ```cpp
-static const std::size_t CONTROL_TYPE_INTY = CONTROL_TYPE_U << 1;
+static const std::size_t kControlTypeIntY = kControlTypeDeltaU << 1;
 ```
 
 
@@ -157,106 +316,53 @@ static const std::size_t CONTROL_TYPE_INTY = CONTROL_TYPE_U << 1;
 Control using integral action (i.e., the state was augmented with output `y` during design) 
 
 
-### CONTROL_TYPE_ADAPT_M
+### kControlTypeAdaptM
 
 ```cpp
-static const std::size_t CONTROL_TYPE_ADAPT_M = CONTROL_TYPE_U << 2;
+static const std::size_t kControlTypeAdaptM = kControlTypeDeltaU << 2;
 ```
 
 
 
-### inf
+Adapt control setpoint adapted with re-estimated process disturbance `m`. 
+
+
+### kInf
 
 ```cpp
-static data_t inf = std::numeric_limits<[data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t)>::infinity();
+static const data_t kInf = std::numeric_limits<[data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t)>::infinity();
 ```
 
 
 
-### neginf
+### kPi
 
 ```cpp
-static data_t neginf = -inf;
+static const data_t kPi = arma::datum::pi;
 ```
 
 
 
-### pi
+### kDefaultP0
 
 ```cpp
-static const data_t pi = arma::datum::pi;
+static const data_t kDefaultP0 = 1e-6;
 ```
 
 
 
-### DEFAULT_P0
+### kDefaultQ0
 
 ```cpp
-static data_t DEFAULT_P0 = 1e-6;
+static const data_t kDefaultQ0 = 1e-6;
 ```
 
 
 
-### DEFAULT_Q0
+### kDefaultR0
 
 ```cpp
-static data_t DEFAULT_Q0 = 1e-6;
-```
-
-
-
-### DEFAULT_R0
-
-```cpp
-static data_t DEFAULT_R0 = 1e-2;
-```
-
-
-
-### DEFAULT_T0
-
-```cpp
-static std::vector< data_t > DEFAULT_T0 = std::vector<[data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t)>(1, 0.0);
-```
-
-
-
-### DATA_T_ZERO
-
-```cpp
-static data_t DATA_T_ZERO = ([data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t))0;
-```
-
-
-
-### DATA_T_ONE
-
-```cpp
-static data_t DATA_T_ONE = ([data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t))1;
-```
-
-
-
-### DEFAULT_SOFTSTART
-
-```cpp
-static data_t DEFAULT_SOFTSTART = ([data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t))0;
-```
-
-
-
-### FALSE
-
-```cpp
-static bool FALSE = false;
-```
-
-
-
-### TRUE
-
-```cpp
-static bool TRUE = true;
+static const data_t kDefaultR0 = 1e-2;
 ```
 
 
@@ -267,4 +373,4 @@ static bool TRUE = true;
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:11 CST
+Updated on 23 March 2021 at 09:14:14 CDT

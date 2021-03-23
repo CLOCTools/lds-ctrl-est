@@ -1,5 +1,11 @@
 var searchData=
 [
-  ['predict_323',['predict',['../classlds_1_1gaussian_1_1sys__t.html#a01dd5acf0f30426a555238c773933aa7',1,'lds::gaussian::sys_t::predict()'],['../classlds_1_1poisson_1_1sys__t.html#a6d2f2e04e9a280a99d9706f28719b845',1,'lds::poisson::sys_t::predict()'],['../classlds_1_1sys__t.html#a1aa986fe7e6cd5c1166dd9f13e78b481',1,'lds::sys_t::predict()']]],
-  ['printsys_324',['printSys',['../classlds_1_1gaussian_1_1ctrl__t.html#acc76c789307b7a5ca1c782fc62768499',1,'lds::gaussian::ctrl_t::printSys()'],['../classlds_1_1gaussian_1_1sys__t.html#a5f792e621affc4730d8c1f766c85d3dd',1,'lds::gaussian::sys_t::printSys()'],['../classlds_1_1poisson_1_1ctrl__t.html#a6723d8e5e545ae4a0539916a3f20df5d',1,'lds::poisson::ctrl_t::printSys()'],['../classlds_1_1poisson_1_1sys__t.html#a7415d3c682122a36458e14f9504998ed',1,'lds::poisson::sys_t::printSys()'],['../classlds_1_1sys__t.html#ab6b044bda733184bc990b5c61b046aec',1,'lds::sys_t::printSys()']]]
+  ['m_309',['m',['../classlds_1_1_fit.html#a7a4d582f96b8c0215754bf33de25779f',1,'lds::Fit::m()'],['../classlds_1_1_system.html#a537d4d819362ae74cefc8d8605a9f7ae',1,'lds::System::m() const']]],
+  ['m0_310',['m0',['../classlds_1_1_system.html#a2aeabe31b0f449bc3b4e16bc696cc431',1,'lds::System']]],
+  ['m2a_5fcellmat_311',['m2a_cellmat',['../namespacearmamexcpp.html#a35ea018a1930eb520c908ff42180bf99',1,'armamexcpp']]],
+  ['m2a_5fmat_312',['m2a_mat',['../namespacearmamexc.html#ab4a496385f93615d22ebe6286f6f5088',1,'armamexc::m2a_mat()'],['../namespacearmamexcpp.html#a28cdcf5d3e5107d946db9f42c9f1dd4f',1,'armamexcpp::m2a_mat(matlab::data::TypedArray&lt; T &gt; matlab_array) -&gt; arma::Mat&lt; T &gt;']]],
+  ['m2a_5fvec_313',['m2a_vec',['../namespacearmamexcpp.html#a9ebf5cd8a987d1869b1c0946e377b685',1,'armamexcpp']]],
+  ['m2s_5fvec_314',['m2s_vec',['../namespacearmamexcpp.html#a383242d82c3c1ae254fb11e9d8afcfd1',1,'armamexcpp']]],
+  ['m2t_5fscalar_315',['m2T_scalar',['../namespacearmamexc.html#a25aa6970a9c91d32b0ff889451f567c1',1,'armamexc']]],
+  ['maximization_316',['Maximization',['../classlds_1_1_e_m.html#adb3b3d275dabfdbd4b9a40a9c594b681',1,'lds::EM']]]
 ];

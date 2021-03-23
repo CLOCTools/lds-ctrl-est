@@ -1,6 +1,10 @@
 <map id="lds_gaussian_fit.h" name="lds_gaussian_fit.h">
-<area shape="rect" id="node1" title="GLDS fit type." alt="" coords="37,5,167,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="63,155,141,181"/>
-<area shape="rect" id="node3" href="$lds__gaussian__fit__ssid_8h.html" title="GLDS SSID fit type." alt="" coords="22,80,182,107"/>
-<area shape="rect" id="node4" href="$lds__gaussian__fit__em_8h.html" title="GLDS E&#45;M fit type." alt="" coords="206,80,361,107"/>
+<area shape="rect" id="node1" title="GLDS fit type." alt="" coords="43,5,172,32"/>
+<area shape="rect" id="node2" href="$lds__gaussian_8h.html" title="glds namespace" alt="" coords="5,155,116,181"/>
+<area shape="rect" id="node5" href="$lds__fit_8h.html" title="LDS base fit type." alt="" coords="120,80,188,107"/>
+<area shape="rect" id="node3" href="$lds_8h.html" title="lds namespace" alt="" coords="129,229,179,256"/>
+<area shape="rect" id="node4" title=" " alt="" coords="116,304,192,331"/>
+<area shape="rect" id="node6" href="$lds__uniform__mats_8h.html" title="List of uniformly sized matrices." alt="" coords="191,155,330,181"/>
+<area shape="rect" id="node7" title=" " alt="" coords="219,229,271,256"/>
+<area shape="rect" id="node8" title=" " alt="" coords="295,229,354,256"/>
 </map>

@@ -61,15 +61,15 @@
   </url>
   
   <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_ctrl_8cpp-example/</loc>
+  </url>
+  
+  <url>
     <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_est_8cpp-example/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_log_lin_ctrl_8cpp-example/</loc>
-  </url>
-  
-  <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_switched_log_lin_ctrl_8cpp-example/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_switched_ctrl_8cpp-example/</loc>
   </url>
   
   <url>
@@ -85,23 +85,19 @@
   </url>
   
   <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__ctrl_8cpp/</loc>
+  </url>
+  
+  <url>
     <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__est_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__log_lin_ctrl_8cpp/</loc>
-  </url>
-  
-  <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__log_lin_ctrl_8cpp/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__ctrl_8cpp/</loc>
   </url>
   
   <url>
     <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/</loc>
-  </url>
-  
-  <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespaceglds/</loc>
   </url>
   
   <url>
@@ -121,7 +117,15 @@
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1fit__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_controller/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_e_m/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_fit/</loc>
   </url>
   
   <url>
@@ -129,27 +133,27 @@
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1em_fit__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sctrl__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/</loc>
   </url>
   
   <url>
@@ -157,27 +161,51 @@
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ctrl__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1fit__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sctrl__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ssid_fit__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1sys__t/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_switched_controller/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_system/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_system_list/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_vector_list/</loc>
   </url>
   
   <url>
@@ -189,7 +217,19 @@
   </url>
   
   <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__ctrl_8h/</loc>
+  </url>
+  
+  <url>
     <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit_8h/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__em_8h/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__ssid_8h/</loc>
   </url>
   
   <url>
@@ -233,6 +273,10 @@
   </url>
   
   <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__em_8h/</loc>
+  </url>
+  
+  <url>
     <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__ssid_8h/</loc>
   </url>
   
@@ -245,7 +289,23 @@
   </url>
   
   <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sctrl_8h/</loc>
+  </url>
+  
+  <url>
     <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8h/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__mats_8h/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__systems_8h/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8h/</loc>
   </url>
   
   <url>
@@ -273,10 +333,6 @@
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespaceplds/</loc>
-  </url>
-  
-  <url>
     <loc>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_plds_state_estimation/</loc>
   </url>
   
@@ -289,23 +345,11 @@
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8cpp/</loc>
-  </url>
-  
-  <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sctrl_8cpp/</loc>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds_8cpp/</loc>
   </url>
   
   <url>
     <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sys_8cpp/</loc>
-  </url>
-  
-  <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__ctrl_8cpp/</loc>
-  </url>
-  
-  <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__sctrl_8cpp/</loc>
   </url>
   
   <url>
@@ -314,6 +358,10 @@
   
   <url>
     <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8cpp/</loc>
+  </url>
+  
+  <url>
+    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8cpp/</loc>
   </url>
   
   <url>

@@ -1,5 +1,9 @@
 <map id="lds_gaussian_ctrl.h" name="lds_gaussian_ctrl.h">
-<area shape="rect" id="node1" title="GLDS controller type." alt="" coords="5,5,141,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="34,155,113,181"/>
-<area shape="rect" id="node3" href="$lds__gaussian__sctrl_8h.html" title="GLDS switched controller type." alt="" coords="57,80,199,107"/>
+<area shape="rect" id="node1" title="GLDS Controller." alt="" coords="55,5,191,32"/>
+<area shape="rect" id="node2" href="$lds__gaussian_8h.html" title="glds namespace" alt="" coords="5,155,116,181"/>
+<area shape="rect" id="node5" href="$lds__gaussian__sys_8h.html" title="GLDS base type." alt="" coords="54,80,193,107"/>
+<area shape="rect" id="node7" href="$lds__ctrl_8h.html" title="Controller." alt="" coords="217,80,293,107"/>
+<area shape="rect" id="node3" href="$lds_8h.html" title="lds namespace" alt="" coords="154,229,205,256"/>
+<area shape="rect" id="node4" title=" " alt="" coords="141,304,217,331"/>
+<area shape="rect" id="node6" href="$lds__sys_8h.html" title="LDS base type." alt="" coords="141,155,218,181"/>
 </map>

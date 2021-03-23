@@ -1,13 +1,4 @@
 <map id="lds.h" name="lds.h">
-<area shape="rect" id="node1" title="lds namespace" alt="" coords="103,5,153,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="274,379,353,405"/>
-<area shape="rect" id="node3" href="$lds__sys_8h.html" title="LDS base type." alt="" coords="43,155,120,181"/>
-<area shape="rect" id="node4" href="$lds__gaussian_8h.html" title="glds namespace" alt="" coords="119,80,230,107"/>
-<area shape="rect" id="node8" href="$lds__poisson_8h.html" title="plds namespace" alt="" coords="425,80,529,107"/>
-<area shape="rect" id="node5" href="$lds__gaussian__sys_8h.html" title="GLDS base type." alt="" coords="195,155,333,181"/>
-<area shape="rect" id="node6" href="$lds__gaussian__ctrl_8h.html" title="GLDS controller type." alt="" coords="245,229,381,256"/>
-<area shape="rect" id="node7" href="$lds__gaussian__sctrl_8h.html" title="GLDS switched controller type." alt="" coords="297,304,439,331"/>
-<area shape="rect" id="node9" href="$lds__poisson__sys_8h.html" title="PLDS base type." alt="" coords="515,155,645,181"/>
-<area shape="rect" id="node10" href="$lds__poisson__ctrl_8h.html" title="PLDS controller type." alt="" coords="566,229,695,256"/>
-<area shape="rect" id="node11" href="$lds__poisson__sctrl_8h.html" title="PLDS switched controller type." alt="" coords="616,304,752,331"/>
+<area shape="rect" id="node1" title="lds namespace" alt="" coords="18,5,69,32"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,80,81,107"/>
 </map>

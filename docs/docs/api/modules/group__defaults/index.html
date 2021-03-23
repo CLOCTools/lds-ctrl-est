@@ -6,10 +6,12 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Defaults #  
-More&hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q0   data_t DEFAULT_R0   std::vector&lt; data_t &gt; DEFAULT_T0   data_t DATA_T_ZERO   data_t DATA_T_ONE   data_t DEFAULT_SOFTSTART   bool FALSE   bool TRUE    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances in case there is need to resolve dimension mismatch)">
+More&hellip; Attributes #      Name     const data_t kDefaultP0 default state estimate covar   const data_t kDefaultQ0 default process noise covar   const data_t kDefaultR0 default output noise covar    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances)
+Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 23 March 2021 at 09:14:15 CDT">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Defaults" />
 <meta property="og:description" content="Defaults #  
-More&hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q0   data_t DEFAULT_R0   std::vector&lt; data_t &gt; DEFAULT_T0   data_t DATA_T_ZERO   data_t DATA_T_ONE   data_t DEFAULT_SOFTSTART   bool FALSE   bool TRUE    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances in case there is need to resolve dimension mismatch)" />
+More&hellip; Attributes #      Name     const data_t kDefaultP0 default state estimate covar   const data_t kDefaultQ0 default process noise covar   const data_t kDefaultR0 default output noise covar    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances)
+Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 23 March 2021 at 09:14:15 CDT" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__defaults/" />
 
@@ -17,7 +19,7 @@ More&hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q0   
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -163,15 +165,9 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#detailed-description">Detailed Description</a></li>
         <li><a href="#attribute-details">Attribute Details</a>
           <ul>
-            <li><a href="#default_p0">DEFAULT_P0</a></li>
-            <li><a href="#default_q0">DEFAULT_Q0</a></li>
-            <li><a href="#default_r0">DEFAULT_R0</a></li>
-            <li><a href="#default_t0">DEFAULT_T0</a></li>
-            <li><a href="#data_t_zero">DATA_T_ZERO</a></li>
-            <li><a href="#data_t_one">DATA_T_ONE</a></li>
-            <li><a href="#default_softstart">DEFAULT_SOFTSTART</a></li>
-            <li><a href="#false">FALSE</a></li>
-            <li><a href="#true">TRUE</a></li>
+            <li><a href="#kdefaultp0">kDefaultP0</a></li>
+            <li><a href="#kdefaultq0">kDefaultQ0</a></li>
+            <li><a href="#kdefaultr0">kDefaultR0</a></li>
           </ul>
         </li>
       </ul>
@@ -207,40 +203,16 @@ https://github.com/alex-shpak/hugo-book
 </thead>
 <tbody>
 <tr>
-<td>data_t</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_p0">DEFAULT_P0</a></strong></td>
+<td>const data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-kdefaultp0">kDefaultP0</a></strong> <br>default state estimate covar</td>
 </tr>
 <tr>
-<td>data_t</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_q0">DEFAULT_Q0</a></strong></td>
+<td>const data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-kdefaultq0">kDefaultQ0</a></strong> <br>default process noise covar</td>
 </tr>
 <tr>
-<td>data_t</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_r0">DEFAULT_R0</a></strong></td>
-</tr>
-<tr>
-<td>std::vector&lt; data_t &gt;</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_t0">DEFAULT_T0</a></strong></td>
-</tr>
-<tr>
-<td>data_t</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-data_t_zero">DATA_T_ZERO</a></strong></td>
-</tr>
-<tr>
-<td>data_t</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-data_t_one">DATA_T_ONE</a></strong></td>
-</tr>
-<tr>
-<td>data_t</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-default_softstart">DEFAULT_SOFTSTART</a></strong></td>
-</tr>
-<tr>
-<td>bool</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-false">FALSE</a></strong></td>
-</tr>
-<tr>
-<td>bool</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-true">TRUE</a></strong></td>
+<td>const data_t</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__defaults/#variable-kdefaultr0">kDefaultR0</a></strong> <br>default output noise covar</td>
 </tr>
 </tbody>
 </table>
@@ -248,58 +220,28 @@ https://github.com/alex-shpak/hugo-book
   Detailed Description
   <a class="anchor" href="#detailed-description">#</a>
 </h2>
-<p>Default values for common variables (e.g., default diagonal elements of covariances in case there is need to resolve dimension mismatch)</p>
+<p>Default values for common variables (e.g., default diagonal elements of covariances)</p>
 <h2 id="attribute-details">
   Attribute Details
   <a class="anchor" href="#attribute-details">#</a>
 </h2>
-<h3 id="default_p0">
-  DEFAULT_P0
-  <a class="anchor" href="#default_p0">#</a>
+<h3 id="kdefaultp0">
+  kDefaultP0
+  <a class="anchor" href="#kdefaultp0">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_P0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
-</code></pre></div><h3 id="default_q0">
-  DEFAULT_Q0
-  <a class="anchor" href="#default_q0">#</a>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t kDefaultP0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
+</code></pre></div><h3 id="kdefaultq0">
+  kDefaultQ0
+  <a class="anchor" href="#kdefaultq0">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_Q0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
-</code></pre></div><h3 id="default_r0">
-  DEFAULT_R0
-  <a class="anchor" href="#default_r0">#</a>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t kDefaultQ0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>;
+</code></pre></div><h3 id="kdefaultr0">
+  kDefaultR0
+  <a class="anchor" href="#kdefaultr0">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_R0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-2</span>;
-</code></pre></div><h3 id="default_t0">
-  DEFAULT_T0
-  <a class="anchor" href="#default_t0">#</a>
-</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> data_t <span style="color:#f92672">&gt;</span> DEFAULT_T0 <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0.0</span>);
-</code></pre></div><h3 id="data_t_zero">
-  DATA_T_ZERO
-  <a class="anchor" href="#data_t_zero">#</a>
-</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DATA_T_ZERO <span style="color:#f92672">=</span> (data_t)<span style="color:#ae81ff">0</span>;
-</code></pre></div><h3 id="data_t_one">
-  DATA_T_ONE
-  <a class="anchor" href="#data_t_one">#</a>
-</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DATA_T_ONE <span style="color:#f92672">=</span> (data_t)<span style="color:#ae81ff">1</span>;
-</code></pre></div><h3 id="default_softstart">
-  DEFAULT_SOFTSTART
-  <a class="anchor" href="#default_softstart">#</a>
-</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> data_t DEFAULT_SOFTSTART <span style="color:#f92672">=</span> (data_t)<span style="color:#ae81ff">0</span>;
-</code></pre></div><h3 id="false">
-  FALSE
-  <a class="anchor" href="#false">#</a>
-</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> FALSE <span style="color:#f92672">=</span> false;
-</code></pre></div><h3 id="true">
-  TRUE
-  <a class="anchor" href="#true">#</a>
-</h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">bool</span> TRUE <span style="color:#f92672">=</span> true;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> data_t kDefaultR0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-2</span>;
 </code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       
@@ -338,15 +280,9 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#detailed-description">Detailed Description</a></li>
         <li><a href="#attribute-details">Attribute Details</a>
           <ul>
-            <li><a href="#default_p0">DEFAULT_P0</a></li>
-            <li><a href="#default_q0">DEFAULT_Q0</a></li>
-            <li><a href="#default_r0">DEFAULT_R0</a></li>
-            <li><a href="#default_t0">DEFAULT_T0</a></li>
-            <li><a href="#data_t_zero">DATA_T_ZERO</a></li>
-            <li><a href="#data_t_one">DATA_T_ONE</a></li>
-            <li><a href="#default_softstart">DEFAULT_SOFTSTART</a></li>
-            <li><a href="#false">FALSE</a></li>
-            <li><a href="#true">TRUE</a></li>
+            <li><a href="#kdefaultp0">kDefaultP0</a></li>
+            <li><a href="#kdefaultq0">kDefaultQ0</a></li>
+            <li><a href="#kdefaultr0">kDefaultR0</a></li>
           </ul>
         </li>
       </ul>

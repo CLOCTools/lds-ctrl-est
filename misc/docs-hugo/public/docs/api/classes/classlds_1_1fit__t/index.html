@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.a590577461f58da39637ea95f9e957a3d323bafb11a4fd4804134924a6d96b7a.js" integrity="sha256-pZBXdGH1jaOWN&#43;qV&#43;elXo9MjuvsRpP1IBBNJJKbZa3o="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -216,7 +216,7 @@ https://github.com/alex-shpak/hugo-book
 </tr>
 <tr>
 <td></td>
-<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#function-fit_t">fit_t</a></strong>(armaMat &amp; A, armaMat &amp; B, armaVec &amp; g, armaVec &amp; m, armaMat &amp; Q, armaVec &amp; x0, armaMat &amp; P0, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a> &amp; dt)<br>Constructs a new LDS fit type.</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#function-fit_t">fit_t</a></strong>(Matrix &amp; A, Matrix &amp; B, Vector &amp; g, Vector &amp; m, Matrix &amp; Q, Vector &amp; x0, Matrix &amp; P0, <a href="/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t">data_t</a> &amp; dt)<br>Constructs a new LDS fit type.</td>
 </tr>
 </tbody>
 </table>
@@ -233,35 +233,35 @@ https://github.com/alex-shpak/hugo-book
 </thead>
 <tbody>
 <tr>
-<td>armaMat</td>
+<td>Matrix</td>
 <td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-a">A</a></strong> <br>state matrix</td>
 </tr>
 <tr>
-<td>armaMat</td>
+<td>Matrix</td>
 <td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-b">B</a></strong> <br>input matrix</td>
 </tr>
 <tr>
-<td>armaVec</td>
+<td>Vector</td>
 <td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-g">g</a></strong> <br>input gain</td>
 </tr>
 <tr>
-<td>armaVec</td>
+<td>Vector</td>
 <td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-m">m</a></strong> <br>process noise mean</td>
 </tr>
 <tr>
-<td>armaMat</td>
+<td>Matrix</td>
 <td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-q">Q</a></strong> <br>process noise cov</td>
 </tr>
 <tr>
-<td>armaVec</td>
+<td>Vector</td>
 <td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-x0">x0</a></strong> <br>initial state</td>
 </tr>
 <tr>
-<td>armaMat</td>
+<td>Matrix</td>
 <td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-p0">P0</a></strong> <br>initial covar</td>
 </tr>
 <tr>
-<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#typedef-data_t">data_t</a></td>
+<td><a href="/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t">data_t</a></td>
 <td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1fit__t/#variable-dt">dt</a></strong> <br>sample period</td>
 </tr>
 </tbody>
@@ -283,13 +283,13 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#fit_t-1">#</a>
 </h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">fit_t(
-    armaMat <span style="color:#f92672">&amp;</span> A,
-    armaMat <span style="color:#f92672">&amp;</span> B,
-    armaVec <span style="color:#f92672">&amp;</span> g,
-    armaVec <span style="color:#f92672">&amp;</span> m,
-    armaMat <span style="color:#f92672">&amp;</span> Q,
-    armaVec <span style="color:#f92672">&amp;</span> x0,
-    armaMat <span style="color:#f92672">&amp;</span> P0,
+    Matrix <span style="color:#f92672">&amp;</span> A,
+    Matrix <span style="color:#f92672">&amp;</span> B,
+    Vector <span style="color:#f92672">&amp;</span> g,
+    Vector <span style="color:#f92672">&amp;</span> m,
+    Matrix <span style="color:#f92672">&amp;</span> Q,
+    Vector <span style="color:#f92672">&amp;</span> x0,
+    Matrix <span style="color:#f92672">&amp;</span> P0,
     data_t <span style="color:#f92672">&amp;</span> dt
 )
 </code></pre></div><p><strong>Parameters</strong>:</p>
@@ -312,43 +312,43 @@ https://github.com/alex-shpak/hugo-book
   <strong>A</strong>
   <a class="anchor" href="#a">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat A;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Matrix A;
 </code></pre></div><hr>
 <h3 id="b">
   <strong>B</strong>
   <a class="anchor" href="#b">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat B;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Matrix B;
 </code></pre></div><hr>
 <h3 id="g">
   <strong>g</strong>
   <a class="anchor" href="#g">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec g;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Vector g;
 </code></pre></div><hr>
 <h3 id="m">
   <strong>m</strong>
   <a class="anchor" href="#m">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec m;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Vector m;
 </code></pre></div><hr>
 <h3 id="q">
   <strong>Q</strong>
   <a class="anchor" href="#q">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat Q;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Matrix Q;
 </code></pre></div><hr>
 <h3 id="x0">
   <strong>x0</strong>
   <a class="anchor" href="#x0">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaVec x0;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Vector x0;
 </code></pre></div><hr>
 <h3 id="p0">
   <strong>P0</strong>
   <a class="anchor" href="#p0">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">armaMat P0;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Matrix P0;
 </code></pre></div><hr>
 <h3 id="dt">
   <strong>dt</strong>
@@ -357,7 +357,7 @@ https://github.com/alex-shpak/hugo-book
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">data_t dt;
 </code></pre></div><hr>
 <hr>
-<p>Updated on  3 March 2021 at 23:06:11 CST</p>
+<p>Updated on 10 March 2021 at 11:57:48 CST</p>
 </article>
  
       

@@ -23,7 +23,19 @@ title: Files
 
 
 
+- **[ldsCtrlEst_h/lds_ctrl.h](/ldsctrlest/docs/api/files/lds__ctrl_8h/#file-lds_ctrl.h)** <br>Controller. 
+
+
+
 - **[ldsCtrlEst_h/lds_fit.h](/ldsctrlest/docs/api/files/lds__fit_8h/#file-lds_fit.h)** <br>LDS base fit type. 
+
+
+
+- **[ldsCtrlEst_h/lds_fit_em.h](/ldsctrlest/docs/api/files/lds__fit__em_8h/#file-lds_fit_em.h)** <br>subspace identification 
+
+
+
+- **[ldsCtrlEst_h/lds_fit_ssid.h](/ldsctrlest/docs/api/files/lds__fit__ssid_8h/#file-lds_fit_ssid.h)** <br>subspace identification 
 
 
 
@@ -31,7 +43,7 @@ title: Files
 
 
 
-- **[ldsCtrlEst_h/lds_gaussian_ctrl.h](/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8h/#file-lds_gaussian_ctrl.h)** <br>GLDS controller type. 
+- **[ldsCtrlEst_h/lds_gaussian_ctrl.h](/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8h/#file-lds_gaussian_ctrl.h)** <br>GLDS Controller. 
 
 
 
@@ -67,6 +79,10 @@ title: Files
 
 
 
+- **[ldsCtrlEst_h/lds_poisson_fit_em.h](/ldsctrlest/docs/api/files/lds__poisson__fit__em_8h/#file-lds_poisson_fit_em.h)** <br>PLDS E-M fit type. 
+
+
+
 - **[ldsCtrlEst_h/lds_poisson_fit_ssid.h](/ldsctrlest/docs/api/files/lds__poisson__fit__ssid_8h/#file-lds_poisson_fit_ssid.h)** <br>PLDS SSID fit type. 
 
 
@@ -79,7 +95,23 @@ title: Files
 
 
 
+- **[ldsCtrlEst_h/lds_sctrl.h](/ldsctrlest/docs/api/files/lds__sctrl_8h/#file-lds_sctrl.h)** <br>SwitchedController type. 
+
+
+
 - **[ldsCtrlEst_h/lds_sys.h](/ldsctrlest/docs/api/files/lds__sys_8h/#file-lds_sys.h)** <br>LDS base type. 
+
+
+
+- **[ldsCtrlEst_h/lds_uniform_mats.h](/ldsctrlest/docs/api/files/lds__uniform__mats_8h/#file-lds_uniform_mats.h)** <br>List of uniformly sized matrices. 
+
+
+
+- **[ldsCtrlEst_h/lds_uniform_systems.h](/ldsctrlest/docs/api/files/lds__uniform__systems_8h/#file-lds_uniform_systems.h)** <br>List of uniformly sized Systems. 
+
+
+
+- **[ldsCtrlEst_h/lds_uniform_vecs.h](/ldsctrlest/docs/api/files/lds__uniform__vecs_8h/#file-lds_uniform_vecs.h)** <br>List of uniformly sized vectors. 
 
 
 
@@ -107,15 +139,15 @@ title: Files
 
 
 
+- **[examples/eg_plds_ctrl.cpp](/ldsctrlest/docs/api/files/eg__plds__ctrl_8cpp/#file-eg_plds_ctrl.cpp)** 
+
+
+
 - **[examples/eg_plds_est.cpp](/ldsctrlest/docs/api/files/eg__plds__est_8cpp/#file-eg_plds_est.cpp)** 
 
 
 
-- **[examples/eg_plds_logLinCtrl.cpp](/ldsctrlest/docs/api/files/eg__plds__log_lin_ctrl_8cpp/#file-eg_plds_loglinctrl.cpp)** 
-
-
-
-- **[examples/eg_plds_switched_logLinCtrl.cpp](/ldsctrlest/docs/api/files/eg__plds__switched__log_lin_ctrl_8cpp/#file-eg_plds_switched_loglinctrl.cpp)** 
+- **[examples/eg_plds_switched_ctrl.cpp](/ldsctrlest/docs/api/files/eg__plds__switched__ctrl_8cpp/#file-eg_plds_switched_ctrl.cpp)** 
 
 
 
@@ -125,23 +157,11 @@ title: Files
 
 
 
-- **[src/lds_gaussian_ctrl.cpp](/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8cpp/#file-lds_gaussian_ctrl.cpp)** <br>GLDS controller type. 
-
-
-
-- **[src/lds_gaussian_sctrl.cpp](/ldsctrlest/docs/api/files/lds__gaussian__sctrl_8cpp/#file-lds_gaussian_sctrl.cpp)** <br>GLDS switched controller type. 
+- **[src/lds.cpp](/ldsctrlest/docs/api/files/lds_8cpp/#file-lds.cpp)** <br>misc lds namespace functions 
 
 
 
 - **[src/lds_gaussian_sys.cpp](/ldsctrlest/docs/api/files/lds__gaussian__sys_8cpp/#file-lds_gaussian_sys.cpp)** <br>GLDS base type. 
-
-
-
-- **[src/lds_poisson_ctrl.cpp](/ldsctrlest/docs/api/files/lds__poisson__ctrl_8cpp/#file-lds_poisson_ctrl.cpp)** <br>PLDS controller type. 
-
-
-
-- **[src/lds_poisson_sctrl.cpp](/ldsctrlest/docs/api/files/lds__poisson__sctrl_8cpp/#file-lds_poisson_sctrl.cpp)** <br>PLDS switched controller type. 
 
 
 
@@ -153,10 +173,14 @@ title: Files
 
 
 
+- **[src/lds_uniform_vecs.cpp](/ldsctrlest/docs/api/files/lds__uniform__vecs_8cpp/#file-lds_uniform_vecs.cpp)** <br>Uniformly sized vectors. 
+
+
+
 
 
 
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

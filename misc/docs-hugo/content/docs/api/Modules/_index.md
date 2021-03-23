@@ -11,7 +11,7 @@ title: Modules
 
 
 
-- **[Control Mode Bit Masks](/ldsctrlest/docs/api/modules/group__control__masks/)** 
+- **[Control Mode Bit Masks](/ldsctrlest/docs/api/modules/group__control__masks/)** <br>provides fill types for constructing new armadillo vectors, matrices 
 
 
 
@@ -25,4 +25,4 @@ title: Modules
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['emfit_5ft_267',['emFit_t',['../classlds_1_1gaussian_1_1em_fit__t.html#a8dd95e66bbeb954ec0c934b5ea24c9fb',1,'lds::gaussian::emFit_t::emFit_t(armaMat &amp;A, armaMat &amp;B, armaVec &amp;g, armaVec &amp;m, armaMat &amp;Q, armaVec &amp;x0, armaMat &amp;P0, armaMat &amp;C, armaVec &amp;d, armaMat &amp;R, data_t dt, std::vector&lt; armaMat &gt; &amp;uTrain, std::vector&lt; armaMat &gt; &amp;zTrain)'],['../classlds_1_1gaussian_1_1em_fit__t.html#a7710b1e4cd05ea02c2ff59b14557b111',1,'lds::gaussian::emFit_t::emFit_t(data_t dt, std::vector&lt; armaMat &gt; &amp;uTrain, std::vector&lt; armaMat &gt; &amp;zTrain)']]],
-  ['emfit_5fx_5fequals_5fy_268',['emFit_x_equals_y',['../namespacelds_1_1gaussian.html#a7f8be3d78b39d603fce096c92c86829f',1,'lds::gaussian']]],
-  ['estep_269',['Estep',['../classlds_1_1gaussian_1_1em_fit__t.html#a724affa0296c06b5325df7b4f2cffa60',1,'lds::gaussian::emFit_t']]]
+  ['d_288',['d',['../classlds_1_1_fit.html#aac616e9bae766d7da6dfb78b04e17bc8',1,'lds::Fit::d()'],['../classlds_1_1_system.html#ad1e4594a8d02930957860994bc4f54ba',1,'lds::System::d()']]],
+  ['decomposedata_289',['DecomposeData',['../classlds_1_1_s_s_i_d.html#a0d3e51ed46ed3a159299a5773724bcb3',1,'lds::SSID']]],
+  ['dim_290',['dim',['../classlds_1_1_uniform_matrix_list.html#ab854df8ba5038e058623ed0e45aad19c',1,'lds::UniformMatrixList::dim()'],['../classlds_1_1_uniform_system_list.html#ac986be3ddb8c25c068702f197b3286cc',1,'lds::UniformSystemList::dim()'],['../classlds_1_1_uniform_vector_list.html#aea30edd5c8c2f1b6a81e4c7f87e9ea50',1,'lds::UniformVectorList::dim()']]],
+  ['dt_291',['dt',['../classlds_1_1_fit.html#abd874b046e73d20087c589caacdb806d',1,'lds::Fit::dt()'],['../classlds_1_1_system.html#ad36940175d7fdd0c19e058cc5dd3d409',1,'lds::System::dt()']]]
 ];

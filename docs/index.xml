@@ -22,7 +22,7 @@
       <guid>https://mfbolus.github.io/ldsctrlest/docs/getting-started/</guid>
       <description>Downloading the Library #  The source code for this library can be downloaded from stanley-rozell/ldsCtrlEst either by downloading a snapshot or cloning the repository via git.
 git clone https://github.com/stanley-rozell/ldsCtrlEst.git By default, this would check out the master branch. In most cases, we suggest downloading or checking out the latest release instead.
-cd /path/to/ldsCtrlEst git checkout 0.5.0 Dependencies #  Note that the primary dependencies of this project listed below must be installed along with their header files and with CMake config files or pkg-config files.</description>
+cd /path/to/ldsCtrlEst git checkout 0.6.0 Dependencies #  Note that the primary dependencies of this project listed below must be installed along with their header files and with CMake config files or pkg-config files.</description>
     </item>
     
     <item>
@@ -59,7 +59,7 @@ Contributing #  We welcome any community contributions to this project. Please f
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_4fef79e7177ba769987a8da36c892c5f/</guid>
-      <description>build #  Directories #     Name     include     Updated on 3 March 2021 at 23:06:12 CST</description>
+      <description>build #  Directories #     Name     include     Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
     <item>
@@ -77,9 +77,7 @@ Contributing #  We welcome any community contributions to this project. Please f
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__control__masks/</guid>
-      <description>Control Mode Bit Masks #  
-More&amp;hellip; Attributes #      Name     const std::size_t CONTROL_TYPE_U   const std::size_t CONTROL_TYPE_INTY   const std::size_t CONTROL_TYPE_ADAPT_M Control setpoint adapted with (re-estimated) process disturbance m.    Detailed Description #  Control mode bit masks. These can be bit-wise OR&amp;rsquo;d to use in combination.
-Attribute Details #  CONTROL_TYPE_U #  static const std::size_t CONTROL_TYPE_U = 0x1; Control was designed to penalize change in input (i.</description>
+      <description>provides fill types for constructing new armadillo vectors, matrices</description>
     </item>
     
     <item>
@@ -89,7 +87,8 @@ Attribute Details #  CONTROL_TYPE_U #  static const std::size_t CONTROL_TYPE_U =
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__defaults/</guid>
       <description>Defaults #  
-More&amp;hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q0   data_t DEFAULT_R0   std::vector&amp;lt; data_t &amp;gt; DEFAULT_T0   data_t DATA_T_ZERO   data_t DATA_T_ONE   data_t DEFAULT_SOFTSTART   bool FALSE   bool TRUE    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances in case there is need to resolve dimension mismatch)</description>
+More&amp;hellip; Attributes #      Name     const data_t kDefaultP0 default state estimate covar   const data_t kDefaultQ0 default process noise covar   const data_t kDefaultR0 default output noise covar    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances)
+Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
     <item>
@@ -102,6 +101,15 @@ More&amp;hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q
     </item>
     
     <item>
+      <title>eg_plds_ctrl.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_ctrl_8cpp-example/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_ctrl_8cpp-example/</guid>
+      <description>Example PLDS Control.</description>
+    </item>
+    
+    <item>
       <title>eg_plds_est.cpp</title>
       <link>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_est_8cpp-example/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -111,20 +119,11 @@ More&amp;hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q
     </item>
     
     <item>
-      <title>eg_plds_logLinCtrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_log_lin_ctrl_8cpp-example/</link>
+      <title>eg_plds_switched_ctrl.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_switched_ctrl_8cpp-example/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_log_lin_ctrl_8cpp-example/</guid>
-      <description>Example PLDS Control.</description>
-    </item>
-    
-    <item>
-      <title>eg_plds_switched_logLinCtrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_switched_log_lin_ctrl_8cpp-example/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_switched_log_lin_ctrl_8cpp-example/</guid>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_switched_ctrl_8cpp-example/</guid>
       <description>Example Switched PLDS Control.</description>
     </item>
     
@@ -134,7 +133,7 @@ More&amp;hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_d28a4824dc47e487b107a5db32ef43c4/</guid>
-      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_logLinCtrl.cpp   examples/eg_plds_switched_logLinCtrl.cpp     Updated on 3 March 2021 at 23:06:12 CST</description>
+      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
     <item>
@@ -144,7 +143,17 @@ More&amp;hellip; Attributes #      Name     data_t DEFAULT_P0   data_t DEFAULT_Q
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__glds__ctrl_8cpp/</guid>
       <description>examples/eg_glds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
-Source code #  //===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===// // // Copyright 2021 [name of copyright owner] // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
+Source code #  //===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
+    </item>
+    
+    <item>
+      <title>examples/eg_plds_ctrl.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__ctrl_8cpp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__ctrl_8cpp/</guid>
+      <description>examples/eg_plds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
+Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control ---------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
     </item>
     
     <item>
@@ -153,35 +162,16 @@ Source code #  //===-- eg_glds_ctrl.cpp - Example GLDS Control -----------------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__est_8cpp/</guid>
-      <description>examples/eg_plds_est.cpp #  Functions #      Name     armaMat random_walk(size_t n_t, const arma::mat &amp;amp; Q, arma::vec x0)   int main(void )    Function Details #  random_walk #  armaMat random_walk( size_t n_t, const arma::mat &amp;amp; Q, arma::vec x0 ) main #  int main( void ) Source code #  //===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===// // // Copyright 2021 [name of copyright owner] // // Licensed under the Apache License, Version 2.</description>
+      <description>examples/eg_plds_est.cpp #  Functions #      Name     Matrix random_walk(size_t n_t, const Matrix &amp;amp; Q, const Vector &amp;amp; x0)   int main()    Function Details #  random_walk #  Matrix random_walk( size_t n_t, const Matrix &amp;amp; Q, const Vector &amp;amp; x0 ) main #  int main() Source code #  //===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.</description>
     </item>
     
     <item>
-      <title>examples/eg_plds_logLinCtrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__log_lin_ctrl_8cpp/</link>
+      <title>examples/eg_plds_switched_ctrl.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__ctrl_8cpp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__log_lin_ctrl_8cpp/</guid>
-      <description>examples/eg_plds_logLinCtrl.cpp #  Functions #      Name     auto main(void )    Function Details #  main #  auto main( void ) Going to simulate a switching disturbance (m) acting on system
-Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control ---------------------===// // // Copyright 2021 [name of copyright owner] // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
-    </item>
-    
-    <item>
-      <title>examples/eg_plds_switched_logLinCtrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__log_lin_ctrl_8cpp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__log_lin_ctrl_8cpp/</guid>
-      <description>examples/eg_plds_switched_logLinCtrl.cpp #  Functions #      Name     auto main(void )    Function Details #  main #  auto main( void ) Source code #  //===-- eg_plds_switched_logLinCtrl.cpp - Example Switched PLDS Control ---===// // // Copyright 2021 [name of copyright owner] // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
-    </item>
-    
-    <item>
-      <title>glds</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespaceglds/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespaceglds/</guid>
-      <description>glds #   Updated on 3 March 2021 at 23:06:11 CST</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__ctrl_8cpp/</guid>
+      <description>examples/eg_plds_switched_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Source code #  //===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
     </item>
     
     <item>
@@ -190,7 +180,7 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_glds_control/</guid>
-      <description>GLDS Control Tutorial #  This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::ctrl_t). In place of a physical system, another GLDS model (lds::gaussian::sys_t) receives control inputs and provides measurements for the simulated feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system.</description>
+      <description>GLDS Control Tutorial #  This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::Controller). In place of a physical system, a GLDS model (lds::gaussian::System) receives control inputs and simulates measurements for the feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system.</description>
     </item>
     
     <item>
@@ -199,7 +189,7 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_8f2980731aba7ec7b9fcae5764f196e3/</guid>
-      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 3 March 2021 at 23:06:12 CST</description>
+      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
     <item>
@@ -212,11 +202,39 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
-      <title>lds::fit_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1fit__t/</link>
+      <title>lds::Controller</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1fit__t/</guid>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_controller/</guid>
+      <description>lds::Controller #  More&amp;hellip;
+Inherited by lds::SwitchedController&amp;lt; System &amp;gt;, lds::gaussian::Controller, lds::poisson::Controller
+Public Functions #      Name      Controller() =default
+Constructs a new Controller.    Controller(const System &amp;amp; sys, data_t u_lb, data_t u_ub, size_t control_type =0)
+Constructs a new Controller.    Controller(System &amp;amp;&amp;amp; sys, data_t u_lb, data_t u_ub, size_t control_type =0)
+Constructs a new Controller by moving the system object.</description>
+    </item>
+    
+    <item>
+      <title>lds::EM</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_e_m/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_e_m/</guid>
+      <description>lds::EM #  More&amp;hellip;
+Inherited by lds::gaussian::FitEM, lds::poisson::FitEM
+Public Functions #      Name      EM() =default
+Constructs a new EMFit type.    EM(size_t n_x, data_t dt, UniformMatrixList&amp;lt; kMatFreeDim2 &amp;gt; &amp;amp;&amp;amp; u_train, UniformMatrixList&amp;lt; kMatFreeDim2 &amp;gt; &amp;amp;&amp;amp; z_train)
+Constructs a new EMFit type.    EM(const Fit &amp;amp; fit0, UniformMatrixList&amp;lt; kMatFreeDim2 &amp;gt; &amp;amp;&amp;amp; u_train, UniformMatrixList&amp;lt; kMatFreeDim2 &amp;gt; &amp;amp;&amp;amp; z_train)
+Constructs a new EMFit type.</description>
+    </item>
+    
+    <item>
+      <title>lds::Fit</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_fit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_fit/</guid>
       <description>LDS Fit Type.</description>
     </item>
     
@@ -230,56 +248,56 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
-      <title>lds::gaussian::ctrl_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/</link>
+      <title>lds::gaussian::Controller</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ctrl__t/</guid>
-      <description>GLDS Controller Type.</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/</guid>
+      <description>Gaussian-observation Controller Type.</description>
     </item>
     
     <item>
-      <title>lds::gaussian::emFit_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1em_fit__t/</link>
+      <title>lds::gaussian::Fit</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1em_fit__t/</guid>
-      <description>GLDS E-M Fit Type.</description>
-    </item>
-    
-    <item>
-      <title>lds::gaussian::fit_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1fit__t/</guid>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/</guid>
       <description>GLDS Fit Type.</description>
     </item>
     
     <item>
-      <title>lds::gaussian::sctrl_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sctrl__t/</link>
+      <title>lds::gaussian::FitEM</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sctrl__t/</guid>
-      <description>Switched GLDS Controller Type.</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/</guid>
+      <description>GLDS E-M Fit Type.</description>
     </item>
     
     <item>
-      <title>lds::gaussian::ssidFit_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/</link>
+      <title>lds::gaussian::FitSSID</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/</guid>
-      <description>GLDS SSID Fit Type.</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/</guid>
+      <description>Subspace Identification (SSID) for GLDS.</description>
     </item>
     
     <item>
-      <title>lds::gaussian::sys_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/</link>
+      <title>lds::gaussian::SwitchedController</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/</guid>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/</guid>
+      <description>Gaussian-observation SwitchedController Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::gaussian::System</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/</guid>
       <description>Gaussian LDS Type.</description>
     </item>
     
@@ -293,57 +311,128 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
-      <title>lds::poisson::ctrl_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ctrl__t/</link>
+      <title>lds::poisson::Controller</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ctrl__t/</guid>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_controller/</guid>
       <description>PLDS Controller Type.</description>
     </item>
     
     <item>
-      <title>lds::poisson::fit_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1fit__t/</link>
+      <title>lds::poisson::Fit</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1fit__t/</guid>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit/</guid>
       <description>PLDS Fit Type.</description>
     </item>
     
     <item>
-      <title>lds::poisson::sctrl_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sctrl__t/</link>
+      <title>lds::poisson::FitEM</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sctrl__t/</guid>
-      <description>Switched PLDS Controller Type.</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/</guid>
+      <description>PLDS E-M Fit Type.</description>
     </item>
     
     <item>
-      <title>lds::poisson::ssidFit_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ssid_fit__t/</link>
+      <title>lds::poisson::FitSSID</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ssid_fit__t/</guid>
-      <description>GLDS SSID Fit Type.</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/</guid>
+      <description>Subspace Identification (SSID) for PLDS.</description>
     </item>
     
     <item>
-      <title>lds::poisson::sys_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/</link>
+      <title>lds::poisson::SwitchedController</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/</guid>
-      <description>Poisson LDS Type.</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/</guid>
+      <description>Poisson-observation SwitchedController Type.</description>
     </item>
     
     <item>
-      <title>lds::sys_t</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1sys__t/</link>
+      <title>lds::poisson::System</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1sys__t/</guid>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/</guid>
+      <description>Poisson System type.</description>
+    </item>
+    
+    <item>
+      <title>lds::SSID</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/</guid>
+      <description>lds::SSID #  More&amp;hellip;
+Inherited by lds::gaussian::FitSSID, lds::poisson::FitSSID
+Public Functions #      Name      SSID() =default
+Constructs a new SSIDFit type.    SSID(size_t n_x, size_t n_h, data_t dt, UniformMatrixList&amp;lt; kMatFreeDim2 &amp;gt; &amp;amp;&amp;amp; u_train, UniformMatrixList&amp;lt; kMatFreeDim2 &amp;gt; &amp;amp;&amp;amp; z_train, const Vector &amp;amp; d =Vector(1).fill(-kInf))
+Constructs a new SSIDFit type.   std::tuple&amp;lt; Fit, Vector &amp;gt; Run(SSIDWt ssid_wt)
+Runs fitting by subspace identification (SSID)   std::tuple&amp;lt; UniformMatrixList&amp;lt; kMatFreeDim2 &amp;gt;, UniformMatrixList&amp;lt; kMatFreeDim2 &amp;gt; &amp;gt; ReturnData()</description>
+    </item>
+    
+    <item>
+      <title>lds::SwitchedController</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_switched_controller/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_switched_controller/</guid>
+      <description>SwitchedController Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::System</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_system/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_system/</guid>
       <description>Linear Dynamical System Type.</description>
+    </item>
+    
+    <item>
+      <title>lds::UniformMatrixList</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/</guid>
+      <description>lds::UniformMatrixList #  More&amp;hellip;
+Inherits from std::vector&amp;lt; Matrix &amp;gt;
+Public Functions #      Name      UniformMatrixList() =default
+Constructs a new UniformMatrixList.    UniformMatrixList(const std::vector&amp;lt; Matrix &amp;gt; &amp;amp; mats, std::array&amp;lt; size_t, 2 &amp;gt; dim ={0, 0})
+Constructs a new UniformMatrixList by copying existing vector of Matrix if dimensions consistent.    UniformMatrixList(std::vector&amp;lt; Matrix &amp;gt; &amp;amp;&amp;amp; mats, std::array&amp;lt; size_t, 2 &amp;gt; dim ={0, 0})</description>
+    </item>
+    
+    <item>
+      <title>lds::UniformSystemList</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_system_list/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_system_list/</guid>
+      <description>lds::UniformSystemList #  More&amp;hellip;
+Inherits from std::vector&amp;lt; System &amp;gt;
+Public Functions #      Name      UniformSystemList() =default
+Constructs a new UniformSystemList.    UniformSystemList(const std::vector&amp;lt; System &amp;gt; &amp;amp; systems, std::array&amp;lt; size_t, 3 &amp;gt; dim ={0, 0, 0})
+Constructs a new UniformSystemList by copying existing vector of System if dimensions consistent.    UniformSystemList(std::vector&amp;lt; System &amp;gt; &amp;amp;&amp;amp; systems, std::array&amp;lt; size_t, 3 &amp;gt; dim ={0, 0, 0})</description>
+    </item>
+    
+    <item>
+      <title>lds::UniformVectorList</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_vector_list/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_vector_list/</guid>
+      <description>lds::UniformVectorList #  Inherits from std::vector&amp;lt; Vector &amp;gt;
+Public Functions #      Name      UniformVectorList() =default
+Constructs a new UniformVectorList.    UniformVectorList(const std::vector&amp;lt; Vector &amp;gt; &amp;amp; vecs, size_t dim =0)
+Constructs a new UniformVectorList by copying existing vector of Vector if dimensions consistent.    UniformVectorList(std::vector&amp;lt; Vector &amp;gt; &amp;amp;&amp;amp; vecs, size_t dim =0)
+Constructs a new UniformVectorList by moving existing vector of Vector if dimensions consistent.</description>
     </item>
     
     <item>
@@ -352,7 +441,7 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_2755d76cbd49ca86cc5d9263eb253d5e/</guid>
-      <description>ldsCtrlEst_h #  Files #     Name     ldsCtrlEst_h/lds.h lds namespace   ldsCtrlEst_h/lds_fit.h LDS base fit type.   ldsCtrlEst_h/lds_gaussian.h glds namespace   ldsCtrlEst_h/lds_gaussian_ctrl.h GLDS controller type.   ldsCtrlEst_h/lds_gaussian_fit.h GLDS fit type.   ldsCtrlEst_h/lds_gaussian_fit_em.h GLDS E-M fit type.   ldsCtrlEst_h/lds_gaussian_fit_ssid.h GLDS SSID fit type.   ldsCtrlEst_h/lds_gaussian_sctrl.h GLDS switched controller type.   ldsCtrlEst_h/lds_gaussian_sys.h GLDS base type.   ldsCtrlEst_h/lds_poisson.</description>
+      <description>ldsCtrlEst_h #  Files #     Name     ldsCtrlEst_h/lds.h lds namespace   ldsCtrlEst_h/lds_ctrl.h Controller.   ldsCtrlEst_h/lds_fit.h LDS base fit type.   ldsCtrlEst_h/lds_fit_em.h subspace identification   ldsCtrlEst_h/lds_fit_ssid.h subspace identification   ldsCtrlEst_h/lds_gaussian.h glds namespace   ldsCtrlEst_h/lds_gaussian_ctrl.h GLDS Controller.   ldsCtrlEst_h/lds_gaussian_fit.h GLDS fit type.   ldsCtrlEst_h/lds_gaussian_fit_em.h GLDS E-M fit type.   ldsCtrlEst_h/lds_gaussian_fit_ssid.h GLDS SSID fit type.   ldsCtrlEst_h/lds_gaussian_sctrl.</description>
     </item>
     
     <item>
@@ -365,12 +454,39 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
+      <title>ldsCtrlEst_h/lds_ctrl.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__ctrl_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__ctrl_8h/</guid>
+      <description>Controller.</description>
+    </item>
+    
+    <item>
       <title>ldsCtrlEst_h/lds_fit.h</title>
       <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit_8h/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit_8h/</guid>
       <description>LDS base fit type.</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_fit_em.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__em_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__em_8h/</guid>
+      <description>subspace identification</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_fit_ssid.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__ssid_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__ssid_8h/</guid>
+      <description>subspace identification</description>
     </item>
     
     <item>
@@ -388,7 +504,7 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8h/</guid>
-      <description>GLDS controller type.</description>
+      <description>GLDS Controller.</description>
     </item>
     
     <item>
@@ -464,6 +580,15 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
+      <title>ldsCtrlEst_h/lds_poisson_fit_em.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__em_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__em_8h/</guid>
+      <description>PLDS E-M fit type.</description>
+    </item>
+    
+    <item>
       <title>ldsCtrlEst_h/lds_poisson_fit_ssid.h</title>
       <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__ssid_8h/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -491,12 +616,48 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
+      <title>ldsCtrlEst_h/lds_sctrl.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sctrl_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sctrl_8h/</guid>
+      <description>SwitchedController type.</description>
+    </item>
+    
+    <item>
       <title>ldsCtrlEst_h/lds_sys.h</title>
       <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8h/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8h/</guid>
       <description>LDS base type.</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_uniform_mats.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__mats_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__mats_8h/</guid>
+      <description>List of uniformly sized matrices.</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_uniform_systems.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__systems_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__systems_8h/</guid>
+      <description>List of uniformly sized Systems.</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_uniform_vecs.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8h/</guid>
+      <description>List of uniformly sized vectors.</description>
     </item>
     
     <item>
@@ -527,21 +688,12 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
-      <title>plds</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespaceplds/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespaceplds/</guid>
-      <description>plds #   Updated on 3 March 2021 at 23:06:12 CST</description>
-    </item>
-    
-    <item>
       <title>PLDS State Estimation</title>
       <link>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_plds_state_estimation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_plds_state_estimation/</guid>
-      <description>PLDS State Estimation Tutorial #  This tutorial shows how to use this library to estimate the state of an LDS Poisson observations from input/output data. In place of a physical system, another PLDS model (lds::poisson::sys_t) receives random inputs and provides measurements for the state estimator. For the sake of example, the only parameter mismatch is assumed to be the process disturbance, which is adaptively re-estimated.
+      <description>PLDS State Estimation Tutorial #  This tutorial shows how to use this library to estimate the state of an LDS with Poisson observations from input/output data. In place of a physical system, another PLDS model (lds::poisson::System) receives random inputs and provides measurements for the state estimator. For the sake of example, the only parameter mismatch is assumed to be the process disturbance, which is adaptively re-estimated.
 The full code for this can be found here.</description>
     </item>
     
@@ -551,8 +703,8 @@ The full code for this can be found here.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_switched_plds_control/</guid>
-      <description>PLDS Switched Control Tutorial #  This tutorial shows how to use this library to control a system with a switched PLDS controller (lds::poisson::sctrl_t). This type of controller is applicable in scenarios where a physical system is not accurately captured by a LDS but has multiple discrete operating modes where the dynamics can be well-approximated as linear.
-In the example that follows, another PLDS model (lds::poisson::sys_t) is used in place of a physical system.</description>
+      <description>PLDS Switched Control Tutorial #  This tutorial shows how to use this library to control a system with a switched PLDS controller (lds::poisson::SwitchedController). This type of controller is applicable in scenarios where a physical system is not accurately captured by a single LDS but has multiple discrete operating modes where the dynamics can be well-approximated as linear.
+In the example that follows, another PLDS model (lds::poisson::System) is used in place of a physical system.</description>
     </item>
     
     <item>
@@ -561,25 +713,16 @@ In the example that follows, another PLDS model (lds::poisson::sys_t) is used in
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_68267d1309a1af8e8297ef4c3efbcdba/</guid>
-      <description>src #  Files #     Name     src/lds_gaussian_ctrl.cpp GLDS controller type.   src/lds_gaussian_sctrl.cpp GLDS switched controller type.   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_ctrl.cpp PLDS controller type.   src/lds_poisson_sctrl.cpp PLDS switched controller type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.     Updated on 3 March 2021 at 23:06:12 CST</description>
+      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
     <item>
-      <title>src/lds_gaussian_ctrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8cpp/</link>
+      <title>src/lds.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds_8cpp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8cpp/</guid>
-      <description>GLDS controller type.</description>
-    </item>
-    
-    <item>
-      <title>src/lds_gaussian_sctrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sctrl_8cpp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sctrl_8cpp/</guid>
-      <description>GLDS switched controller type.</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds_8cpp/</guid>
+      <description>misc lds namespace functions</description>
     </item>
     
     <item>
@@ -589,24 +732,6 @@ In the example that follows, another PLDS model (lds::poisson::sys_t) is used in
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sys_8cpp/</guid>
       <description>GLDS base type.</description>
-    </item>
-    
-    <item>
-      <title>src/lds_poisson_ctrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__ctrl_8cpp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__ctrl_8cpp/</guid>
-      <description>PLDS controller type.</description>
-    </item>
-    
-    <item>
-      <title>src/lds_poisson_sctrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__sctrl_8cpp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__sctrl_8cpp/</guid>
-      <description>PLDS switched controller type.</description>
     </item>
     
     <item>
@@ -628,12 +753,21 @@ In the example that follows, another PLDS model (lds::poisson::sys_t) is used in
     </item>
     
     <item>
+      <title>src/lds_uniform_vecs.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8cpp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8cpp/</guid>
+      <description>Uniformly sized vectors.</description>
+    </item>
+    
+    <item>
       <title>std</title>
       <link>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacestd/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacestd/</guid>
-      <description>std #   Updated on 3 March 2021 at 23:06:12 CST</description>
+      <description>std #   Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
   </channel>

@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['z_216',['z',['../classlds_1_1gaussian_1_1sys__t.html#a806888a1a09989020d0896438808a877',1,'lds::gaussian::sys_t::z()'],['../classlds_1_1poisson_1_1sys__t.html#ae39a4016b008cef054741952879a7af3',1,'lds::poisson::sys_t::z()']]],
-  ['ztrain_217',['zTrain',['../classlds_1_1gaussian_1_1fit__t.html#ac6880064c67eeac3f0022ed16605306d',1,'lds::gaussian::fit_t::zTrain()'],['../classlds_1_1poisson_1_1fit__t.html#a5e9388a8e4446a70d43a80ad64212beb',1,'lds::poisson::fit_t::zTrain()']]]
+  ['y_217',['y',['../classlds_1_1_e_m.html#a60a42cd9651b09633932a396f6a9ac28',1,'lds::EM::y()'],['../classlds_1_1_system.html#af2c04e5f60fdbfc7e6c6ef9b79998c58',1,'lds::System::y()']]],
+  ['y_5f_218',['y_',['../classlds_1_1_e_m.html#ae186a5ac1e53b1a0c2c2ed8dca14ffa2',1,'lds::EM::y_()'],['../classlds_1_1_system.html#aa85cf46269efb05e406b5c412f4257b4',1,'lds::System::y_()']]],
+  ['y_5fref_219',['y_ref',['../classlds_1_1_controller.html#a44c6593ac4fb1d391337136e20eeb7f3',1,'lds::Controller']]],
+  ['y_5fref_5f_220',['y_ref_',['../classlds_1_1_controller.html#a301b9a2c954fc9d890b71eaba9152d37',1,'lds::Controller']]]
 ];

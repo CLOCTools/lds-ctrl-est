@@ -30,3 +30,8 @@ matlab_add_mex(NAME plds_ssid_matlab SHARED SRC plds_ssid_mex.cpp OUTPUT_NAME "p
 target_link_libraries(plds_ssid_matlab ${CMAKE_PROJECT_NAME}Static)
 target_include_directories(plds_ssid_matlab PUBLIC ${Matlab_INCLUDE_DIRS})
 target_include_directories(plds_ssid_matlab INTERFACE $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<INSTALL_INTERFACE:include>)
+
+matlab_add_mex(NAME plds_em_refit_matlab SHARED SRC plds_em_refit_mex.cpp OUTPUT_NAME "plds_em_refit_mex" R2018a)
+target_link_libraries(plds_em_refit_matlab ${CMAKE_PROJECT_NAME}Static)
+target_include_directories(plds_em_refit_matlab PUBLIC ${Matlab_INCLUDE_DIRS})
+target_include_directories(plds_em_refit_matlab INTERFACE $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include> $<INSTALL_INTERFACE:include>)

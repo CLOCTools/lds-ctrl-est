@@ -11,7 +11,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_4fef79e7177ba769987a8da36c892c5f/</guid>
-      <description>build #  Directories #     Name     include     Updated on 3 March 2021 at 23:06:12 CST</description>
+      <description>build #  Directories #     Name     include     Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
     <item>
@@ -20,7 +20,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_d28a4824dc47e487b107a5db32ef43c4/</guid>
-      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_logLinCtrl.cpp   examples/eg_plds_switched_logLinCtrl.cpp     Updated on 3 March 2021 at 23:06:12 CST</description>
+      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
     <item>
@@ -30,7 +30,17 @@
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__glds__ctrl_8cpp/</guid>
       <description>examples/eg_glds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
-Source code #  //===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===// // // Copyright 2021 [name of copyright owner] // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
+Source code #  //===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
+    </item>
+    
+    <item>
+      <title>examples/eg_plds_ctrl.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__ctrl_8cpp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__ctrl_8cpp/</guid>
+      <description>examples/eg_plds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
+Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control ---------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
     </item>
     
     <item>
@@ -39,26 +49,16 @@ Source code #  //===-- eg_glds_ctrl.cpp - Example GLDS Control -----------------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__est_8cpp/</guid>
-      <description>examples/eg_plds_est.cpp #  Functions #      Name     armaMat random_walk(size_t n_t, const arma::mat &amp;amp; Q, arma::vec x0)   int main(void )    Function Details #  random_walk #  armaMat random_walk( size_t n_t, const arma::mat &amp;amp; Q, arma::vec x0 ) main #  int main( void ) Source code #  //===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===// // // Copyright 2021 [name of copyright owner] // // Licensed under the Apache License, Version 2.</description>
+      <description>examples/eg_plds_est.cpp #  Functions #      Name     Matrix random_walk(size_t n_t, const Matrix &amp;amp; Q, const Vector &amp;amp; x0)   int main()    Function Details #  random_walk #  Matrix random_walk( size_t n_t, const Matrix &amp;amp; Q, const Vector &amp;amp; x0 ) main #  int main() Source code #  //===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.</description>
     </item>
     
     <item>
-      <title>examples/eg_plds_logLinCtrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__log_lin_ctrl_8cpp/</link>
+      <title>examples/eg_plds_switched_ctrl.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__ctrl_8cpp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__log_lin_ctrl_8cpp/</guid>
-      <description>examples/eg_plds_logLinCtrl.cpp #  Functions #      Name     auto main(void )    Function Details #  main #  auto main( void ) Going to simulate a switching disturbance (m) acting on system
-Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control ---------------------===// // // Copyright 2021 [name of copyright owner] // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
-    </item>
-    
-    <item>
-      <title>examples/eg_plds_switched_logLinCtrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__log_lin_ctrl_8cpp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__log_lin_ctrl_8cpp/</guid>
-      <description>examples/eg_plds_switched_logLinCtrl.cpp #  Functions #      Name     auto main(void )    Function Details #  main #  auto main( void ) Source code #  //===-- eg_plds_switched_logLinCtrl.cpp - Example Switched PLDS Control ---===// // // Copyright 2021 [name of copyright owner] // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__ctrl_8cpp/</guid>
+      <description>examples/eg_plds_switched_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Source code #  //===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
     </item>
     
     <item>
@@ -67,7 +67,7 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_8f2980731aba7ec7b9fcae5764f196e3/</guid>
-      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 3 March 2021 at 23:06:12 CST</description>
+      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
     <item>
@@ -76,7 +76,7 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_2755d76cbd49ca86cc5d9263eb253d5e/</guid>
-      <description>ldsCtrlEst_h #  Files #     Name     ldsCtrlEst_h/lds.h lds namespace   ldsCtrlEst_h/lds_fit.h LDS base fit type.   ldsCtrlEst_h/lds_gaussian.h glds namespace   ldsCtrlEst_h/lds_gaussian_ctrl.h GLDS controller type.   ldsCtrlEst_h/lds_gaussian_fit.h GLDS fit type.   ldsCtrlEst_h/lds_gaussian_fit_em.h GLDS E-M fit type.   ldsCtrlEst_h/lds_gaussian_fit_ssid.h GLDS SSID fit type.   ldsCtrlEst_h/lds_gaussian_sctrl.h GLDS switched controller type.   ldsCtrlEst_h/lds_gaussian_sys.h GLDS base type.   ldsCtrlEst_h/lds_poisson.</description>
+      <description>ldsCtrlEst_h #  Files #     Name     ldsCtrlEst_h/lds.h lds namespace   ldsCtrlEst_h/lds_ctrl.h Controller.   ldsCtrlEst_h/lds_fit.h LDS base fit type.   ldsCtrlEst_h/lds_fit_em.h subspace identification   ldsCtrlEst_h/lds_fit_ssid.h subspace identification   ldsCtrlEst_h/lds_gaussian.h glds namespace   ldsCtrlEst_h/lds_gaussian_ctrl.h GLDS Controller.   ldsCtrlEst_h/lds_gaussian_fit.h GLDS fit type.   ldsCtrlEst_h/lds_gaussian_fit_em.h GLDS E-M fit type.   ldsCtrlEst_h/lds_gaussian_fit_ssid.h GLDS SSID fit type.   ldsCtrlEst_h/lds_gaussian_sctrl.</description>
     </item>
     
     <item>
@@ -89,12 +89,39 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
+      <title>ldsCtrlEst_h/lds_ctrl.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__ctrl_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__ctrl_8h/</guid>
+      <description>Controller.</description>
+    </item>
+    
+    <item>
       <title>ldsCtrlEst_h/lds_fit.h</title>
       <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit_8h/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit_8h/</guid>
       <description>LDS base fit type.</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_fit_em.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__em_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__em_8h/</guid>
+      <description>subspace identification</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_fit_ssid.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__ssid_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__ssid_8h/</guid>
+      <description>subspace identification</description>
     </item>
     
     <item>
@@ -112,7 +139,7 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8h/</guid>
-      <description>GLDS controller type.</description>
+      <description>GLDS Controller.</description>
     </item>
     
     <item>
@@ -188,6 +215,15 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
+      <title>ldsCtrlEst_h/lds_poisson_fit_em.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__em_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__em_8h/</guid>
+      <description>PLDS E-M fit type.</description>
+    </item>
+    
+    <item>
       <title>ldsCtrlEst_h/lds_poisson_fit_ssid.h</title>
       <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__ssid_8h/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -215,12 +251,48 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
     </item>
     
     <item>
+      <title>ldsCtrlEst_h/lds_sctrl.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sctrl_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sctrl_8h/</guid>
+      <description>SwitchedController type.</description>
+    </item>
+    
+    <item>
       <title>ldsCtrlEst_h/lds_sys.h</title>
       <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8h/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8h/</guid>
       <description>LDS base type.</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_uniform_mats.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__mats_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__mats_8h/</guid>
+      <description>List of uniformly sized matrices.</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_uniform_systems.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__systems_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__systems_8h/</guid>
+      <description>List of uniformly sized Systems.</description>
+    </item>
+    
+    <item>
+      <title>ldsCtrlEst_h/lds_uniform_vecs.h</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8h/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8h/</guid>
+      <description>List of uniformly sized vectors.</description>
     </item>
     
     <item>
@@ -247,25 +319,16 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_68267d1309a1af8e8297ef4c3efbcdba/</guid>
-      <description>src #  Files #     Name     src/lds_gaussian_ctrl.cpp GLDS controller type.   src/lds_gaussian_sctrl.cpp GLDS switched controller type.   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_ctrl.cpp PLDS controller type.   src/lds_poisson_sctrl.cpp PLDS switched controller type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.     Updated on 3 March 2021 at 23:06:12 CST</description>
+      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 23 March 2021 at 09:14:15 CDT</description>
     </item>
     
     <item>
-      <title>src/lds_gaussian_ctrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8cpp/</link>
+      <title>src/lds.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds_8cpp/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8cpp/</guid>
-      <description>GLDS controller type.</description>
-    </item>
-    
-    <item>
-      <title>src/lds_gaussian_sctrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sctrl_8cpp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sctrl_8cpp/</guid>
-      <description>GLDS switched controller type.</description>
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds_8cpp/</guid>
+      <description>misc lds namespace functions</description>
     </item>
     
     <item>
@@ -275,24 +338,6 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sys_8cpp/</guid>
       <description>GLDS base type.</description>
-    </item>
-    
-    <item>
-      <title>src/lds_poisson_ctrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__ctrl_8cpp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__ctrl_8cpp/</guid>
-      <description>PLDS controller type.</description>
-    </item>
-    
-    <item>
-      <title>src/lds_poisson_sctrl.cpp</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__sctrl_8cpp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__sctrl_8cpp/</guid>
-      <description>PLDS switched controller type.</description>
     </item>
     
     <item>
@@ -311,6 +356,15 @@ Source code #  //===-- eg_plds_logLinCtrl.cpp - Example PLDS Control -----------
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8cpp/</guid>
       <description>LDS base type.</description>
+    </item>
+    
+    <item>
+      <title>src/lds_uniform_vecs.cpp</title>
+      <link>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8cpp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8cpp/</guid>
+      <description>Uniformly sized vectors.</description>
     </item>
     
   </channel>

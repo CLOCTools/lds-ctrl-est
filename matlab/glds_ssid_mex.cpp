@@ -5,13 +5,17 @@ using matlab::data::ArrayFactory;
 using matlab::data::TypedArray;
 using matlab::mex::ArgumentList;
 
+using lds::data_t;
+using lds::Matrix;
+using lds::Vector;
+
 class MexFunction : public matlab::mex::Function {
  private:
-  std::shared_ptr<matlab::engine::MATLABEngine> matlabPtr;
+  std::shared_ptr<matlab::engine::MATLABEngine> matlab_ptr_;
 
  public:
   /* Constructor for the class. */
-  MexFunction() { matlabPtr = getEngine(); }
+  MexFunction() { matlab_ptr_ = getEngine(); }
 
   void operator()(ArgumentList outputs, ArgumentList inputs) {
     checkArguments(outputs, inputs);
@@ -19,109 +23,92 @@ class MexFunction : public matlab::mex::Function {
 
     // Input Parameters
     lds::data_t dt(1);
-    size_t nX(1);
-    size_t nH(50);
-    lds::armaVec d0 = lds::armaVec(1).fill(-lds::inf);
-    bool force_unitNormC(false);
-    size_t whichWt(0);
-    lds::data_t wtG0(0);
+    size_t n_x(1);
+    size_t n_h(25);
+    lds::Vector d0 = lds::Vector(1).fill(-lds::kInf);
+    bool force_unit_norm_c(false);
+    size_t which_wt(0);
 
-    lds::data_t t_startSSID(-lds::inf);
-    lds::data_t t_stopSSID(lds::inf);
+    lds::data_t t_start_ssid(-lds::kInf);
+    lds::data_t t_stop_ssid(lds::kInf);
 
     matlab::data::Array fit0 = std::move(inputs[0]);
     matlab::data::CellArray u_matlab = std::move(inputs[1]);
     matlab::data::CellArray z_matlab = std::move(inputs[2]);
     dt = inputs[3][0];
-    nX = inputs[4][0];
+    n_x = inputs[4][0];
 
-    std::vector<lds::data_t> t0 =
-        std::vector<lds::data_t>(z_matlab.getNumberOfElements(), 0.0);
-
-    size_t nInputs = inputs.size();
-    if (nInputs > 12) {
-      t_stopSSID = (lds::data_t)inputs[12][0];
+    size_t n_inputs = inputs.size();
+    if (n_inputs > 5) {
+      n_h = static_cast<size_t>(inputs[5][0]);
+    }
+    if (n_inputs > 6) {
+      TypedArray<data_t> d0_matlab = std::move(inputs[6]);
+      d0 = armamexcpp::m2a_vec<data_t>(d0_matlab);
+    }
+    if (n_inputs > 7) {
+      which_wt = static_cast<size_t>(inputs[7][0]);
     }
 
-    if (nInputs > 11) {
-      t_startSSID = (lds::data_t)inputs[11][0];
+    lds::UniformMatrixList<lds::kMatFreeDim2> u;
+    lds::UniformMatrixList<lds::kMatFreeDim2> z;
+    {
+      std::vector<lds::Matrix> tmp =
+          std::move(armamexcpp::m2a_cellmat<data_t>(u_matlab));
+      u = lds::UniformMatrixList<lds::kMatFreeDim2>(std::move(tmp));
+    }
+    {
+      std::vector<lds::Matrix> tmp =
+          std::move(armamexcpp::m2a_cellmat<data_t>(z_matlab));
+      z = lds::UniformMatrixList<lds::kMatFreeDim2>(std::move(tmp));
     }
 
-    if (nInputs > 10) {
-      TypedArray<double> t0_matlab = std::move(inputs[10]);
-      t0 = armamexcpp::m2s_vec<double>(t0_matlab);
-    }
+    lds::gaussian::FitSSID ssid(n_x, n_h, dt, std::move(u),
+                                                    std::move(z), d0);
 
-    if (nInputs > 9) {
-      wtG0 = (lds::data_t)inputs[9][0];
-    }
-
-    if (nInputs > 8) {
-      whichWt = (size_t)inputs[8][0];
-    }
-
-    if (nInputs > 7) {
-      force_unitNormC = (bool)inputs[7][0];
-    }
-
-    if (nInputs > 6) {
-      TypedArray<double> d0_matlab = std::move(inputs[6]);
-      d0 = armamexcpp::m2a_vec<double>(d0_matlab);
-    }
-
-    if (nInputs > 5) {
-      nH = (size_t)inputs[5][0];
-    }
-
-    std::vector<glds::armaMat> u =
-        std::move(armamexcpp::m2a_cellmat<double>(u_matlab));
-    std::vector<glds::armaMat> z =
-        std::move(armamexcpp::m2a_cellmat<double>(z_matlab));
-
-    glds::ssidFit_t ldsFit;
-
-    lds::ssidWt wt = lds::NONE;
-    switch (whichWt) {
+    lds::SSIDWt wt = lds::kSSIDNone;
+    switch (which_wt) {
       case 0: {
-        wt = lds::NONE;
+        wt = lds::kSSIDNone;
       } break;
       case 1: {
-        wt = lds::MOESP;
+        wt = lds::kSSIDMOESP;
       } break;
       case 2: {
-        wt = lds::CVA;
+        wt = lds::kSSIDCVA;
       } break;
     }
-    ldsFit = glds::ssidFit(u, z, dt, nX, nH, d0, force_unitNormC, wt, wtG0, t0,
-                           t_startSSID, t_stopSSID);
 
-    TypedArray<double> A = armamexcpp::a2m_mat<double>(ldsFit.A, factory);
-    TypedArray<double> B = armamexcpp::a2m_mat<double>(ldsFit.B, factory);
-    TypedArray<double> g = armamexcpp::a2m_vec<double>(ldsFit.g, factory);
-    TypedArray<double> m = armamexcpp::a2m_vec<double>(ldsFit.m, factory);
-    TypedArray<double> Q = armamexcpp::a2m_mat<double>(ldsFit.Q, factory);
-    TypedArray<double> x0 = armamexcpp::a2m_vec<double>(ldsFit.x0, factory);
-    TypedArray<double> P0 = armamexcpp::a2m_mat<double>(ldsFit.P0, factory);
-    TypedArray<double> C = armamexcpp::a2m_mat<double>(ldsFit.C, factory);
-    TypedArray<double> D = armamexcpp::a2m_mat<double>(ldsFit.D, factory);
-    TypedArray<double> d = armamexcpp::a2m_vec<double>(ldsFit.d, factory);
-    TypedArray<double> R = armamexcpp::a2m_mat<double>(ldsFit.R, factory);
-    TypedArray<double> singVals =
-        armamexcpp::a2m_vec<double>(ldsFit.singVals, factory);
+    lds::gaussian::Fit lds_fit;
+    lds::Vector sing_vals_fit;
+    std::tie(lds_fit, sing_vals_fit) = ssid.Run(wt);
 
-    matlabPtr->setProperty(fit0, u"dt", factory.createScalar(dt));
-    matlabPtr->setProperty(fit0, u"A", A);
-    matlabPtr->setProperty(fit0, u"B", B);
-    matlabPtr->setProperty(fit0, u"g", g);
-    matlabPtr->setProperty(fit0, u"m", m);
-    matlabPtr->setProperty(fit0, u"Q", Q);
-    matlabPtr->setProperty(fit0, u"C", C);
-    matlabPtr->setProperty(fit0, u"d", d);
-    matlabPtr->setProperty(fit0, u"R", R);
-    matlabPtr->setProperty(fit0, u"x0", x0);
-    matlabPtr->setProperty(fit0, u"P0", P0);
+    TypedArray<data_t> a = armamexcpp::a2m_mat<data_t>(lds_fit.A(), factory);
+    TypedArray<data_t> b = armamexcpp::a2m_mat<data_t>(lds_fit.B(), factory);
+    TypedArray<data_t> g = armamexcpp::a2m_vec<data_t>(lds_fit.g(), factory);
+    TypedArray<data_t> m = armamexcpp::a2m_vec<data_t>(lds_fit.m(), factory);
+    TypedArray<data_t> q = armamexcpp::a2m_mat<data_t>(lds_fit.Q(), factory);
+    TypedArray<data_t> x0 = armamexcpp::a2m_vec<data_t>(lds_fit.x0(), factory);
+    TypedArray<data_t> p0 = armamexcpp::a2m_mat<data_t>(lds_fit.P0(), factory);
+    TypedArray<data_t> c = armamexcpp::a2m_mat<data_t>(lds_fit.C(), factory);
+    TypedArray<data_t> d = armamexcpp::a2m_vec<data_t>(lds_fit.d(), factory);
+    TypedArray<data_t> r = armamexcpp::a2m_mat<data_t>(lds_fit.R(), factory);
+
+    matlab_ptr_->setProperty(fit0, u"dt", factory.createScalar(dt));
+    matlab_ptr_->setProperty(fit0, u"A", a);
+    matlab_ptr_->setProperty(fit0, u"B", b);
+    matlab_ptr_->setProperty(fit0, u"g", g);
+    matlab_ptr_->setProperty(fit0, u"m", m);
+    matlab_ptr_->setProperty(fit0, u"Q", q);
+    matlab_ptr_->setProperty(fit0, u"C", c);
+    matlab_ptr_->setProperty(fit0, u"d", d);
+    matlab_ptr_->setProperty(fit0, u"R", r);
+    matlab_ptr_->setProperty(fit0, u"x0", x0);
+    matlab_ptr_->setProperty(fit0, u"P0", p0);
     if (outputs.size() > 0) {
-      outputs[0] = std::move(singVals);
+      TypedArray<data_t> sing_vals =
+          armamexcpp::a2m_vec<data_t>(sing_vals_fit, factory);
+      outputs[0] = std::move(sing_vals);
     }
   }
 
@@ -136,10 +123,10 @@ class MexFunction : public matlab::mex::Function {
   /* Helper function to generate an error message from given string,
    * and display it over MATLAB command prompt.
    */
-  void displayError(std::string errorMessage) {
+  void displayError(const std::string& error_message) {
     ArrayFactory factory;
-    matlabPtr->feval(u"error", 0,
-                     std::vector<Array>({factory.createScalar(errorMessage)}));
+    matlab_ptr_->feval(
+        u"error", 0, std::vector<Array>({factory.createScalar(error_message)}));
   }
 
   void checkArguments(ArgumentList outputs, ArgumentList inputs) {

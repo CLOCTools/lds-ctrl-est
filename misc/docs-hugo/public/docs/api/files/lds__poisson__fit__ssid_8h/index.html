@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -213,7 +213,7 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td>class</td>
-<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1ssid_fit__t/">lds::poisson::ssidFit_t</a></strong> <br>GLDS SSID Fit Type.</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/">lds::poisson::FitSSID</a></strong> <br>Subspace Identification (<a href="/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/">SSID</a>) for PLDS.</td>
 </tr>
 </tbody>
 </table>
@@ -221,7 +221,7 @@ https://github.com/alex-shpak/hugo-book
   Detailed Description
   <a class="anchor" href="#detailed-description">#</a>
 </h2>
-<p>This file declares and partially defines a type by which Poisson-output LDS models are fit by a subspace identification (SSID) algorithm (<code>[lds::gaussian::ssidFit_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1ssid_fit__t/)</code>). Currently, these models are fit assuming linear/Gaussian output, and then an exponential output is fit by maximum likelihood under the Poisson assumption. Future work should implement SSID after Poisson&lt;-&gt;Gaussian moment conversions as outlined in [2].</p>
+<p>This file declares and partially defines a type by which Poisson-output LDS models are fit by a subspace identification (SSID) algorithm (<code>[lds::gaussian::FitSSID](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/)</code>).</p>
 <p>References: [1] van Overschee P, de Moore B. (1996) Subspace Identification for Linear Systems. Boston: Springer. [2] Buesing L, Macke JH, Sahani M. (2012) Spectral learning of linear dynamics from generalised-linear observations with application to neural population data. NIPS 25.</p>
 <h2 id="source-code">
   Source code
@@ -229,7 +229,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_poisson_fit_ssid.h - PLDS Fit (SSID) ---*- C++ -*-===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -249,54 +249,29 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#75715e">#ifndef LDSCTRLEST_LDS_POISSON_FIT_SSID_H
 </span><span style="color:#75715e">#define LDSCTRLEST_LDS_POISSON_FIT_SSID_H
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#ifndef LDSCTRLEST
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_fit_ssid.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_poisson_fit.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">namespace</span> lds {
 <span style="color:#66d9ef">namespace</span> poisson {
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ssidFit_t</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> fit_t {
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FitSSID</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;</span> {
  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-  ssidFit_t() <span style="color:#f92672">:</span> fit_t(){};
-  ssidFit_t(armaMat<span style="color:#f92672">&amp;</span> A, armaMat<span style="color:#f92672">&amp;</span> B, armaVec<span style="color:#f92672">&amp;</span> g, armaVec<span style="color:#f92672">&amp;</span> m, armaMat<span style="color:#f92672">&amp;</span> Q,
-            armaVec<span style="color:#f92672">&amp;</span> x0, armaMat<span style="color:#f92672">&amp;</span> P0, armaMat<span style="color:#f92672">&amp;</span> C, armaVec<span style="color:#f92672">&amp;</span> d, data_t dt,
-            data_t t_startSSID, data_t t_stopSSID, armaVec<span style="color:#f92672">&amp;</span> singVals,
-            std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;&amp;</span> t0, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> uTrain,
-            std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> zTrain);
-  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span> t0;
-  data_t t_startSSID;
-  data_t t_stopSSID;
-  armaVec singVals;
+  <span style="color:#66d9ef">using</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>SSID;
+
+ <span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+  <span style="color:#66d9ef">void</span> DecomposeData() <span style="color:#66d9ef">override</span>;
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">CalcCov</span>();
+
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">PoissonToGaussianMoments</span>();
+  Matrix cov_;
 };
 
-std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span>ssidFit_t, lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>ssidFit_t<span style="color:#f92672">&gt;</span> ssidFit(
-    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> u, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> z, data_t dt, size_t nX,
-    size_t nH <span style="color:#f92672">=</span> <span style="color:#ae81ff">25</span>, armaVec d0 <span style="color:#f92672">=</span> armaVec(<span style="color:#ae81ff">1</span>).fill(<span style="color:#f92672">-</span>inf), ssidWt wt <span style="color:#f92672">=</span> NONE,
-    data_t wtG0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;&amp;</span> t0 <span style="color:#f92672">=</span> DEFAULT_T0,
-    data_t t_startSSID <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;::</span>infinity(),
-    data_t t_stopSSID <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>numeric_limits<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;::</span>infinity(),
-    <span style="color:#66d9ef">bool</span> assumeGaussian <span style="color:#f92672">=</span> true);
-
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">newtonSolveC_mle</span>(armaMat<span style="color:#f92672">&amp;</span> C, armaVec<span style="color:#f92672">&amp;</span> d, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> x,
-                      std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> n, data_t<span style="color:#f92672">&amp;</span> dt);
-
-data_t <span style="color:#a6e22e">newtonSolve_rescaleC_mle</span>(armaMat<span style="color:#f92672">&amp;</span> C, armaVec<span style="color:#f92672">&amp;</span> d, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> x,
-                                std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> n, data_t<span style="color:#f92672">&amp;</span> dt);
-
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">calcD_mle</span>(armaMat<span style="color:#f92672">&amp;</span> C, armaVec<span style="color:#f92672">&amp;</span> d, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> x,
-               std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> n, data_t<span style="color:#f92672">&amp;</span> dt);
-
-data_t <span style="color:#a6e22e">calcD_newtonSolve_rescaleC_mle</span>(armaMat<span style="color:#f92672">&amp;</span> C, armaVec<span style="color:#f92672">&amp;</span> d,
-                                      std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> x,
-                                      std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> n, data_t<span style="color:#f92672">&amp;</span> dt);
-
-<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">fitOutput_mle</span>(armaMat<span style="color:#f92672">&amp;</span> C, armaVec<span style="color:#f92672">&amp;</span> d, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> x,
-                   std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> n, data_t<span style="color:#f92672">&amp;</span> dt);
 }  <span style="color:#75715e">// namespace poisson
 </span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace lds
 </span><span style="color:#75715e"></span><span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

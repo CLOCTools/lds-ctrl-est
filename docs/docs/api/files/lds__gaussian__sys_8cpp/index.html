@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -182,14 +182,14 @@ https://github.com/alex-shpak/hugo-book
   Detailed Description
   <a class="anchor" href="#detailed-description">#</a>
 </h2>
-<p>This file implements the type for state estimation (filtering) as well as simulation of Gaussian-output linear dynamical systems (<code>[lds::gaussian::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1sys__t/)</code>). It inherits functionality from the underlying linear dynamical system (<code>[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)</code>).</p>
+<p>This file implements the type for state estimation (filtering) as well as simulation of Gaussian-output linear dynamical systems (<code>lds::gaussian::sys_t</code>). It inherits functionality from the underlying linear dynamical system (<code>lds::sys_t</code>).</p>
 <h2 id="source-code">
   Source code
   <a class="anchor" href="#source-code">#</a>
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- lds_gaussian_sys.cpp - GLDS ---------------------------------------===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -208,202 +208,54 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> glds;
 
-glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>sys_t(size_t nU, size_t nX, size_t nY, data_t<span style="color:#f92672">&amp;</span> dt, data_t<span style="color:#f92672">&amp;</span> p0,
-                   data_t<span style="color:#f92672">&amp;</span> q0, data_t<span style="color:#f92672">&amp;</span> r0)
-    <span style="color:#f92672">:</span> lds<span style="color:#f92672">::</span>sys_t(nU, nX, dt, p0, q0), r0(r0) {
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nY <span style="color:#f92672">=</span> nY;
+lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0,
+                   data_t q0, data_t r0)
+    <span style="color:#f92672">:</span> lds<span style="color:#f92672">::</span>System(n_u, n_x, n_y, dt, p0, q0) {
 
-  y <span style="color:#f92672">=</span> armaVec(nY, fill<span style="color:#f92672">::</span>zeros);
-  z <span style="color:#f92672">=</span> armaVec(nY, fill<span style="color:#f92672">::</span>zeros);
-  d <span style="color:#f92672">=</span> armaVec(nY, fill<span style="color:#f92672">::</span>zeros);
+  R_.zeros(n_y, n_y);
+  R_.diag().fill(r0);
 
-  C <span style="color:#f92672">=</span> armaMat(nY, nX, fill<span style="color:#f92672">::</span>eye);       <span style="color:#75715e">// each state will map to an output by
-</span><span style="color:#75715e"></span>                                        <span style="color:#75715e">// default (as many as possible)
-</span><span style="color:#75715e"></span>  Ke <span style="color:#f92672">=</span> armaMat(nX, nY, fill<span style="color:#f92672">::</span>zeros);    <span style="color:#75715e">// estimator gain.
-</span><span style="color:#75715e"></span>  Ke_m <span style="color:#f92672">=</span> armaMat(nX, nY, fill<span style="color:#f92672">::</span>zeros);  <span style="color:#75715e">// estimator gain for m adaptation.
-</span><span style="color:#75715e"></span>  defaultR();
+  do_recurse_Ke_<span style="color:#f92672">=</span>true;
 };
 
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>predict() {
-  lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>predict();
-  h();
-}
-
-<span style="color:#75715e">// Filter: Given measurement (`z`) and previous input (`u_tm1`), predict state
-</span><span style="color:#75715e">// and update estimate of the state, covar, output using Kalman filter
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>filter(armaVec<span style="color:#f92672">&amp;</span> u_tm1, armaVec<span style="color:#f92672">&amp;</span> z_t, <span style="color:#66d9ef">bool</span> doRecurse_Ke) {
-  setU(u_tm1);  <span style="color:#75715e">// set u
-</span><span style="color:#75715e"></span>  filter(z_t, doRecurse_Ke);
-}
-
-<span style="color:#75715e">// Filter: Given measurement (`z`) and previous input (`u_tm1`), predict state
-</span><span style="color:#75715e">// and update estimate of the state, covar, output using Kalman filter
-</span><span style="color:#75715e">// (assumes u was previously set or was set internall, e.g. during control)
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>filter(armaVec<span style="color:#f92672">&amp;</span> z, <span style="color:#66d9ef">bool</span> doRecurse_Ke) {
-  <span style="color:#75715e">// predict mean
-</span><span style="color:#75715e"></span>  predict();
-
-  <span style="color:#75715e">// assign the measurement internal variable.
-</span><span style="color:#75715e"></span>  setZ(z);
-
-  <span style="color:#75715e">// recursively calculate esimator gains (or just keep existing values)
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (doRecurse_Ke) recurse_Ke();
-
-  <span style="color:#75715e">// update
-</span><span style="color:#75715e"></span>  x <span style="color:#f92672">+=</span> Ke <span style="color:#f92672">*</span> (<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>z <span style="color:#f92672">-</span> y);
-  <span style="color:#66d9ef">if</span> (adaptM) m <span style="color:#f92672">+=</span> Ke_m <span style="color:#f92672">*</span> (<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>z <span style="color:#f92672">-</span> y);  <span style="color:#75715e">// adaptively estimating disturbance
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// With new state, estimate output.
-</span><span style="color:#75715e"></span>  h();  <span style="color:#75715e">// --&gt; posterior
-</span><span style="color:#75715e"></span>}
-
 <span style="color:#75715e">// recursively estimate Ke
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>recurse_Ke() {
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>RecurseKe() {
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>do_recurse_Ke_) {
+    <span style="color:#66d9ef">return</span>;
+  }
+
   <span style="color:#75715e">// predict covariance
-</span><span style="color:#75715e"></span>  P <span style="color:#f92672">=</span> A <span style="color:#f92672">*</span> P <span style="color:#f92672">*</span> A.t() <span style="color:#f92672">+</span> Q;
+</span><span style="color:#75715e"></span>  P_ <span style="color:#f92672">=</span> A_ <span style="color:#f92672">*</span> P_ <span style="color:#f92672">*</span> A_.t() <span style="color:#f92672">+</span> Q_;
 
   <span style="color:#75715e">// calc Kalman gain
-</span><span style="color:#75715e"></span>  Ke <span style="color:#f92672">=</span> P <span style="color:#f92672">*</span> C.t() <span style="color:#f92672">*</span> inv_sympd(C <span style="color:#f92672">*</span> P <span style="color:#f92672">*</span> C.t() <span style="color:#f92672">+</span> R);
+</span><span style="color:#75715e"></span>  Ke_ <span style="color:#f92672">=</span> P_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">*</span> inv_sympd(C_ <span style="color:#f92672">*</span> P_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">+</span> R_);
 
   <span style="color:#75715e">// update covariance
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// Reference: Ghahramani et Hinton (1996)
-</span><span style="color:#75715e"></span>  P <span style="color:#f92672">=</span> P <span style="color:#f92672">-</span> Ke <span style="color:#f92672">*</span> C <span style="color:#f92672">*</span> P;
+</span><span style="color:#75715e"></span>  P_ <span style="color:#f92672">=</span> P_ <span style="color:#f92672">-</span> Ke_ <span style="color:#f92672">*</span> C_ <span style="color:#f92672">*</span> P_;
 
-  <span style="color:#66d9ef">if</span> (adaptM) {
-    P_m <span style="color:#f92672">+=</span> Q_m;  <span style="color:#75715e">// A_m = I (i.e., random walk)
-</span><span style="color:#75715e"></span>    Ke_m <span style="color:#f92672">=</span> P_m <span style="color:#f92672">*</span> C.t() <span style="color:#f92672">*</span> inv_sympd(C <span style="color:#f92672">*</span> P_m <span style="color:#f92672">*</span> C.t() <span style="color:#f92672">+</span> R);
-    P_m <span style="color:#f92672">=</span> P_m <span style="color:#f92672">-</span> Ke_m <span style="color:#f92672">*</span> C <span style="color:#f92672">*</span> P_m;
+  <span style="color:#66d9ef">if</span> (do_adapt_m) {
+    P_m_ <span style="color:#f92672">+=</span> Q_m_;  <span style="color:#75715e">// A_m = I (i.e., random walk)
+</span><span style="color:#75715e"></span>    Ke_m_ <span style="color:#f92672">=</span> P_m_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">*</span> inv_sympd(C_ <span style="color:#f92672">*</span> P_m_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">+</span> R_);
+    P_m_ <span style="color:#f92672">=</span> P_m_ <span style="color:#f92672">-</span> Ke_m_ <span style="color:#f92672">*</span> C_ <span style="color:#f92672">*</span> P_m_;
   }
 }
 
-<span style="color:#75715e">// Output: y_{k} = h(x_{k})
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>h() { y <span style="color:#f92672">=</span> C <span style="color:#f92672">*</span> x <span style="color:#f92672">+</span> d; }
-
-<span style="color:#75715e">// Measurement: z ~ N(y,R)
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>simMeasurement(armaVec<span style="color:#f92672">&amp;</span> z) {
-  h();
-  z <span style="color:#f92672">=</span> y <span style="color:#f92672">+</span> arma<span style="color:#f92672">::</span>mvnrnd(armaVec(y.n_elem).fill(<span style="color:#ae81ff">0</span>), R);
+<span style="color:#75715e">// Simulate
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> lds<span style="color:#f92672">::</span>Vector<span style="color:#f92672">&amp;</span> lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Simulate(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> u_tm1){
+  f(u_tm1, true);<span style="color:#75715e">//simulate dynamics with noise added
+</span><span style="color:#75715e"></span>  h();<span style="color:#75715e">//output
+</span><span style="color:#75715e"></span>  z_ <span style="color:#f92672">=</span> y_ <span style="color:#f92672">+</span> arma<span style="color:#f92672">::</span>mvnrnd(Vector(n_y_).fill(<span style="color:#ae81ff">0</span>), R_);<span style="color:#75715e">//measure
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> z_;
 }
 
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reset() {
-  lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>reset();
-  h();
-}
-
-<span style="color:#75715e">// Fall back to default value for R
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>defaultR() {
-  R.zeros(nY, nY);
-  R.diag().fill(r0);
-}
-
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setDims(size_t<span style="color:#f92672">&amp;</span> nU, size_t<span style="color:#f92672">&amp;</span> nX, size_t<span style="color:#f92672">&amp;</span> nY) {
-  <span style="color:#66d9ef">if</span> (nU <span style="color:#f92672">!=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU) {
-    szChanged <span style="color:#f92672">=</span> true;
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU <span style="color:#f92672">=</span> nU;
-  }
-
-  <span style="color:#66d9ef">if</span> (nX <span style="color:#f92672">!=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX) {
-    szChanged <span style="color:#f92672">=</span> true;
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX <span style="color:#f92672">=</span> nX;
-  }
-
-  <span style="color:#66d9ef">if</span> (nY <span style="color:#f92672">!=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nY) {
-    szChanged <span style="color:#f92672">=</span> true;
-    <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nY <span style="color:#f92672">=</span> nY;
-  }
-
-  <span style="color:#75715e">// this seems a bit heavy-handed, but if any of the dimensions are changed,
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// reset everything.
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (szChanged) {
-    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;System dimensions were changed. Resetting object.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-    (<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>) <span style="color:#f92672">=</span> glds<span style="color:#f92672">::</span>sys_t(nU, nX, nY, dt, p0, q0, r0);
-    szChanged <span style="color:#f92672">=</span> false;
-  }
-}
-
-<span style="color:#75715e">// output-specific set methods
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setC(stdVec<span style="color:#f92672">&amp;</span> cVec) { reassign(C, cVec); }
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setC(armaMat<span style="color:#f92672">&amp;</span> C) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>C, C); }
-
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setR(stdVec<span style="color:#f92672">&amp;</span> rVec) { reassign(R, rVec); }
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setR(armaMat<span style="color:#f92672">&amp;</span> R) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>R, R); }
-
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setD(stdVec<span style="color:#f92672">&amp;</span> dVec) { reassign(d, dVec); }
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setD(armaVec<span style="color:#f92672">&amp;</span> d) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>d, d); }
-
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setZ(stdVec<span style="color:#f92672">&amp;</span> zVec) { reassign(z, zVec); }
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setZ(armaVec<span style="color:#f92672">&amp;</span> z) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>z, z); }
-
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setKe(stdVec<span style="color:#f92672">&amp;</span> keVec) { reassign(Ke, keVec); }
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setKe(armaMat<span style="color:#f92672">&amp;</span> Ke) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Ke, Ke); }
-
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setKe_m(stdVec<span style="color:#f92672">&amp;</span> kemVec) { reassign(Ke_m, kemVec); }
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>setKe_m(armaMat<span style="color:#f92672">&amp;</span> Ke_m) { reassign(<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Ke_m, Ke_m); }
-
-<span style="color:#66d9ef">void</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>printSys() {
-  lds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span>printSys();
-  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;d: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> d <span style="color:#f92672">&lt;&lt;</span> endl;
-  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;C: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> C <span style="color:#f92672">&lt;&lt;</span> endl;
-  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;R: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> R <span style="color:#f92672">&lt;&lt;</span> endl;
-  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;y: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> y <span style="color:#f92672">&lt;&lt;</span> endl;
-}
-
-glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">&amp;</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">::</span><span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(<span style="color:#66d9ef">const</span> glds<span style="color:#f92672">::</span>sys_t<span style="color:#f92672">&amp;</span> sys) {
-  <span style="color:#75715e">// TODO(mfbolus): would love to be able to re-use the lds code:
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (*this) = lds::sys_t::operator=(sys);
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// but this does not work bc the input is glds::sys_t which is a subclass of
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// lds::sys_t. Need to figure out if there is a way to write functions to
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// apply to all subclasses (e.g., &lt;lds::sys_t&amp; sys)
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// FROM LDS
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>A <span style="color:#f92672">=</span> sys.A;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>B <span style="color:#f92672">=</span> sys.B;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>g <span style="color:#f92672">=</span> sys.g;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Q <span style="color:#f92672">=</span> sys.Q;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>x0 <span style="color:#f92672">=</span> sys.x0;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P0 <span style="color:#f92672">=</span> sys.P0;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Q_m <span style="color:#f92672">=</span> sys.Q_m;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>m0 <span style="color:#f92672">=</span> sys.m0;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P0_m <span style="color:#f92672">=</span> sys.P0_m;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>u <span style="color:#f92672">=</span> sys.u;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>x <span style="color:#f92672">=</span> sys.x;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P <span style="color:#f92672">=</span> sys.P;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>m <span style="color:#f92672">=</span> sys.m;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>P_m <span style="color:#f92672">=</span> sys.P_m;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>dt <span style="color:#f92672">=</span> sys.dt;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>p0 <span style="color:#f92672">=</span> sys.p0;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>q0 <span style="color:#f92672">=</span> sys.q0;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nX <span style="color:#f92672">=</span> sys.nX;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nU <span style="color:#f92672">=</span> sys.nU;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>szChanged <span style="color:#f92672">=</span> sys.szChanged;
-  <span style="color:#75715e">// END FROM LDS
-</span><span style="color:#75715e"></span>
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>C <span style="color:#f92672">=</span> sys.C;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>d <span style="color:#f92672">=</span> sys.d;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>R <span style="color:#f92672">=</span> sys.R;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>r0 <span style="color:#f92672">=</span> sys.r0;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Ke <span style="color:#f92672">=</span> sys.Ke;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>Ke_m <span style="color:#f92672">=</span> sys.Ke_m;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>adaptM <span style="color:#f92672">=</span> sys.adaptM;
-
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>y <span style="color:#f92672">=</span> sys.y;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>z <span style="color:#f92672">=</span> sys.z;
-  <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>nY <span style="color:#f92672">=</span> sys.nY;
-
-  <span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>;
+<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Print() {
+  lds<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Print();
+  std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;R: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> R_ <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
 }
 </code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

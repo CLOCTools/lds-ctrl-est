@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -213,7 +213,7 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td>class</td>
-<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1em_fit__t/">lds::gaussian::emFit_t</a></strong> <br>GLDS E-M Fit Type.</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/">lds::gaussian::FitEM</a></strong> <br>GLDS E-M <a href="/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/">Fit</a> Type.</td>
 </tr>
 </tbody>
 </table>
@@ -221,7 +221,7 @@ https://github.com/alex-shpak/hugo-book
   Detailed Description
   <a class="anchor" href="#detailed-description">#</a>
 </h2>
-<p>This file declares and partially defines a type by which Gaussian-output LDS models are fit by the expectation-maximization (EM) algorithm (<code>[lds::gaussian::emFit_t](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1em_fit__t/)</code>).</p>
+<p>This file declares and partially defines a type by which Gaussian-output LDS models are fit by the expectation-maximization (EM) algorithm (<code>lds::gaussian::emFit_t</code>).</p>
 <p>References: [1] Shumway RH, Stoffer DS. (1982) An Approach to Time Series Smoothing and Forecasting Using the EM Algorithm.Journal of Time Series Analysis 3(2).</p>
 <p>[2] Ghahramani Z, Hinton GE. (1996) Parameter Estimation for Linear Dynamical Systems. Technical Report CRG-TR-96-2.</p>
 <h2 id="source-code">
@@ -230,7 +230,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_gaussian_fit_em.h - GLDS Fit (EM) ------*- C++ -*-===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -250,77 +250,29 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#75715e">#ifndef LDSCTRLEST_LDS_GAUSSIAN_FIT_EM_H
 </span><span style="color:#75715e">#define LDSCTRLEST_LDS_GAUSSIAN_FIT_EM_H
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#ifndef LDSCTRLEST
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_fit_em.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_gaussian_fit.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">namespace</span> lds {
 <span style="color:#66d9ef">namespace</span> gaussian {
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">emFit_t</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> fit_t {
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FitEM</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;</span> {
  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-  emFit_t() <span style="color:#f92672">:</span> fit_t(){};
-  emFit_t(armaMat<span style="color:#f92672">&amp;</span> A, armaMat<span style="color:#f92672">&amp;</span> B, armaVec<span style="color:#f92672">&amp;</span> g, armaVec<span style="color:#f92672">&amp;</span> m, armaMat<span style="color:#f92672">&amp;</span> Q,
-          armaVec<span style="color:#f92672">&amp;</span> x0, armaMat<span style="color:#f92672">&amp;</span> P0, armaMat<span style="color:#f92672">&amp;</span> C, armaVec<span style="color:#f92672">&amp;</span> d, armaMat<span style="color:#f92672">&amp;</span> R,
-          data_t dt, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> uTrain,
-          std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> zTrain);
-  emFit_t(data_t dt, std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> uTrain,
-          std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> zTrain);
-  emFit_t(ssidFit_t<span style="color:#f92672">&amp;</span> fit0);
+  <span style="color:#66d9ef">using</span> EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>EM;
 
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reset</span>(<span style="color:#66d9ef">void</span>);
+ <span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+  <span style="color:#66d9ef">void</span> MaximizeOutput() <span style="color:#66d9ef">override</span>;
 
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">runEM</span>(<span style="color:#66d9ef">bool</span> calcAB <span style="color:#f92672">=</span> true, <span style="color:#66d9ef">bool</span> calcQ <span style="color:#f92672">=</span> true, <span style="color:#66d9ef">bool</span> calcInitial <span style="color:#f92672">=</span> true,
-             <span style="color:#66d9ef">bool</span> calcC <span style="color:#f92672">=</span> true, <span style="color:#66d9ef">bool</span> calcd <span style="color:#f92672">=</span> true, <span style="color:#66d9ef">bool</span> calcR <span style="color:#f92672">=</span> true);
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">MaximizeMeasurement</span>() <span style="color:#66d9ef">override</span>;
 
-  data_t tol <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;     
-  size_t maxIter <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>;  
-
-  <span style="color:#75715e">// get methods
-</span><span style="color:#75715e"></span>  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;</span> getX() { <span style="color:#66d9ef">return</span> xHat; };
-  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;</span> getY() { <span style="color:#66d9ef">return</span> yHat; };
-
-  <span style="color:#75715e">// these are covariances that can be useful to the end-user
-</span><span style="color:#75715e"></span>  armaMat <span style="color:#a6e22e">get_sum_E_xu_tm1_xu_tm1</span>() { <span style="color:#66d9ef">return</span> sum_E_xu_tm1_xu_tm1; };
-  armaMat <span style="color:#a6e22e">get_sum_E_xu_t_xu_tm1</span>() { <span style="color:#66d9ef">return</span> sum_E_xu_t_xu_tm1; };
-  armaMat <span style="color:#a6e22e">get_sum_E_xu_t_xu_t</span>() { <span style="color:#66d9ef">return</span> sum_E_xu_t_xu_t; };
-  size_t <span style="color:#a6e22e">getT</span>() { <span style="color:#66d9ef">return</span> T; };
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setY</span>(std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;</span> yHat) { <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>yHat <span style="color:#f92672">=</span> yHat; };
-
- <span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
-  armaVec getTheta();
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">kalmanFilt</span>();
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">kalmanSmooth</span>(<span style="color:#66d9ef">bool</span> forceCommonInitial);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Estep</span>(<span style="color:#66d9ef">bool</span> forceCommonInitial <span style="color:#f92672">=</span> false);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Mstep</span>(<span style="color:#66d9ef">bool</span> calcAB <span style="color:#f92672">=</span> true, <span style="color:#66d9ef">bool</span> calcQ <span style="color:#f92672">=</span> true, <span style="color:#66d9ef">bool</span> calcInitial <span style="color:#f92672">=</span> false,
-             <span style="color:#66d9ef">bool</span> calcC <span style="color:#f92672">=</span> false, <span style="color:#66d9ef">bool</span> calcd <span style="color:#f92672">=</span> false, <span style="color:#66d9ef">bool</span> calcR <span style="color:#f92672">=</span> true);
-
-  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;</span> xHat;                
-  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>arma<span style="color:#f92672">::</span>Cube<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;&gt;</span> P;        
-  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;</span> yHat;                
-  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>arma<span style="color:#f92672">::</span>Cube<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;&gt;</span> P_t_tm1;  
-
-  armaMat sum_E_xu_t_xu_t;      
-  armaMat sum_E_xu_tm1_xu_tm1;  
-  armaMat sum_E_xu_t_xu_tm1;    
-  size_t T;
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">RecurseKe</span>(Matrix<span style="color:#f92672">&amp;</span> Ke, Cube<span style="color:#f92672">&amp;</span> P_pre, Cube<span style="color:#f92672">&amp;</span> P_post, size_t t) <span style="color:#66d9ef">override</span>;
 };
 
-emFit_t <span style="color:#a6e22e">emFit_x_equals_y</span>(std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> uTrain,
-                         std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>armaMat<span style="color:#f92672">&gt;&amp;</span> zTrain, data_t dt,
-                         std<span style="color:#f92672">::</span>size_t maxIter <span style="color:#f92672">=</span> <span style="color:#ae81ff">100</span>, data_t tol <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>,
-                         data_t q0 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-6</span>, <span style="color:#66d9ef">bool</span> calcAB <span style="color:#f92672">=</span> true,
-                         <span style="color:#66d9ef">bool</span> calcQ <span style="color:#f92672">=</span> true, <span style="color:#66d9ef">bool</span> calcR <span style="color:#f92672">=</span> true);
-};  <span style="color:#75715e">// namespace gaussian
+}  <span style="color:#75715e">// namespace gaussian
 </span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace lds
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

@@ -21,13 +21,13 @@ PLDS base type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/)** <br>Poisson LDS Type.  |
+| class | **[lds::poisson::System](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/)** <br>Poisson [System]() type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (`[lds::poisson::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/)`). It inherits functionality from the underlying linear dynamical system (`[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)`). 
+This file declares and partially defines the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (`[lds::poisson::System](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)`). 
 
 
 
@@ -38,7 +38,7 @@ This file declares and partially defines the type for state estimation (filterin
 ```cpp
 //===-- ldsCtrlEst_h/lds_poisson_sys.h - PLDS -------------------*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,69 +58,39 @@ This file declares and partially defines the type for state estimation (filterin
 #ifndef LDSCTRLEST_LDS_POISSON_SYS_H
 #define LDSCTRLEST_LDS_POISSON_SYS_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+// namespace
+#include "lds_poisson.h"
+// system
+#include "lds_sys.h"
 
 namespace lds {
 namespace poisson {
-class sys_t : public lds::sys_t {
+
+class System : public lds::System {
  public:
-  void filter(armaVec& u_tm1, armaVec& z_t);
+  System() = default;
 
-  void filter(armaVec& z);
+  System(std::size_t n_u, std::size_t n_x, std::size_t n_y, data_t dt,
+         data_t p0 = kDefaultP0, data_t q0 = kDefaultQ0);
 
-  void simMeasurement(armaVec& z);
-
-  sys_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& dt,
-        data_t& p0 = DEFAULT_P0, data_t& q0 = DEFAULT_Q0);
-  sys_t& operator=(const sys_t& sys);
-
-  // get methods
-  size_t getNy() const { return nY; };
-
-  armaMat getC() const { return C; };
-
-  armaVec getD() const { return d; };
-
-  armaVec getY() const { return y; };
-
-  armaVec getZ() const { return z; };
-
-  // set methods
-  void setDims(std::size_t& nU, std::size_t& nX, std::size_t& nY);
-
-  void setC(stdVec& cVec);
-  void setC(armaMat& C);
-
-  void setD(stdVec& dVec);
-  void setD(armaVec& d);
-
-  void setZ(stdVec& zVec);
-  void setZ(armaVec& z);
-
-  void reset();
-  void printSys();
+  const Vector& Simulate(const Vector& u_tm1) override;
 
  protected:
-  void predict();
-  void h();  // output nonlinearity
+  void h() override {
+    cx_ = C_ * x_;
+    y_ = exp(cx_ + d_);
+    diag_y_.diag() = y_;
+  };
 
-  // output-specific stuff
-  std::size_t nY;  
-  armaMat C;       
-  armaVec d;       
-  armaVec y;       
-  armaVec logy;    
-  armaVec z;       
+  void RecurseKe() override;
 
-  armaMat diag_y;  
-  armaVec chance;  
-};                 // sys_t
+ private:
+  // Poisson-output-specific
+  Matrix diag_y_;  
+  Vector chance_;  
+};                  // System
 }  // namespace poisson
 }  // namespace lds
-
-#include "lds_poisson_ctrl.h"
 
 #endif
 ```
@@ -128,4 +98,4 @@ class sys_t : public lds::sys_t {
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

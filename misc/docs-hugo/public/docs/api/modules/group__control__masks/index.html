@@ -5,13 +5,9 @@
   <meta name="generator" content="Hugo 0.80.0" />
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Control Mode Bit Masks #  
-More&hellip; Attributes #      Name     const std::size_t CONTROL_TYPE_U   const std::size_t CONTROL_TYPE_INTY   const std::size_t CONTROL_TYPE_ADAPT_M Control setpoint adapted with (re-estimated) process disturbance m.    Detailed Description #  Control mode bit masks. These can be bit-wise OR&rsquo;d to use in combination.
-Attribute Details #  CONTROL_TYPE_U #  static const std::size_t CONTROL_TYPE_U = 0x1; Control was designed to penalize change in input (i.">
+<meta name="description" content="provides fill types for constructing new armadillo vectors, matrices">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="Control Mode Bit Masks" />
-<meta property="og:description" content="Control Mode Bit Masks #  
-More&hellip; Attributes #      Name     const std::size_t CONTROL_TYPE_U   const std::size_t CONTROL_TYPE_INTY   const std::size_t CONTROL_TYPE_ADAPT_M Control setpoint adapted with (re-estimated) process disturbance m.    Detailed Description #  Control mode bit masks. These can be bit-wise OR&rsquo;d to use in combination.
-Attribute Details #  CONTROL_TYPE_U #  static const std::size_t CONTROL_TYPE_U = 0x1; Control was designed to penalize change in input (i." />
+<meta property="og:description" content="provides fill types for constructing new armadillo vectors, matrices" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__control__masks/" />
 
@@ -19,7 +15,7 @@ Attribute Details #  CONTROL_TYPE_U #  static const std::size_t CONTROL_TYPE_U =
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -165,9 +161,9 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#detailed-description">Detailed Description</a></li>
         <li><a href="#attribute-details">Attribute Details</a>
           <ul>
-            <li><a href="#control_type_u">CONTROL_TYPE_U</a></li>
-            <li><a href="#control_type_inty">CONTROL_TYPE_INTY</a></li>
-            <li><a href="#control_type_adapt_m">CONTROL_TYPE_ADAPT_M</a></li>
+            <li><a href="#kcontroltypedeltau">kControlTypeDeltaU</a></li>
+            <li><a href="#kcontroltypeinty">kControlTypeIntY</a></li>
+            <li><a href="#kcontroltypeadaptm">kControlTypeAdaptM</a></li>
           </ul>
         </li>
       </ul>
@@ -188,7 +184,7 @@ https://github.com/alex-shpak/hugo-book
   Control Mode Bit Masks
   <a class="anchor" href="#control-mode-bit-masks">#</a>
 </h1>
-<p><br> <br><a href="#detailed-description">More&hellip;</a>
+<p>provides fill types for constructing new armadillo vectors, matrices <br> <br><a href="#detailed-description">More&hellip;</a>
 <br></p>
 <h2 id="attributes">
   Attributes
@@ -204,15 +200,15 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td>const std::size_t</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_u">CONTROL_TYPE_U</a></strong></td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypedeltau">kControlTypeDeltaU</a></strong> <br>control designed to penalize change in input</td>
 </tr>
 <tr>
 <td>const std::size_t</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_inty">CONTROL_TYPE_INTY</a></strong></td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypeinty">kControlTypeIntY</a></strong> <br>control using integral action</td>
 </tr>
 <tr>
 <td>const std::size_t</td>
-<td><strong><a href="/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_adapt_m">CONTROL_TYPE_ADAPT_M</a></strong> <br>Control setpoint adapted with (re-estimated) process disturbance <code>m</code>.</td>
+<td><strong><a href="/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypeadaptm">kControlTypeAdaptM</a></strong> <br>adapt control setpoint with re-estimated disturbance <code>m</code></td>
 </tr>
 </tbody>
 </table>
@@ -225,25 +221,26 @@ https://github.com/alex-shpak/hugo-book
   Attribute Details
   <a class="anchor" href="#attribute-details">#</a>
 </h2>
-<h3 id="control_type_u">
-  CONTROL_TYPE_U
-  <a class="anchor" href="#control_type_u">#</a>
+<h3 id="kcontroltypedeltau">
+  kControlTypeDeltaU
+  <a class="anchor" href="#kcontroltypedeltau">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_U <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1</span>;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t kControlTypeDeltaU <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x1</span>;
 </code></pre></div><p>Control was designed to penalize change in input (i.e., the state was augmented with input <code>u</code>)</p>
-<h3 id="control_type_inty">
-  CONTROL_TYPE_INTY
-  <a class="anchor" href="#control_type_inty">#</a>
+<h3 id="kcontroltypeinty">
+  kControlTypeIntY
+  <a class="anchor" href="#kcontroltypeinty">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_INTY <span style="color:#f92672">=</span> CONTROL_TYPE_U <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t kControlTypeIntY <span style="color:#f92672">=</span> kControlTypeDeltaU <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">1</span>;
 </code></pre></div><p>Control using integral action (i.e., the state was augmented with output <code>y</code> during design)</p>
-<h3 id="control_type_adapt_m">
-  CONTROL_TYPE_ADAPT_M
-  <a class="anchor" href="#control_type_adapt_m">#</a>
+<h3 id="kcontroltypeadaptm">
+  kControlTypeAdaptM
+  <a class="anchor" href="#kcontroltypeadaptm">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t CONTROL_TYPE_ADAPT_M <span style="color:#f92672">=</span> CONTROL_TYPE_U <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">2</span>;
-</code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>size_t kControlTypeAdaptM <span style="color:#f92672">=</span> kControlTypeDeltaU <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">2</span>;
+</code></pre></div><p>Adapt control setpoint adapted with re-estimated process disturbance <code>m</code>.</p>
+<hr>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       
@@ -282,9 +279,9 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#detailed-description">Detailed Description</a></li>
         <li><a href="#attribute-details">Attribute Details</a>
           <ul>
-            <li><a href="#control_type_u">CONTROL_TYPE_U</a></li>
-            <li><a href="#control_type_inty">CONTROL_TYPE_INTY</a></li>
-            <li><a href="#control_type_adapt_m">CONTROL_TYPE_ADAPT_M</a></li>
+            <li><a href="#kcontroltypedeltau">kControlTypeDeltaU</a></li>
+            <li><a href="#kcontroltypeinty">kControlTypeIntY</a></li>
+            <li><a href="#kcontroltypeadaptm">kControlTypeAdaptM</a></li>
           </ul>
         </li>
       </ul>

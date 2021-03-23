@@ -1,7 +1,5 @@
 <map id="lds_poisson.h" name="lds_poisson.h">
 <area shape="rect" id="node1" title="plds namespace" alt="" coords="5,5,109,32"/>
-<area shape="rect" id="node2" title=" " alt="" coords="43,304,122,331"/>
-<area shape="rect" id="node3" href="$lds__poisson__sys_8h.html" title="PLDS base type." alt="" coords="44,80,175,107"/>
-<area shape="rect" id="node4" href="$lds__poisson__ctrl_8h.html" title="PLDS controller type." alt="" coords="95,155,225,181"/>
-<area shape="rect" id="node5" href="$lds__poisson__sctrl_8h.html" title="PLDS switched controller type." alt="" coords="145,229,281,256"/>
+<area shape="rect" id="node2" href="$lds_8h.html" title="lds namespace" alt="" coords="32,80,83,107"/>
+<area shape="rect" id="node3" title=" " alt="" coords="19,155,95,181"/>
 </map>

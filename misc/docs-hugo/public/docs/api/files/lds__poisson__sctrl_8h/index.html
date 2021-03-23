@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -213,7 +213,7 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td>class</td>
-<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sctrl__t/">lds::poisson::sctrl_t</a></strong> <br>Switched PLDS Controller Type.</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/">lds::poisson::SwitchedController</a></strong> <br>Poisson-observation <a href="">SwitchedController</a> Type.</td>
 </tr>
 </tbody>
 </table>
@@ -221,14 +221,14 @@ https://github.com/alex-shpak/hugo-book
   Detailed Description
   <a class="anchor" href="#detailed-description">#</a>
 </h2>
-<p>This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Poisson-output linear dynamical systems (<code>[lds::poisson::sctrl_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sctrl__t/)</code>).</p>
+<p>This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Poisson-output linear dynamical systems (<a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/">lds::poisson::SwitchedController</a>).</p>
 <h2 id="source-code">
   Source code
   <a class="anchor" href="#source-code">#</a>
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_poisson_sctrl.h - Switched Controller --*- C++ -*-===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -248,94 +248,57 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#75715e">#ifndef LDSCTRLEST_LDS_POISSON_SWITCHED_CTRL_H
 </span><span style="color:#75715e">#define LDSCTRLEST_LDS_POISSON_SWITCHED_CTRL_H
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#ifndef LDSCTRLEST
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_poisson_ctrl.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">namespace</span> lds {
 <span style="color:#66d9ef">namespace</span> poisson {
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">sctrl_t</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> ctrl_t {
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SwitchedController</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;</span> {
  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-  sctrl_t(std<span style="color:#f92672">::</span>size_t nSys, std<span style="color:#f92672">::</span>size_t nU, std<span style="color:#f92672">::</span>size_t nX, std<span style="color:#f92672">::</span>size_t nY,
-          data_t<span style="color:#f92672">&amp;</span> uLB, data_t<span style="color:#f92672">&amp;</span> uUB, data_t<span style="color:#f92672">&amp;</span> dt, data_t<span style="color:#f92672">&amp;</span> p0 <span style="color:#f92672">=</span> DEFAULT_P0,
-          data_t<span style="color:#f92672">&amp;</span> q0 <span style="color:#f92672">=</span> DEFAULT_Q0, size_t controlType <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">void</span> set_y_ref(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> y_ref) <span style="color:#66d9ef">override</span> {
+    Reassign(y_ref_,y_ref);
+    lds<span style="color:#f92672">::</span>Limit(y_ref_, kYRefLB, lds<span style="color:#f92672">::</span>kInf);
+    cx_ref_ <span style="color:#f92672">=</span> log(y_ref_) <span style="color:#f92672">-</span> sys_.d();
+  };
 
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setSystem</span>(size_t sysIdx, ctrl_t<span style="color:#f92672">&amp;</span> sys);
+  <span style="color:#75715e">// make sure base class template methods available
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>SwitchedController;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>Switch;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>Control;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>ControlOutputReference;
 
-  <span style="color:#75715e">// TODO(mfbolus):
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// This switchSystem(sysIdx) approach is wasteful but simple.
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Would be faster to toggle between ctrl_t&#39;s and replace wrapper u, x, P, m,
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// P_m. However, would have to override or rewrite most controller
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// functionality.
-</span><span style="color:#75715e"></span>
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">switchSystem</span>(size_t sysIdx);
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>sys;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>Kc;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>Kc_inty;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>Kc_u;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>g_design;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>u_ref;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>x_ref;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>y_ref;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>control_type;
 
-  size_t <span style="color:#a6e22e">getSysIdx</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> sysIdx; };
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>set_g_design;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>set_u_ref;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>set_x_ref;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>set_y_ref;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>set_Kc;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>set_Kc_inty;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>set_Kc_u;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>set_tau_awu;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>set_control_type;
 
- <span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
-  size_t nSys;  
-  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>ctrl_t<span style="color:#f92672">&gt;</span>
-      systems;    
-  size_t sysIdx;  
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>Reset;
+  <span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>SwitchedController<span style="color:#f92672">&lt;</span>System<span style="color:#f92672">&gt;::</span>Print;
 
  <span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
-  <span style="color:#75715e">// make all parameter set* methods private and define them to do nothing.
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// force users to use setSystem, with pre-defined systems.
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// from lds_t
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">void</span> setDims(std<span style="color:#f92672">::</span>size_t<span style="color:#f92672">&amp;</span> nU, std<span style="color:#f92672">::</span>size_t<span style="color:#f92672">&amp;</span> nX){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setU</span>(stdVec<span style="color:#f92672">&amp;</span> uVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setU</span>(armaVec<span style="color:#f92672">&amp;</span> u){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setA</span>(stdVec<span style="color:#f92672">&amp;</span> aVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setA</span>(armaMat<span style="color:#f92672">&amp;</span> A){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setB</span>(stdVec<span style="color:#f92672">&amp;</span> bVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setB</span>(armaMat<span style="color:#f92672">&amp;</span> B){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setM</span>(stdVec<span style="color:#f92672">&amp;</span> mVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setM</span>(armaVec<span style="color:#f92672">&amp;</span> m){};
-  <span style="color:#75715e">// void setG(stdVec&amp; gVec) {};
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// void setG(armaVec&amp; g) {};
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ</span>(stdVec<span style="color:#f92672">&amp;</span> qVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ</span>(armaMat<span style="color:#f92672">&amp;</span> Q){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ_m</span>(stdVec<span style="color:#f92672">&amp;</span> qmVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setQ_m</span>(armaMat<span style="color:#f92672">&amp;</span> Q_m){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setX0</span>(stdVec<span style="color:#f92672">&amp;</span> x0Vec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setX0</span>(armaVec<span style="color:#f92672">&amp;</span> x0){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0</span>(stdVec<span style="color:#f92672">&amp;</span> p0Vec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0</span>(armaMat<span style="color:#f92672">&amp;</span> P0){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0_m</span>(stdVec<span style="color:#f92672">&amp;</span> p0mVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setP0_m</span>(armaMat<span style="color:#f92672">&amp;</span> P0_m){};
-
-  <span style="color:#75715e">// from sys_t
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setC</span>(stdVec<span style="color:#f92672">&amp;</span> cVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setC</span>(armaMat<span style="color:#f92672">&amp;</span> C){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setD</span>(stdVec<span style="color:#f92672">&amp;</span> dVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setD</span>(armaVec<span style="color:#f92672">&amp;</span> d){};
-
-  <span style="color:#75715e">// from ctrl_t
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// void setGDesign(stdVec&amp; gVec) {};
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// void setGDesign(armaVec&amp; g) {};
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_x</span>(stdVec<span style="color:#f92672">&amp;</span> Kc_xVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_x</span>(armaVec<span style="color:#f92672">&amp;</span> Kc_x){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_u</span>(stdVec<span style="color:#f92672">&amp;</span> Kc_uVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_u</span>(armaVec<span style="color:#f92672">&amp;</span> Kc_u){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_inty</span>(stdVec<span style="color:#f92672">&amp;</span> Kc_intyVec){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setKc_inty</span>(armaVec<span style="color:#f92672">&amp;</span> Kc_inty){};
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setControlType</span>(size_t controlType);  <span style="color:#75715e">// {};
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// // assuming I *want* to maintain same references
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// void setURef(stdVec&amp; uRefVec) {};
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// void setURef(armaVec&amp; uRef) {};
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// void setXRef(stdVec&amp; xRefVec) {};
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// void setXRef(armaVec&amp; xRef) {};
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// void setYRef(stdVec&amp; yRefVec) {};
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// void setYRef(armaVec&amp; yRef) {};
-</span><span style="color:#75715e"></span>};
+  <span style="color:#66d9ef">constexpr</span> <span style="color:#66d9ef">static</span> data_t kYRefLB <span style="color:#f92672">=</span>
+      <span style="color:#ae81ff">1e-4</span>;  
+};
 }  <span style="color:#75715e">// namespace poisson
 </span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace lds
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

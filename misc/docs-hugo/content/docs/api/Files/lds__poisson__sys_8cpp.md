@@ -14,7 +14,7 @@ PLDS base type.  [More...](#detailed-description)
 
 
 
-This file implements the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (`[lds::poisson::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/)`). It inherits functionality from the underlying linear dynamical system (`[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)`). 
+This file implements the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (`lds::poisson::sys_t`). It inherits functionality from the underlying linear dynamical system (`lds::sys_t`). 
 
 
 
@@ -25,7 +25,7 @@ This file implements the type for state estimation (filtering) as well as simula
 ```cpp
 //===-- lds_poisson_sys.cpp - PLDS ----------------------------------------===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,179 +44,48 @@ This file implements the type for state estimation (filtering) as well as simula
 
 #include <ldsCtrlEst>
 
-using namespace std;
-using namespace plds;
-
-plds::sys_t::sys_t(size_t nU, size_t nX, size_t nY, data_t& dt, data_t& p0,
-                   data_t& q0)
-    : lds::sys_t(nU, nX, dt, p0, q0) {
-  this->nY = nY;
-
-  y = armaVec(nY, fill::zeros);
-  logy = armaVec(nY, fill::zeros);
-  z = armaVec(nY, fill::zeros);
-  d = armaVec(nY, fill::zeros);
-
-  C = armaMat(nY, nX, fill::eye);  // each state will map to an output by
-                                   // default (as many as possible)
-  diag_y = diagmat(y);
-
-  // TODO(mfbolus): for some reason, on my mac, initializing with randu results
-  // in bus error!
-  //
-  // chance = armaVec(nY, fill::randu);
-  chance = armaVec(nY, fill::zeros);
+lds::poisson::System::System(size_t n_u, size_t n_x, size_t n_y, data_t dt,
+                             data_t p0, data_t q0)
+    : lds::System(n_u, n_x, n_y, dt, p0, q0) {
+  diag_y_ = diagmat(y_);
+  chance_ = Vector(n_y, fill::randu);
 };
-
-// predict: Given input, predict the state, covar
-void plds::sys_t::predict() {
-  lds::sys_t::predict();
-  h();
-}
 
 // Correct: Given measurement (z) and current input (u), update estimate of the
 // state, covar, output.
 //
 // see Eden et al. 2004
-void plds::sys_t::filter(armaVec& z) {
-  predict();
-  diag_y.diag() = y;  // need this for covariance update below
-
-  // assign the measurement internal variable.
-  setZ(z);
-
-  // predict covariance (took this out of generic predict step...)
-  P = A * P * A.t() + Q;
+void lds::poisson::System::RecurseKe() {
+  // predict covariance
+  P_ = A_ * P_ * A_.t() + Q_;
 
   // update cov
-  P = pinv(pinv(P) + C.t() * diag_y * C);
-  x = x + P * C.t() * (z - y);  // posterior
-  if (adaptM) {
-    P_m += Q_m;  // A_m = I
-    P_m = pinv(pinv(P_m) + C.t() * diag_y * C);
-    m = m + P_m * C.t() * (z - y);
+  P_ = pinv(pinv(P_) + C_.t() * diag_y_ * C_);
+  Ke_ = P_ * C_.t();
+  if (do_adapt_m) {
+    P_m_ += Q_m_;                                     // predict (A_m = I)
+    P_m_ = pinv(pinv(P_m_) + C_.t() * diag_y_ * C_);  // update
+    Ke_m_ = P_m_ * C_.t();
   }
-  h();  // posterior
-}
-
-// Output: y_{k} = h(x_{k}) = exp(C * x_{k} + d)
-void plds::sys_t::h() {
-  logy = C * x + d;
-  y = exp(logy);
 }
 
 // Measurement: z ~ Poisson(y)
 // n.b., In reality, this is only Poisson where rate `y` and sample period `dt`
 // are sufficiently small there is only ever 0 or 1 events in a period. If
 // either of those is violated, results will be innacurate.
-void plds::sys_t::simMeasurement(armaVec& z) {
-  h();
+// Simulate
+const lds::Vector& lds::poisson::System::Simulate(const Vector& u_tm1) {
+  f(u_tm1, true);  // simulate dynamics with noise added
+  h();             // output
 
-  // roll the dice.
-  chance.randu(y.n_elem);
-
-  // Compare.
-  z.zeros();
-  for (std::size_t k = 0; k < y.n_elem; k++) {
-    if ((y[k]) > chance[k]) z[k] = 1.0;
+  chance_.randu(n_y_);
+  z_.zeros();
+  for (std::size_t k = 0; k < n_y_; k++) {
+    if ((y_[k]) > chance_[k]) {
+      z_[k] = 1.0;
+    }
   }
-}
-
-void plds::sys_t::reset() {
-  lds::sys_t::reset();
-  h();
-  diag_y = diagmat(y);
-}
-
-void plds::sys_t::setDims(size_t& nU, size_t& nX, size_t& nY) {
-  if (nU != this->nU) {
-    szChanged = true;
-    this->nU = nU;
-  }
-
-  if (nX != this->nX) {
-    szChanged = true;
-    this->nX = nX;
-  }
-
-  if (nY != this->nY) {
-    szChanged = true;
-    this->nY = nY;
-  }
-
-  // this seems a bit heavy-handed, but if any of the dimensions are changed,
-  // reset everything.
-  if (szChanged) {
-    cout << "System dimensions were changed. Resetting object.\n";
-    (*this) = plds::sys_t(nU, nX, nY, dt, p0, q0);
-    szChanged = false;
-  }
-}
-
-void plds::sys_t::setC(stdVec& cVec) { reassign(C, cVec); }
-void plds::sys_t::setC(armaMat& C) { reassign(this->C, C); }
-
-void plds::sys_t::setD(stdVec& dVec) { reassign(d, dVec); }
-void plds::sys_t::setD(armaVec& d) { reassign(this->d, d); }
-
-void plds::sys_t::setZ(stdVec& zVec) { reassign(z, zVec); }
-void plds::sys_t::setZ(armaVec& z) { reassign(this->z, z); }
-
-void plds::sys_t::printSys() {
-  lds::sys_t::printSys();
-  cout << "d: \n" << d << endl;
-  cout << "C: \n" << C << endl;
-  cout << "y: \n" << y << endl;
-}
-
-plds::sys_t& plds::sys_t::operator=(const plds::sys_t& sys) {
-  // TODO(mfbolus): would love to be able to re-use the lds code:
-  //
-  // (*this) = lds::sys_t::operator=(sys);
-  //
-  // but this does not work bc the input is glds::sys_t which is a subclass of
-  // lds::sys_t. Need to figure out if there is a way to write functions to
-  // apply to all subclasses (e.g., <lds::sys_t& sys)
-
-  // FROM LDS
-  this->A = sys.A;
-  this->B = sys.B;
-  this->g = sys.g;
-  this->Q = sys.Q;
-  this->x0 = sys.x0;
-  this->P0 = sys.P0;
-
-  this->Q_m = sys.Q_m;
-  this->m0 = sys.m0;
-  this->P0_m = sys.P0_m;
-
-  this->u = sys.u;
-  this->x = sys.x;
-  this->P = sys.P;
-  this->m = sys.m;
-  this->P_m = sys.P_m;
-
-  this->dt = sys.dt;
-  this->p0 = sys.p0;
-  this->q0 = sys.q0;
-
-  this->nX = sys.nX;
-  this->nU = sys.nU;
-  this->szChanged = sys.szChanged;
-  // END FROM LDS
-
-  // PLDS
-  this->C = sys.C;
-  this->d = sys.d;
-  this->logy = sys.logy;
-  this->y = sys.y;
-  this->z = sys.z;
-  this->nY = sys.nY;
-  this->diag_y = sys.diag_y;
-  this->chance = sys.chance;
-  // END FROM PLDS
-
-  return *this;
+  return z_;
 }
 // ******************* SYS_T *******************
 ```
@@ -224,4 +93,4 @@ plds::sys_t& plds::sys_t::operator=(const plds::sys_t& sys) {
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

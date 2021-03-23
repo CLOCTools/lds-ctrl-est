@@ -1,1 +1,1 @@
-lds_fit.cpp;lds_gaussian_fit.cpp;lds_gaussian_fit_em.cpp;lds_gaussian_fit_ssid.cpp;lds_poisson_fit.cpp;lds_poisson_fit_ssid.cpp;
+lds_fit.cpp;lds_gaussian_fit.cpp;lds_gaussian_fit_em.cpp;lds_gaussian_fit_ssid.cpp;lds_poisson_fit_em.cpp;lds_poisson_fit_ssid.cpp;

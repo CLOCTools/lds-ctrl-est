@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ldsCtrlEst
-   &#160;<span id="projectnumber">0.5.0</span>
+   &#160;<span id="projectnumber">0.6.0</span>
    </div>
   </td>
  </tr>
@@ -74,18 +74,23 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>GLDS controller type.  
+<p>GLDS Controller.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;ldsCtrlEst&gt;</code><br />
-<code>#include &quot;<a class="el" href="lds__gaussian__sctrl_8h_source.html">lds_gaussian_sctrl.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="lds__gaussian_8h_source.html">lds_gaussian.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="lds__gaussian__sys_8h_source.html">lds_gaussian_sys.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="lds__ctrl_8h_source.html">lds_ctrl.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for lds_gaussian_ctrl.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="lds__gaussian__ctrl_8h__incl.png" border="0" usemap="#alds__gaussian__ctrl_8h" alt=""/></div>
 <map name="alds__gaussian__ctrl_8h" id="alds__gaussian__ctrl_8h">
-<area shape="rect" title="GLDS controller type." alt="" coords="5,5,141,32"/>
-<area shape="rect" title=" " alt="" coords="34,155,113,181"/>
-<area shape="rect" href="lds__gaussian__sctrl_8h.html" title="GLDS switched controller type." alt="" coords="57,80,199,107"/>
+<area shape="rect" title="GLDS Controller." alt="" coords="55,5,191,32"/>
+<area shape="rect" href="lds__gaussian_8h.html" title="glds namespace" alt="" coords="5,155,116,181"/>
+<area shape="rect" href="lds__gaussian__sys_8h.html" title="GLDS base type." alt="" coords="54,80,193,107"/>
+<area shape="rect" href="lds__ctrl_8h.html" title="Controller." alt="" coords="217,80,293,107"/>
+<area shape="rect" href="lds_8h.html" title="lds namespace" alt="" coords="154,229,205,256"/>
+<area shape="rect" title=" " alt="" coords="141,304,217,331"/>
+<area shape="rect" href="lds__sys_8h.html" title="LDS base type." alt="" coords="141,155,218,181"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
@@ -93,10 +98,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="lds__gaussian__ctrl_8h__dep__incl.png" border="0" usemap="#alds__gaussian__ctrl_8hdep" alt=""/></div>
 <map name="alds__gaussian__ctrl_8hdep" id="alds__gaussian__ctrl_8hdep">
-<area shape="rect" title="GLDS controller type." alt="" coords="7,5,143,32"/>
-<area shape="rect" href="lds__gaussian__sys_8h.html" title="GLDS base type." alt="" coords="5,80,144,107"/>
-<area shape="rect" href="lds__gaussian_8h.html" title="glds namespace" alt="" coords="19,155,130,181"/>
-<area shape="rect" href="lds_8h.html" title="lds namespace" alt="" coords="49,229,100,256"/>
+<area shape="rect" title="GLDS Controller." alt="" coords="9,5,145,32"/>
+<area shape="rect" href="lds__gaussian__sctrl_8h.html" title="GLDS switched controller type." alt="" coords="5,80,148,107"/>
 </map>
 </div>
 </div>
@@ -104,8 +107,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlds_1_1gaussian_1_1ctrl__t.html">lds::gaussian::ctrl_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GLDS Controller Type.  <a href="classlds_1_1gaussian_1_1ctrl__t.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlds_1_1gaussian_1_1_controller.html">lds::gaussian::Controller</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gaussian-observation <a class="el" href="classlds_1_1gaussian_1_1_controller.html" title="Gaussian-observation Controller Type.">Controller</a> Type.  <a href="classlds_1_1gaussian_1_1_controller.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -118,8 +121,8 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GLDS controller type. </p>
-<p>This file declares and partially defines the type for feedback control of a gaussian-output linear dynamical system (<code><a class="el" href="classlds_1_1gaussian_1_1ctrl__t.html" title="GLDS Controller Type.">lds::gaussian::ctrl_t</a></code>). It inherits functionality from the underlying GLDS model type (<code><a class="el" href="classlds_1_1gaussian_1_1sys__t.html" title="Gaussian LDS Type.">lds::gaussian::sys_t</a></code>), including state estimation. </p>
+<div class="textblock"><p>GLDS Controller. </p>
+<p>This file declares and partially defines the type for control of a gaussian-observation linear dynamical system (<a class="el" href="classlds_1_1gaussian_1_1_controller.html" title="Gaussian-observation Controller Type.">lds::gaussian::Controller</a>). It inherits functionality from the underlying GLDS model type (<a class="el" href="classlds_1_1gaussian_1_1_system.html" title="Gaussian LDS Type.">lds::gaussian::System</a>), including state estimation. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

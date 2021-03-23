@@ -69,7 +69,7 @@ end
 % methods in other files:
 matlabSS_to_this(this,sys,g,d);
 
-[y, x] = simulate(this, u, addNoise);
+[y, x, z] = simulate(this, u, addNoise);
 [yImpC, tImp] = simulate_imp(this, nSamps);
 
 [K_est, eig_z2e, sys_z2e, sys_aug] = calcK_steadyState(this, augmentM, qM);
@@ -85,7 +85,7 @@ matlabSS_to_this(this,sys,g,d);
 [plds, y, x] = fit_plds_output_mle(this, u, z, g, rescaleOnly, wG0);
 [y, x] = refit_output(this, u, z, g, tol, maxIter, refit_d);
 
-[] = save_params_rtxi_gldsController(this, savename, qM, Kc, Kc_inty, yRef);
+[] = save_params_controller(this, savename, qM, Kc, Kc_inty, yRef);
 end%end methods
 
 end%classdef

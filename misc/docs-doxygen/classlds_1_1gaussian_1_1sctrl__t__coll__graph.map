@@ -1,9 +1,0 @@
-<map id="lds::gaussian::sctrl_t" name="lds::gaussian::sctrl_t">
-<area shape="rect" id="node1" title="Switched GLDS Controller Type." alt="" coords="179,468,322,495"/>
-<area shape="rect" id="node2" href="$classlds_1_1gaussian_1_1ctrl__t.html" title="GLDS Controller Type." alt="" coords="183,392,319,419"/>
-<area shape="rect" id="node3" href="$classlds_1_1gaussian_1_1sys__t.html" title="Gaussian LDS Type." alt="" coords="93,206,232,233"/>
-<area shape="rect" id="node4" href="$classlds_1_1sys__t.html" title="Linear Dynamical System Type." alt="" coords="124,5,201,32"/>
-<area shape="rect" id="node5" title=" " alt="" coords="5,5,80,32"/>
-<area shape="rect" id="node6" title=" " alt="" coords="234,5,310,32"/>
-<area shape="rect" id="node7" title=" " alt="" coords="396,206,455,233"/>
-</map>

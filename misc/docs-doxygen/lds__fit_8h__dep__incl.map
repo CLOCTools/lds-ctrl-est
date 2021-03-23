@@ -1,0 +1,11 @@
+<map id="lds_fit.h" name="lds_fit.h">
+<area shape="rect" id="node1" title="LDS base fit type." alt="" coords="315,5,383,32"/>
+<area shape="rect" id="node2" href="$lds__fit__em_8h.html" title="subspace identification" alt="" coords="243,80,336,107"/>
+<area shape="rect" id="node5" href="$lds__fit__ssid_8h.html" title="subspace identification" alt="" coords="360,80,459,107"/>
+<area shape="rect" id="node8" href="$lds__gaussian__fit_8h.html" title="GLDS fit type." alt="" coords="89,80,218,107"/>
+<area shape="rect" id="node9" href="$lds__poisson__fit_8h.html" title="PLDS base fit type." alt="" coords="483,80,605,107"/>
+<area shape="rect" id="node3" href="$lds__gaussian__fit__em_8h.html" title="GLDS E&#45;M fit type." alt="" coords="5,155,160,181"/>
+<area shape="rect" id="node4" href="$lds__poisson__fit__em_8h.html" title="PLDS E&#45;M fit type." alt="" coords="368,155,515,181"/>
+<area shape="rect" id="node6" href="$lds__gaussian__fit__ssid_8h.html" title="GLDS SSID fit type." alt="" coords="184,155,344,181"/>
+<area shape="rect" id="node7" href="$lds__poisson__fit__ssid_8h.html" title="PLDS SSID fit type." alt="" coords="539,155,691,181"/>
+</map>

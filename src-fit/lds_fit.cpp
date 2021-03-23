@@ -1,6 +1,6 @@
-//===-- lds_fit.cpp - Fit Type for LDS --------------------------------------===//
+//===-- lds_fit.cpp - Fit Type for LDS ------------------------------------===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,26 +26,23 @@
 
 #include <ldsCtrlEst>
 
-using namespace std;
-using namespace lds;
+namespace lds {
+Fit::Fit(size_t n_u, size_t n_x, size_t n_y, data_t dt) {
+  dt_ = dt;
+  n_x_ = n_x;
+  n_y_ = n_y;
+  n_u_ = n_u;
 
-lds::fit_t::fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q,
-                  armaVec& x0, armaMat& P0, data_t& dt) {
-  this->A = A;
-  this->B = B;
-  this->g = g;
-  this->m = m;
-  this->Q = Q;
+  A_ = Matrix(n_x_, n_x_, fill::eye);
+  B_ = Matrix(n_x_, n_u_, fill::zeros);
+  g_ = Vector(n_u_, fill::ones);
+  m_ = Vector(n_x_, fill::zeros);
+  Q_ = kDefaultQ0 * Matrix(n_x_, n_x_, fill::eye);
 
-  this->x0 = x0;
+  C_ = Matrix(n_y_, n_x_, fill::eye);
+  d_ = Vector(n_y_, fill::zeros);
 
-  if (P0.is_sympd()) {
-    this->P0 = P0;
-  } else {
-    cerr << "Warning: P0 was not symmetric/positive-def. Going to set P0 to "
-            "diag mat with default value...\n";
-    this->P0 = DEFAULT_P0 * armaMat(A.n_rows, A.n_cols, fill::eye);
-  }
-
-  this->dt = dt;
+  x0_ = Vector(n_x_, fill::zeros);
+  P0_ = kDefaultP0 * Matrix(n_x_, n_x_, fill::eye);
 }
+}  // namespace lds

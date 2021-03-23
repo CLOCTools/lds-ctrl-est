@@ -11,7 +11,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_glds_control/</guid>
-      <description>GLDS Control Tutorial #  This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::ctrl_t). In place of a physical system, another GLDS model (lds::gaussian::sys_t) receives control inputs and provides measurements for the simulated feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system.</description>
+      <description>GLDS Control Tutorial #  This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::Controller). In place of a physical system, a GLDS model (lds::gaussian::System) receives control inputs and simulates measurements for the feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system.</description>
     </item>
     
     <item>
@@ -20,7 +20,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_plds_state_estimation/</guid>
-      <description>PLDS State Estimation Tutorial #  This tutorial shows how to use this library to estimate the state of an LDS Poisson observations from input/output data. In place of a physical system, another PLDS model (lds::poisson::sys_t) receives random inputs and provides measurements for the state estimator. For the sake of example, the only parameter mismatch is assumed to be the process disturbance, which is adaptively re-estimated.
+      <description>PLDS State Estimation Tutorial #  This tutorial shows how to use this library to estimate the state of an LDS with Poisson observations from input/output data. In place of a physical system, another PLDS model (lds::poisson::System) receives random inputs and provides measurements for the state estimator. For the sake of example, the only parameter mismatch is assumed to be the process disturbance, which is adaptively re-estimated.
 The full code for this can be found here.</description>
     </item>
     
@@ -30,8 +30,8 @@ The full code for this can be found here.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_switched_plds_control/</guid>
-      <description>PLDS Switched Control Tutorial #  This tutorial shows how to use this library to control a system with a switched PLDS controller (lds::poisson::sctrl_t). This type of controller is applicable in scenarios where a physical system is not accurately captured by a LDS but has multiple discrete operating modes where the dynamics can be well-approximated as linear.
-In the example that follows, another PLDS model (lds::poisson::sys_t) is used in place of a physical system.</description>
+      <description>PLDS Switched Control Tutorial #  This tutorial shows how to use this library to control a system with a switched PLDS controller (lds::poisson::SwitchedController). This type of controller is applicable in scenarios where a physical system is not accurately captured by a single LDS but has multiple discrete operating modes where the dynamics can be well-approximated as linear.
+In the example that follows, another PLDS model (lds::poisson::System) is used in place of a physical system.</description>
     </item>
     
   </channel>

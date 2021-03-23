@@ -1,11 +1,14 @@
 var searchData=
 [
-  ['d_19',['D',['../classlds_1_1gaussian_1_1fit__t.html#a93f1b5b0cf66174ddf06bf4cdfb754e5',1,'lds::gaussian::fit_t']]],
-  ['d_20',['d',['../classlds_1_1gaussian_1_1fit__t.html#a3e3eff8fced4992e8be512a8919a020b',1,'lds::gaussian::fit_t::d()'],['../classlds_1_1gaussian_1_1sys__t.html#a4db53312c68dd9e93a1750f983a28a88',1,'lds::gaussian::sys_t::d()'],['../classlds_1_1poisson_1_1fit__t.html#a1a9caf782671af21e437dc47a3678e88',1,'lds::poisson::fit_t::d()'],['../classlds_1_1poisson_1_1sys__t.html#a93c41f8c761df738143adb7ea0cb0371',1,'lds::poisson::sys_t::d()']]],
-  ['data_5ft_21',['data_t',['../namespacelds.html#a266c35f2b9ec485f1f900ad84bd5e1d7',1,'lds']]],
-  ['defaultq_22',['defaultQ',['../classlds_1_1sys__t.html#af27e52b37a7c47834f9d73521837808f',1,'lds::sys_t']]],
-  ['defaultr_23',['defaultR',['../classlds_1_1gaussian_1_1sys__t.html#a6f5368949bdf036ad57d6c0b5be21ae2',1,'lds::gaussian::sys_t']]],
-  ['defaults_24',['Defaults',['../group__defaults.html',1,'']]],
-  ['diag_5fy_25',['diag_y',['../classlds_1_1poisson_1_1sys__t.html#a8a0f5b87f912f269b139e5fee7da2ded',1,'lds::poisson::sys_t']]],
-  ['dt_26',['dt',['../classlds_1_1fit__t.html#a98c30f015be4eb1a7796348a2741e244',1,'lds::fit_t::dt()'],['../classlds_1_1sys__t.html#a7c31bbf94d77c6b950ee0acccaef7949',1,'lds::sys_t::dt()']]]
+  ['d_23',['d',['../classlds_1_1_fit.html#aac616e9bae766d7da6dfb78b04e17bc8',1,'lds::Fit::d()'],['../classlds_1_1_system.html#ad1e4594a8d02930957860994bc4f54ba',1,'lds::System::d()']]],
+  ['d_5f_24',['D_',['../classlds_1_1_s_s_i_d.html#a8cde5d430d3e27fcf560c84ad93bea94',1,'lds::SSID']]],
+  ['d_5f_25',['d_',['../classlds_1_1_fit.html#aa77499e9c7ec3e57feb3036ede640a2a',1,'lds::Fit::d_()'],['../classlds_1_1_system.html#a426e42ac2b84c261c5cb05e224e77dc9',1,'lds::System::d_()']]],
+  ['data_5ft_26',['data_t',['../namespacelds.html#a97e34776784b70d0cd756bef1a679d55',1,'lds']]],
+  ['decomposedata_27',['DecomposeData',['../classlds_1_1_s_s_i_d.html#a0d3e51ed46ed3a159299a5773724bcb3',1,'lds::SSID']]],
+  ['defaults_28',['Defaults',['../group__defaults.html',1,'']]],
+  ['dim_29',['dim',['../classlds_1_1_uniform_matrix_list.html#ab854df8ba5038e058623ed0e45aad19c',1,'lds::UniformMatrixList::dim()'],['../classlds_1_1_uniform_system_list.html#ac986be3ddb8c25c068702f197b3286cc',1,'lds::UniformSystemList::dim()'],['../classlds_1_1_uniform_vector_list.html#aea30edd5c8c2f1b6a81e4c7f87e9ea50',1,'lds::UniformVectorList::dim()']]],
+  ['do_5fadapt_5fm_30',['do_adapt_m',['../classlds_1_1_system.html#a6f47dc2d5190de1328d488d8dd638301',1,'lds::System']]],
+  ['do_5frecurse_5fke_5f_31',['do_recurse_Ke_',['../classlds_1_1gaussian_1_1_system.html#a735a0d174b9266eb17e488ef809129e5',1,'lds::gaussian::System']]],
+  ['dt_32',['dt',['../classlds_1_1_fit.html#abd874b046e73d20087c589caacdb806d',1,'lds::Fit::dt()'],['../classlds_1_1_system.html#ad36940175d7fdd0c19e058cc5dd3d409',1,'lds::System::dt()']]],
+  ['dt_5f_33',['dt_',['../classlds_1_1_fit.html#aca00a52c1017f76668a984100a32989f',1,'lds::Fit::dt_()'],['../classlds_1_1_e_m.html#a06a415667fa19fbd3b43fa227e1ba7a8',1,'lds::EM::dt_()'],['../classlds_1_1_s_s_i_d.html#ab7dc4e55d5a2395d7ebb97685cbd4aa9',1,'lds::SSID::dt_()'],['../classlds_1_1_system.html#ab056dd2417999a8bcd991a9dd9e541fd',1,'lds::System::dt_()']]]
 ];

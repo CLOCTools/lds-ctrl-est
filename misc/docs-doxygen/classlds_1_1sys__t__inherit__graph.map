@@ -1,9 +1,0 @@
-<map id="lds::sys_t" name="lds::sys_t">
-<area shape="rect" id="node1" title="Linear Dynamical System Type." alt="" coords="121,5,198,32"/>
-<area shape="rect" id="node2" href="$classlds_1_1gaussian_1_1sys__t.html" title="Gaussian LDS Type." alt="" coords="11,80,150,107"/>
-<area shape="rect" id="node5" href="$classlds_1_1poisson_1_1sys__t.html" title="Poisson LDS Type." alt="" coords="174,80,305,107"/>
-<area shape="rect" id="node3" href="$classlds_1_1gaussian_1_1ctrl__t.html" title="GLDS Controller Type." alt="" coords="11,155,147,181"/>
-<area shape="rect" id="node4" href="$classlds_1_1gaussian_1_1sctrl__t.html" title="Switched GLDS Controller Type." alt="" coords="5,229,148,256"/>
-<area shape="rect" id="node6" href="$classlds_1_1poisson_1_1ctrl__t.html" title="PLDS Controller Type." alt="" coords="175,155,304,181"/>
-<area shape="rect" id="node7" href="$classlds_1_1poisson_1_1sctrl__t.html" title="Switched PLDS Controller Type." alt="" coords="173,229,309,256"/>
-</map>

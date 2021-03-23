@@ -7,6 +7,8 @@
 #   :command:`matlab_add_mex`
 # adds a target compiling a MEX file.
 
+set(MATLAB_ADDITIONAL_VERSIONS "R2021a=9.10")
+
 find_package(Matlab)
 
 # if (Matlab_FOUND)

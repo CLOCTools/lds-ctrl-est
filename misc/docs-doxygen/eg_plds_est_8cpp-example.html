@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ldsCtrlEst
-   &#160;<span id="projectnumber">0.5.0</span>
+   &#160;<span id="projectnumber">0.6.0</span>
    </div>
   </td>
  </tr>
@@ -69,7 +69,7 @@ $(function() {
 <p>Example PLDS Estimation</p>
 <div class="fragment"><div class="line"><span class="comment">//===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===//</span></div>
 <div class="line"><span class="comment">//</span></div>
-<div class="line"><span class="comment">// Copyright 2021 [name of copyright owner]</span></div>
+<div class="line"><span class="comment">// Copyright 2021 Georgia Institute of Technology</span></div>
 <div class="line"><span class="comment">//</span></div>
 <div class="line"><span class="comment">// Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span></div>
 <div class="line"><span class="comment">// you may not use this file except in compliance with the License.</span></div>
@@ -88,136 +88,131 @@ $(function() {
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;ldsCtrlEst&gt;</span></div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using</span> lds::armaMat;</div>
-<div class="line"><span class="keyword">using</span> lds::armaVec;</div>
-<div class="line"><span class="keyword">using</span> <a name="a0"></a><a class="code" href="namespacelds.html#a266c35f2b9ec485f1f900ad84bd5e1d7">lds::data_t</a>;</div>
+<div class="line"><span class="keyword">using</span> lds::Matrix;</div>
+<div class="line"><span class="keyword">using</span> lds::Vector;</div>
+<div class="line"><span class="keyword">using</span> <a name="a0"></a><a class="code" href="namespacelds.html#a97e34776784b70d0cd756bef1a679d55">lds::data_t</a>;</div>
 <div class="line"><span class="keyword">using</span> std::cout;</div>
-<div class="line"><span class="keyword">using</span> std::vector;</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// for generating random input</span></div>
-<div class="line">armaMat random_walk(<span class="keywordtype">size_t</span> n_t, <span class="keyword">const</span> arma::mat&amp; Q, arma::vec x0);</div>
+<div class="line">Matrix random_walk(<span class="keywordtype">size_t</span> n_t, <span class="keyword">const</span> Matrix&amp; Q, <span class="keyword">const</span> Vector&amp; x0);</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main(<span class="keywordtype">void</span>) {</div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">  cout &lt;&lt; <span class="stringliteral">&quot; ********** Example Poisson LDS Estimation ********** \n\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Make SISO system sampled at 1kHz</span></div>
-<div class="line">  <a class="code" href="namespacelds.html#a266c35f2b9ec485f1f900ad84bd5e1d7">data_t</a> dt = 1e-3;</div>
-<div class="line">  <span class="keywordtype">size_t</span> n_u = 1;                             <span class="comment">// no. inputs</span></div>
-<div class="line">  <span class="keywordtype">size_t</span> n_x = 1;                             <span class="comment">// no. states</span></div>
-<div class="line">  <span class="keywordtype">size_t</span> n_y = 1;                             <span class="comment">// no. outputs</span></div>
-<div class="line">  <span class="keywordtype">size_t</span> n_t = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(30 / dt);  <span class="comment">// no time steps for simulation.</span></div>
+<div class="line">  <a class="code" href="namespacelds.html#a97e34776784b70d0cd756bef1a679d55">data_t</a> dt = 1e-3;</div>
+<div class="line">  <span class="keywordtype">size_t</span> n_u = 1;                           <span class="comment">// no. inputs</span></div>
+<div class="line">  <span class="keywordtype">size_t</span> n_x = 1;                           <span class="comment">// no. states</span></div>
+<div class="line">  <span class="keywordtype">size_t</span> n_y = 1;                           <span class="comment">// no. outputs</span></div>
+<div class="line">  <span class="keyword">auto</span> n_t = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(30 / dt);  <span class="comment">// no time steps for simulation.</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// construct ground truth system...</span></div>
-<div class="line">  <a name="_a1"></a><a class="code" href="classlds_1_1poisson_1_1sys__t.html">lds::poisson::sys_t</a> system_true(n_u, n_x, n_y, dt);</div>
+<div class="line">  <a name="_a1"></a><a class="code" href="classlds_1_1poisson_1_1_system.html">lds::poisson::System</a> system_true(n_u, n_x, n_y, dt);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Model parameters</span></div>
-<div class="line">  armaMat a_true(n_x, n_x, arma::fill::eye);</div>
+<div class="line">  Matrix a_true(n_x, n_x, arma::fill::eye);</div>
 <div class="line">  a_true[0] = exp(-dt / 0.075);</div>
-<div class="line">  armaMat b_true = armaMat(n_x, n_u).fill(1e-2);</div>
-<div class="line">  armaVec m0_true = armaVec(n_x, arma::fill::zeros).fill(-7e-2);  <span class="comment">// disturbance</span></div>
-<div class="line">  armaVec x0_true = m0_true * arma::inv(armaMat(n_x, n_x, arma::fill::eye) -</div>
+<div class="line">  Matrix b_true = Matrix(n_x, n_u).fill(1e-2);</div>
+<div class="line">  Vector m0_true = Vector(n_x, arma::fill::zeros).fill(-7e-2);  <span class="comment">// disturbance</span></div>
+<div class="line">  Vector x0_true = m0_true * arma::inv(Matrix(n_x, n_x, arma::fill::eye) -</div>
 <div class="line">                                        a_true);  <span class="comment">// initial state</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Assign params.</span></div>
-<div class="line">  system_true.setA(a_true);</div>
-<div class="line">  system_true.setB(b_true);</div>
-<div class="line">  system_true.setX0(x0_true);</div>
-<div class="line">  system_true.setM(m0_true);</div>
-<div class="line">  system_true.reset();</div>
+<div class="line">  system_true.set_A(a_true);</div>
+<div class="line">  system_true.set_B(b_true);</div>
+<div class="line">  system_true.set_x0(x0_true);</div>
+<div class="line">  system_true.set_m(m0_true);</div>
+<div class="line">  system_true.Reset();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Construct system for estimation</span></div>
 <div class="line">  <span class="comment">// e.g., will create a model with incorrect disturbance</span></div>
-<div class="line">  <a class="code" href="classlds_1_1poisson_1_1sys__t.html">lds::poisson::sys_t</a> system_estimator(n_u, n_x, n_y, dt);</div>
+<div class="line">  <a class="code" href="classlds_1_1poisson_1_1_system.html">lds::poisson::System</a> system_estimator(n_u, n_x, n_y, dt);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Can copy parameters from another system object</span></div>
 <div class="line">  system_estimator = system_true;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// wrong disturbance</span></div>
-<div class="line">  armaVec m0_est = m0_true * 2;</div>
-<div class="line">  system_estimator.setM(m0_est);</div>
+<div class="line">  Vector m0_est = m0_true * 2;</div>
+<div class="line">  system_estimator.set_m(m0_est);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// set new initial conditions</span></div>
-<div class="line">  armaVec x0_est = m0_est * arma::inv(armaMat(n_x, n_x, arma::fill::eye) -</div>
+<div class="line">  Vector x0_est = m0_est * arma::inv(Matrix(n_x, n_x, arma::fill::eye) -</div>
 <div class="line">                                      a_true);  <span class="comment">// initial state</span></div>
-<div class="line">  system_estimator.setX0(x0_est);</div>
-<div class="line">  system_estimator.reset();  <span class="comment">// reset to initial condition.</span></div>
+<div class="line">  system_estimator.set_x0(x0_est);</div>
+<div class="line">  system_estimator.Reset();  <span class="comment">// reset to initial condition.</span></div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// turn on adaptive disturbance estimation</span></div>
-<div class="line">  system_estimator.adaptM = <span class="keyword">true</span>;</div>
+<div class="line">  system_estimator.do_adapt_m = <span class="keyword">true</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// set adaptation rate by changing covariance of assumed process noise acting</span></div>
 <div class="line">  <span class="comment">// on random-walk evolution of m</span></div>
-<div class="line">  armaMat q_m = armaMat(n_x, n_x, arma::fill::eye) * 1e-6;</div>
-<div class="line">  system_estimator.setQ_m(q_m);</div>
+<div class="line">  Matrix q_m = Matrix(n_x, n_x, arma::fill::eye) * 1e-6;</div>
+<div class="line">  system_estimator.set_Q_m(q_m);</div>
 <div class="line"> </div>
 <div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;.....................................\n&quot;</span>;</div>
 <div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;estimator:\n&quot;</span>;</div>
 <div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;.....................................\n&quot;</span>;</div>
-<div class="line">  system_estimator.printSys();</div>
+<div class="line">  system_estimator.Print();</div>
 <div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;.....................................\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Set up simulation :</span></div>
-<div class="line"> </div>
 <div class="line">  <span class="comment">// Simulated measurements</span></div>
-<div class="line">  armaMat z(n_y, n_t, arma::fill::zeros);</div>
+<div class="line">  Matrix z(n_y, n_t, arma::fill::zeros);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Stimulus (generate random stimulus)</span></div>
-<div class="line">  armaMat q_u =</div>
-<div class="line">      armaMat(n_u, n_u, arma::fill::eye) * 1e-3;  <span class="comment">// cov of random walk</span></div>
-<div class="line">  armaMat u = random_walk(n_t, q_u, armaVec(n_u, arma::fill::zeros));</div>
+<div class="line">  Matrix q_u =</div>
+<div class="line">      Matrix(n_u, n_u, arma::fill::eye) * 1e-3;  <span class="comment">// cov of random walk</span></div>
+<div class="line">  Matrix u = random_walk(n_t, q_u, Vector(n_u, arma::fill::zeros));</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// create matrix to save outputs in...</span></div>
-<div class="line">  armaMat y_hat(n_y, n_t, arma::fill::zeros);</div>
-<div class="line">  armaMat y_true(n_y, n_t, arma::fill::zeros);</div>
+<div class="line">  Matrix y_hat(n_y, n_t, arma::fill::zeros);</div>
+<div class="line">  Matrix y_true(n_y, n_t, arma::fill::zeros);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// states and disturbance params</span></div>
-<div class="line">  armaMat x_hat(n_x, n_t, arma::fill::zeros);</div>
-<div class="line">  armaMat m_hat(n_x, n_t, arma::fill::zeros);</div>
+<div class="line">  Matrix x_hat(n_x, n_t, arma::fill::zeros);</div>
+<div class="line">  Matrix m_hat(n_x, n_t, arma::fill::zeros);</div>
 <div class="line"> </div>
-<div class="line">  armaMat x_true(n_x, n_t, arma::fill::zeros);</div>
-<div class="line">  armaMat m_true(n_y, n_t, arma::fill::zeros);</div>
+<div class="line">  Matrix x_true(n_x, n_t, arma::fill::zeros);</div>
+<div class="line">  Matrix m_true(n_y, n_t, arma::fill::zeros);</div>
+<div class="line"> </div>
+<div class="line">  <span class="comment">// initial conditions</span></div>
+<div class="line">  y_hat.col(0) = system_estimator.y();</div>
+<div class="line">  y_true.col(0) = system_true.y();</div>
+<div class="line">  x_hat.col(0) = system_estimator.x();</div>
+<div class="line">  x_true.col(0) = system_true.x();</div>
+<div class="line">  m_hat.col(0) = system_estimator.m();</div>
+<div class="line">  m_true.col(0) = system_true.m();</div>
 <div class="line"> </div>
 <div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;Starting &quot;</span> &lt;&lt; n_t * dt &lt;&lt; <span class="stringliteral">&quot; sec simlation ... \n&quot;</span>;</div>
 <div class="line">  <span class="keyword">auto</span> start = std::chrono::high_resolution_clock::now();</div>
-<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> t = 0; t &lt; n_t; t++) {</div>
-<div class="line">    <span class="comment">// input</span></div>
-<div class="line">    armaVec u_k(u.colptr(t), u.n_rows, <span class="keyword">false</span>, <span class="keyword">true</span>);</div>
-<div class="line"> </div>
+<div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> t = 1; t &lt; n_t; t++) {</div>
 <div class="line">    <span class="comment">// Simlate the true system.</span></div>
-<div class="line">    system_true.setU(u_k);</div>
-<div class="line">    system_true.simPredict();</div>
+<div class="line">    z.col(t) = system_true.Simulate(u.col(t - 1));</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">// generate a measurement</span></div>
-<div class="line">    armaVec z_k(z.colptr(t), z.n_rows, <span class="keyword">false</span>, <span class="keyword">true</span>);</div>
-<div class="line">    system_true.simMeasurement(z_k);</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// filter (predict -&gt; update)</span></div>
-<div class="line">    system_estimator.filter(z_k);</div>
+<div class="line">    <span class="comment">// Filter (predict -&gt; update)</span></div>
+<div class="line">    system_estimator.Filter(u.col(t - 1), z.col(t));</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// save signals</span></div>
-<div class="line">    y_hat.col(t) = system_estimator.getY();</div>
-<div class="line">    y_true.col(t) = system_true.getY();</div>
+<div class="line">    y_hat.col(t) = system_estimator.y();</div>
+<div class="line">    y_true.col(t) = system_true.y();</div>
 <div class="line"> </div>
-<div class="line">    x_true.col(t) = system_true.getX();</div>
-<div class="line">    m_true.col(t) = system_true.getM();</div>
+<div class="line">    x_true.col(t) = system_true.x();</div>
+<div class="line">    m_true.col(t) = system_true.m();</div>
 <div class="line"> </div>
-<div class="line">    x_hat.col(t) = system_estimator.getX();</div>
-<div class="line">    m_hat.col(t) = system_estimator.getM();</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// for next time.</span></div>
-<div class="line">    system_estimator.setU(u_k);</div>
+<div class="line">    x_hat.col(t) = system_estimator.x();</div>
+<div class="line">    m_hat.col(t) = system_estimator.m();</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="keyword">auto</span> finish = std::chrono::high_resolution_clock::now();</div>
-<div class="line">  std::chrono::duration&lt;data_t, std::milli&gt; simTime_ms = finish - start;</div>
-<div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;Finished simlation in &quot;</span> &lt;&lt; simTime_ms.count() &lt;&lt; <span class="stringliteral">&quot; ms.\n&quot;</span>;</div>
-<div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;(app. &quot;</span> &lt;&lt; (simTime_ms.count() / n_t) * 1e3 &lt;&lt; <span class="stringliteral">&quot; us/time-step)\n&quot;</span>;</div>
+<div class="line">  std::chrono::duration&lt;data_t, std::milli&gt; sim_time_ms = finish - start;</div>
+<div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;Finished simlation in &quot;</span> &lt;&lt; sim_time_ms.count() &lt;&lt; <span class="stringliteral">&quot; ms.\n&quot;</span>;</div>
+<div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;(app. &quot;</span> &lt;&lt; (sim_time_ms.count() / n_t) * 1e3 &lt;&lt; <span class="stringliteral">&quot; us/time-step)\n&quot;</span>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// saved variables: dt, y_hat, x_hat, m_hat, z, u, y_true,</span></div>
 <div class="line">  <span class="comment">// x_true, m_true saving with hdf5 via armadillo</span></div>
 <div class="line">  arma::hdf5_opts::opts replace = arma::hdf5_opts::replace;</div>
 <div class="line"> </div>
-<div class="line">  <span class="keyword">auto</span> dt_vec = arma::vec(1).fill(dt);</div>
+<div class="line">  <span class="keyword">auto</span> dt_vec = Vector(1).fill(dt);</div>
 <div class="line">  dt_vec.save(arma::hdf5_name(<span class="stringliteral">&quot;eg_plds_est.h5&quot;</span>, <span class="stringliteral">&quot;dt&quot;</span>));</div>
 <div class="line">  u.save(arma::hdf5_name(<span class="stringliteral">&quot;eg_plds_est.h5&quot;</span>, <span class="stringliteral">&quot;u&quot;</span>, replace));</div>
 <div class="line">  z.save(arma::hdf5_name(<span class="stringliteral">&quot;eg_plds_est.h5&quot;</span>, <span class="stringliteral">&quot;z&quot;</span>, replace));</div>
@@ -232,23 +227,23 @@ $(function() {
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// for generating random input</span></div>
-<div class="line">armaMat random_walk(<span class="keywordtype">size_t</span> n_t, <span class="keyword">const</span> arma::mat&amp; Q, arma::vec x0) {</div>
+<div class="line">Matrix random_walk(<span class="keywordtype">size_t</span> n_t, <span class="keyword">const</span> Matrix&amp; Q, <span class="keyword">const</span> Vector&amp; x0) {</div>
 <div class="line">  <span class="keywordtype">size_t</span> n = Q.n_rows;</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">if</span> ((n != Q.n_cols) || (Q.n_cols != Q.n_rows)) {</div>
 <div class="line">    <span class="keywordflow">throw</span> std::logic_error(<span class="stringliteral">&quot;Q must be `n` x `n`.&quot;</span>);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
-<div class="line">  arma::mat x(n, n_t, arma::fill::zeros);</div>
+<div class="line">  Matrix x(n, n_t, arma::fill::zeros);</div>
 <div class="line">  x.col(0) = x0;</div>
 <div class="line">  <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> t = 1; t &lt; n_t; t++) {</div>
-<div class="line">    x.col(t) = x.col(t - 1) + arma::mvnrnd(arma::vec(n, arma::fill::zeros), Q);</div>
+<div class="line">    x.col(t) = x.col(t - 1) + arma::mvnrnd(Vector(n, arma::fill::zeros), Q);</div>
 <div class="line">  }</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">return</span> x;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclasslds_1_1poisson_1_1sys__t_html"><div class="ttname"><a href="classlds_1_1poisson_1_1sys__t.html">lds::poisson::sys_t</a></div><div class="ttdoc">Poisson LDS Type.</div><div class="ttdef"><b>Definition:</b> lds_poisson_sys.h:40</div></div>
-<div class="ttc" id="anamespacelds_html_a266c35f2b9ec485f1f900ad84bd5e1d7"><div class="ttname"><a href="namespacelds.html#a266c35f2b9ec485f1f900ad84bd5e1d7">lds::data_t</a></div><div class="ttdeci">double data_t</div><div class="ttdef"><b>Definition:</b> lds.h:39</div></div>
+<div class="ttc" id="aclasslds_1_1poisson_1_1_system_html"><div class="ttname"><a href="classlds_1_1poisson_1_1_system.html">lds::poisson::System</a></div><div class="ttdoc">Poisson System type.</div><div class="ttdef"><b>Definition:</b> lds_poisson_sys.h:40</div></div>
+<div class="ttc" id="anamespacelds_html_a97e34776784b70d0cd756bef1a679d55"><div class="ttname"><a href="namespacelds.html#a97e34776784b70d0cd756bef1a679d55">lds::data_t</a></div><div class="ttdeci">double data_t</div><div class="ttdef"><b>Definition:</b> lds.h:42</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

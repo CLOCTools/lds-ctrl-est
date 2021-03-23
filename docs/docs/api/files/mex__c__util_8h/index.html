@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -206,7 +206,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/mex_c_util.h - Mex C API Utilities ---------*- C++ -*-===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -226,9 +226,7 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#75715e">#ifndef LDSCTRLEST_MEXC_UTIL_H
 </span><span style="color:#75715e">#define LDSCTRLEST_MEXC_UTIL_H
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#ifndef LDSCTRLEST
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;mex.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
@@ -254,7 +252,7 @@ https://github.com/alex-shpak/hugo-book
   <span style="color:#66d9ef">if</span> (mxGetData(matlab_mat)) {
     <span style="color:#66d9ef">const</span> mwSize n_dim <span style="color:#f92672">=</span> mxGetNumberOfDimensions(matlab_mat);
     <span style="color:#66d9ef">if</span> (n_dim <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span>) {
-      <span style="color:#66d9ef">return</span> arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(<span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span> <span style="color:#f92672">*&gt;</span>(mxGetData(matlab_mat)),
+      <span style="color:#66d9ef">return</span> arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(<span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span>(mxGetData(matlab_mat)),
                           mxGetM(matlab_mat), mxGetN(matlab_mat), copy_aux_mem,
                           strict);
     }
@@ -267,28 +265,30 @@ https://github.com/alex-shpak/hugo-book
 
 <span style="color:#75715e">// TODO(mfbolus): make these templated.
 </span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">auto</span> <span style="color:#a6e22e">a2m_mat</span>(arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span>arma_mat) <span style="color:#f92672">-&gt;</span> mxArray <span style="color:#f92672">*</span> {
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">auto</span> a2m_mat(arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span>arma_mat) <span style="color:#f92672">-&gt;</span> mxArray <span style="color:#f92672">*</span> {
   mxArray <span style="color:#f92672">*</span>matlab_mat <span style="color:#f92672">=</span> mxCreateNumericMatrix(arma_mat.n_rows, arma_mat.n_cols,
                                               mxDOUBLE_CLASS, mxREAL);
   <span style="color:#66d9ef">if</span> (matlab_mat) {
-    <span style="color:#66d9ef">auto</span> <span style="color:#f92672">*</span>dst_pointer <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span> <span style="color:#f92672">*&gt;</span>(mxGetData(matlab_mat));
-    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">auto</span> <span style="color:#f92672">*</span>src_pointer <span style="color:#f92672">=</span> <span style="color:#66d9ef">const_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span> <span style="color:#f92672">*&gt;</span>(arma_mat.memptr());
+    <span style="color:#66d9ef">auto</span> <span style="color:#f92672">*</span>dst_pointer <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span>(mxGetData(matlab_mat));
+    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">auto</span> <span style="color:#f92672">*</span>src_pointer <span style="color:#f92672">=</span> <span style="color:#66d9ef">const_cast</span><span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span>(arma_mat.memptr());
     <span style="color:#75715e">// TODO(mfbolus): I just want to MOVE the data, not copy.
-</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>memcpy(dst_pointer, src_pointer, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">double</span>) <span style="color:#f92672">*</span> arma_mat.n_elem);
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>memcpy(dst_pointer, src_pointer, <span style="color:#66d9ef">sizeof</span>(T) <span style="color:#f92672">*</span> arma_mat.n_elem);
     <span style="color:#66d9ef">return</span> matlab_mat;
   }
   mexErrMsgTxt(<span style="color:#e6db74">&#34;Failed to create matlab mat from arma::Mat.&#34;</span>);
   <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nullptr</span>;
 }
 
-<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">auto</span> <span style="color:#a6e22e">a2m_vec</span>(arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span><span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span>arma_vec) <span style="color:#f92672">-&gt;</span> mxArray <span style="color:#f92672">*</span> {
+<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T<span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">auto</span> a2m_vec(arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span>arma_vec) <span style="color:#f92672">-&gt;</span> mxArray <span style="color:#f92672">*</span> {
   mxArray <span style="color:#f92672">*</span>matlab_mat <span style="color:#f92672">=</span>
       mxCreateNumericMatrix(arma_vec.n_elem, <span style="color:#ae81ff">1</span>, mxDOUBLE_CLASS, mxREAL);
   <span style="color:#66d9ef">if</span> (matlab_mat) {
-    <span style="color:#66d9ef">auto</span> <span style="color:#f92672">*</span>dst_pointer <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span> <span style="color:#f92672">*&gt;</span>(mxGetData(matlab_mat));
-    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">auto</span> <span style="color:#f92672">*</span>src_pointer <span style="color:#f92672">=</span> <span style="color:#66d9ef">const_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">double</span> <span style="color:#f92672">*&gt;</span>(arma_vec.memptr());
+    <span style="color:#66d9ef">auto</span> <span style="color:#f92672">*</span>dst_pointer <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span>(mxGetData(matlab_mat));
+    <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">auto</span> <span style="color:#f92672">*</span>src_pointer <span style="color:#f92672">=</span> <span style="color:#66d9ef">const_cast</span><span style="color:#f92672">&lt;</span>T <span style="color:#f92672">*&gt;</span>(arma_vec.memptr());
     <span style="color:#75715e">// TODO(mfbolus): I just want to MOVE the data, not copy.
-</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>memcpy(dst_pointer, src_pointer, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">double</span>) <span style="color:#f92672">*</span> arma_vec.n_elem);
+</span><span style="color:#75715e"></span>    std<span style="color:#f92672">::</span>memcpy(dst_pointer, src_pointer, <span style="color:#66d9ef">sizeof</span>(T) <span style="color:#f92672">*</span> arma_vec.n_elem);
     <span style="color:#66d9ef">return</span> matlab_mat;
   }
   mexErrMsgTxt(<span style="color:#e6db74">&#34;Failed to create matlab mat from arma::Col.&#34;</span>);
@@ -299,7 +299,7 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

@@ -21,7 +21,7 @@ PLDS base fit type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::fit_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1fit__t/)** <br>PLDS Fit Type.  |
+| class | **[lds::poisson::Fit](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit/)** <br>PLDS [Fit]() Type.  |
 
 ## Detailed Description
 
@@ -38,7 +38,7 @@ This file declares and partially defines the base fit type for a Gaussian-output
 ```cpp
 //===-- ldsCtrlEst_h/lds_poisson_fit.h - Fit Type for PLDS ------*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,32 +58,39 @@ This file declares and partially defines the base fit type for a Gaussian-output
 #ifndef LDSCTRLEST_LDS_POISSON_FIT_H
 #define LDSCTRLEST_LDS_POISSON_FIT_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+// namespace
+#include "lds_poisson.h"
+// fit
+#include "lds_fit.h"
 
 namespace lds {
 namespace poisson {
-class fit_t : public lds::fit_t {
+class Fit : public lds::Fit {
  public:
-  fit_t(){};
-  fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0,
-        armaMat& P0, armaMat& C, armaVec& d, data_t dt,
-        std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+  Fit() = default;
 
-  // Output
-  armaMat C;  
-  armaVec d;  
+  Fit(size_t n_u, size_t n_x, size_t n_y, data_t dt)
+      : lds::Fit(n_u, n_x, n_y, dt){};
 
-  // input/output training data
-  std::vector<armaMat> uTrain;  
-  std::vector<armaMat> zTrain;  
+  View h(Matrix& y, const Matrix& x, size_t t) override {
+    y.col(t) = exp(C_ * x.col(t) + d_);
+    return y.col(t);
+  };
+
+  void set_R(const Matrix& R) override {
+    std::cerr
+        << "WARNING: Cannot set R (R[0] = " << R.at(0)
+        << "). No Gaussian measurement noise in Poisson observation model.\n";
+  };
+
+  const Matrix& R() const override {
+    return R_;
+  };
+
 };
 
 };  // namespace poisson
 }  // namespace lds
-
-#include "lds_poisson_fit_ssid.h"
 
 #endif
 ```
@@ -91,4 +98,4 @@ class fit_t : public lds::fit_t {
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

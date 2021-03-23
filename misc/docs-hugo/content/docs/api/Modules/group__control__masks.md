@@ -1,11 +1,12 @@
 ---
 title: Control Mode Bit Masks
+summary: provides fill types for constructing new armadillo vectors, matrices 
 
 ---
 
 # Control Mode Bit Masks
 
-<br> <br>[More...](#detailed-description)
+provides fill types for constructing new armadillo vectors, matrices <br> <br>[More...](#detailed-description)
 <br>
 
 
@@ -13,9 +14,9 @@ title: Control Mode Bit Masks
 
 |                | Name           |
 | -------------- | -------------- |
-| const std::size_t | **[CONTROL_TYPE_U](/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_u)**  |
-| const std::size_t | **[CONTROL_TYPE_INTY](/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_inty)**  |
-| const std::size_t | **[CONTROL_TYPE_ADAPT_M](/ldsctrlest/docs/api/modules/group__control__masks/#variable-control_type_adapt_m)** <br>Control setpoint adapted with (re-estimated) process disturbance `m`.  |
+| const std::size_t | **[kControlTypeDeltaU](/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypedeltau)** <br>control designed to penalize change in input  |
+| const std::size_t | **[kControlTypeIntY](/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypeinty)** <br>control using integral action  |
+| const std::size_t | **[kControlTypeAdaptM](/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypeadaptm)** <br>adapt control setpoint with re-estimated disturbance `m` |
 
 ## Detailed Description
 
@@ -27,10 +28,10 @@ Control mode bit masks. These can be bit-wise OR'd to use in combination.
 
 ## Attribute Details
 
-### CONTROL_TYPE_U
+### kControlTypeDeltaU
 
 ```cpp
-static const std::size_t CONTROL_TYPE_U = 0x1;
+static const std::size_t kControlTypeDeltaU = 0x1;
 ```
 
 
@@ -38,10 +39,10 @@ static const std::size_t CONTROL_TYPE_U = 0x1;
 Control was designed to penalize change in input (i.e., the state was augmented with input `u`) 
 
 
-### CONTROL_TYPE_INTY
+### kControlTypeIntY
 
 ```cpp
-static const std::size_t CONTROL_TYPE_INTY = CONTROL_TYPE_U << 1;
+static const std::size_t kControlTypeIntY = kControlTypeDeltaU << 1;
 ```
 
 
@@ -49,12 +50,15 @@ static const std::size_t CONTROL_TYPE_INTY = CONTROL_TYPE_U << 1;
 Control using integral action (i.e., the state was augmented with output `y` during design) 
 
 
-### CONTROL_TYPE_ADAPT_M
+### kControlTypeAdaptM
 
 ```cpp
-static const std::size_t CONTROL_TYPE_ADAPT_M = CONTROL_TYPE_U << 2;
+static const std::size_t kControlTypeAdaptM = kControlTypeDeltaU << 2;
 ```
 
+
+
+Adapt control setpoint adapted with re-estimated process disturbance `m`. 
 
 
 
@@ -63,4 +67,4 @@ static const std::size_t CONTROL_TYPE_ADAPT_M = CONTROL_TYPE_U << 2;
 
 -------------------------------
 
-Updated on  3 March 2021 at 23:06:12 CST
+Updated on 23 March 2021 at 09:14:15 CDT

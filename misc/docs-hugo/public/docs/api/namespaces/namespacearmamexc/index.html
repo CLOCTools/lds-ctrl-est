@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -208,12 +208,12 @@ https://github.com/alex-shpak/hugo-book
 <td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-m2a_mat">m2a_mat</a></strong>(const mxArray * matlab_mat, bool copy_aux_mem =false, bool strict =true)<br>Convert matlab matrix to armadillo.</td>
 </tr>
 <tr>
-<td>auto</td>
-<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_mat">a2m_mat</a></strong>(arma::Mat&lt; double &gt; const &amp; arma_mat)<br>Convert armadillo to matlab matrix.</td>
+<td>template &lt;typename T &gt; <br>auto</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_mat">a2m_mat</a></strong>(arma::Mat&lt; T &gt; const &amp; arma_mat)<br>Convert armadillo to matlab matrix.</td>
 </tr>
 <tr>
-<td>auto</td>
-<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_vec">a2m_vec</a></strong>(arma::Col&lt; double &gt; const &amp; arma_vec)<br>Convert armadillo to matlab vector.</td>
+<td>template &lt;typename T &gt; <br>auto</td>
+<td><strong><a href="/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_vec">a2m_vec</a></strong>(arma::Col&lt; T &gt; const &amp; arma_vec)<br>Convert armadillo to matlab vector.</td>
 </tr>
 </tbody>
 </table>
@@ -268,8 +268,9 @@ https://github.com/alex-shpak/hugo-book
   a2m_mat
   <a class="anchor" href="#a2m_mat">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">auto</span> a2m_mat(
-    arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> arma_mat
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T <span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">auto</span> a2m_mat(
+    arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span> T <span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> arma_mat
 )
 </code></pre></div><p><strong>Parameters</strong>:</p>
 <ul>
@@ -280,8 +281,9 @@ https://github.com/alex-shpak/hugo-book
   a2m_vec
   <a class="anchor" href="#a2m_vec">#</a>
 </h3>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">auto</span> a2m_vec(
-    arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">double</span> <span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> arma_vec
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> T <span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">auto</span> a2m_vec(
+    arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span> T <span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">&amp;</span> arma_vec
 )
 </code></pre></div><p><strong>Parameters</strong>:</p>
 <ul>
@@ -289,7 +291,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 <p><strong>Return</strong>: matlab vector</p>
 <hr>
-<p>Updated on  3 March 2021 at 23:06:11 CST</p>
+<p>Updated on 23 March 2021 at 09:14:14 CDT</p>
 </article>
  
       

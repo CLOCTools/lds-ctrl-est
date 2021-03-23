@@ -1,6 +1,6 @@
 //===-- ldsCtrlEst_h/lds_poisson_sys.h - PLDS -------------------*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@
 /// \file
 /// This file declares and partially defines the type for state estimation
 /// (filtering) as well as simulation of Poisson-output linear dynamical systems
-/// (`lds::poisson::sys_t`). It inherits functionality from the underlying
-/// linear dynamical system (`lds::sys_t`).
+/// (`lds::poisson::System`). It inherits functionality from the underlying
+/// linear dynamical system (`lds::System`).
 ///
 /// \brief PLDS base type
 //===----------------------------------------------------------------------===//
@@ -28,139 +28,78 @@
 #ifndef LDSCTRLEST_LDS_POISSON_SYS_H
 #define LDSCTRLEST_LDS_POISSON_SYS_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+// namespace
+#include "lds_poisson.h"
+// system
+#include "lds_sys.h"
 
 namespace lds {
 namespace poisson {
-///
-/// @brief      Poisson LDS Type
-///
-class sys_t : public lds::sys_t {
+
+/// Poisson System type
+class System : public lds::System {
  public:
   /**
-   * Given current measurment and input, filter data to produce causal state
-   * estimates using a point-process filter, which procedes by predicting the
-   * state and subsequently updating.
-   *
-   * References:
-   *
-   * Smith AC, Brown EN. (2003) Estimating a State-Space Model from Point
-   * Process Observations. Neural Computation 15.
-   *
-   * Eden UT, ..., Brown EN. (2004) Dynamic Analysis of Neural Encoding by Point
-   * Process Adaptive Filtering Neural Computation 16.
-   *
-   * @brief      Filter data to produce causal state estimates
-   *
-   * @param      u_tm1  input at t-minus-1
-   * @param      z_t    current measurement
+   * @brief      Constructs a new System.
    */
-  void filter(armaVec& u_tm1, armaVec& z_t);
+  System() = default;
 
   /**
-   * Given current measurment and input, filter data to produce causal state
-   * estimates using a point-process filter, which procedes by predicting the
-   * state and subsequently updating.
+   * @brief      Constructs a new Poisson System.
    *
-   * References:
-   *
-   * Smith AC, Brown EN. (2003) Estimating a State-Space Model from Point
-   * Process Observations. Neural Computation 15.
-   *
-   * Eden UT, ..., Brown EN. (2004) Dynamic Analysis of Neural Encoding by Point
-   * Process Adaptive Filtering Neural Computation 16.
-   *
-   * @brief      Filter data to produce causal state estimates
-   *
-   * @param      z    current measurement
-   */
-  void filter(armaVec& z);
-
-  /**
-   * @brief      Simulate one step of the model and produce a measurement
-   *
-   * @param      z     measurement
-   */
-  void simMeasurement(armaVec& z);
-
-  /**
-   * @brief      Constructs a new PLDS.
-   *
-   * @param      nU    number of inputs
-   * @param      nX    number of states
-   * @param      nY    number of outputs
+   * @param      n_u    number of inputs
+   * @param      n_x    number of states
+   * @param      n_y    number of outputs
    * @param      dt    sample period
    * @param      p0    [optional] initial diagonal elements of state estimate
    *                   covariance (P)
    * @param      q0    [optional] initial diagonal elements of process noise
    *                   covariance (Q)
    */
-  sys_t(std::size_t nU, std::size_t nX, std::size_t nY, data_t& dt,
-        data_t& p0 = DEFAULT_P0, data_t& q0 = DEFAULT_Q0);
-  sys_t& operator=(const sys_t& sys);
+  System(std::size_t n_u, std::size_t n_x, std::size_t n_y, data_t dt,
+         data_t p0 = kDefaultP0, data_t q0 = kDefaultQ0);
 
-  // get methods
-  /// Get number of outputs (y)
-  size_t getNy() const { return nY; };
-
-  /// Get output matrix (C)
-  armaMat getC() const { return C; };
-
-  /// Get output bias (D)
-  armaVec getD() const { return d; };
-
-  /// Get output (y)
-  armaVec getY() const { return y; };
-
-  /// Get measurement (z)
-  armaVec getZ() const { return z; };
-
-  // set methods
-  /// Set dimensions of sytem
-  void setDims(std::size_t& nU, std::size_t& nX, std::size_t& nY);
-
-  /// Set output matrix (C)
-  void setC(stdVec& cVec);
-  /// Set output matrix (C)
-  void setC(armaMat& C);
-
-  /// Set output bias (d)
-  void setD(stdVec& dVec);
-  /// Set output bias (d)
-  void setD(armaVec& d);
-
-  /// Set measurement (z)
-  void setZ(stdVec& zVec);
-  /// Set measurement (z)
-  void setZ(armaVec& z);
-
-  /// Reset system variables
-  void reset();
-  /// Print system variables to stdout
-  void printSys();
+  /**
+   * Simulate system and produce measurement
+   *
+   *
+   * @brief      Simulate system measurement
+   *
+   * @param      u_tm1  input at t-1
+   *
+   * @return     z      measurement
+   */
+  const Vector& Simulate(const Vector& u_tm1) override;
 
  protected:
-  /// One-step prediction
-  void predict();
   /// System output function
-  void h();  // output nonlinearity
+  void h() override {
+    cx_ = C_ * x_;
+    y_ = exp(cx_ + d_);
+    diag_y_.diag() = y_;
+  };
 
-  // output-specific stuff
-  std::size_t nY;  ///< number of outputs
-  armaMat C;       ///< output matrix
-  armaVec d;       ///< output bias
-  armaVec y;       ///< output
-  armaVec logy;    ///< logarithm of output
-  armaVec z;       ///< measurement
+  /**
+   * Recursively recalculate estimator gain (Ke).
+   *
+   * References:
+   *
+   * Smith AC, Brown EN. (2003) Estimating a State-Space Model from Point
+   * Process Observations. Neural Computation 15.
+   *
+   * Eden UT, ..., Brown EN. (2004) Dynamic Analysis of Neural Encoding by Point
+   * Process Adaptive Filtering Neural Computation 16.
+   *
+   * @brief      Recursively recalculate estimator gain (Ke)
+   */
+  void RecurseKe() override;
 
-  armaMat diag_y;  ///< diagonal matrix with elements y
-  armaVec chance;  ///< p.r. number for rolling dice if simulating data
-};                 // sys_t
+ private:
+  // Poisson-output-specific
+  Matrix diag_y_;  ///< diagonal matrix with elements y
+  Vector chance_;  ///< p.r. number for rolling dice if simulating data
+};                  // System
 }  // namespace poisson
 }  // namespace lds
-
-#include "lds_poisson_ctrl.h"
 
 #endif

@@ -1,0 +1,5 @@
+<map id="lds_fit_ssid.h" name="lds_fit_ssid.h">
+<area shape="rect" id="node1" title="subspace identification" alt="" coords="125,5,224,32"/>
+<area shape="rect" id="node2" href="$lds__gaussian__fit__ssid_8h.html" title="GLDS SSID fit type." alt="" coords="5,80,165,107"/>
+<area shape="rect" id="node3" href="$lds__poisson__fit__ssid_8h.html" title="PLDS SSID fit type." alt="" coords="189,80,341,107"/>
+</map>

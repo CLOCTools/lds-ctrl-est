@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['sctrl_5ft_221',['sctrl_t',['../classlds_1_1gaussian_1_1sctrl__t.html',1,'lds::gaussian::sctrl_t'],['../classlds_1_1poisson_1_1sctrl__t.html',1,'lds::poisson::sctrl_t']]],
-  ['ssidfit_5ft_222',['ssidFit_t',['../classlds_1_1gaussian_1_1ssid_fit__t.html',1,'lds::gaussian::ssidFit_t'],['../classlds_1_1poisson_1_1ssid_fit__t.html',1,'lds::poisson::ssidFit_t']]],
-  ['sys_5ft_223',['sys_t',['../classlds_1_1gaussian_1_1sys__t.html',1,'lds::gaussian::sys_t'],['../classlds_1_1poisson_1_1sys__t.html',1,'lds::poisson::sys_t'],['../classlds_1_1sys__t.html',1,'lds::sys_t']]]
+  ['ssid_230',['SSID',['../classlds_1_1_s_s_i_d.html',1,'lds']]],
+  ['switchedcontroller_231',['SwitchedController',['../classlds_1_1gaussian_1_1_switched_controller.html',1,'lds::gaussian::SwitchedController'],['../classlds_1_1poisson_1_1_switched_controller.html',1,'lds::poisson::SwitchedController'],['../classlds_1_1_switched_controller.html',1,'lds::SwitchedController&lt; System &gt;']]],
+  ['system_232',['System',['../classlds_1_1gaussian_1_1_system.html',1,'lds::gaussian::System'],['../classlds_1_1poisson_1_1_system.html',1,'lds::poisson::System'],['../classlds_1_1_system.html',1,'lds::System']]]
 ];

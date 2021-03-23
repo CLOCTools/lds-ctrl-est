@@ -15,7 +15,7 @@
 <link rel="manifest" href="/ldsctrlest/manifest.json">
 <link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.7db40c81cfd3c2f1d8e2318d27c5adde21a14feddc630c9c0555f4b56073d19d.js" integrity="sha256-fbQMgc/TwvHY4jGNJ8Wt3iGhT&#43;3cYwycBVX0tWBz0Z0="></script>
+<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -213,7 +213,7 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td>class</td>
-<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/">lds::poisson::sys_t</a></strong> <br>Poisson LDS Type.</td>
+<td><strong><a href="/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/">lds::poisson::System</a></strong> <br>Poisson <a href="">System</a> type.</td>
 </tr>
 </tbody>
 </table>
@@ -221,14 +221,14 @@ https://github.com/alex-shpak/hugo-book
   Detailed Description
   <a class="anchor" href="#detailed-description">#</a>
 </h2>
-<p>This file declares and partially defines the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (<code>[lds::poisson::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1sys__t/)</code>). It inherits functionality from the underlying linear dynamical system (<code>[lds::sys_t](/ldsctrlest/docs/api/classes/classlds_1_1sys__t/)</code>).</p>
+<p>This file declares and partially defines the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (<code>[lds::poisson::System](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/)</code>). It inherits functionality from the underlying linear dynamical system (<code>[lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)</code>).</p>
 <h2 id="source-code">
   Source code
   <a class="anchor" href="#source-code">#</a>
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_poisson_sys.h - PLDS -------------------*- C++ -*-===//
 </span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 [name of copyright owner]
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
 </span><span style="color:#75715e">// you may not use this file except in compliance with the License.
@@ -248,73 +248,43 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#75715e">#ifndef LDSCTRLEST_LDS_POISSON_SYS_H
 </span><span style="color:#75715e">#define LDSCTRLEST_LDS_POISSON_SYS_H
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#ifndef LDSCTRLEST
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#endif
+<span style="color:#75715e">// namespace
+</span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_poisson.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#75715e">// system
+</span><span style="color:#75715e"></span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_sys.h&#34;</span><span style="color:#75715e">
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">namespace</span> lds {
 <span style="color:#66d9ef">namespace</span> poisson {
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">sys_t</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> lds<span style="color:#f92672">::</span>sys_t {
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">System</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> lds<span style="color:#f92672">::</span>System {
  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
-  <span style="color:#66d9ef">void</span> filter(armaVec<span style="color:#f92672">&amp;</span> u_tm1, armaVec<span style="color:#f92672">&amp;</span> z_t);
+  System() <span style="color:#f92672">=</span> <span style="color:#66d9ef">default</span>;
 
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">filter</span>(armaVec<span style="color:#f92672">&amp;</span> z);
+  System(std<span style="color:#f92672">::</span>size_t n_u, std<span style="color:#f92672">::</span>size_t n_x, std<span style="color:#f92672">::</span>size_t n_y, data_t dt,
+         data_t p0 <span style="color:#f92672">=</span> kDefaultP0, data_t q0 <span style="color:#f92672">=</span> kDefaultQ0);
 
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">simMeasurement</span>(armaVec<span style="color:#f92672">&amp;</span> z);
-
-  sys_t(std<span style="color:#f92672">::</span>size_t nU, std<span style="color:#f92672">::</span>size_t nX, std<span style="color:#f92672">::</span>size_t nY, data_t<span style="color:#f92672">&amp;</span> dt,
-        data_t<span style="color:#f92672">&amp;</span> p0 <span style="color:#f92672">=</span> DEFAULT_P0, data_t<span style="color:#f92672">&amp;</span> q0 <span style="color:#f92672">=</span> DEFAULT_Q0);
-  sys_t<span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(<span style="color:#66d9ef">const</span> sys_t<span style="color:#f92672">&amp;</span> sys);
-
-  <span style="color:#75715e">// get methods
-</span><span style="color:#75715e"></span>  size_t <span style="color:#a6e22e">getNy</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> nY; };
-
-  armaMat <span style="color:#a6e22e">getC</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> C; };
-
-  armaVec <span style="color:#a6e22e">getD</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> d; };
-
-  armaVec <span style="color:#a6e22e">getY</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> y; };
-
-  armaVec <span style="color:#a6e22e">getZ</span>() <span style="color:#66d9ef">const</span> { <span style="color:#66d9ef">return</span> z; };
-
-  <span style="color:#75715e">// set methods
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setDims</span>(std<span style="color:#f92672">::</span>size_t<span style="color:#f92672">&amp;</span> nU, std<span style="color:#f92672">::</span>size_t<span style="color:#f92672">&amp;</span> nX, std<span style="color:#f92672">::</span>size_t<span style="color:#f92672">&amp;</span> nY);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setC</span>(stdVec<span style="color:#f92672">&amp;</span> cVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setC</span>(armaMat<span style="color:#f92672">&amp;</span> C);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setD</span>(stdVec<span style="color:#f92672">&amp;</span> dVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setD</span>(armaVec<span style="color:#f92672">&amp;</span> d);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setZ</span>(stdVec<span style="color:#f92672">&amp;</span> zVec);
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">setZ</span>(armaVec<span style="color:#f92672">&amp;</span> z);
-
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reset</span>();
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">printSys</span>();
+  <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> Simulate(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> u_tm1) <span style="color:#66d9ef">override</span>;
 
  <span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
-  <span style="color:#66d9ef">void</span> predict();
-  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">h</span>();  <span style="color:#75715e">// output nonlinearity
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// output-specific stuff
-</span><span style="color:#75715e"></span>  std<span style="color:#f92672">::</span>size_t nY;  
-  armaMat C;       
-  armaVec d;       
-  armaVec y;       
-  armaVec logy;    
-  armaVec z;       
+  <span style="color:#66d9ef">void</span> h() <span style="color:#66d9ef">override</span> {
+    cx_ <span style="color:#f92672">=</span> C_ <span style="color:#f92672">*</span> x_;
+    y_ <span style="color:#f92672">=</span> exp(cx_ <span style="color:#f92672">+</span> d_);
+    diag_y_.diag() <span style="color:#f92672">=</span> y_;
+  };
 
-  armaMat diag_y;  
-  armaVec chance;  
-};                 <span style="color:#75715e">// sys_t
+  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">RecurseKe</span>() <span style="color:#66d9ef">override</span>;
+
+ <span style="color:#66d9ef">private</span><span style="color:#f92672">:</span>
+  <span style="color:#75715e">// Poisson-output-specific
+</span><span style="color:#75715e"></span>  Matrix diag_y_;  
+  Vector chance_;  
+};                  <span style="color:#75715e">// System
 </span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace poisson
 </span><span style="color:#75715e"></span>}  <span style="color:#75715e">// namespace lds
 </span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_poisson_ctrl.h&#34;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on  3 March 2021 at 23:06:12 CST</p>
+<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
 </article>
  
       

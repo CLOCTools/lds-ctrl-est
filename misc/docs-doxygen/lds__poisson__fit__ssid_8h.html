@@ -22,7 +22,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">ldsCtrlEst
-   &#160;<span id="projectnumber">0.5.0</span>
+   &#160;<span id="projectnumber">0.6.0</span>
    </div>
   </td>
  </tr>
@@ -68,8 +68,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
   <div class="headertitle">
 <div class="title">lds_poisson_fit_ssid.h File Reference</div>  </div>
 </div><!--header-->
@@ -77,23 +76,23 @@ $(function() {
 
 <p>PLDS SSID fit type.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;ldsCtrlEst&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="lds__fit__ssid_8h_source.html">lds_fit_ssid.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="lds__poisson__fit_8h_source.html">lds_poisson_fit.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for lds_poisson_fit_ssid.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="lds__poisson__fit__ssid_8h__incl.png" border="0" usemap="#alds__poisson__fit__ssid_8h" alt=""/></div>
 <map name="alds__poisson__fit__ssid_8h" id="alds__poisson__fit__ssid_8h">
-<area shape="rect" title="PLDS SSID fit type." alt="" coords="5,5,157,32"/>
-<area shape="rect" title=" " alt="" coords="42,80,121,107"/>
-</map>
-</div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="lds__poisson__fit__ssid_8h__dep__incl.png" border="0" usemap="#alds__poisson__fit__ssid_8hdep" alt=""/></div>
-<map name="alds__poisson__fit__ssid_8hdep" id="alds__poisson__fit__ssid_8hdep">
-<area shape="rect" title="PLDS SSID fit type." alt="" coords="5,5,157,32"/>
-<area shape="rect" href="lds__poisson__fit_8h.html" title="PLDS base fit type." alt="" coords="21,80,142,107"/>
+<area shape="rect" title="PLDS SSID fit type." alt="" coords="57,5,209,32"/>
+<area shape="rect" href="lds__fit__ssid_8h.html" title="subspace identification" alt="" coords="151,80,250,107"/>
+<area shape="rect" href="lds__poisson__fit_8h.html" title="PLDS base fit type." alt="" coords="5,80,127,107"/>
+<area shape="rect" href="lds__fit_8h.html" title="LDS base fit type." alt="" coords="144,155,212,181"/>
+<area shape="rect" href="lds_8h.html" title="lds namespace" alt="" coords="130,304,181,331"/>
+<area shape="rect" href="lds__uniform__mats_8h.html" title="List of uniformly sized matrices." alt="" coords="193,229,331,256"/>
+<area shape="rect" title=" " alt="" coords="117,379,193,405"/>
+<area shape="rect" title=" " alt="" coords="220,304,272,331"/>
+<area shape="rect" title=" " alt="" coords="297,304,355,331"/>
+<area shape="rect" href="lds__poisson_8h.html" title="plds namespace" alt="" coords="14,229,118,256"/>
 </map>
 </div>
 </div>
@@ -101,8 +100,8 @@ This graph shows which files directly or indirectly include this file:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlds_1_1poisson_1_1ssid_fit__t.html">lds::poisson::ssidFit_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GLDS SSID Fit Type.  <a href="classlds_1_1poisson_1_1ssid_fit__t.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classlds_1_1poisson_1_1_fit_s_s_i_d.html">lds::poisson::FitSSID</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subspace Identification (<a class="el" href="classlds_1_1_s_s_i_d.html">SSID</a>) for PLDS.  <a href="classlds_1_1poisson_1_1_fit_s_s_i_d.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
@@ -113,31 +112,10 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacelds_1_1poisson"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelds_1_1poisson.html">lds::poisson</a></td></tr>
 <tr class="memdesc:namespacelds_1_1poisson"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linear Dynamical Systems with Poisson observations. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a23b17aa04ff412f7ce257cbc3b5555b5"><td class="memItemLeft" align="right" valign="top">std::tuple&lt; ssidFit_t, <a class="el" href="classlds_1_1gaussian_1_1ssid_fit__t.html">lds::gaussian::ssidFit_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelds_1_1poisson.html#a23b17aa04ff412f7ce257cbc3b5555b5">lds::poisson::ssidFit</a> (std::vector&lt; armaMat &gt; &amp;u, std::vector&lt; armaMat &gt; &amp;z, data_t dt, size_t nX, size_t nH=25, armaVec d0=armaVec(1).fill(-inf), ssidWt wt=NONE, data_t wtG0=0.0, std::vector&lt; data_t &gt; &amp;t0=DEFAULT_T0, data_t t_startSSID=-std::numeric_limits&lt; data_t &gt;::infinity(), data_t t_stopSSID=std::numeric_limits&lt; data_t &gt;::infinity(), bool assumeGaussian=true)</td></tr>
-<tr class="memdesc:a23b17aa04ff412f7ce257cbc3b5555b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fit a PLDS model using subspace identification (SSID)  <a href="namespacelds_1_1poisson.html#a23b17aa04ff412f7ce257cbc3b5555b5">More...</a><br /></td></tr>
-<tr class="separator:a23b17aa04ff412f7ce257cbc3b5555b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac7fa06c36e6b7ac75ea5ccf22b93975e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelds_1_1poisson.html#ac7fa06c36e6b7ac75ea5ccf22b93975e">lds::poisson::newtonSolveC_mle</a> (armaMat &amp;C, armaVec &amp;d, std::vector&lt; armaMat &gt; &amp;x, std::vector&lt; armaMat &gt; &amp;n, data_t &amp;dt)</td></tr>
-<tr class="memdesc:ac7fa06c36e6b7ac75ea5ccf22b93975e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve for output matrix by Poisson MLE.  <a href="namespacelds_1_1poisson.html#ac7fa06c36e6b7ac75ea5ccf22b93975e">More...</a><br /></td></tr>
-<tr class="separator:ac7fa06c36e6b7ac75ea5ccf22b93975e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f95eea1b2a782afcec27b90d34f3ce3"><td class="memItemLeft" align="right" valign="top">data_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelds_1_1poisson.html#a6f95eea1b2a782afcec27b90d34f3ce3">lds::poisson::newtonSolve_rescaleC_mle</a> (armaMat &amp;C, armaVec &amp;d, std::vector&lt; armaMat &gt; &amp;x, std::vector&lt; armaMat &gt; &amp;n, data_t &amp;dt)</td></tr>
-<tr class="memdesc:a6f95eea1b2a782afcec27b90d34f3ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Solve for rescaled output matrix by Poisson MLE.  <a href="namespacelds_1_1poisson.html#a6f95eea1b2a782afcec27b90d34f3ce3">More...</a><br /></td></tr>
-<tr class="separator:a6f95eea1b2a782afcec27b90d34f3ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d1ad566143a3cb1e5b9352a17dde79c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelds_1_1poisson.html#a9d1ad566143a3cb1e5b9352a17dde79c">lds::poisson::calcD_mle</a> (armaMat &amp;C, armaVec &amp;d, std::vector&lt; armaMat &gt; &amp;x, std::vector&lt; armaMat &gt; &amp;n, data_t &amp;dt)</td></tr>
-<tr class="memdesc:a9d1ad566143a3cb1e5b9352a17dde79c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates output bias by Poisson MLE.  <a href="namespacelds_1_1poisson.html#a9d1ad566143a3cb1e5b9352a17dde79c">More...</a><br /></td></tr>
-<tr class="separator:a9d1ad566143a3cb1e5b9352a17dde79c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a4377ac64128d009b035a32eac907ed"><td class="memItemLeft" align="right" valign="top">data_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelds_1_1poisson.html#a0a4377ac64128d009b035a32eac907ed">lds::poisson::calcD_newtonSolve_rescaleC_mle</a> (armaMat &amp;C, armaVec &amp;d, std::vector&lt; armaMat &gt; &amp;x, std::vector&lt; armaMat &gt; &amp;n, data_t &amp;dt)</td></tr>
-<tr class="memdesc:a0a4377ac64128d009b035a32eac907ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates output bias and rescaled output matrix by Poisson MLE.  <a href="namespacelds_1_1poisson.html#a0a4377ac64128d009b035a32eac907ed">More...</a><br /></td></tr>
-<tr class="separator:a0a4377ac64128d009b035a32eac907ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1eeffec125806e1e0637611e3b7b7098"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacelds_1_1poisson.html#a1eeffec125806e1e0637611e3b7b7098">lds::poisson::fitOutput_mle</a> (armaMat &amp;C, armaVec &amp;d, std::vector&lt; armaMat &gt; &amp;x, std::vector&lt; armaMat &gt; &amp;n, data_t &amp;dt)</td></tr>
-<tr class="memdesc:a1eeffec125806e1e0637611e3b7b7098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates exponential output function by Poisson MLE.  <a href="namespacelds_1_1poisson.html#a1eeffec125806e1e0637611e3b7b7098">More...</a><br /></td></tr>
-<tr class="separator:a1eeffec125806e1e0637611e3b7b7098"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>PLDS SSID fit type. </p>
-<p>This file declares and partially defines a type by which Poisson-output LDS models are fit by a subspace identification (SSID) algorithm (<code><a class="el" href="classlds_1_1gaussian_1_1ssid_fit__t.html" title="GLDS SSID Fit Type.">lds::gaussian::ssidFit_t</a></code>). Currently, these models are fit assuming linear/Gaussian output, and then an exponential output is fit by maximum likelihood under the Poisson assumption. Future work should implement SSID after Poisson&lt;-&gt;Gaussian moment conversions as outlined in [2].</p>
+<p>This file declares and partially defines a type by which Poisson-output LDS models are fit by a subspace identification (SSID) algorithm (<code><a class="el" href="classlds_1_1gaussian_1_1_fit_s_s_i_d.html" title="Subspace Identification (SSID) for GLDS.">lds::gaussian::FitSSID</a></code>).</p>
 <p>References: [1] van Overschee P, de Moore B. (1996) Subspace Identification for Linear Systems. Boston: Springer. [2] Buesing L, Macke JH, Sahani M. (2012) Spectral learning of linear dynamics from generalised-linear observations with application to neural population data. NIPS 25. </p>
 </div></div><!-- contents -->
 <!-- start footer part -->

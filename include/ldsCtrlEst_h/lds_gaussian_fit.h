@@ -1,6 +1,6 @@
 //===-- ldsCtrlEst_h/lds_gaussian_fit.h - Fit Type for GLDS -----*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,77 +27,50 @@
 #ifndef LDSCTRLEST_LDS_GAUSSIAN_FIT_H
 #define LDSCTRLEST_LDS_GAUSSIAN_FIT_H
 
-#ifndef LDSCTRLEST
-#include <ldsCtrlEst>
-#endif
+// namespace
+#include "lds_gaussian.h"
+// fit type
+#include "lds_fit.h"
 
 namespace lds {
 namespace gaussian {
 /// GLDS Fit Type
-class fit_t : public lds::fit_t {
+class Fit : public lds::Fit {
  public:
-  fit_t(){};
-  /**
-   * @brief      Constructs a new GLDS fit.
-   *
-   * @param      A       state matrix
-   * @param      B       input matrix
-   * @param      g       input gain
-   * @param      m       process disturbance
-   * @param      Q       process noise covariance
-   * @param      x0      initial state estimate
-   * @param      P0      covariance of initial state estimate
-   * @param      C       output matrix
-   * @param      D       feedthrough matrix
-   * @param      d       output bias
-   * @param      R       covariance of output noise
-   * @param      dt      sample period
-   * @param      uTrain  input training data
-   * @param      zTrain  measurement training data
-   */
-  fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0,
-        armaMat& P0, armaMat& C, armaMat& D, armaVec& d, armaMat& R, data_t dt,
-        std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+  Fit() = default;
 
   /**
-   * @brief      Constructs a new GLDS fit type.
+   * @brief      Constructs a new Fit.
    *
-   * @param      A       state matrix
-   * @param      B       input matrix
-   * @param      g       input gain
-   * @param      m       process disturbance
-   * @param      Q       process noise covariance
-   * @param      x0      initial state estimate
-   * @param      P0      covariance of initial state estimate
-   * @param      C       output matrix
-   * @param      d       output bias
-   * @param      R       covariance of output noise
-   * @param      dt      sample period
-   * @param      uTrain  input training data
-   * @param      zTrain  measurement training data
+   * @param  n_u   number of inputs
+   * @param  n_x   number of states
+   * @param  n_y   number of outputs
+   * @param  dt    sample period
    */
-  fit_t(armaMat& A, armaMat& B, armaVec& g, armaVec& m, armaMat& Q, armaVec& x0,
-        armaMat& P0, armaMat& C, armaVec& d, armaMat& R, data_t dt,
-        std::vector<armaMat>& uTrain, std::vector<armaMat>& zTrain);
+  Fit(size_t n_u, size_t n_x, size_t n_y, data_t dt);
+  /// gets measurement noise covariance
+  const Matrix& R() const override { return R_; };
+  /// sets measurement noise covariance
+  void set_R(const Matrix& R) override {
+    Reassign(R_, R);
+    ForceSymPD(R_);
+  };
 
-  // Output
-  armaMat C;  ///< output matrix
-  armaMat D;  ///< feedthrough matrix
-  armaVec d;  ///< output bias
-  armaMat R;  ///< output noise cov
-
-  // input/output training data
-  std::vector<armaMat> uTrain;  ///< input training data
-  std::vector<armaMat> zTrain;  ///< measurement training data
+  /**
+   * @brief      output function
+   *
+   * @param      y     output estimate (over time)
+   * @param      x     state estimate (over time)
+   * @param      t     time index
+   *
+   * @return     output
+   */
+  View h(Matrix& y, const Matrix& x, size_t t) override {
+    y.col(t) = C_ * x.col(t) + d_;
+    return y.col(t);
+  };
 };
 
 };  // namespace gaussian
 }  // namespace lds
-
-// subspace identification
-#include "lds_gaussian_fit_ssid.h"
-
-// expectation maximization
-#include "lds_gaussian_fit_em.h"
-
 #endif

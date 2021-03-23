@@ -1,6 +1,6 @@
 //===-- ldsCtrlEst - Library Preamble ---------------------------*- C++ -*-===//
 //
-// Copyright 2021 [name of copyright owner]
+// Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -32,15 +32,63 @@
 #cmakedefine Octave_FOUND
 
 #include <armadillo> // for linear algebra and more
+#include <vector> // std::vector
+#include <array> // std::array
 #include <iostream> // for printing
 #include <chrono>  //for timing
 
-// Parent `lds` namespace
-// (contains Gaussian and Poisson output variants)
+// Parent `lds` namespace:
 #include "ldsCtrlEst_h/lds.h"
+// UniformMatrixList type:
+#include "ldsCtrlEst_h/lds_uniform_mats.h"
+// UniformVectorList type:
+#include "ldsCtrlEst_h/lds_uniform_vecs.h"
+// UniformSystemList type:
+#include "ldsCtrlEst_h/lds_uniform_systems.h"
+// System type:
+#include "ldsCtrlEst_h/lds_sys.h"
+// Controller type:
+#include "ldsCtrlEst_h/lds_ctrl.h"
+// SwitchedController type:
+#include "ldsCtrlEst_h/lds_sctrl.h"
 
-// define shortened namespace aliases for user convenience
-namespace glds = lds::gaussian;
-namespace plds = lds::poisson;
+// lds::gaussian namespace:
+#include "ldsCtrlEst_h/lds_gaussian.h"
+// Gaussian System type:
+#include "ldsCtrlEst_h/lds_gaussian_sys.h"
+// Gaussian Controller type:
+#include "ldsCtrlEst_h/lds_gaussian_ctrl.h"
+// Gaussian SwitchedController type:
+#include "ldsCtrlEst_h/lds_gaussian_sctrl.h"
+
+// lds::poisson namespace:
+#include "ldsCtrlEst_h/lds_poisson.h"
+// Gaussian System type:
+#include "ldsCtrlEst_h/lds_poisson_sys.h"
+// Gaussian Controller type:
+#include "ldsCtrlEst_h/lds_poisson_ctrl.h"
+// Gaussian SwitchedController type:
+#include "ldsCtrlEst_h/lds_poisson_sctrl.h"
+
+#ifdef LDSCTRLEST_BUILD_FIT
+// lds fit type:
+#include "ldsCtrlEst_h/lds_fit.h"
+// lds ssid fit template:
+#include "ldsCtrlEst_h/lds_fit_ssid.h"
+// lds em fit template:
+#include "ldsCtrlEst_h/lds_fit_em.h"
+// Gaussian fit type:
+#include "ldsCtrlEst_h/lds_gaussian_fit.h"
+// Gaussian SSID fit type:
+#include "ldsCtrlEst_h/lds_gaussian_fit_ssid.h"
+// Gaussian EM fit type:
+#include "ldsCtrlEst_h/lds_gaussian_fit_em.h"
+// Poisson fit type:
+#include "ldsCtrlEst_h/lds_poisson_fit.h"
+// Poisson SSID fit type:
+#include "ldsCtrlEst_h/lds_poisson_fit_ssid.h"
+// Poisson EM fit type:
+#include "ldsCtrlEst_h/lds_poisson_fit_em.h"
+#endif
 
 #endif
