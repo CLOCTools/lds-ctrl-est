@@ -59,7 +59,7 @@ Contributing #  We welcome any community contributions to this project. Please f
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_4fef79e7177ba769987a8da36c892c5f/</guid>
-      <description>build #  Directories #     Name     include     Updated on 24 March 2021 at 13:11:19 EDT</description>
+      <description>build #  Directories #     Name     include     Updated on 24 March 2021 at 13:26:05 EDT</description>
     </item>
     
     <item>
@@ -88,7 +88,7 @@ Contributing #  We welcome any community contributions to this project. Please f
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__defaults/</guid>
       <description>Defaults #  
 More&amp;hellip; Attributes #      Name     const data_t kDefaultP0 default state estimate covar   const data_t kDefaultQ0 default process noise covar   const data_t kDefaultR0 default output noise covar    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances)
-Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 24 March 2021 at 13:11:19 EDT</description>
+Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 24 March 2021 at 13:26:05 EDT</description>
     </item>
     
     <item>
@@ -133,7 +133,7 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d28a4824dc47e487b107a5db32ef43c4/</guid>
-      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 24 March 2021 at 13:11:19 EDT</description>
+      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 24 March 2021 at 13:26:05 EDT</description>
     </item>
     
     <item>
@@ -189,7 +189,7 @@ Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control -----------------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_8f2980731aba7ec7b9fcae5764f196e3/</guid>
-      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 24 March 2021 at 13:11:19 EDT</description>
+      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 24 March 2021 at 13:26:05 EDT</description>
     </item>
     
     <item>
@@ -713,7 +713,7 @@ In the example that follows, another PLDS model (lds::poisson::System) is used i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_68267d1309a1af8e8297ef4c3efbcdba/</guid>
-      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 24 March 2021 at 13:11:19 EDT</description>
+      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 24 March 2021 at 13:26:05 EDT</description>
     </item>
     
     <item>
@@ -767,7 +767,7 @@ In the example that follows, another PLDS model (lds::poisson::System) is used i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacestd/</guid>
-      <description>std #   Updated on 24 March 2021 at 13:11:19 EDT</description>
+      <description>std #   Updated on 24 March 2021 at 13:26:05 EDT</description>
     </item>
     
   </channel>
