@@ -5,7 +5,7 @@ title: GLDS Control
 
 This tutorial shows how to use this library to control a system with a Gaussian LDS controller (`lds::gaussian::Controller`). In place of a physical system, a GLDS model (`lds::gaussian::System`) receives control inputs and simulates measurements for the feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system. A combination of integral action and adaptive estimation of this process disturbance is used to perform control.
 
-The full code for this can be found [here](/ldsctrlest/docs/api/examples/eg_glds_ctrl_8cpp-example/).
+The full code for this can be found [here](/lds-ctrl-est/docs/api/examples/eg_glds_ctrl_8cpp-example/).
 
 ## Preamble
 In addition to including the main `ldsCtrlEst` header, this tutorial will use some shorthand.
@@ -193,4 +193,4 @@ The control loop is carried out here in a simple for-loop, where a the controlle
 ## Example simulation result
 Below are example results for this simulation, including outputs, latent states, process disturbance, and the control signal. The controller's online estimates of the output, state, and disturbance are given in purple.
 
-![example control output](/ldsctrlest/eg_glds_ctrl_output.png)
+![example control output](/lds-ctrl-est/eg_glds_ctrl_output.png)

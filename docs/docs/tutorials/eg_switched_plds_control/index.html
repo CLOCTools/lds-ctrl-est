@@ -11,13 +11,13 @@ In the example that follows, another PLDS model (lds::poisson::System) is used i
 <meta property="og:description" content="PLDS Switched Control Tutorial #  This tutorial shows how to use this library to control a system with a switched PLDS controller (lds::poisson::SwitchedController). This type of controller is applicable in scenarios where a physical system is not accurately captured by a single LDS but has multiple discrete operating modes where the dynamics can be well-approximated as linear.
 In the example that follows, another PLDS model (lds::poisson::System) is used in place of a physical system." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_switched_plds_control/" />
+<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/" />
 
 <title>PLDS Switched Control | LDS C&amp;E</title>
-<link rel="manifest" href="/ldsctrlest/manifest.json">
-<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/lds-ctrl-est/en.search.min.72e87928cd64ea4a0afab7155f06dd7cb67d202d86332c5a03adc9aca44d35f0.js" integrity="sha256-cuh5KM1k6koK&#43;rcVXwbdfLZ9IC2GMyxaA63JrKRNNfA="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -35,7 +35,7 @@ https://github.com/alex-shpak/hugo-book
         
   <nav>
 <h2 class="book-brand">
-  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  <a href="/lds-ctrl-est"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
   </a>
 </h2>
 
@@ -59,22 +59,22 @@ https://github.com/alex-shpak/hugo-book
   <ul>
 <li><strong>Library Terminology</strong>
 <ul>
-<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
-<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
 </ul>
 </li>
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/getting-started/"><strong>Getting Started</strong></a></li>
 </ul>
 <p><br /></p>
 <ul>
 <li><strong>Tutorials</strong>
 <ul>
-<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
-<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
-<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/"class=active>Switched PLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/"class=active>Switched PLDS Control</a></li>
 </ul>
 </li>
 </ul>
@@ -82,21 +82,21 @@ https://github.com/alex-shpak/hugo-book
 <ul>
 <li><strong>API Reference</strong>
 <ul>
-<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
-<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
-<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
-<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
-<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
 </ul>
 </li>
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
 </ul>
 <p><br /></p>
 
@@ -109,7 +109,7 @@ https://github.com/alex-shpak/hugo-book
 <ul>
   
   <li>
-    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
         Github
       </a>
   </li>
@@ -138,14 +138,14 @@ https://github.com/alex-shpak/hugo-book
         
   <div class="flex align-center justify-between">
   <label for="menu-control">
-    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
   <strong>PLDS Switched Control</strong>
 
   <label for="toc-control">
     
-    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
     
   </label>
 </div>
@@ -184,7 +184,7 @@ https://github.com/alex-shpak/hugo-book
 </h1>
 <p>This tutorial shows how to use this library to control a system with a switched PLDS controller (<code>lds::poisson::SwitchedController</code>). This type of controller is applicable in scenarios where a physical system is not accurately captured by a <strong>single</strong> LDS but has <strong>multiple</strong> discrete operating modes where the dynamics can be well-approximated as linear.</p>
 <p>In the example that follows, another PLDS model (<code>lds::poisson::System</code>) is used in place of a physical system. It receives control inputs and provides measurements for the simulated feedback control loop. This system stochastically flips between two input gains. Here, the controller is assumed to have a perfect model of the switching system being controlled. Note that in practice, users would need to have a decoder that estimates operating mode of the physical system being controlled. This library does not currently include operating mode estimation.</p>
-<p>The full code for this can be found <a href="/ldsctrlest/docs/api/examples/eg_plds_switched_log_lin_ctrl_8cpp-example/">here</a>.</p>
+<p>The full code for this can be found <a href="/lds-ctrl-est/docs/api/examples/eg_plds_switched_log_lin_ctrl_8cpp-example/">here</a>.</p>
 <h2 id="preamble">
   Preamble
   <a class="anchor" href="#preamble">#</a>
@@ -235,13 +235,13 @@ https://github.com/alex-shpak/hugo-book
   controlled_system.set_B(b1);
   controlled_system.set_d(d);
   controlled_system.Reset();  <span style="color:#75715e">// reset to initial conditions
-</span></code></pre></div><p>See the <a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a> and <a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS State Estimation</a> tutorials for more detail about creating <code>System</code> objects.</p>
+</span></code></pre></div><p>See the <a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a> and <a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS State Estimation</a> tutorials for more detail about creating <code>System</code> objects.</p>
 <h2 id="creating-the-controller">
   Creating the controller
   <a class="anchor" href="#creating-the-controller">#</a>
 </h2>
 <p>Now, create the controller. A switched-system controller (<code>SwitchedController</code>) essentially toggles between the parameters of its subsystems when the controller is told a switch has occured. The first thing the user needs to do is define these subsystems. In this example, there are two Poisson systems (<code>sys1</code>, <code>sys2</code>), which are the same save for their input gains.</p>
-<p>Similar to a non-switched controller, constructing a <code>SwitchedController</code> requires these system models and upper/lower bounds on control. See the <a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a> tutorial for more details. In the case of a <code>SwitchedController</code>, it needs a <strong>list</strong> of systems, using the <code>std::vector</code> container.</p>
+<p>Similar to a non-switched controller, constructing a <code>SwitchedController</code> requires these system models and upper/lower bounds on control. See the <a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a> tutorial for more details. In the case of a <code>SwitchedController</code>, it needs a <strong>list</strong> of systems, using the <code>std::vector</code> container.</p>
 <p>Moreover, when assigning control-related signals such as the feedback controller gains, it is crucial that the list of gains optimized for each operating mode of the system have the same dimensionality. For this reason, this library provides <code>UniformMatrixList</code> and <code>UniformVectorList</code> containers that should be used when setting <code>Kc</code>, <code>Kc_inty</code>, <code>g_design</code>. These containers are <code>std::vector</code>s whose contents are uniformly sized.</p>
 <p>Putting this information together, here is how to create the controller and the list of controller gains optimized for each system operating mode.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// create switched controller
@@ -296,7 +296,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <p>In this demonstration, we will use the <code>ControlOutputReference</code> method which allows users to simply set the reference output event rate (<code>y_ref</code>) and supply the current measurement <code>z</code>. It then calculates the solution for the state/input required to track that output at steady state. In this case, the goal is to regulate the output about a constant reference, so it is appropriate here. This method can also be used for time-varying references as long as this variation is slow compared to the dynamics of the system. Importantly, this method performs control in the linear state space (i.e., taking the logarithm of the reference output).</p>
 <p>The control loop is carried out here in a simple for-loop, controlled system is simulated along with stochastic mode switches, a measurement taken, and the control signal updated.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Let the controlled system stachastically change gain
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Let the controlled system stochastically change gain
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// Assume another algorithm decodes this mode change and signals the
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// switched_controller
 </span><span style="color:#75715e"></span>  Vector <span style="color:#a6e22e">chance</span>(<span style="color:#ae81ff">1</span>, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>randu);
@@ -330,7 +330,7 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#example-simulation-result">#</a>
 </h2>
 <p>Below are example results for this simulation, including outputs, latent states, mode switches, and the control signal. The controller&rsquo;s online estimates of the output and state are shown in purple.</p>
-<p><img src="/ldsctrlest/eg_plds_switched_ctrl_output.png" alt="example control output" /></p>
+<p><img src="/lds-ctrl-est/eg_plds_switched_ctrl_output.png" alt="example control output" /></p>
 <p>Note that every time the operating mode of the system changes (here, a gain changes), the controller immediately adjusts its inputs. In contrast, a non-switched controller with integral action would also compensate but do so in a comparitively sluggish fashion.</p>
 </article>
  

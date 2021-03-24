@@ -1,4 +1,1 @@
 
-[submodule "misc/docs-hugo/themes/book"]
-	path = misc/docs-hugo/themes/book
-	url = https://github.com/alex-shpak/hugo-book

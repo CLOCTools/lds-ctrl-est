@@ -14,10 +14,10 @@ arma/mex interface using Matlab C API <br> <br>[More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| template <class T \> <br>auto | **[m2T_scalar](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-m2t_scalar)**(const mxArray * matlab_scalar)<br>Convert Matlab mxArray to scalar of type T.  |
-| template <class T \> <br>auto | **[m2a_mat](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-m2a_mat)**(const mxArray * matlab_mat, bool copy_aux_mem =false, bool strict =true)<br>Convert matlab matrix to armadillo.  |
-| template <typename T \> <br>auto | **[a2m_mat](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_mat)**(arma::Mat< T > const & arma_mat)<br>Convert armadillo to matlab matrix.  |
-| template <typename T \> <br>auto | **[a2m_vec](/ldsctrlest/docs/api/namespaces/namespacearmamexc/#function-a2m_vec)**(arma::Col< T > const & arma_vec)<br>Convert armadillo to matlab vector.  |
+| template <class T \> <br>auto | **[m2T_scalar](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-m2t_scalar)**(const mxArray * matlab_scalar)<br>Convert Matlab mxArray to scalar of type T.  |
+| template <class T \> <br>auto | **[m2a_mat](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-m2a_mat)**(const mxArray * matlab_mat, bool copy_aux_mem =false, bool strict =true)<br>Convert matlab matrix to armadillo.  |
+| template <typename T \> <br>auto | **[a2m_mat](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-a2m_mat)**(arma::Mat< T > const & arma_mat)<br>Convert armadillo to matlab matrix.  |
+| template <typename T \> <br>auto | **[a2m_vec](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-a2m_vec)**(arma::Col< T > const & arma_vec)<br>Convert armadillo to matlab vector.  |
 
 ## Detailed Description
 
@@ -121,4 +121,4 @@ inline auto a2m_vec(
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:14 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

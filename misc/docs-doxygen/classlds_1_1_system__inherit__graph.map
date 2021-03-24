@@ -1,5 +1,0 @@
-<map id="lds::System" name="lds::System">
-<area shape="rect" id="node1" title="Linear Dynamical System Type." alt="" coords="121,5,212,32"/>
-<area shape="rect" id="node2" href="$classlds_1_1gaussian_1_1_system.html" title="Gaussian LDS Type." alt="" coords="5,80,157,107"/>
-<area shape="rect" id="node3" href="$classlds_1_1poisson_1_1_system.html" title="Poisson System type." alt="" coords="181,80,325,107"/>
-</map>

@@ -14,14 +14,14 @@ GLDS E-M fit type.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::gaussian](/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::gaussian](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::FitEM](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/)** <br>GLDS E-M [Fit](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/) Type.  |
+| class | **[lds::gaussian::FitEM](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/)** <br>GLDS E-M [Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/) Type.  |
 
 ## Detailed Description
 
@@ -88,4 +88,4 @@ class FitEM : public EM<Fit> {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

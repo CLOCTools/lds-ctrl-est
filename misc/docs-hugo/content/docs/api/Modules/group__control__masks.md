@@ -14,9 +14,9 @@ provides fill types for constructing new armadillo vectors, matrices <br> <br>[M
 
 |                | Name           |
 | -------------- | -------------- |
-| const std::size_t | **[kControlTypeDeltaU](/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypedeltau)** <br>control designed to penalize change in input  |
-| const std::size_t | **[kControlTypeIntY](/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypeinty)** <br>control using integral action  |
-| const std::size_t | **[kControlTypeAdaptM](/ldsctrlest/docs/api/modules/group__control__masks/#variable-kcontroltypeadaptm)** <br>adapt control setpoint with re-estimated disturbance `m` |
+| const std::size_t | **[kControlTypeDeltaU](/lds-ctrl-est/docs/api/modules/group__control__masks/#variable-kcontroltypedeltau)** <br>control designed to penalize change in input  |
+| const std::size_t | **[kControlTypeIntY](/lds-ctrl-est/docs/api/modules/group__control__masks/#variable-kcontroltypeinty)** <br>control using integral action  |
+| const std::size_t | **[kControlTypeAdaptM](/lds-ctrl-est/docs/api/modules/group__control__masks/#variable-kcontroltypeadaptm)** <br>adapt control setpoint with re-estimated disturbance `m` |
 
 ## Detailed Description
 
@@ -67,4 +67,4 @@ Adapt control setpoint adapted with re-estimated process disturbance `m`.
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

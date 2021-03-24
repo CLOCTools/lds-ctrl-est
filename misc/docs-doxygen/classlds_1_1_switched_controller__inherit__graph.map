@@ -1,6 +1,0 @@
-<map id="lds::SwitchedController&lt; System &gt;" name="lds::SwitchedController&lt; System &gt;">
-<area shape="rect" id="node1" title="SwitchedController Type." alt="" coords="225,39,384,80"/>
-<area shape="rect" id="node3" href="$classlds_1_1gaussian_1_1_switched_controller.html" title="Gaussian&#45;observation SwitchedController Type." alt="" coords="432,5,651,47"/>
-<area shape="rect" id="node4" href="$classlds_1_1poisson_1_1_switched_controller.html" title="Poisson&#45;observation SwitchedController Type." alt="" coords="435,71,647,112"/>
-<area shape="rect" id="node2" href="$classlds_1_1_controller.html" title=" " alt="" coords="5,46,177,73"/>
-</map>

@@ -14,7 +14,7 @@ arma <-> mex interoperability utilities (Matlab C++ API)  [More...](#detailed-de
 
 | Name           |
 | -------------- |
-| **[armamexcpp](/ldsctrlest/docs/api/namespaces/namespacearmamexcpp/)** <br>arma/mex interface using Matlab C++ API  |
+| **[armamexcpp](/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/)** <br>arma/mex interface using Matlab C++ API  |
 
 ## Detailed Description
 
@@ -131,4 +131,4 @@ auto s2m_vec(const std::vector<T>& std_vec, matlab::data::ArrayFactory& factory)
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

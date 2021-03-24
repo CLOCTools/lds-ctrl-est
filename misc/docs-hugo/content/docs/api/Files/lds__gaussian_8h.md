@@ -14,14 +14,14 @@ summary: glds namespace
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::gaussian](/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::gaussian](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the namespace for linear dynamical systems with Gaussian observations (`[lds::gaussian](/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/)`). 
+This file declares and partially defines the namespace for linear dynamical systems with Gaussian observations (`[lds::gaussian](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/)`). 
 
 
 
@@ -67,4 +67,4 @@ namespace gaussian {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

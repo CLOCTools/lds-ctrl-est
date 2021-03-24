@@ -1,7 +1,0 @@
-<map id="lds::poisson::FitSSID" name="lds::poisson::FitSSID">
-<area shape="rect" id="node1" title="Subspace Identification (SSID) for PLDS." alt="" coords="5,276,151,303"/>
-<area shape="rect" id="node2" href="$classlds_1_1_s_s_i_d.html" title=" " alt="" coords="20,200,136,227"/>
-<area shape="rect" id="node3" href="$classlds_1_1_fit.html" title="LDS Fit Type." alt="" coords="21,89,82,115"/>
-<area shape="rect" id="node4" href="$classlds_1_1_uniform_matrix_list.html" title=" " alt="" coords="107,81,257,123"/>
-<area shape="rect" id="node5" title=" " alt="" coords="111,5,253,32"/>
-</map>

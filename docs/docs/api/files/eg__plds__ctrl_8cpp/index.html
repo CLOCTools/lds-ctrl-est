@@ -11,13 +11,13 @@ Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control -----------------
 <meta property="og:description" content="examples/eg_plds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
 Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control ---------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &#34;License&#34;); // you may not use this file except in compliance with the License." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__ctrl_8cpp/" />
+<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__ctrl_8cpp/" />
 
 <title>examples/eg_plds_ctrl.cpp | LDS C&amp;E</title>
-<link rel="manifest" href="/ldsctrlest/manifest.json">
-<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/lds-ctrl-est/en.search.min.72e87928cd64ea4a0afab7155f06dd7cb67d202d86332c5a03adc9aca44d35f0.js" integrity="sha256-cuh5KM1k6koK&#43;rcVXwbdfLZ9IC2GMyxaA63JrKRNNfA="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -35,7 +35,7 @@ https://github.com/alex-shpak/hugo-book
         
   <nav>
 <h2 class="book-brand">
-  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  <a href="/lds-ctrl-est"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
   </a>
 </h2>
 
@@ -59,22 +59,22 @@ https://github.com/alex-shpak/hugo-book
   <ul>
 <li><strong>Library Terminology</strong>
 <ul>
-<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
-<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
 </ul>
 </li>
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/getting-started/"><strong>Getting Started</strong></a></li>
 </ul>
 <p><br /></p>
 <ul>
 <li><strong>Tutorials</strong>
 <ul>
-<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
-<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
-<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
 </ul>
 </li>
 </ul>
@@ -82,21 +82,21 @@ https://github.com/alex-shpak/hugo-book
 <ul>
 <li><strong>API Reference</strong>
 <ul>
-<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
-<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
-<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
-<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
-<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
 </ul>
 </li>
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
 </ul>
 <p><br /></p>
 
@@ -109,7 +109,7 @@ https://github.com/alex-shpak/hugo-book
 <ul>
   
   <li>
-    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
         Github
       </a>
   </li>
@@ -138,14 +138,14 @@ https://github.com/alex-shpak/hugo-book
         
   <div class="flex align-center justify-between">
   <label for="menu-control">
-    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
   <strong>examples/eg_plds_ctrl.cpp</strong>
 
   <label for="toc-control">
     
-    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
     
   </label>
 </div>
@@ -198,7 +198,7 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td>auto</td>
-<td><strong><a href="/ldsctrlest/docs/api/files/eg__plds__ctrl_8cpp/#function-main">main</a></strong>()</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__ctrl_8cpp/#function-main">main</a></strong>()</td>
 </tr>
 </tbody>
 </table>
@@ -450,7 +450,7 @@ https://github.com/alex-shpak/hugo-book
   <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
 }
 </code></pre></div><hr>
-<p>Updated on 23 March 2021 at 09:14:15 CDT</p>
+<p>Updated on 24 March 2021 at 13:11:19 EDT</p>
 </article>
  
       

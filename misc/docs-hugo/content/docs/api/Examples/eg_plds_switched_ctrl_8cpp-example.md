@@ -169,7 +169,7 @@ auto main() -> int {
   cout << "Starting " << n_t * dt << " sec simulation ... \n";
   auto start = std::chrono::high_resolution_clock::now();
   for (size_t t = 1; t < n_t; t++) {
-    // Let the controlled system stachastically change gain
+    // Let the controlled system stochastically change gain
     // Assume another algorithm decodes this mode change and signals the
     // switched_controller
     Vector chance(1, arma::fill::randu);
@@ -234,4 +234,4 @@ _Filename: eg_plds_switched_ctrl.cpp_
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

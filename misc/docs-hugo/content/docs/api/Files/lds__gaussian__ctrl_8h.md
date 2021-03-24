@@ -14,20 +14,20 @@ GLDS Controller.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::gaussian](/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::gaussian](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::Controller](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/)** <br>Gaussian-observation [Controller]() Type.  |
+| class | **[lds::gaussian::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/)** <br>Gaussian-observation [Controller]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for control of a gaussian-observation linear dynamical system ([lds::gaussian::Controller](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/)). It inherits functionality from the underlying GLDS model type ([lds::gaussian::System](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/)), including state estimation. 
+This file declares and partially defines the type for control of a gaussian-observation linear dynamical system ([lds::gaussian::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/)). It inherits functionality from the underlying GLDS model type ([lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/)), including state estimation. 
 
 
 
@@ -112,4 +112,4 @@ class Controller : public lds::Controller<System> {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

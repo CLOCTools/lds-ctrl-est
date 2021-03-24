@@ -1,8 +1,0 @@
-<map id="lds_ctrl.h" name="lds_ctrl.h">
-<area shape="rect" id="node1" title="Controller." alt="" coords="169,5,245,32"/>
-<area shape="rect" id="node2" href="$lds__gaussian__ctrl_8h.html" title="GLDS Controller." alt="" coords="5,80,141,107"/>
-<area shape="rect" id="node4" href="$lds__poisson__ctrl_8h.html" title="PLDS controller type." alt="" coords="273,80,402,107"/>
-<area shape="rect" id="node6" href="$lds__sctrl_8h.html" title="SwitchedController type." alt="" coords="165,80,248,107"/>
-<area shape="rect" id="node3" href="$lds__gaussian__sctrl_8h.html" title="GLDS switched controller type." alt="" coords="53,155,195,181"/>
-<area shape="rect" id="node5" href="$lds__poisson__sctrl_8h.html" title="PLDS switched controller type." alt="" coords="269,155,405,181"/>
-</map>

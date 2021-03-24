@@ -14,13 +14,13 @@ summary: lds namespace
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
 
 ## Detailed Description
 
 
 
-This file defines the `lds` namespace, which will be an umbrella for linear dynamical systems with Gaussian (`[lds::gaussian](/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/)`) or Poisson (`[lds::poisson](/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/)`) observations. 
+This file defines the `lds` namespace, which will be an umbrella for linear dynamical systems with Gaussian (`[lds::gaussian](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/)`) or Poisson (`[lds::poisson](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/)`) observations. 
 
 
 
@@ -180,4 +180,4 @@ inline void Reassign(Matrix& some, const Matrix& other,
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

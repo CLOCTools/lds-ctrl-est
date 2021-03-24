@@ -1,8 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$classlds_1_1_controller.html" title=" " alt="" coords="5,89,177,116"/>
-<area shape="rect" id="node2" href="$classlds_1_1_switched_controller.html" title="SwitchedController Type." alt="" coords="229,23,387,65"/>
-<area shape="rect" id="node5" href="$classlds_1_1gaussian_1_1_controller.html" title="Gaussian&#45;observation Controller Type." alt="" coords="225,89,391,116"/>
-<area shape="rect" id="node6" href="$classlds_1_1poisson_1_1_controller.html" title="PLDS Controller Type." alt="" coords="229,140,387,167"/>
-<area shape="rect" id="node3" href="$classlds_1_1gaussian_1_1_switched_controller.html" title="Gaussian&#45;observation SwitchedController Type." alt="" coords="439,5,657,32"/>
-<area shape="rect" id="node4" href="$classlds_1_1poisson_1_1_switched_controller.html" title="Poisson&#45;observation SwitchedController Type." alt="" coords="442,56,654,83"/>
-</map>

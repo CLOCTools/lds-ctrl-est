@@ -14,20 +14,20 @@ PLDS SSID fit type.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::poisson](/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::poisson](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::FitSSID](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/)** <br>Subspace Identification ([SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)) for PLDS.  |
+| class | **[lds::poisson::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/)** <br>Subspace Identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)) for PLDS.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines a type by which Poisson-output LDS models are fit by a subspace identification (SSID) algorithm (`[lds::gaussian::FitSSID](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/)`).
+This file declares and partially defines a type by which Poisson-output LDS models are fit by a subspace identification (SSID) algorithm (`[lds::gaussian::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/)`).
 
 References: [1] van Overschee P, de Moore B. (1996) Subspace Identification for Linear Systems. Boston: Springer. [2] Buesing L, Macke JH, Sahani M. (2012) Spectral learning of linear dynamics from generalised-linear observations with application to neural population data. NIPS 25. 
 
@@ -86,4 +86,4 @@ class FitSSID : public SSID<Fit> {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

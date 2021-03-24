@@ -14,13 +14,13 @@ List of uniformly sized matrices.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)**  |
+| class | **[lds::UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)**  |
 
 ## Detailed Description
 
@@ -317,4 +317,4 @@ void UniformMatrixList<D>::CheckDimensions(std::array<size_t, 2> dim) {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

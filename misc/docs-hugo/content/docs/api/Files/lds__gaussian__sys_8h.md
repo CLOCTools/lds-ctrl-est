@@ -14,20 +14,20 @@ GLDS base type.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::gaussian](/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::gaussian](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::System](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/)** <br>Gaussian LDS Type.  |
+| class | **[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/)** <br>Gaussian LDS Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for state estimation (filtering) as well as simulation of Gaussian-output linear dynamical systems (`[lds::gaussian::System](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)`). 
+This file declares and partially defines the type for state estimation (filtering) as well as simulation of Gaussian-output linear dynamical systems (`[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)`). 
 
 
 
@@ -122,4 +122,4 @@ class System : public lds::System {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

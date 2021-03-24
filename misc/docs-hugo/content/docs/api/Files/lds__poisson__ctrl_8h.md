@@ -14,20 +14,20 @@ PLDS controller type.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::poisson](/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::poisson](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::Controller](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_controller/)** <br>PLDS [Controller]() Type.  |
+| class | **[lds::poisson::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/)** <br>PLDS [Controller]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for feedback control of a Poisson-output linear dynamical system (`[lds::poisson::Controller](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_controller/)`). It inherits functionality from the underlying PLDS model type (`[lds::poisson::System](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/)`), including state estimation. 
+This file declares and partially defines the type for feedback control of a Poisson-output linear dynamical system (`[lds::poisson::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/)`). It inherits functionality from the underlying PLDS model type (`[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/)`), including state estimation. 
 
 
 
@@ -117,4 +117,4 @@ class Controller : public lds::Controller<System> {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

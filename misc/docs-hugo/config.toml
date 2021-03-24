@@ -1,4 +1,4 @@
-baseURL = 'https://mfbolus.github.io/ldsctrlest'
+baseURL = 'https://stanley-rozell.github.io/lds-ctrl-est'
 title = 'LDS C&E'
 theme = 'book'
 
@@ -28,7 +28,7 @@ enableGitInfo = false
 # [[menu.before]]
 [[menu.after]]
   name = "Github"
-  url = "https://github.com/mfbolus/ldsctrlest"
+  url = "https://github.com/stanley-rozell/lds-ctrl-est"
   weight = 10
 
 [params]
@@ -56,7 +56,7 @@ enableGitInfo = false
 
   # Set source repository location.
   # Used for 'Last Modified' and 'Edit this page' links.
-  BookRepo = 'https://github.com/mfbolus/ldsctrlest'
+  BookRepo = 'https://github.com/stanley-rozell/lds-ctrl-est'
 
   # Enable "Edit this page" links for 'doc' page type.
   # Disabled by default. Uncomment to enable. Requires 'BookRepo' param.

@@ -14,19 +14,19 @@ Controller.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::Controller](/ldsctrlest/docs/api/classes/classlds_1_1_controller/)**  |
+| class | **[lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/)**  |
 
 ## Detailed Description
 
 
 
-This file declares the type for control of a linear dynamical system ([lds::Controller](/ldsctrlest/docs/api/classes/classlds_1_1_controller/)). 
+This file declares the type for control of a linear dynamical system ([lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/)). 
 
 
 
@@ -524,4 +524,4 @@ void Controller<System>::InitVars() {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

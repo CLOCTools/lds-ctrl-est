@@ -1,7 +1,0 @@
-<map id="lds::gaussian::FitEM" name="lds::gaussian::FitEM">
-<area shape="rect" id="node1" title="GLDS E&#45;M Fit Type." alt="" coords="5,276,148,303"/>
-<area shape="rect" id="node2" href="$classlds_1_1_e_m.html" title=" " alt="" coords="25,200,129,227"/>
-<area shape="rect" id="node3" href="$classlds_1_1_fit.html" title="LDS Fit Type." alt="" coords="19,89,81,115"/>
-<area shape="rect" id="node4" href="$classlds_1_1_uniform_matrix_list.html" title=" " alt="" coords="105,81,256,123"/>
-<area shape="rect" id="node5" title=" " alt="" coords="109,5,252,32"/>
-</map>

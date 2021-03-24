@@ -14,20 +14,20 @@ PLDS base type.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::poisson](/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::poisson](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::System](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/)** <br>Poisson [System]() type.  |
+| class | **[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/)** <br>Poisson [System]() type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (`[lds::poisson::System](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)`). 
+This file declares and partially defines the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (`[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)`). 
 
 
 
@@ -98,4 +98,4 @@ class System : public lds::System {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

@@ -13,9 +13,9 @@ title: Defaults
 
 |                | Name           |
 | -------------- | -------------- |
-| const data_t | **[kDefaultP0](/ldsctrlest/docs/api/modules/group__defaults/#variable-kdefaultp0)** <br>default state estimate covar  |
-| const data_t | **[kDefaultQ0](/ldsctrlest/docs/api/modules/group__defaults/#variable-kdefaultq0)** <br>default process noise covar  |
-| const data_t | **[kDefaultR0](/ldsctrlest/docs/api/modules/group__defaults/#variable-kdefaultr0)** <br>default output noise covar  |
+| const data_t | **[kDefaultP0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultp0)** <br>default state estimate covar  |
+| const data_t | **[kDefaultQ0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultq0)** <br>default process noise covar  |
+| const data_t | **[kDefaultR0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultr0)** <br>default output noise covar  |
 
 ## Detailed Description
 
@@ -57,4 +57,4 @@ static const data_t kDefaultR0 = 1e-2;
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

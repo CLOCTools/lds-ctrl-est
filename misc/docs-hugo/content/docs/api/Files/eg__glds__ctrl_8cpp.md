@@ -11,7 +11,7 @@ title: examples/eg_glds_ctrl.cpp
 
 |                | Name           |
 | -------------- | -------------- |
-| auto | **[main](/ldsctrlest/docs/api/files/eg__glds__ctrl_8cpp/#function-main)**() |
+| auto | **[main](/lds-ctrl-est/docs/api/files/eg__glds__ctrl_8cpp/#function-main)**() |
 
 
 ## Function Details
@@ -294,4 +294,4 @@ auto main() -> int {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

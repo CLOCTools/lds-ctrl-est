@@ -3,373 +3,373 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/tutorials/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/tutorials/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/acknowledgements/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/acknowledgements/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/getting-started/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/issues-contributing/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/issues-contributing/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacearmamexc/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacearmamexcpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_4fef79e7177ba769987a8da36c892c5f/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_4fef79e7177ba769987a8da36c892c5f/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/terminology/control-estimation/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/terminology/control-estimation/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/categories/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/categories/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__control__masks/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__control__masks/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__defaults/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__defaults/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_glds_ctrl_8cpp-example/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_ctrl_8cpp-example/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_ctrl_8cpp-example/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_ctrl_8cpp-example/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_est_8cpp-example/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_est_8cpp-example/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/eg_plds_switched_ctrl_8cpp-example/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_switched_ctrl_8cpp-example/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/examples/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_d28a4824dc47e487b107a5db32ef43c4/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d28a4824dc47e487b107a5db32ef43c4/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__glds__ctrl_8cpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__glds__ctrl_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__ctrl_8cpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__ctrl_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__est_8cpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/eg__plds__switched__ctrl_8cpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_glds_control/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/tutorials/eg_glds_control/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_8f2980731aba7ec7b9fcae5764f196e3/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_8f2980731aba7ec7b9fcae5764f196e3/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacelds/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacelds/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_controller/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_e_m/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_fit/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_controller/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_system/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_switched_controller/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_switched_controller/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_system/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_system/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_system_list/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/classes/classlds_1_1_uniform_vector_list/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_vector_list/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_2755d76cbd49ca86cc5d9263eb253d5e/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_2755d76cbd49ca86cc5d9263eb253d5e/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__ctrl_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__ctrl_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__fit_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__em_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__fit__em_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__fit__ssid_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__fit__ssid_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__ctrl_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian__ctrl_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__fit_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian__fit_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__fit__em_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian__fit__em_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__fit__ssid_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian__fit__ssid_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sctrl_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian__sctrl_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sys_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian__sys_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__poisson_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__ctrl_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__poisson__ctrl_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__poisson__fit_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__em_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__poisson__fit__em_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__fit__ssid_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__poisson__fit__ssid_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__sctrl_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__poisson__sctrl_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__sys_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__poisson__sys_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sctrl_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__sctrl_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__sys_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__mats_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__uniform__mats_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__systems_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__uniform__systems_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__uniform__vecs_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/mex__c__util_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/mex__c__util_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/mex__cpp__util_8h/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/mex__cpp__util_8h/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/terminology/model/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/terminology/model/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/modules/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/pages/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/pages/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_plds_state_estimation/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_switched_plds_control/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/dir_68267d1309a1af8e8297ef4c3efbcdba/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_68267d1309a1af8e8297ef4c3efbcdba/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds_8cpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__gaussian__sys_8cpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian__sys_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__poisson__sys_8cpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__poisson__sys_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__sys_8cpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__sys_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/files/lds__uniform__vecs_8cpp/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__uniform__vecs_8cpp/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/docs/api/namespaces/namespacestd/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacestd/</loc>
   </url>
   
   <url>
-    <loc>https://mfbolus.github.io/ldsctrlest/tags/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/tags/</loc>
   </url>
   
 </urlset>

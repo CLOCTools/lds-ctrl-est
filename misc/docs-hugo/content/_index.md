@@ -21,12 +21,12 @@ Generally, the `ldsCtrlEst` library does **not** endeavor to provide functionali
 Among other things, this project also does not provide methods for trajectory optimization, linearization of nonlinear models, or other methods related to nonlinear control, with the exception of the nonlinear state estimator for Poisson-output LDS models.
 
 # Repository Design
-![system class hierarchy](/ldsctrlest/classlds_1_1_system__inherit__graph.png)
+![system class hierarchy](/lds-ctrl-est/classlds_1_1_system__inherit__graph.png)
 
 - All dynamical systems *with observations* (`lds::gaussian::System`, `lds::poisson::System`) are derived from a prototypical linear dynamical system abstract type (`lds::System`).
 - These Gaussian and Poisson system types include user-accessible functions for one-step filtering for one-step simulation, etc.
 
-![controller class hierarchy](/ldsctrlest/classlds_1_1_controller__inherit__graph.png)
+![controller class hierarchy](/lds-ctrl-est/classlds_1_1_controller__inherit__graph.png)
 
 - The controller types for Gaussian- and Poisson-output systems (`lds::gaussian::Controller`, `lds::gaussian::SwitchedController`, `lds::poisson::Controller`, `lds::poisson::SwitchedController`) are derived from an abstract class template (`lds::Controller`) that is generic over LDS types derived from `lds::System` (here, `lds::gaussian::System` and `lds::poisson::System`). `lds::Controller` provides functions for one-step updates of the control signal, based on feedback and a target/reference signal. For the common problem of output reference tracking, the controller uses the underlying system model to estimate the control signal required to track the target, effectively providing model-based open-loop control if the estimator is disabled.
 - In order to ensure dimensionalities always match internally, every property of a system/controller class is `protected` or `private`. Get methods provide read-only references for most signals/parameters. Where appropriate, set methods are defined so users can change hidden parameters if and only if the new parameter has the correct dimensions.

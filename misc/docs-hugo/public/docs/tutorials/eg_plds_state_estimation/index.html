@@ -11,13 +11,13 @@ The full code for this can be found here.">
 <meta property="og:description" content="PLDS State Estimation Tutorial #  This tutorial shows how to use this library to estimate the state of an LDS with Poisson observations from input/output data. In place of a physical system, another PLDS model (lds::poisson::System) receives random inputs and provides measurements for the state estimator. For the sake of example, the only parameter mismatch is assumed to be the process disturbance, which is adaptively re-estimated.
 The full code for this can be found here." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mfbolus.github.io/ldsctrlest/docs/tutorials/eg_plds_state_estimation/" />
+<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/" />
 
 <title>PLDS State Estimation | LDS C&amp;E</title>
-<link rel="manifest" href="/ldsctrlest/manifest.json">
-<link rel="icon" href="/ldsctrlest/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/ldsctrlest/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/ldsctrlest/en.search.min.88e84de0df48ee0fae77b8096842b20bf0c4e9bdfd60edab92e44d995bb44094.js" integrity="sha256-iOhN4N9I7g&#43;ud7gJaEKyC/DE6b39YO2rkuRNmVu0QJQ="></script>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/lds-ctrl-est/en.search.min.72e87928cd64ea4a0afab7155f06dd7cb67d202d86332c5a03adc9aca44d35f0.js" integrity="sha256-cuh5KM1k6koK&#43;rcVXwbdfLZ9IC2GMyxaA63JrKRNNfA="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -35,7 +35,7 @@ https://github.com/alex-shpak/hugo-book
         
   <nav>
 <h2 class="book-brand">
-  <a href="/ldsctrlest"><img src="/ldsctrlest/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  <a href="/lds-ctrl-est"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
   </a>
 </h2>
 
@@ -59,22 +59,22 @@ https://github.com/alex-shpak/hugo-book
   <ul>
 <li><strong>Library Terminology</strong>
 <ul>
-<li><a href="/ldsctrlest/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
-<li><a href="/ldsctrlest/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
 </ul>
 </li>
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/ldsctrlest/docs/getting-started/"><strong>Getting Started</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/getting-started/"><strong>Getting Started</strong></a></li>
 </ul>
 <p><br /></p>
 <ul>
 <li><strong>Tutorials</strong>
 <ul>
-<li><a href="/ldsctrlest/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
-<li><a href="/ldsctrlest/docs/tutorials/eg_plds_state_estimation/"class=active>PLDS Estimation</a></li>
-<li><a href="/ldsctrlest/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/"class=active>PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
 </ul>
 </li>
 </ul>
@@ -82,21 +82,21 @@ https://github.com/alex-shpak/hugo-book
 <ul>
 <li><strong>API Reference</strong>
 <ul>
-<li><a href="/ldsctrlest/docs/api/namespaces/">Namespaces</a></li>
-<li><a href="/ldsctrlest/docs/api/classes/">Classes</a></li>
-<li><a href="/ldsctrlest/docs/api/modules/">Modules</a></li>
-<li><a href="/ldsctrlest/docs/api/files/">Files</a></li>
-<li><a href="/ldsctrlest/docs/api/examples/">Examples</a></li>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
 </ul>
 </li>
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/ldsctrlest/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/ldsctrlest/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
 </ul>
 <p><br /></p>
 
@@ -109,7 +109,7 @@ https://github.com/alex-shpak/hugo-book
 <ul>
   
   <li>
-    <a href="https://github.com/mfbolus/ldsctrlest" target="_blank" rel="noopener">
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
         Github
       </a>
   </li>
@@ -138,14 +138,14 @@ https://github.com/alex-shpak/hugo-book
         
   <div class="flex align-center justify-between">
   <label for="menu-control">
-    <img src="/ldsctrlest/svg/menu.svg" class="book-icon" alt="Menu" />
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
   <strong>PLDS State Estimation</strong>
 
   <label for="toc-control">
     
-    <img src="/ldsctrlest/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
     
   </label>
 </div>
@@ -183,7 +183,7 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#plds-state-estimation-tutorial">#</a>
 </h1>
 <p>This tutorial shows how to use this library to estimate the state of an LDS with Poisson observations from input/output data. In place of a physical system, another PLDS model (<code>lds::poisson::System</code>) receives random inputs and provides measurements for the state estimator. For the sake of example, the only parameter mismatch is assumed to be the process disturbance, which is adaptively re-estimated.</p>
-<p>The full code for this can be found <a href="/ldsctrlest/docs/api/examples/eg_plds_est_8cpp-example/">here</a>.</p>
+<p>The full code for this can be found <a href="/lds-ctrl-est/docs/api/examples/eg_plds_est_8cpp-example/">here</a>.</p>
 <h2 id="preamble">
   Preamble
   <a class="anchor" href="#preamble">#</a>
@@ -212,9 +212,9 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System system_true(n_u, n_x, n_y, dt);
 </code></pre></div><p>This default system is a random walk, where the state matrix is identity, the input matrix is zeros, and the top <code>min(n_x, n_y)</code> states are observed at the output. i.e., for this example,
 
-<link rel="stylesheet" href="/ldsctrlest/katex/katex.min.css" />
-<script defer src="/ldsctrlest/katex/katex.min.js"></script>
-<script defer src="/ldsctrlest/katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script><span>
+<link rel="stylesheet" href="/lds-ctrl-est/katex/katex.min.css" />
+<script defer src="/lds-ctrl-est/katex/katex.min.js"></script>
+<script defer src="/lds-ctrl-est/katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script><span>
   \[x_{t&#43;1} = x_t &#43; w_t\]
 </span>
 </p>
@@ -285,9 +285,9 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#example-simulation-result">#</a>
 </h2>
 <p>Below are example results for this simulation, including outputs, latent states, process disturbance, and the input. The online estimates of the output, state, and disturbance are given in purple.</p>
-<p><img src="/ldsctrlest/eg_plds_est_output.png" alt="example estimator output" /></p>
+<p><img src="/lds-ctrl-est/eg_plds_est_output.png" alt="example estimator output" /></p>
 <p>With this parameterization, it takes the estimator approximately 5 seconds to minimize state error. The state and output error distributions for the period after 5 seconds is shown below.</p>
-<p><img src="/ldsctrlest/eg_plds_est_output_hist.png" alt="example estimator output histogram" /></p>
+<p><img src="/lds-ctrl-est/eg_plds_est_output_hist.png" alt="example estimator output histogram" /></p>
 </article>
  
       

@@ -14,19 +14,19 @@ subspace identification  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/)**  |
+| class | **[lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/)**  |
 
 ## Detailed Description
 
 
 
-This file declares the type for fitting a linear dynamical system by expectation-maximization ([lds::EM](/ldsctrlest/docs/api/classes/classlds_1_1_e_m/)). 
+This file declares the type for fitting a linear dynamical system by expectation-maximization ([lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/)). 
 
 
 
@@ -625,4 +625,4 @@ Vector EM<Fit>::UpdateTheta() {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

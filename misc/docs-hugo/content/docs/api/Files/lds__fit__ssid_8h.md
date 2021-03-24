@@ -14,19 +14,19 @@ subspace identification  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)**  |
+| class | **[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)**  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines a template type by which LDS models are fit by a subspace identification (SSID) algorithm (`[lds::SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)<Fit>`).
+This file declares and partially defines a template type by which LDS models are fit by a subspace identification (SSID) algorithm (`[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)<Fit>`).
 
 References: [1] van Overschee P, de Moore B. (1996) Subspace Identification for Linear Systems. Boston: Springer. 
 
@@ -583,4 +583,4 @@ void SSID<Fit>::RecomputeExtObs() {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

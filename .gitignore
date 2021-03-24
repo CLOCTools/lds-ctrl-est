@@ -95,7 +95,6 @@ build/
 cpp.sublime-workspace
 .cache/
 
-!docs/
-!misc/docs-hugo/
-!misc/docs-doxygen/classlds_1_1_system__inherit__graph.png
-!misc/docs-doxygen/classlds_1_1_controller__inherit__graph.png
+# whitelist documentation
+!docs/**
+!misc/docs-hugo/**

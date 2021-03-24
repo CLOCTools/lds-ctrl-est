@@ -15,19 +15,19 @@ Inherits from std::vector< Matrix >
 
 |                | Name           |
 | -------------- | -------------- |
-| | **[UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**() =default<br>Constructs a new [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/).  |
-| | **[UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**(const std::vector< Matrix > & mats, std::array< size_t, 2 > dim ={0, 0})<br>Constructs a new [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/) by copying existing vector of Matrix if dimensions consistent.  |
-| | **[UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**(std::vector< Matrix > && mats, std::array< size_t, 2 > dim ={0, 0})<br>Constructs a new [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/) by moving existing vector of Matrix if dimensions consistent.  |
-| | **[UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**(std::initializer_list< Matrix > mats, std::array< size_t, 2 > dim ={0, 0})<br>Constructs a new [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/) from initializer_list of Matrix if dimensions consistent.  |
-| | **[UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**(const [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > & that)<br>Constructs a new [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/) (copy).  |
-| | **[UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**([UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > && that)<br>Constructs a new [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/) (move).  |
-| | **[~UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-~uniformmatrixlist)**() =default<br>Destroys the object.  |
-| const std::array< size_t, 2 > & | **[dim](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-dim)**(size_t n =0) const<br>gets dimensions of uniformly sized matrices  |
-| size_t | **[size](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-size)**()<br>size of container  |
-| const Matrix & | **[at](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-at)**(size_t n)<br>gets reference to n^th element  |
-| void | **[Swap](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-swap)**(Matrix & that, size_t n)<br>swaps input matrix with n^th matrix of list  |
-| [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > & | **[operator=](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-operator=)**(const [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > & that)<br>assigns the contents (copy)  |
-| [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > & | **[operator=](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-operator=)**([UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > && that)<br>assigns the contents (move)  |
+| | **[UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**() =default<br>Constructs a new [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/).  |
+| | **[UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**(const std::vector< Matrix > & mats, std::array< size_t, 2 > dim ={0, 0})<br>Constructs a new [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/) by copying existing vector of Matrix if dimensions consistent.  |
+| | **[UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**(std::vector< Matrix > && mats, std::array< size_t, 2 > dim ={0, 0})<br>Constructs a new [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/) by moving existing vector of Matrix if dimensions consistent.  |
+| | **[UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**(std::initializer_list< Matrix > mats, std::array< size_t, 2 > dim ={0, 0})<br>Constructs a new [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/) from initializer_list of Matrix if dimensions consistent.  |
+| | **[UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**(const [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > & that)<br>Constructs a new [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/) (copy).  |
+| | **[UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-uniformmatrixlist)**([UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > && that)<br>Constructs a new [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/) (move).  |
+| | **[~UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-~uniformmatrixlist)**() =default<br>Destroys the object.  |
+| const std::array< size_t, 2 > & | **[dim](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-dim)**(size_t n =0) const<br>gets dimensions of uniformly sized matrices  |
+| size_t | **[size](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-size)**()<br>size of container  |
+| const Matrix & | **[at](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-at)**(size_t n)<br>gets reference to n^th element  |
+| void | **[Swap](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-swap)**(Matrix & that, size_t n)<br>swaps input matrix with n^th matrix of list  |
+| [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > & | **[operator=](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-operator=)**(const [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > & that)<br>assigns the contents (copy)  |
+| [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > & | **[operator=](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/#function-operator=)**([UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< D > && that)<br>assigns the contents (move)  |
 
 ## Detailed Description
 
@@ -116,7 +116,7 @@ UniformMatrixList(
 
 **Parameters**:
 
-  * **that** another [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)
+  * **that** another [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)
 
 
 ---
@@ -132,7 +132,7 @@ UniformMatrixList(
 
 **Parameters**:
 
-  * **that** another [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)
+  * **that** another [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)
 
 
 ---
@@ -213,7 +213,7 @@ inline UniformMatrixList< D > & operator=(
 
 **Parameters**:
 
-  * **that** another [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)
+  * **that** another [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)
 
 
 **Return**: reference to object 
@@ -231,7 +231,7 @@ inline UniformMatrixList< D > & operator=(
 
 **Parameters**:
 
-  * **that** another [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)
+  * **that** another [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)
 
 
 **Return**: reference to object 
@@ -241,4 +241,4 @@ inline UniformMatrixList< D > & operator=(
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:14 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

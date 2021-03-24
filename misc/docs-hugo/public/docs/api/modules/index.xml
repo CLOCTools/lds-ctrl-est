@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Modules on LDS C&amp;E</title>
-    <link>https://mfbolus.github.io/ldsctrlest/docs/api/modules/</link>
+    <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/</link>
     <description>Recent content in Modules on LDS C&amp;E</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://mfbolus.github.io/ldsctrlest/docs/api/modules/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator><atom:link href="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Control Mode Bit Masks</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__control__masks/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__control__masks/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__control__masks/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__control__masks/</guid>
       <description>provides fill types for constructing new armadillo vectors, matrices</description>
     </item>
     
     <item>
       <title>Defaults</title>
-      <link>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__defaults/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__defaults/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://mfbolus.github.io/ldsctrlest/docs/api/modules/group__defaults/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__defaults/</guid>
       <description>Defaults #  
 More&amp;hellip; Attributes #      Name     const data_t kDefaultP0 default state estimate covar   const data_t kDefaultQ0 default process noise covar   const data_t kDefaultR0 default output noise covar    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances)
-Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 23 March 2021 at 09:14:15 CDT</description>
+Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 24 March 2021 at 13:11:19 EDT</description>
     </item>
     
   </channel>

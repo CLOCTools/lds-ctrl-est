@@ -12,12 +12,12 @@ Linear Dynamical Systems with Gaussian observations. <br>
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::Controller](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_controller/)** <br>Gaussian-observation [Controller]() Type.  |
-| class | **[lds::gaussian::Fit](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/)** <br>GLDS [Fit]() Type.  |
-| class | **[lds::gaussian::FitEM](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/)** <br>GLDS E-M [Fit](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit/) Type.  |
-| class | **[lds::gaussian::FitSSID](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/)** <br>Subspace Identification ([SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)) for GLDS.  |
-| class | **[lds::gaussian::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)** <br>Gaussian-observation [SwitchedController]() Type.  |
-| class | **[lds::gaussian::System](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_system/)** <br>Gaussian LDS Type.  |
+| class | **[lds::gaussian::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/)** <br>Gaussian-observation [Controller]() Type.  |
+| class | **[lds::gaussian::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/)** <br>GLDS [Fit]() Type.  |
+| class | **[lds::gaussian::FitEM](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/)** <br>GLDS E-M [Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/) Type.  |
+| class | **[lds::gaussian::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/)** <br>Subspace Identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)) for GLDS.  |
+| class | **[lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)** <br>Gaussian-observation [SwitchedController]() Type.  |
+| class | **[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/)** <br>Gaussian LDS Type.  |
 
 
 
@@ -27,4 +27,4 @@ Linear Dynamical Systems with Gaussian observations. <br>
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:14 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

@@ -14,13 +14,13 @@ arma/mex interface using Matlab C++ API <br> <br>[More...](#detailed-description
 
 |                | Name           |
 | -------------- | -------------- |
-| template <class T \> <br>auto | **[m2a_cellmat](/ldsctrlest/docs/api/namespaces/namespacearmamexcpp/#function-m2a_cellmat)**(matlab::data::CellArray & matlab_cell)<br>Convert matlab cell array to vector of armadillo matrices.  |
-| template <class T \> <br>auto | **[m2s_vec](/ldsctrlest/docs/api/namespaces/namespacearmamexcpp/#function-m2s_vec)**(matlab::data::TypedArray< T > & matlab_array)<br>Convert matlab matrix to a vector of scalars.  |
-| template <class T \> <br>auto | **[m2a_vec](/ldsctrlest/docs/api/namespaces/namespacearmamexcpp/#function-m2a_vec)**(matlab::data::TypedArray< T > matlab_array)<br>Convert matlab to armadillo vector.  |
-| template <class T \> <br>auto | **[m2a_mat](/ldsctrlest/docs/api/namespaces/namespacearmamexcpp/#function-m2a_mat)**(matlab::data::TypedArray< T > matlab_array)<br>Convert matlab to armadillo matrix.  |
-| template <class T \> <br>auto | **[a2m_mat](/ldsctrlest/docs/api/namespaces/namespacearmamexcpp/#function-a2m_mat)**(const arma::Mat< T > & arma_mat, matlab::data::ArrayFactory & factory)<br>Convert armadillo to matlab matrix.  |
-| template <class T \> <br>auto | **[a2m_vec](/ldsctrlest/docs/api/namespaces/namespacearmamexcpp/#function-a2m_vec)**(const arma::Col< T > & arma_vec, matlab::data::ArrayFactory & factory)<br>Convert armadillo to matlab vector.  |
-| template <class T \> <br>auto | **[s2m_vec](/ldsctrlest/docs/api/namespaces/namespacearmamexcpp/#function-s2m_vec)**(const std::vector< T > & std_vec, matlab::data::ArrayFactory & factory)<br>Convert vector of scalar T to matlab matrix.  |
+| template <class T \> <br>auto | **[m2a_cellmat](/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/#function-m2a_cellmat)**(matlab::data::CellArray & matlab_cell)<br>Convert matlab cell array to vector of armadillo matrices.  |
+| template <class T \> <br>auto | **[m2s_vec](/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/#function-m2s_vec)**(matlab::data::TypedArray< T > & matlab_array)<br>Convert matlab matrix to a vector of scalars.  |
+| template <class T \> <br>auto | **[m2a_vec](/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/#function-m2a_vec)**(matlab::data::TypedArray< T > matlab_array)<br>Convert matlab to armadillo vector.  |
+| template <class T \> <br>auto | **[m2a_mat](/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/#function-m2a_mat)**(matlab::data::TypedArray< T > matlab_array)<br>Convert matlab to armadillo matrix.  |
+| template <class T \> <br>auto | **[a2m_mat](/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/#function-a2m_mat)**(const arma::Mat< T > & arma_mat, matlab::data::ArrayFactory & factory)<br>Convert armadillo to matlab matrix.  |
+| template <class T \> <br>auto | **[a2m_vec](/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/#function-a2m_vec)**(const arma::Col< T > & arma_vec, matlab::data::ArrayFactory & factory)<br>Convert armadillo to matlab vector.  |
+| template <class T \> <br>auto | **[s2m_vec](/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/#function-s2m_vec)**(const std::vector< T > & std_vec, matlab::data::ArrayFactory & factory)<br>Convert vector of scalar T to matlab matrix.  |
 
 ## Detailed Description
 
@@ -205,4 +205,4 @@ auto s2m_vec(
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:14 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

@@ -14,20 +14,20 @@ PLDS switched controller type.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::poisson](/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::poisson](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/)** <br>Poisson-observation [SwitchedController]() Type.  |
+| class | **[lds::poisson::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/)** <br>Poisson-observation [SwitchedController]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Poisson-output linear dynamical systems ([lds::poisson::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/)). 
+This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Poisson-output linear dynamical systems ([lds::poisson::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/)). 
 
 
 
@@ -112,4 +112,4 @@ class SwitchedController : public lds::SwitchedController<System> {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

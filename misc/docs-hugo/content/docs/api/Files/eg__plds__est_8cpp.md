@@ -11,8 +11,8 @@ title: examples/eg_plds_est.cpp
 
 |                | Name           |
 | -------------- | -------------- |
-| Matrix | **[random_walk](/ldsctrlest/docs/api/files/eg__plds__est_8cpp/#function-random_walk)**(size_t n_t, const Matrix & Q, const Vector & x0) |
-| int | **[main](/ldsctrlest/docs/api/files/eg__plds__est_8cpp/#function-main)**() |
+| Matrix | **[random_walk](/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#function-random_walk)**(size_t n_t, const Matrix & Q, const Vector & x0) |
+| int | **[main](/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#function-main)**() |
 
 
 ## Function Details
@@ -223,4 +223,4 @@ Matrix random_walk(size_t n_t, const Matrix& Q, const Vector& x0) {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

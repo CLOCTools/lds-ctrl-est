@@ -14,14 +14,14 @@ summary: plds namespace
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::poisson](/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::poisson](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/)** <br>Linear Dynamical Systems with Poisson observations.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the namespace for linear dynamical systems with Poisson observations (`[lds::poisson](/ldsctrlest/docs/api/namespaces/namespacelds_1_1poisson/)`). 
+This file declares and partially defines the namespace for linear dynamical systems with Poisson observations (`[lds::poisson](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/)`). 
 
 
 
@@ -66,4 +66,4 @@ namespace poisson {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

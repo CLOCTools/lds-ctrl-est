@@ -14,20 +14,20 @@ GLDS switched controller type.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
-| **[lds::gaussian](/ldsctrlest/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds::gaussian](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/)** <br>Linear Dynamical Systems with Gaussian observations.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)** <br>Gaussian-observation [SwitchedController]() Type.  |
+| class | **[lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)** <br>Gaussian-observation [SwitchedController]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Gaussian-output linear dynamical systems ([lds::gaussian::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)). 
+This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Gaussian-output linear dynamical systems ([lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)). 
 
 
 
@@ -110,4 +110,4 @@ class SwitchedController : public lds::SwitchedController<System> {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

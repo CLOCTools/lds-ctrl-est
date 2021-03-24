@@ -14,7 +14,7 @@ LDS base type.  [More...](#detailed-description)
 
 
 
-This file implements the base type for linear dynamical systems ([lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. 
+This file implements the base type for linear dynamical systems ([lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. 
 
 
 
@@ -136,4 +136,4 @@ void lds::System::Print() {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

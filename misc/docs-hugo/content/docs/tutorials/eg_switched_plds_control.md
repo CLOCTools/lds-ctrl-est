@@ -7,7 +7,7 @@ This tutorial shows how to use this library to control a system with a switched 
 
 In the example that follows, another PLDS model (`lds::poisson::System`) is used in place of a physical system. It receives control inputs and provides measurements for the simulated feedback control loop. This system stochastically flips between two input gains. Here, the controller is assumed to have a perfect model of the switching system being controlled. Note that in practice, users would need to have a decoder that estimates operating mode of the physical system being controlled. This library does not currently include operating mode estimation.
 
-The full code for this can be found [here](/ldsctrlest/docs/api/examples/eg_plds_switched_log_lin_ctrl_8cpp-example/).
+The full code for this can be found [here](/lds-ctrl-est/docs/api/examples/eg_plds_switched_log_lin_ctrl_8cpp-example/).
 
 ## Preamble
 In addition to including the main `ldsCtrlEst` header, this tutorial will use some shorthand.
@@ -135,7 +135,7 @@ In this demonstration, we will use the `ControlOutputReference` method which all
 
 The control loop is carried out here in a simple for-loop, controlled system is simulated along with stochastic mode switches, a measurement taken, and the control signal updated.
 ```cpp
-  // Let the controlled system stachastically change gain
+  // Let the controlled system stochastically change gain
   // Assume another algorithm decodes this mode change and signals the
   // switched_controller
   Vector chance(1, arma::fill::randu);
@@ -170,6 +170,6 @@ Note that as the gain of the controlled system changes stochastically, the contr
 ## Example simulation result
 Below are example results for this simulation, including outputs, latent states, mode switches, and the control signal. The controller's online estimates of the output and state are shown in purple.
 
-![example control output](/ldsctrlest/eg_plds_switched_ctrl_output.png)
+![example control output](/lds-ctrl-est/eg_plds_switched_ctrl_output.png)
 
 Note that every time the operating mode of the system changes (here, a gain changes), the controller immediately adjusts its inputs. In contrast, a non-switched controller with integral action would also compensate but do so in a comparitively sluggish fashion.

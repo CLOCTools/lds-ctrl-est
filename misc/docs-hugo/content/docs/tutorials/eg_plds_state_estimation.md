@@ -5,7 +5,7 @@ title: PLDS State Estimation
 
 This tutorial shows how to use this library to estimate the state of an LDS with Poisson observations from input/output data. In place of a physical system, another PLDS model (`lds::poisson::System`) receives random inputs and provides measurements for the state estimator. For the sake of example, the only parameter mismatch is assumed to be the process disturbance, which is adaptively re-estimated.
 
-The full code for this can be found [here](/ldsctrlest/docs/api/examples/eg_plds_est_8cpp-example/).
+The full code for this can be found [here](/lds-ctrl-est/docs/api/examples/eg_plds_est_8cpp-example/).
 
 ## Preamble
 In addition to including the main `ldsCtrlEst` header, this tutorial will use some shorthand.
@@ -115,8 +115,8 @@ In this demonstration, random inputs are presented to the system, measurements a
 ## Example simulation result
 Below are example results for this simulation, including outputs, latent states, process disturbance, and the input. The online estimates of the output, state, and disturbance are given in purple.
 
-![example estimator output](/ldsctrlest/eg_plds_est_output.png)
+![example estimator output](/lds-ctrl-est/eg_plds_est_output.png)
 
 With this parameterization, it takes the estimator approximately 5 seconds to minimize state error. The state and output error distributions for the period after 5 seconds is shown below.
 
-![example estimator output histogram](/ldsctrlest/eg_plds_est_output_hist.png)
+![example estimator output histogram](/lds-ctrl-est/eg_plds_est_output_hist.png)

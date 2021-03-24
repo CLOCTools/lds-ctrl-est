@@ -14,19 +14,19 @@ SwitchedController type.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1_switched_controller/)** <br>[SwitchedController]() Type.  |
+| class | **[lds::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1_switched_controller/)** <br>[SwitchedController]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares the type for switched control of a system approximated as multiple discrete Gaussian-output linear dynamical systems ([lds::gaussian::SwitchedController](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)). 
+This file declares the type for switched control of a system approximated as multiple discrete Gaussian-output linear dynamical systems ([lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)). 
 
 
 
@@ -262,4 +262,4 @@ inline void SwitchedController<System>::Switch(size_t idx,
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

@@ -9,48 +9,48 @@ title: lds::SSID
 
  [More...](#detailed-description)
 
-Inherited by [lds::gaussian::FitSSID](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/), [lds::poisson::FitSSID](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/)
+Inherited by [lds::gaussian::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/), [lds::poisson::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/)
 
 ## Public Functions
 
 |                | Name           |
 | -------------- | -------------- |
-| | **[SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-ssid)**() =default<br>Constructs a new [SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)[Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/) type.  |
-| | **[SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-ssid)**(size_t n_x, size_t n_h, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) dt, [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > && u_train, [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > && z_train, const Vector & d =Vector(1).fill(-kInf))<br>Constructs a new [SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/)[Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/) type.  |
-| std::tuple< [Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/), Vector > | **[Run](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-run)**([SSIDWt](/ldsctrlest/docs/api/namespaces/namespacelds/#enum-ssidwt) ssid_wt)<br>Runs fitting by subspace identification ([SSID](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/))  |
-| std::tuple< [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) >, [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > > | **[ReturnData](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-returndata)**()<br>Returns the I/O data to caller.  |
+| | **[SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-ssid)**() =default<br>Constructs a new [SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)[Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/) type.  |
+| | **[SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-ssid)**(size_t n_x, size_t n_h, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) dt, [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > && u_train, [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > && z_train, const Vector & d =Vector(1).fill(-kInf))<br>Constructs a new [SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)[Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/) type.  |
+| std::tuple< [Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/), Vector > | **[Run](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-run)**([SSIDWt](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enum-ssidwt) ssid_wt)<br>Runs fitting by subspace identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/))  |
+| std::tuple< [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) >, [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > > | **[ReturnData](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-returndata)**()<br>Returns the I/O data to caller.  |
 
 ## Protected Functions
 
 |                | Name           |
 | -------------- | -------------- |
-| void | **[CalcD](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-calcd)**([data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) t_silence =0.1, [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) thresh_silence =0.001)<br>Using periods of silence in inputs (u), calculates the output \ bias (d)  |
-| void | **[CreateHankelDataMat](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-createhankeldatamat)**()<br>Creates the block-hankel I/O data matrix.  |
-| virtual void | **[DecomposeData](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-decomposedata)**()<br>Decompose data to lower-triangular matrix (used in Solve)  |
-| void | **[CalcSVD](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-calcsvd)**([SSIDWt](/ldsctrlest/docs/api/namespaces/namespacelds/#enum-ssidwt) wt)<br>performs the singular value decomposition (SVD)  |
-| void | **[Solve](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-solve)**([data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) wt_dc)<br>solves for LDS parameters  |
-| void | **[RecomputeExtObs](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#function-recomputeextobs)**()<br>recompute extended observability matrix from estimates of A, C  |
+| void | **[CalcD](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-calcd)**([data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) t_silence =0.1, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) thresh_silence =0.001)<br>Using periods of silence in inputs (u), calculates the output \ bias (d)  |
+| void | **[CreateHankelDataMat](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-createhankeldatamat)**()<br>Creates the block-hankel I/O data matrix.  |
+| virtual void | **[DecomposeData](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-decomposedata)**()<br>Decompose data to lower-triangular matrix (used in Solve)  |
+| void | **[CalcSVD](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-calcsvd)**([SSIDWt](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enum-ssidwt) wt)<br>performs the singular value decomposition (SVD)  |
+| void | **[Solve](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-solve)**([data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) wt_dc)<br>solves for LDS parameters  |
+| void | **[RecomputeExtObs](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-recomputeextobs)**()<br>recompute extended observability matrix from estimates of A, C  |
 
 ## Protected Attributes
 
 |                | Name           |
 | -------------- | -------------- |
-| [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > | **[u_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-u_)** <br>input training data  |
-| [UniformMatrixList](/ldsctrlest/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/ldsctrlest/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > | **[z_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-z_)** <br>measurement training data  |
-| Matrix | **[D_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-d_)** <br>block-Hankel I/O data matrix  |
-| [Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/) | **[fit_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-fit_)** <br>fit  |
-| Matrix | **[g_dc_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-g_dc_)** <br>I/O gain @ DC.  |
-| [data_t](/ldsctrlest/docs/api/namespaces/namespacelds/#using-data_t) | **[dt_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-dt_)** <br>sample period  |
-| size_t | **[n_u_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_u_)** <br>number of inputs  |
-| size_t | **[n_x_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_x_)** <br>number of states  |
-| size_t | **[n_y_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_y_)** <br>number of outputs  |
-| size_t | **[n_h_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_h_)**  |
-| size_t | **[n_trials_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_trials_)** <br>number of input/output data sequences  |
-| std::vector< size_t > | **[n_t_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_t_)** <br>number of time steps  |
-| size_t | **[n_t_tot_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_t_tot_)** <br>total number of time steps across trials  |
-| Matrix | **[L_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-l_)** <br>lower triangle decomp of covariance matrix  |
-| Vector | **[s_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-s_)** <br>singular values  |
-| Matrix | **[ext_obs_t_](/ldsctrlest/docs/api/classes/classlds_1_1_s_s_i_d/#variable-ext_obs_t_)** <br>extended observability matrix  |
+| [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > | **[u_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-u_)** <br>input training data  |
+| [UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)< [kMatFreeDim2](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2) > | **[z_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-z_)** <br>measurement training data  |
+| Matrix | **[D_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-d_)** <br>block-Hankel I/O data matrix  |
+| [Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/) | **[fit_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-fit_)** <br>fit  |
+| Matrix | **[g_dc_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-g_dc_)** <br>I/O gain @ DC.  |
+| [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) | **[dt_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-dt_)** <br>sample period  |
+| size_t | **[n_u_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_u_)** <br>number of inputs  |
+| size_t | **[n_x_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_x_)** <br>number of states  |
+| size_t | **[n_y_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_y_)** <br>number of outputs  |
+| size_t | **[n_h_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_h_)**  |
+| size_t | **[n_trials_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_trials_)** <br>number of input/output data sequences  |
+| std::vector< size_t > | **[n_t_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_t_)** <br>number of time steps  |
+| size_t | **[n_t_tot_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-n_t_tot_)** <br>total number of time steps across trials  |
+| Matrix | **[L_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-l_)** <br>lower triangle decomp of covariance matrix  |
+| Vector | **[s_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-s_)** <br>singular values  |
+| Matrix | **[ext_obs_t_](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#variable-ext_obs_t_)** <br>extended observability matrix  |
 
 ## Detailed Description
 
@@ -114,7 +114,7 @@ std::tuple< Fit, Vector > Run(
   * **ssid_wt** weight for singular value decomp
 
 
-**Return**: tuple ([Fit](/ldsctrlest/docs/api/classes/classlds_1_1_fit/), singular values) 
+**Return**: tuple ([Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/), singular values) 
 
 ---
 ### **ReturnData**
@@ -170,7 +170,7 @@ virtual void DecomposeData()
 
 
 
-**Reimplemented by**: [lds::gaussian::FitSSID::DecomposeData](/ldsctrlest/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/#function-decomposedata), [lds::poisson::FitSSID::DecomposeData](/ldsctrlest/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/#function-decomposedata)
+**Reimplemented by**: [lds::gaussian::FitSSID::DecomposeData](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/#function-decomposedata), [lds::poisson::FitSSID::DecomposeData](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/#function-decomposedata)
 
 
 ---
@@ -367,4 +367,4 @@ Matrix ext_obs_t_;
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:14 CDT
+Updated on 24 March 2021 at 13:11:19 EDT

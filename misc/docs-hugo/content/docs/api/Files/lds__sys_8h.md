@@ -14,19 +14,19 @@ LDS base type.  [More...](#detailed-description)
 
 | Name           |
 | -------------- |
-| **[lds](/ldsctrlest/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
+| **[lds](/lds-ctrl-est/docs/api/namespaces/namespacelds/)** <br>Linear Dynamical Systems (LDS) namespace.  |
 
 ## Classes
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)** <br>Linear Dynamical [System]() Type.  |
+| class | **[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)** <br>Linear Dynamical [System]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the base type for linear dynamical systems (`[lds::System](/ldsctrlest/docs/api/classes/classlds_1_1_system/)`). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. 
+This file declares and partially defines the base type for linear dynamical systems (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)`). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. 
 
 
 
@@ -169,4 +169,4 @@ class System {
 
 -------------------------------
 
-Updated on 23 March 2021 at 09:14:15 CDT
+Updated on 24 March 2021 at 13:11:19 EDT
