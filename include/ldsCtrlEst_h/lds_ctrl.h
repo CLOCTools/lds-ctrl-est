@@ -206,6 +206,22 @@ class Controller {
    */
   void set_control_type(size_t control_type);
 
+  // There is no reason u_lb/ub should not be public, but making set methods
+  // anyway.
+  /**
+   * @brief      sets control lower bound
+   *
+   * @param      u_lb  control lower bound
+   */
+  void set_u_lb(data_t u_lb) { u_lb_ = u_lb; };
+
+  /**
+   * @brief      Sets control upper bound
+   *
+   * @param      u_ub  control upper bound
+   */
+  void set_u_ub(data_t u_ub) { u_ub_ = u_ub; };
+
   /// reset system and control variables.
   void Reset() {
     sys_.Reset();
@@ -342,8 +358,7 @@ inline Controller<System>::Controller(const System& sys, data_t u_lb,
       u_lb_(u_lb),
       u_ub_(u_ub),
       control_type_(control_type),
-      tau_awu_(lds::kInf)
-{
+      tau_awu_(lds::kInf) {
   InitVars();
 }
 
