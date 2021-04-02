@@ -34,7 +34,7 @@ namespace lds {
 
 class UniformVectorList : public std::vector<Vector> {
  private:
-  using std::vector<Vector>::vector;
+  // using std::vector<Vector>::vector;
   using std::vector<Vector>::operator=;
   using std::vector<Vector>::operator[];
   using std::vector<Vector>::at;
