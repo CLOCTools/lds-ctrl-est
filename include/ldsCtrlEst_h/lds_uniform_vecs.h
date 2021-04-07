@@ -34,6 +34,7 @@ namespace lds {
 
 class UniformVectorList : public std::vector<Vector> {
  private:
+  // TODO(mfbolus): would rather *uncomment* the below for sake of conversion
   // using std::vector<Vector>::vector;
   using std::vector<Vector>::operator=;
   using std::vector<Vector>::operator[];
