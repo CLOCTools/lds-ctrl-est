@@ -6,7 +6,7 @@ git clone https://github.com/stanley-rozell/ldsCtrlEst.git
 By default, this would check out the master branch. In most cases, we suggest downloading or checking out the latest release instead.
 ```shell
 cd /path/to/ldsCtrlEst
-git checkout 0.6.0
+git checkout 0.5.0
 ```
 
 # Dependencies
@@ -48,7 +48,7 @@ Below are example usages of `cmake`/`make` to configure/build the library.
   ```shell
   cd /path/to/repository
   mkdir build && cd build
-  cmake -DLDSCTRLEST_BUILD_FIT=1 -DLDSCTRLEST_STATIC_OPENBLAS=1 .. #configure to build the fitting portion of library and statically link openblas and ldsCtrlEst to mex files
+  cmake -DLDSCTRLEST_BUILD_FIT=1 -DLDSCTRLEST_BUILD_STATIC=1 .. #configure to build the fitting portion of library and statically link openblas and ldsCtrlEst to mex files
   make #build the project
   ```
 

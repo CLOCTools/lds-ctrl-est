@@ -374,7 +374,9 @@ void EM<Fit>::Smooth(bool force_common_initial) {
           x_pre.col(t) + k_e * (z_.at(trial).col(t) - y_[trial].col(t));
       y_[trial].col(t) = fit_.C() * x_post.col(t) + fit_.d();
     }
-    ForceSymPD(P_[trial].slice(n_t_[trial] - 1));
+    ForceSymPD(p_pre.slice(n_t_[trial] - 1));
+    ForceSymPD(p_post.slice(n_t_[trial] - 1));
+    ForceSymPD(p_post.slice(n_t_[trial] - 2));
 
     // backfilter -> Smoothed estimate
     // Reference:

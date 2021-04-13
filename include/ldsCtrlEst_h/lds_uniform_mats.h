@@ -35,7 +35,8 @@ namespace lds {
 template <MatrixListFreeDim D = kMatFreeDimNone>
 class UniformMatrixList : public std::vector<Matrix> {
  private:
-  using std::vector<Matrix>::vector;
+  // TODO(mfbolus): would rather *uncomment* the below for sake of conversion
+  // using std::vector<Matrix>::vector;
   using std::vector<Matrix>::operator=;
   using std::vector<Matrix>::operator[];
   using std::vector<Matrix>::at;
