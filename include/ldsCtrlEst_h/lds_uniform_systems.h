@@ -40,6 +40,7 @@ class UniformSystemList : public std::vector<System> {
                 "System must be derived from lds::System type.");
 
  private:
+  // TODO(mfbolus): would rather *uncomment* the below for sake of conversion
   // using std::vector<System>::vector;
   using std::vector<System>::operator=;
   using std::vector<System>::operator[];
