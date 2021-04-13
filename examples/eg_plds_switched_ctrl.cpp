@@ -128,6 +128,9 @@ auto main() -> int {
 
   switched_controller.set_y_ref(y_ref0);
 
+  std::vector<lds::poisson::System> systems_vec(3, lds::poisson::System());
+  lds::UniformSystemList<lds::poisson::System> systems(std::move(systems_vec));
+
   cout << ".....................................\n";
   cout << "switched_controller:\n";
   cout << ".....................................\n";
