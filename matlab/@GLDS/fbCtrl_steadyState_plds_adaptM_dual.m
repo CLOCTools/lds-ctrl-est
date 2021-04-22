@@ -9,7 +9,7 @@ function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_stea
 	% Kfb_x : [nU, nX] state feedback controller gains. May be either time varying or not.
 	% Kfb_intY : [nU, nY] state feedback controller gains. May be either time varying or not.
 	% qM : diagonal elements of assumed process noise for disturbance variation
-	% ctrlGate : logical gate for whether control is enabled
+	% ctrlGate : [1, nTime] logical gate for whether control is enabled
 	% recurseK : [bool] Whether to recursively calculate K (Kalman gain)
 	% adaptSetPoint : [bool] Use adaptively re-estimated disturbance when calculating state-control setpoint.
 	% uLims : [0 5] lower and upper limits on control signal
