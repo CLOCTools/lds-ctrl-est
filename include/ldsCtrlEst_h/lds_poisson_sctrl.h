@@ -1,5 +1,6 @@
 //===-- ldsCtrlEst_h/lds_poisson_sctrl.h - Switched Controller --*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");

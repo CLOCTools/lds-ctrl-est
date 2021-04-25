@@ -25,6 +25,7 @@ This file implements the base type for linear dynamical systems ([lds::System](/
 ```cpp
 //===-- lds_sys.cpp - LDS -------------------------------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,7 +43,7 @@ This file implements the base type for linear dynamical systems ([lds::System](/
 //===----------------------------------------------------------------------===//
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
+#include <ldsCtrlEst_h/lds_sys.h>
 
 lds::System::System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0,
                     data_t q0)
@@ -136,4 +137,4 @@ void lds::System::Print() {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

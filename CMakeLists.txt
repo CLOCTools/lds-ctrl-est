@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 # set project name and version (MAJOR.minor.patch)
-project(ldsCtrlEst VERSION 0.5.0 LANGUAGES CXX C)
+project(ldsCtrlEst VERSION 0.6.0 LANGUAGES CXX C)
 # some name variants I will be using:
 set(CMAKE_PROJECT_NAME_CAP LDSCTRLEST)#all caps
 
@@ -101,12 +101,10 @@ find_package(PkgConfig REQUIRED)
 find_package(Doxygen COMPONENTS dot
              OPTIONAL_COMPONENTS mscgen dia)
 
-if(LDSCTRLEST_BUILD_STATIC)
+if(LDSCTRLEST_BUILD_STATIC AND NOT APPLE)
   #statically-linking against openblas in this case
-
   # OpenBLAS
   include(OpenBLAS)
-
 endif()
 
 # ARMADILLO
@@ -141,12 +139,13 @@ message(STATUS "")
 
 # With variables/includes set, configure the template header,
 # copy the headers, and add include directories to entire project.
-message(STATUS "Copying ${PROJECT_SOURCE_DIR}/include/ to
-  ${PROJECT_BINARY_DIR}/include/")
+message(STATUS "Creating link to ${PROJECT_SOURCE_DIR}/include at
+  ${PROJECT_BINARY_DIR}/include")
+file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/include)
+# file(CREATE_LINK <original> <linkname> [RESULT <result>] [COPY_ON_ERROR] [SYMBOLIC])
 file(
-  COPY ${PROJECT_SOURCE_DIR}/include/ldsCtrlEst_h/
-  DESTINATION ${PROJECT_BINARY_DIR}/include/ldsCtrlEst_h/
-  PATTERN "*mex*" EXCLUDE)
+  CREATE_LINK ${PROJECT_SOURCE_DIR}/include/ldsCtrlEst_h ${PROJECT_BINARY_DIR}/include/ldsCtrlEst_h SYMBOLIC
+)
 message(STATUS "Generating ${PROJECT_BINARY_DIR}/include/ldsCtrlEst")
 configure_file(${PROJECT_SOURCE_DIR}/include/ldsCtrlEst.in
   ${PROJECT_BINARY_DIR}/include/ldsCtrlEst)
@@ -230,11 +229,6 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   # matlab
   if (Matlab_FOUND)
     file(
-      COPY ${PROJECT_SOURCE_DIR}/include/ldsCtrlEst_h/mex_cpp_util.h
-      DESTINATION ${PROJECT_BINARY_DIR}/include/ldsCtrlEst_h/
-    )
-
-    file(
       COPY ${PROJECT_SOURCE_DIR}/matlab/
       DESTINATION ${PROJECT_BINARY_DIR}/matlab/
       PATTERN "*.cpp" EXCLUDE
@@ -248,10 +242,6 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
 
   # octave
   if (Octave_FOUND)
-    file(
-      COPY ${PROJECT_SOURCE_DIR}/include/ldsCtrlEst_h/mex_c_util.h
-      DESTINATION ${PROJECT_BINARY_DIR}/include/ldsCtrlEst_h/
-      )
     file(
       COPY ${PROJECT_SOURCE_DIR}/octave/
       DESTINATION ${PROJECT_BINARY_DIR}/octave/
@@ -298,14 +288,20 @@ list(APPEND PROJECT_REQUIRED_INCLUDE_DIRS
   ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR})
 list(REMOVE_DUPLICATES PROJECT_REQUIRED_INCLUDE_DIRS)
 
-# Note that the trailing / character in "include/" is critical
-install(DIRECTORY ${PROJECT_BINARY_DIR}/include/
+# Install headers
+install(
+  FILES "${PROJECT_BINARY_DIR}/include/${CMAKE_PROJECT_NAME}"
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+# Note that sym-linked the rest of the headers, so need to copy them from the
+# source location.
+install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${CMAKE_PROJECT_NAME}_h"
   DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
   PATTERN ".svn" EXCLUDE
   PATTERN "*.cmake" EXCLUDE
   PATTERN "*~" EXCLUDE
   PATTERN "*orig" EXCLUDE
-  )
+)
 
 set(install_targets ${CMAKE_PROJECT_NAME})
 if(LDSCTRLEST_BUILD_STATIC)

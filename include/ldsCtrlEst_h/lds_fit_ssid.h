@@ -1,5 +1,6 @@
 //===-- ldsCtrlEst_h/lds_fit_ssid.h - SSID Fit ------------------*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -105,7 +106,7 @@ class SSID {
   /**
    * @brief      Decompose data to lower-triangular matrix (used in Solve)
    */
-  virtual void DecomposeData();
+  virtual void DecomposeData() = 0;
 
   /**
    * @brief      performs the singular value decomposition (SVD)
@@ -216,10 +217,15 @@ std::tuple<Fit, Vector> SSID<Fit>::Run(SSIDWt ssid_wt) {
   // the weight on minimizing dc I/O gain only works for gaussian,
   // and hopefully not necessary with appropriate dataset.
   data_t wt_dc = 0;
+  // std::cout << "creating hankel mat\n";
   CreateHankelDataMat();
+  // std::cout << "decomposing data\n";
   DecomposeData();
+  // std::cout << "calculating svd\n";
   CalcSVD(ssid_wt);
+  // std::cout << "solving for params\n";
   Solve(wt_dc);
+  // std::cout << "fin\n";
   return std::make_tuple(fit_, s_);
 }
 
@@ -254,22 +260,25 @@ void SSID<Fit>::CreateHankelDataMat() {
   Matrix z(n_y_, n_t_tot_, fill::zeros);
   Matrix u(n_u_, n_t_tot_, fill::zeros);
   size_t so_far(0);
+
   for (size_t trial = 0; trial < z_.size(); trial++) {
     z.submat(0, so_far, n_y_ - 1, so_far + n_t_.at(trial) - 1) = z_.at(trial);
     u.submat(0, so_far, n_u_ - 1, so_far + n_t_.at(trial) - 1) = u_.at(trial);
     so_far += n_t_.at(trial);
   }
+
   // remove output bias
   z.each_col() -= fit_.d();
 
   // calculate I/O gain @ DC while data in convenient form
   g_dc_ = z * pinv(u);
+  // std::cout << "G0_data = " << g_dc_ << "\n";
 
   // create hankel data matrix
   size_t len = z.n_cols - 2 * n_h_ + 1;  // data length in hankel mat
 
   // block-hankel data matrix
-  D_ = Matrix(2 * n_h_ * (n_u_ + n_y_), len);
+  D_ = Matrix(2 * n_h_ * (n_u_ + n_y_), len, fill::zeros);
   // past input
   auto u_p = D_.submat(0, 0, n_h_ * n_u_ - 1, len - 1);
   // future input
@@ -308,33 +317,19 @@ void SSID<Fit>::CreateHankelDataMat() {
     }
   }
 
-  // TODO(mfbolus): subtract mean?
-  // Vector m = mean(D_,1);
-  // D_.each_col() -= m;
-
   D_ /= sqrt(static_cast<data_t>(len));
 }
 
-template <typename Fit>
-void SSID<Fit>::DecomposeData() {
-  // // do LQ decomp instead of calculating covariance expensive way
-  // // Note that "R" in van Overschee is lower-triangular (L), not "R" in QR
-  // // decomp. Very confusing.
-  // Matrix q_t;
-  // lq(L_, q_t, D_);
-
-  // // van Overschee zeros out the other elements.
-  // L_ = trimatl(L_);
-
-  // Depending on dataset, this may be faster:
-  // Calculate covariance of the data matrix
-  Matrix cov = D_ * D_.t();
-  // retro-actively do mean subtraction
-  Vector mu_d = arma::mean(D_, 1);
-  cov -= mu_d * mu_d.t() * D_.n_cols;
-  L_ = arma::chol(cov, "lower");
-  L_ = trimatl(L_);
-}
+// template <typename Fit>
+// void SSID<Fit>::DecomposeData() {
+//   // do LQ decomp instead of calculating covariance expensive way
+//   // Note that "R" in van Overschee is lower-triangular (L), not "R" in QR
+//   // decomp. Very confusing.
+//   Matrix q_t;
+//   lq(L_, q_t, D_);
+//   // van Overschee zeros out the other elements.
+//   L_ = trimatl(L_);
+// }
 
 template <typename Fit>
 void SSID<Fit>::CalcSVD(SSIDWt wt) {
@@ -375,7 +370,7 @@ void SSID<Fit>::CalcSVD(SSIDWt wt) {
     case kSSIDNone: {
       // No weighting. (what van Overschee calls "N4SID")
       Matrix O_k_sans_Qt = Lup * R_11_14 + Lyp * R_44_14;
-      arma::svd(U, s_, V, O_k_sans_Qt);
+      arma::svd(U, s_, V, O_k_sans_Qt, "std");
     } break;
     case kSSIDMOESP: {
       // MOESP weighting
@@ -385,7 +380,7 @@ void SSID<Fit>::CalcSVD(SSIDWt wt) {
                   R_23_13.t() * inv(R_23_13 * R_23_13.t()) * R_23_13;
       Matrix O_k_ortho_Uf_sans_Qt =
           join_horiz((Lup * R_11_13 + Lyp * R_44_13) * Pi, Lyp * R_44);
-      svd(U, s_, V, O_k_ortho_Uf_sans_Qt);
+      svd(U, s_, V, O_k_ortho_Uf_sans_Qt, "std");
     } break;
     case kSSIDCVA: {
       // CVA weighting
@@ -404,7 +399,7 @@ void SSID<Fit>::CalcSVD(SSIDWt wt) {
       Matrix w_o_w = arma::solve(
           inv_w1, O_k_ortho_Uf_sans_Qt);  // alternatively
                                           // pinv(inv_W1)*O_k_ortho_Uf_sans_Qt
-      svd(U, s_, V, w_o_w);
+      svd(U, s_, V, w_o_w, "std");
 
       U = inv_w1 * U;
       break;

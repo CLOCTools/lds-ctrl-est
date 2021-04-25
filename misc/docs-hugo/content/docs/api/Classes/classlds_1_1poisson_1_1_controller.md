@@ -48,6 +48,8 @@ Inherits from [lds::Controller< System >](/lds-ctrl-est/docs/api/classes/classld
 | void | **[set_Kc_u](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#function-set_kc_u)**(const Matrix & Kc_u)<br>Set input controller gain.  |
 | void | **[set_tau_awu](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#function-set_tau_awu)**([data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) tau)<br>Set time constant of anti-integral-windup.  |
 | void | **[set_control_type](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#function-set_control_type)**(size_t control_type)<br>Sets the control type.  |
+| void | **[set_u_lb](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#function-set_u_lb)**([data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) u_lb)<br>sets control lower bound  |
+| void | **[set_u_ub](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#function-set_u_ub)**([data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) u_ub)<br>Sets control upper bound.  |
 | void | **[Reset](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#function-reset)**()<br>reset system and control variables.  |
 | void | **[Print](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#function-print)**()<br>prints variables to stdout  |
 
@@ -57,6 +59,7 @@ Inherits from [lds::Controller< System >](/lds-ctrl-est/docs/api/classes/classld
 | -------------- | -------------- |
 | [System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/) | **[sys_](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#variable-sys_)** <br>underlying LDS  |
 | Vector | **[u_](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#variable-u_)** <br>control signal  |
+| Vector | **[u_return_](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#variable-u_return_)** <br>control signal that is _returned_ to user  |
 | Vector | **[g_design_](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#variable-g_design_)** <br>input gain of the system used for controller design  |
 | Vector | **[u_ref_](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#variable-u_ref_)** <br>reference input  |
 | Vector | **[u_ref_prev_](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/#variable-u_ref_prev_)** <br>reference input at previous time step  |
@@ -107,4 +110,4 @@ inline virtual void set_y_ref(
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

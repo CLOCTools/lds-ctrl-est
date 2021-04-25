@@ -15,7 +15,7 @@
 <link rel="manifest" href="/lds-ctrl-est/manifest.json">
 <link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/lds-ctrl-est/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/lds-ctrl-est/en.search.min.24d3ce5a4342260448cf2e27a83655125b7508c771ad7d530604570eb26f0962.js" integrity="sha256-JNPOWkNCJgRIzy4nqDZVElt1CMdxrX1TBgRXDrJvCWI="></script>
+<script defer src="/lds-ctrl-est/en.search.min.984a87477490fafea7ec7ed9296bdbe3bb2bba10f5bd70acefff95a0dd30842d.js" integrity="sha256-mEqHR3SQ&#43;v6n7H7ZKWvb47sruhD1vXCs7/&#43;VoN0whC0="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -225,6 +225,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_fit_em.h - EM Fit ----------------------*- C++ -*-===//
 </span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Copyright 2021 Michael Bolus
 </span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
@@ -258,10 +259,10 @@ https://github.com/alex-shpak/hugo-book
   EM() <span style="color:#f92672">=</span> <span style="color:#66d9ef">default</span>;
 
   EM(size_t n_x, data_t dt, UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> u_train,
-       UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train);
+     UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train);
 
   EM(<span style="color:#66d9ef">const</span> Fit<span style="color:#f92672">&amp;</span> fit0, UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> u_train,
-       UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train);
+     UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train);
 
   <span style="color:#66d9ef">const</span> Fit<span style="color:#f92672">&amp;</span> Run(<span style="color:#66d9ef">bool</span> calc_dynamics <span style="color:#f92672">=</span> true, <span style="color:#66d9ef">bool</span> calc_Q <span style="color:#f92672">=</span> true,
                  <span style="color:#66d9ef">bool</span> calc_init <span style="color:#f92672">=</span> true, <span style="color:#66d9ef">bool</span> calc_output <span style="color:#f92672">=</span> true,
@@ -337,9 +338,8 @@ https://github.com/alex-shpak/hugo-book
 };
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
-EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>EM(size_t n_x, data_t dt,
-                UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> u_train,
-                UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train) {
+EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>EM(size_t n_x, data_t dt, UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> u_train,
+            UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train) {
   n_u_ <span style="color:#f92672">=</span> u_train.at(<span style="color:#ae81ff">0</span>).n_rows;
   n_y_ <span style="color:#f92672">=</span> z_train.at(<span style="color:#ae81ff">0</span>).n_rows;
   fit_ <span style="color:#f92672">=</span> Fit(n_u_, n_x, n_y_, dt);
@@ -350,7 +350,7 @@ EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
 EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>EM(<span style="color:#66d9ef">const</span> Fit<span style="color:#f92672">&amp;</span> fit0, UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> u_train,
-                UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train) {
+            UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train) {
   <span style="color:#75715e">// make sure fit dims match I/O data
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (fit0.n_u() <span style="color:#f92672">!=</span> u_train.at(<span style="color:#ae81ff">0</span>).n_rows) {
     <span style="color:#66d9ef">throw</span> std<span style="color:#f92672">::</span>runtime_error(
@@ -414,8 +414,8 @@ EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
 <span style="color:#66d9ef">const</span> Fit<span style="color:#f92672">&amp;</span> EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>Run(<span style="color:#66d9ef">bool</span> calc_dynamics, <span style="color:#66d9ef">bool</span> calc_Q, <span style="color:#66d9ef">bool</span> calc_init,
-                          <span style="color:#66d9ef">bool</span> calc_output, <span style="color:#66d9ef">bool</span> calc_measurement,
-                          size_t max_iter, data_t tol) {
+                        <span style="color:#66d9ef">bool</span> calc_output, <span style="color:#66d9ef">bool</span> calc_measurement,
+                        size_t max_iter, data_t tol) {
   Reset();  <span style="color:#75715e">// to initial conditions
 </span><span style="color:#75715e"></span>
   size_t n_params <span style="color:#f92672">=</span>
@@ -500,15 +500,19 @@ EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</
           x_pre.col(t) <span style="color:#f92672">+</span> k_e <span style="color:#f92672">*</span> (z_.at(trial).col(t) <span style="color:#f92672">-</span> y_[trial].col(t));
       y_[trial].col(t) <span style="color:#f92672">=</span> fit_.C() <span style="color:#f92672">*</span> x_post.col(t) <span style="color:#f92672">+</span> fit_.d();
     }
-    ForceSymPD(P_[trial].slice(n_t_[trial] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
 
     <span style="color:#75715e">// backfilter -&gt; Smoothed estimate
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// Reference:
 </span><span style="color:#75715e"></span>    <span style="color:#75715e">// Shumway et Stoffer (1982)
-</span><span style="color:#75715e"></span>    k_backfilt <span style="color:#f92672">=</span> Cube(n_x_, n_x_, n_t_[trial], fill<span style="color:#f92672">::</span>zeros);
+</span><span style="color:#75715e"></span>    ForceSymPD(p_post.slice(n_t_[trial] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
+    k_backfilt <span style="color:#f92672">=</span> Cube(n_x_, n_x_, n_t_[trial], fill<span style="color:#f92672">::</span>zeros);
     x_[trial].col(n_t_[trial] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> x_post.col(n_t_[trial] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
     P_[trial].slice(n_t_[trial] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> p_post.slice(n_t_[trial] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
     <span style="color:#66d9ef">for</span> (size_t t <span style="color:#f92672">=</span> (n_t_[trial] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>); t <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>; t<span style="color:#f92672">--</span>) {
+      <span style="color:#75715e">// TODO(mfmbolus): should not be necessary to force symm positive def
+</span><span style="color:#75715e"></span>      ForceSymPD(p_pre.slice(t));
+      ForceSymPD(p_post.slice(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
+      ForceSymPD(P_[trial].slice(t));
       k_backfilt.slice(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span>
           p_post.slice(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> fit_.A().t() <span style="color:#f92672">*</span> inv_sympd(p_pre.slice(t));
       x_[trial].col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span>
@@ -603,7 +607,7 @@ EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
 <span style="color:#66d9ef">void</span> EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>Maximization(<span style="color:#66d9ef">bool</span> calc_dynamics, <span style="color:#66d9ef">bool</span> calc_Q, <span style="color:#66d9ef">bool</span> calc_init,
-                             <span style="color:#66d9ef">bool</span> calc_output, <span style="color:#66d9ef">bool</span> calc_measurement) {
+                           <span style="color:#66d9ef">bool</span> calc_output, <span style="color:#66d9ef">bool</span> calc_measurement) {
   <span style="color:#66d9ef">if</span> (calc_output) {
     MaximizeOutput();
   }
@@ -809,7 +813,7 @@ Vector EM<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on 30 March 2021 at 15:49:43 CDT</p>
+<p>Updated on 25 April 2021 at 11:04:30 EDT</p>
 </article>
  
       

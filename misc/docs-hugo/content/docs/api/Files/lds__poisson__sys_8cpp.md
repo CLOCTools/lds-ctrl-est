@@ -25,6 +25,7 @@ This file implements the type for state estimation (filtering) as well as simula
 ```cpp
 //===-- lds_poisson_sys.cpp - PLDS ----------------------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,7 +43,7 @@ This file implements the type for state estimation (filtering) as well as simula
 //===----------------------------------------------------------------------===//
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
+#include <ldsCtrlEst_h/lds_poisson_sys.h>
 
 lds::poisson::System::System(size_t n_u, size_t n_x, size_t n_y, data_t dt,
                              data_t p0, data_t q0)
@@ -93,4 +94,4 @@ const lds::Vector& lds::poisson::System::Simulate(const Vector& u_tm1) {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

@@ -32,6 +32,7 @@ auto main()
 ```cpp
 //===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -157,6 +158,9 @@ auto main() -> int {
 
   switched_controller.set_y_ref(y_ref0);
 
+  std::vector<lds::poisson::System> systems_vec(3, lds::poisson::System());
+  lds::UniformSystemList<lds::poisson::System> systems(std::move(systems_vec));
+
   cout << ".....................................\n";
   cout << "switched_controller:\n";
   cout << ".....................................\n";
@@ -252,4 +256,4 @@ auto main() -> int {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

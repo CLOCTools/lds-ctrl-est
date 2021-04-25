@@ -1,5 +1,6 @@
 //===-- lds_poisson_sys.cpp - PLDS ----------------------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,7 +26,7 @@
 /// \brief PLDS base type
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
+#include <ldsCtrlEst_h/lds_poisson_sys.h>
 
 lds::poisson::System::System(size_t n_u, size_t n_x, size_t n_y, data_t dt,
                              data_t p0, data_t q0)

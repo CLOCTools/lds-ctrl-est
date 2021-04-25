@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="generator" content="Hugo 0.80.0" />
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="examples/eg_glds_du_plds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
+Source code #  //===-- eg_glds_du_plds_ctrl.cpp - Example GLDS Delta u Control of PLDS ---===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="examples/eg_glds_du_plds_ctrl.cpp" />
+<meta property="og:description" content="examples/eg_glds_du_plds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
+Source code #  //===-- eg_glds_du_plds_ctrl.cpp - Example GLDS Delta u Control of PLDS ---===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__glds__du__plds__ctrl_8cpp/" />
+
+<title>examples/eg_glds_du_plds_ctrl.cpp | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
+<script defer src="/lds-ctrl-est/en.search.min.984a87477490fafea7ec7ed9296bdbe3bb2bba10f5bd70acefff95a0dd30842d.js" integrity="sha256-mEqHR3SQ&#43;v6n7H7ZKWvb47sruhD1vXCs7/&#43;VoN0whC0="></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+  
+</head>
+
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var menu=document.querySelector("aside.book-menu nav");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>examples/eg_glds_du_plds_ctrl.cpp</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#exampleseg_glds_du_plds_ctrlcpp">examples/eg_glds_du_plds_ctrl.cpp</a>
+      <ul>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#function-details">Function Details</a>
+          <ul>
+            <li><a href="#main">main</a></li>
+          </ul>
+        </li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="exampleseg_glds_du_plds_ctrlcpp">
+  examples/eg_glds_du_plds_ctrl.cpp
+  <a class="anchor" href="#exampleseg_glds_du_plds_ctrlcpp">#</a>
+</h1>
+<h2 id="functions">
+  Functions
+  <a class="anchor" href="#functions">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>auto</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/files/eg__glds__du__plds__ctrl_8cpp/#function-main">main</a></strong>()</td>
+</tr>
+</tbody>
+</table>
+<h2 id="function-details">
+  Function Details
+  <a class="anchor" href="#function-details">#</a>
+</h2>
+<h3 id="main">
+  main
+  <a class="anchor" href="#main">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">auto</span> main()
+</code></pre></div><p>Going to simulate a switching disturbance (m) acting on system</p>
+<h2 id="source-code">
+  Source code
+  <a class="anchor" href="#source-code">#</a>
+</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- eg_glds_du_plds_ctrl.cpp - Example GLDS Delta u Control of PLDS ---===//
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Copyright 2021 Michael Bolus
+</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+</span><span style="color:#75715e">// you may not use this file except in compliance with the License.
+</span><span style="color:#75715e">// You may obtain a copy of the License at
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">//     http://www.apache.org/licenses/LICENSE-2.0
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Unless required by applicable law or agreed to in writing, software
+</span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span><span style="color:#75715e">// See the License for the specific language governing permissions and
+</span><span style="color:#75715e">// limitations under the License.
+</span><span style="color:#75715e">//
+</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t;
+<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Matrix;
+<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Vector;
+<span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>cout;
+
+<span style="color:#66d9ef">auto</span> <span style="color:#a6e22e">main</span>() <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">int</span> {
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; ********** Example Gaussian LDS du Control of PLDS ********** </span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+
+  <span style="color:#75715e">// Make 1st-order SISO system, sampled at 1kHz
+</span><span style="color:#75715e"></span>  data_t dt <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;
+  size_t n_u <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+  size_t n_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+  size_t n_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+
+  <span style="color:#75715e">// no time steps for simulation.
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> n_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">5.0</span> <span style="color:#f92672">/</span> dt);
+
+  <span style="color:#75715e">// construct ground truth system to be controlled...
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// initializes to random walk model with top-most n_y state observed
+</span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System controlled_system(n_u, n_x, n_y, dt);
+
+  <span style="color:#75715e">// Ground-truth parameters for the controlled system
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (stand-in for physical system to be controlled)
+</span><span style="color:#75715e"></span>  Matrix a_true(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye);
+  a_true[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> exp(<span style="color:#f92672">-</span>dt <span style="color:#f92672">/</span> <span style="color:#ae81ff">0.01</span>);
+  Matrix b_true <span style="color:#f92672">=</span> Matrix(n_x, n_u).fill(<span style="color:#ae81ff">2.5e-2</span>);
+  <span style="color:#75715e">// control signal to model input unit conversion e.g., V -&gt; mW/mm2:
+</span><span style="color:#75715e"></span>  Vector g_true <span style="color:#f92672">=</span> Vector(n_y).fill(<span style="color:#ae81ff">10.0</span>);
+
+  size_t which_m <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;  <span style="color:#75715e">// whether low or high disturbance (0, 1)
+</span><span style="color:#75715e"></span>  data_t m_low <span style="color:#f92672">=</span> log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> dt) <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> a_true[<span style="color:#ae81ff">0</span>]);
+  data_t pr_lo2hi <span style="color:#f92672">=</span>
+      <span style="color:#ae81ff">0</span>;  <span style="color:#75715e">// 1e-3;  // probability of going from low to high disturb.
+</span><span style="color:#75715e"></span>  data_t m_high <span style="color:#f92672">=</span> log(<span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> dt) <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> a_true[<span style="color:#ae81ff">0</span>]);
+  data_t pr_hi2lo <span style="color:#f92672">=</span> pr_lo2hi;
+
+  <span style="color:#75715e">// initially let m be low
+</span><span style="color:#75715e"></span>  Vector m0_true <span style="color:#f92672">=</span> Vector(n_y).fill(m_low);
+  Vector x0_true <span style="color:#f92672">=</span> Vector(n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>ones) <span style="color:#f92672">*</span> log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> dt);
+
+  <span style="color:#75715e">// Assign params.
+</span><span style="color:#75715e"></span>  controlled_system.set_A(a_true);
+  controlled_system.set_B(b_true);
+  controlled_system.set_m(m0_true);
+  controlled_system.set_g(g_true);
+  controlled_system.set_x0(x0_true);
+  controlled_system.Reset();
+
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;controlled_system:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  controlled_system.Print();
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+
+  <span style="color:#75715e">// make a controller
+</span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>Controller controller;
+  {
+    <span style="color:#75715e">// Create **incorrect** model used for control.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// (e.g., imperfect model fitting)
+</span><span style="color:#75715e"></span>    Matrix b_controller <span style="color:#f92672">=</span> b_true <span style="color:#f92672">/</span> <span style="color:#ae81ff">50</span>;
+
+    <span style="color:#75715e">// let&#39;s assume zero process disturbance initially
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// (will be re-estimating)
+</span><span style="color:#75715e"></span>    Vector m_controller <span style="color:#f92672">=</span> Vector(n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+
+    <span style="color:#75715e">// process noise covariance
+</span><span style="color:#75715e"></span>    Matrix q_controller <span style="color:#f92672">=</span> Matrix(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-8</span>;
+
+    <span style="color:#75715e">// output noise covariance
+</span><span style="color:#75715e"></span>    Matrix r_controller <span style="color:#f92672">=</span> Matrix(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-2</span>;
+
+    lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System controller_system(n_u, n_x, n_y, dt);
+    controller_system.set_A(a_true);
+    controller_system.set_B(b_controller);
+    controller_system.set_g(g_true);
+    controller_system.set_m(m_controller);
+    controller_system.set_Q(q_controller);
+    controller_system.set_R(r_controller);
+    controller_system.Reset();  <span style="color:#75715e">// reset to new m
+</span><span style="color:#75715e"></span>    controller_system.Print();
+
+    <span style="color:#75715e">// going to adaptively re-estimate the disturbance
+</span><span style="color:#75715e"></span>    controller_system.do_adapt_m <span style="color:#f92672">=</span> true;
+
+    <span style="color:#75715e">// set adaptation rate by changing covariance of assumed process noise
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// acting on random-walk evolution of m
+</span><span style="color:#75715e"></span>    Matrix q_m <span style="color:#f92672">=</span> Matrix(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-8</span>;
+    controller_system.set_Q_m(q_m);
+
+    <span style="color:#75715e">// create controller
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// lower and upper bounds on control signal (e.g., in Volts)
+</span><span style="color:#75715e"></span>    data_t u_lb <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;  <span style="color:#75715e">// [=] V
+</span><span style="color:#75715e"></span>    data_t u_ub <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.0</span>;  <span style="color:#75715e">// [=] V
+</span><span style="color:#75715e"></span>    controller <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(
+        lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>Controller(std<span style="color:#f92672">::</span>move(controller_system), u_lb, u_ub));
+  }
+
+  <span style="color:#75715e">// Control variables:
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Reference/target output, controller gains
+</span><span style="color:#75715e"></span>  Vector y_ref0 <span style="color:#f92672">=</span> Vector(n_y).fill(<span style="color:#ae81ff">20.0</span> <span style="color:#f92672">*</span> dt);
+
+  <span style="color:#75715e">// to design for this example, augmented state with control and made the input
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// du; cost on output q_y = 1, on integral output = 1e2, on u = 0, on du =
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// 1e-2.
+</span><span style="color:#75715e"></span>  Matrix k_x <span style="color:#f92672">=</span> Matrix(n_u, n_x).fill(<span style="color:#ae81ff">2.44</span>);     <span style="color:#75715e">// gains on state error
+</span><span style="color:#75715e"></span>  Matrix k_inty <span style="color:#f92672">=</span> Matrix(n_u, n_y).fill(<span style="color:#ae81ff">97.4</span>);  <span style="color:#75715e">// gains on integrated err
+</span><span style="color:#75715e"></span>  Matrix k_u <span style="color:#f92672">=</span> Matrix(n_u, n_u).fill(<span style="color:#ae81ff">5.23e-2</span>);  <span style="color:#75715e">// gains on input amp
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">// set up controller type bit mask so controller knows how to proceed
+</span><span style="color:#75715e"></span>  size_t control_type <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  <span style="color:#75715e">// use integral action to minimize DC error
+</span><span style="color:#75715e"></span>  control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>kControlTypeIntY;
+  <span style="color:#75715e">// update change in control (LP filters control)
+</span><span style="color:#75715e"></span>  control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>kControlTypeDeltaU;
+
+  <span style="color:#75715e">// set controller type
+</span><span style="color:#75715e"></span>  controller.set_control_type(control_type);
+
+  <span style="color:#75715e">// Let&#39;s say these controller gains were designed assuming g was 9 V/(mW/mm2):
+</span><span style="color:#75715e"></span>  Vector g_design <span style="color:#f92672">=</span> Vector(n_u).fill(<span style="color:#ae81ff">10</span>);
+
+  <span style="color:#75715e">// Set params.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// **n.b. using arbitrary defaults for Q, R in this example. Really, these
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// should be set by users, as they tune characteristics of Kalman filter.
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Users can also choose not to recursively calculate the estimator gain and
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// supply it (setKe) instead of covariances.**
+</span><span style="color:#75715e"></span>  controller.set_y_ref(y_ref0);
+  controller.set_Kc(k_x);
+  controller.set_Kc_inty(k_inty);
+  controller.set_Kc_u(k_u);
+  controller.set_g_design(g_design);
+
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;control system:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  controller.Print();
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+
+  <span style="color:#75715e">// set up variables for simulation
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// create Matrixrix to save outputs in...
+</span><span style="color:#75715e"></span>  Matrix y_ref <span style="color:#f92672">=</span> Matrix(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>ones) <span style="color:#f92672">*</span> y_ref0[<span style="color:#ae81ff">0</span>];
+
+  <span style="color:#75715e">// Simulated measurements
+</span><span style="color:#75715e"></span>  Matrix z(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+
+  <span style="color:#75715e">// simulated control signal ([=] V)
+</span><span style="color:#75715e"></span>  Matrix u(n_u, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+
+  <span style="color:#75715e">// outputs, states and gain/disturbance params
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// *_hat indicates online estimates
+</span><span style="color:#75715e"></span>  Matrix y_hat(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  Matrix x_hat(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  Matrix m_hat(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+
+  <span style="color:#75715e">// *_true indicates ground truth (system being controlled)
+</span><span style="color:#75715e"></span>  Matrix y_true(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  Matrix x_true(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  Matrix m_true(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+
+  <span style="color:#75715e">// get initial val
+</span><span style="color:#75715e"></span>  y_hat.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_y <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controller.sys().y();
+  y_true.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_y <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.y();
+
+  x_hat.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controller.sys().x();
+  x_true.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.x();
+
+  m_hat.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controller.sys().m();
+  m_true.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.m();
+
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Starting &#34;</span> <span style="color:#f92672">&lt;&lt;</span> n_t <span style="color:#f92672">*</span> dt <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; sec simulation ... </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  <span style="color:#66d9ef">auto</span> start <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">::</span>now();
+  <span style="color:#66d9ef">for</span> (size_t t <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; t <span style="color:#f92672">&lt;</span> n_t; t<span style="color:#f92672">++</span>) {
+    <span style="color:#75715e">// simulate a stochastically switched disturbance
+</span><span style="color:#75715e"></span>    Vector chance <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>randu<span style="color:#f92672">&lt;</span>Vector<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1</span>);
+    <span style="color:#66d9ef">if</span> (which_m <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)  <span style="color:#75715e">// low disturbance
+</span><span style="color:#75715e"></span>    {
+      <span style="color:#66d9ef">if</span> (chance[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> pr_lo2hi) {  <span style="color:#75715e">// switches low -&gt; high disturbance
+</span><span style="color:#75715e"></span>        m0_true <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(n_y, m_high);
+        which_m <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+      }
+    } <span style="color:#66d9ef">else</span> {                       <span style="color:#75715e">// high disturbance
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">if</span> (chance[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> pr_hi2lo) {  <span style="color:#75715e">// swithces high -&gt; low disturbance
+</span><span style="color:#75715e"></span>        m0_true <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(n_y, m_low);
+        which_m <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+      }
+    }
+    controlled_system.set_m(m0_true);
+
+    <span style="color:#75715e">// input
+</span><span style="color:#75715e"></span>    Vector u_tm1(u.colptr(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>), u.n_rows, false, true);
+
+    <span style="color:#75715e">// Simulate the true system.
+</span><span style="color:#75715e"></span>    z.col(t) <span style="color:#f92672">=</span> controlled_system.Simulate(u_tm1);
+
+    <span style="color:#75715e">// This method uses a steady-state solution to control problem to calculate
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// x_ref, u_ref from reference output y_ref. Therefore, it is only
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// applicable to regulation problems or cases where reference trajectory
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">// changes slowly compared to system dynamics.
+</span><span style="color:#75715e"></span>    u.col(t) <span style="color:#f92672">=</span> controller.ControlOutputReference(z.col(t));
+
+    <span style="color:#75715e">// save the signals
+</span><span style="color:#75715e"></span>    y_true.col(t) <span style="color:#f92672">=</span> controlled_system.y();
+    x_true.col(t) <span style="color:#f92672">=</span> controlled_system.x();
+    m_true.col(t) <span style="color:#f92672">=</span> controlled_system.m();
+
+    y_hat.col(t) <span style="color:#f92672">=</span> controller.sys().y();
+    x_hat.col(t) <span style="color:#f92672">=</span> controller.sys().x();
+    m_hat.col(t) <span style="color:#f92672">=</span> controller.sys().m();
+  }
+
+  <span style="color:#66d9ef">auto</span> finish <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">::</span>now();
+  std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>duration<span style="color:#f92672">&lt;</span>data_t, std<span style="color:#f92672">::</span>milli<span style="color:#f92672">&gt;</span> sim_time_ms <span style="color:#f92672">=</span> finish <span style="color:#f92672">-</span> start;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Finished simulation in &#34;</span> <span style="color:#f92672">&lt;&lt;</span> sim_time_ms.count() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; ms.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;(app. &#34;</span> <span style="color:#f92672">&lt;&lt;</span> (sim_time_ms.count() <span style="color:#f92672">/</span> n_t) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e3</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; us/time-step)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Saving simulation data to disk.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+
+  <span style="color:#75715e">// saved variables: dt, lambdaHat, xHat, mHat, z, u, lambdaRef, lambdaTrue,
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// xTrue, mTrue saving with hdf5 via armadillo
+</span><span style="color:#75715e"></span>  arma<span style="color:#f92672">::</span>hdf5_opts<span style="color:#f92672">::</span>opts replace <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>hdf5_opts<span style="color:#f92672">::</span>replace;
+
+  <span style="color:#66d9ef">auto</span> dt_vec <span style="color:#f92672">=</span> Vector(<span style="color:#ae81ff">1</span>).fill(dt);
+  dt_vec.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;dt&#34;</span>));
+  y_ref.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;y_ref&#34;</span>, replace));
+  u.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;u&#34;</span>, replace));
+  z.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;z&#34;</span>, replace));
+  x_true.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;x_true&#34;</span>, replace));
+  m_true.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;m_true&#34;</span>, replace));
+  y_true.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;y_true&#34;</span>, replace));
+  x_hat.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;x_hat&#34;</span>, replace));
+  m_hat.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;m_hat&#34;</span>, replace));
+  y_hat.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_glds_du_plds_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;y_hat&#34;</span>, replace));
+
+  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;fin.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><hr>
+<p>Updated on 25 April 2021 at 11:04:30 EDT</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#exampleseg_glds_du_plds_ctrlcpp">examples/eg_glds_du_plds_ctrl.cpp</a>
+      <ul>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#function-details">Function Details</a>
+          <ul>
+            <li><a href="#main">main</a></li>
+          </ul>
+        </li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

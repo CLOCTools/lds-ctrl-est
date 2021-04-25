@@ -37,6 +37,7 @@ This file provides a container for uniformly sized vectors.
 ```cpp
 //===-- ldsCtrlEst_h/lds_uniform_vecs.h - Uniform Vectors -------*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -66,7 +67,8 @@ namespace lds {
 
 class UniformVectorList : public std::vector<Vector> {
  private:
-  using std::vector<Vector>::vector;
+  // TODO(mfbolus): would rather *uncomment* the below for sake of conversion
+  // using std::vector<Vector>::vector;
   using std::vector<Vector>::operator=;
   using std::vector<Vector>::operator[];
   using std::vector<Vector>::at;
@@ -186,4 +188,4 @@ inline UniformVectorList& UniformVectorList::operator=(
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

@@ -38,6 +38,7 @@ This file declares and partially defines the type for control of a gaussian-obse
 ```cpp
 //===-- ldsCtrlEst_h/lds_gaussian_ctrl.h - GLDS Controller ------*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -112,4 +113,4 @@ class Controller : public lds::Controller<System> {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

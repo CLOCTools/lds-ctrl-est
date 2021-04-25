@@ -1,5 +1,6 @@
 //===-- eg_plds_ctrl.cpp - Example PLDS Control ---------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -49,14 +50,6 @@ auto main() -> int {
 
   // Set control type bit mask, so controller knows what to do
   size_t control_type = lds::kControlTypeIntY;  // integral action
-
-  // // uncomment to use control that was designed to minimize change in control
-  // // signal, rather than instantaneous amplitude
-  // control_type = control_type | lds::kControlTypeDeltaU;
-  // if (control_type & lds::kControlTypeDeltaU) {
-  //   k_x *= dt*10;
-  //   k_inty *= 0;
-  // }
 
   // Ground-truth parameters for the controlled system
   // (stand-in for physical system to be controlled)

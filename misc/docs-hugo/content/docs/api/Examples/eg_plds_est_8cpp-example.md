@@ -13,6 +13,7 @@ Example PLDS Estimation
 ```cpp
 //===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -192,4 +193,4 @@ _Filename: eg_plds_est.cpp_
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

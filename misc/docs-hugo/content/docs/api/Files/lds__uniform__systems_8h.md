@@ -37,6 +37,7 @@ This file provides a container for uniformly sized Systems.
 ```cpp
 //===-- ldsCtrlEst_h/lds_uniform_systems.h - Uniform Systems ----*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -72,7 +73,8 @@ class UniformSystemList : public std::vector<System> {
                 "System must be derived from lds::System type.");
 
  private:
-  using std::vector<System>::vector;
+  // TODO(mfbolus): would rather *uncomment* the below for sake of conversion
+  // using std::vector<System>::vector;
   using std::vector<System>::operator=;
   using std::vector<System>::operator[];
   using std::vector<System>::at;
@@ -263,4 +265,4 @@ void UniformSystemList<System>::CheckDimensions(std::array<size_t, 3> dim) {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

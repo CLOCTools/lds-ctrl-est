@@ -1,5 +1,6 @@
 //===-- lds_gaussian_fit_ssid.cpp - GLDS Fit (SSID) -----------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,18 +39,15 @@ void FitSSID::DecomposeData() {
   // // decomp. Very confusing.
   // Matrix q_t;
   // lq(L_, q_t, D_);
-
   // // van Overschee zeros out the other elements.
   // L_ = trimatl(L_);
 
   // Depending on dataset, this may be faster:
-  // Calculate covariance of the data matrix
-  Matrix cov = D_ * D_.t();
-  // retro-actively do mean subtraction
-  Vector mu_d = arma::mean(D_, 1);
-  cov -= mu_d * mu_d.t() * D_.n_cols;
+  // Buesing CoreSSID/ssidN4SIDsmall.m:
+  // "Cholesky decomposition of SIG, corresponds to QR of data matrix"
+  Matrix cov = arma::cov(D_.t(), 1) * D_.n_cols;  // undo normalization
+  ForceSymPD(cov);
   L_ = arma::chol(cov, "lower");
-  L_ = trimatl(L_);
 }
 
 void FitSSID::SolveVanOverschee() {

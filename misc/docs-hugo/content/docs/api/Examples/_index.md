@@ -17,6 +17,12 @@ title: Examples
 
 
 
+- **[eg_glds_du_plds_ctrl.cpp](/lds-ctrl-est/docs/api/examples/eg_glds_du_plds_ctrl_8cpp-example/#example-eg_glds_du_plds_ctrl.cpp)** <br>Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u). 
+
+
+
+
+
 - **[eg_plds_ctrl.cpp](/lds-ctrl-est/docs/api/examples/eg_plds_ctrl_8cpp-example/#example-eg_plds_ctrl.cpp)** <br>Example PLDS Control. 
 
 
@@ -37,4 +43,4 @@ title: Examples
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:31 EDT

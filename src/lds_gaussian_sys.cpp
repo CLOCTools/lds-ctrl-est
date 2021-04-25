@@ -1,5 +1,6 @@
 //===-- lds_gaussian_sys.cpp - GLDS ---------------------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,8 +26,7 @@
 /// \brief GLDS base type
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
-
+#include <ldsCtrlEst_h/lds_gaussian_sys.h>
 
 lds::gaussian::System::System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0,
                    data_t q0, data_t r0)

@@ -1,28 +1,34 @@
-function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims)
-	% [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims)
+function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, Kfb_v, qM, ctrlGate, sigma_u_noise, recurseK, adaptSetPoint, uLims)
+	% [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, Kfb_v, qM, ctrlGate, recurseK, adaptSetPoint, uLims)
 	%
 	% Feedback control of a spiking PLDS model with adaptive re-estimation of process disturbance, m.
 	% Using steady state control solution (e.g., inf horizon lqr).
 	%
 	% plds : PLDS object to be controlled
 	% r : [nY, nTime] reference/target **output** (not state)
-	% Kfb_x : [nU, nX] state feedback controller gains. May be either time varying or not.
-	% Kfb_intY : [nU, nY] state feedback controller gains. May be either time varying or not.
+	% Kfb_x : [nU, nX] state feedback controller gains
+	% Kfb_intY : [nU, nY] integral feedback controller gains
+	% Kfb_v : [nU, nU] or [0,0] input feedback controller gains. If not empty, assumes control designed around updating time-change in u (du).
 	% qM : diagonal elements of assumed process noise for disturbance variation
 	% ctrlGate : [1, nTime] logical gate for whether control is enabled
+	% sigma_u_noise : [deafult=0] standard deviation (sigma) of zero-mean Gaussian noise added to control signal
 	% recurseK : [bool] Whether to recursively calculate K (Kalman gain)
 	% adaptSetPoint : [bool] Use adaptively re-estimated disturbance when calculating state-control setpoint.
 	% uLims : [0 5] lower and upper limits on control signal
 
-	if nargin < 8
-		recurseK = true;
-	end
-
 	if nargin < 9
-		adaptSetPoint = false;
+		sigma_u_noise = 0;
 	end
 
 	if nargin < 10
+		recurseK = true;
+	end
+
+	if nargin < 11
+		adaptSetPoint = false;
+	end
+
+	if nargin < 12
 		uLims = [0 5];
 	end
 
@@ -71,7 +77,7 @@ function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_stea
 	A_true = plds.A;
 	B_true = plds.B * (plds.g*eye(size(plds.B,2)));
 	m_true = plds.m;
-	x0_true = inv(eye(nX_true)-A_true)*m_true;
+	x0_true = plds.x0; %inv(eye(nX_true)-A_true)*m_true;
 	C_true = plds.C;
 	d_true = plds.d;
 
@@ -93,7 +99,6 @@ function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_stea
 	intE = zeros(nY, 1);
 
 	% rng(13)
-	chance = rand(nY, nSamps);
 	z = zeros(nY, nSamps);
 	uRef = zeros(nU, nSamps);
 	xRef = zeros(nX, nSamps);
@@ -106,18 +111,20 @@ function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_stea
 	yTrue(:,1) = exp(C_true * x0_true + d_true);
 	yHat(:,1) = C * x0 + d;
 
+	u_prev = zeros(nU,1);
 	m_prev = m;
 	Pm_prev = P0m;
 
 	function [] = simPLDS(k)
 		xTrue(:,k) = A_true * xTrue(:,k-1) + B_true * u(:,k-1) + m_true;
 		yTrue(:,k) = exp(C_true * xTrue(:,k) + d_true);
-		z(:,k) = chance(:,k) < yTrue(:,k);
+		z(:,k) = poissrnd(yTrue(:,k));
 	end
 
 	function [] = predictLDS(k)
 		mHat(:,k-1) = m_prev;
-		xHat(:,k) = A*xHat(:,k-1) + B*u(:,k-1) + mHat(:,k-1);
+		% xHat(:,k) = A*xHat(:,k-1) + B*u(:,k-1) + mHat(:,k-1);
+		xHat(:,k) = A*xHat(:,k-1) + B*u_prev + mHat(:,k-1);
 		yHat(:,k) = C*xHat(:,k) + d;
 	end
 
@@ -164,21 +171,45 @@ function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_stea
 			% TODO: the only realizable output. Comment out to use actual ref.
 			% r(:,k) = C*xRef(:,k) + d;
 
-			% calc control in intensity ("v")
-			v = v_ss;
-			v = v - Kfb_x*(xHat(:,k) - xRef(:,k));
-
 			% only integrate error if not saturated?
 			if ((u(:,k-1) > uLims(1)) && (u(:,k-1) < uLims(2)))
 				intE = intE + (yHat(:,k)-r(:,k))*dt;
 			end
-			v = v - Kfb_intY*intE;
+
+			% calc control in physical units ("v")
+			if isempty(Kfb_v)
+				v = v_ss;
+				v = v - Kfb_x*(xHat(:,k) - xRef(:,k));
+				v = v - Kfb_intY*intE;
+			else %if control designed around dv
+				% at s-s, dv will be zero
+				dv = zeros(nU,1);
+				% n.b., line below is essentially first order difference eq
+				% (i.e., LP filter ...)
+				% dv = dv - Kfb_v*g*(u(:,k-1) - uRef(:,k-1));
+				dv = dv - Kfb_v*(g.*u_prev - v_ss);
+
+				dv = dv - Kfb_x*(xHat(:,k) - xRef(:,k));
+				dv = dv - Kfb_intY*intE;
+				v = g.*u_prev + dv;
+			end
 
 			% convert back to driver control voltage
 			u(:,k) = v ./ g;
 
+			% TODO(mfbolus): should controller "know" about the added noise?
+			% If not, uncomment the below and commount out last line of if statement.
 			u(u(:,k)>uLims(2),k) = uLims(2);
 			u(u(:,k)<uLims(1),k) = uLims(1);
+			u_prev = u(:,k);
+
+			% add noise
+			u(:,k) = u(:,k) + sigma_u_noise .* randn(nU,1);
+			u(u(:,k)>uLims(2),k) = uLims(2);
+			u(u(:,k)<uLims(1),k) = uLims(1);
+
+			% TODO(mfbolus) : see note above
+			% u_prev = u(:,k);
 		else
 			intE = 0*r(:,k);
 		end

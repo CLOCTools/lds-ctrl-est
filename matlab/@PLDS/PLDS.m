@@ -63,7 +63,9 @@ end
 [y, x, z] = simulate(this, u, addNoise);
 [yImpC, tImp] = simulate_imp(this, nSamps);
 [yHat, xHat, P, K] = ppfilter_joint(this, u, z, augmentM, qM);
-[Kx, KintY, Fx, Fv, Hx] = log_lqr_outputWt(this, qIntY_over_qY, r_over_qY);
+[Kx, KintY, Kv, Fx, Fv, Hx] = log_lqr_outputWt(this, qIntY_over_qY, r_over_qY, penalize_dv);
+
+[sys_du] = create_sys_du(this);
 
 [] = save_params(this, savename);
 end%end methods

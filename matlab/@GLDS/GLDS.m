@@ -78,14 +78,16 @@ matlabSS_to_this(this,sys,g,d);
 [yHat, xHat, mHat, P, Pm, K, Km] = ksmooth_joint(this, u, z, augmentM, qM);
 
 [u_ss, x_ss, y_ss] = calcCtrl_steadyState(this, r);
-[Kx, KintY, Fx, Fv, Hx] = lqr_outputWt(this, qIntY_over_qY, r_over_qY);
-[u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_joint(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims);
-[u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims);
+[Kx, KintY, Kv, Fx, Fv, Hx] = lqr_outputWt(this, qIntY_over_qY, r_over_qY, penalize_dv);
+% [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_joint(this, plds, r, Kfb_x, Kfb_intY, qM, ctrlGate, recurseK, adaptSetPoint, uLims);
+[u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_steadyState_plds_adaptM_dual(this, plds, r, Kfb_x, Kfb_intY, Kfb_v, qM, ctrlGate, sigma_u_noise, recurseK, adaptSetPoint, uLims);
 
 [plds, y, x] = fit_plds_output_mle(this, u, z, g, rescaleOnly, wG0);
 [y, x] = refit_output(this, u, z, g, tol, maxIter, refit_d);
 
-[] = save_params_controller(this, savename, qM, Kc, Kc_inty, yRef);
+[sys_du] = create_sys_du(this);
+
+[] = save_params_controller(this, savename, qM, Kc, Kc_inty, Kc_u, yRef);
 end%end methods
 
 end%classdef

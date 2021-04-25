@@ -1,5 +1,6 @@
 //===-- ldsCtrlEst_h/lds_control.h - Controller -----------------*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -245,7 +246,8 @@ class Controller {
  protected:
   System sys_;  ///< underlying LDS
 
-  Vector u_;  ///< control signal
+  Vector u_;         ///< control signal
+  Vector u_return_;  ///< control signal that is *returned* to user
 
   Vector g_design_;  ///< input gain of the system used for controller design
 
@@ -425,7 +427,7 @@ inline const Vector& Controller<System>::Control(
   CalcControl(do_control, do_estimation, do_lock_control, sigma_soft_start,
               sigma_u_noise, do_reset_at_control_onset);
 
-  return u_;
+  return u_return_;
 }
 
 template <typename System>
@@ -450,7 +452,7 @@ inline const Vector& Controller<System>::ControlOutputReference(
   CalcControl(do_control, do_estimation, do_lock_control, sigma_soft_start,
               sigma_u_noise, do_reset_at_control_onset);
 
-  return u_;
+  return u_return_;
 }
 
 template <typename System>
@@ -482,18 +484,26 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
     }
 
     if (!do_lock_control) {
-      du_ref_ = u_ref_ - u_ref_prev_;
-
       // first do u -> v change of vars. (v = g.*u)
       // e.g., convert into physical units (e.g., v[=] mW/mm2 rather than driver
       // control voltage u[=]V)
       v_ref_ = g_design_ % u_ref_;
-      dv_ref_ = g_design_ % du_ref_;
 
       // Given FB, calc. the change in control
       if (control_type_ & kControlTypeDeltaU) {
         // if control designed to minimize not u but deltaU (i.e. state aug with
         // u):
+
+        // TODO(mfbolus): Commented out for now. See note below.
+        // du_ref_ = u_ref_ - u_ref_prev_;
+        // dv_ref_ = g_design_ % du_ref_;
+
+        // TODO(mfbolus): Assuming users want *smooth* control signals if using
+        // kControlTypeDeltaU, it should be the case that dv_ref_ is --> 0. May
+        // want to revisit, but I am going to force it to be zero unless a
+        // situation arises that argues for keeping the above.
+        dv_ref_.zeros();
+
         dv_ = dv_ref_;                     // nominally-optimal.
         dv_ -= Kc_ * (sys_.x() - x_ref_);  // instantaneous state error
         dv_ -= Kc_u_ * (v_ - v_ref_);      // penalty on amp u (rel to ref)
@@ -525,13 +535,7 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
 
       // convert back to control voltage u[=]V
       u_ = v_ / sys_.g();
-    }  // else do nothing until lock is low
-
-    // It may be desireable to make inputs more variable.
-    if (sigma_u_noise > 0.0) {
-      u_ += sigma_u_noise * Vector(sys_.n_u(), fill::randn);
-    };
-
+    }       // else do nothing until lock is low
   } else {  // if not control
     // feed through u_ref in open loop
     u_ = u_ref_ % g_design_ / sys_.g();
@@ -544,6 +548,17 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
   // enforce box constraints (and antiwindup)
   AntiWindup();
 
+  // add noise to input?
+  // The value for u that is *returned* to user after addition of any noise,
+  // while keeping controller/estimator blind to this addition.
+  u_return_ = u_;
+  if ((sigma_u_noise > 0.0) && (do_control && !do_lock_control)) {
+    u_return_ += sigma_u_noise * Vector(sys_.n_u(), fill::randn);
+    Limit(u_return_, u_lb_, u_ub_);
+  };
+
+  // For next time step:
+  u_ref_prev_ = u_ref_;
   do_control_prev_ = do_control;
   do_lock_control_prev_ = do_lock_control;
 }  // CalcControl
@@ -625,6 +640,7 @@ void Controller<System>::InitVars() {
   y_ref_ = Vector(sys_.n_y(), fill::zeros);
 
   u_ = Vector(sys_.n_u(), fill::zeros);
+  u_return_ = Vector(sys_.n_u(), fill::zeros);
   u_sat_ = Vector(sys_.n_u(), fill::zeros);
 
   // Might not need all these, so zero elements until later.

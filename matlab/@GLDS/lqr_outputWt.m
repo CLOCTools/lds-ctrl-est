@@ -1,5 +1,5 @@
-function [Kx, KintY, Fx, Fv, Hx] = lqr_outputWt(this, qIntY_over_qY, r_over_qY)
-	% [Kx, KintY, Fx, Fv, Hx] = lqr_outputWt(this, qIntY_over_qY, r_over_qY)
+function [Kx, KintY, Kv, Fx, Fv, Hx] = lqr_outputWt(this, qIntY_over_qY, r_over_qY, penalize_dv)
+	% [Kx, KintY, Kv, Fx, Fv, Hx] = lqr_outputWt(this, qIntY_over_qY, r_over_qY, penalize_dv)
 	%
 	% Output-weighted LQR for linear dynamical system, including integral action
 	%
@@ -25,38 +25,51 @@ function [Kx, KintY, Fx, Fv, Hx] = lqr_outputWt(this, qIntY_over_qY, r_over_qY)
 	% 	this: model fit struct at *least* including A, B, C, and dt
 	% 	qIntY_over_qY: relative weighting on integral error vs. proportional
 	% 	r_over_qY: relative weighting on control deviation vs. proportional error
+	%		penalize_dv: [default=false] whether to design controller to penalize time-change in input (dv)
 	%
 	% OUTPUTS
 	% 	Kx: feedback gains on x
 	%		KintY: feedback gains on integral of Y
+	%		Kv: feedback gains on input (if penalize_dv = true)
+	%
 
-  this.checkDims();
+	% make copy in case augment with input to `penalize_dv`
+	sys = copy(this);
 
 	if (nargin < 2)
-		qIntY_over_qY = 1;%1e2;
+		qIntY_over_qY = 1;
 	end
 
 	if (nargin < 3)
-		r_over_qY = 1;%1e-3;%1e-2
+		r_over_qY = 1;
 	end
 
-	nX = this.nX;
-	nU = this.nU;
-	nY = this.nY;
+	if (nargin < 4)
+		penalize_dv = false;
+	end
+
+	if (penalize_dv)
+		sys = this.create_sys_du();
+	end
+
+  sys.checkDims();
+	nX = sys.nX;
+	nU = sys.nU;
+	nY = sys.nY;
 
 	if qIntY_over_qY>0
-		dt = this.dt;
+		dt = sys.dt;
 		Fx = zeros(nX+nY);
-		Fx(1:nX,1:nX) = this.A;
-		Fx((nX+1):end, 1:nX) = this.C*dt; %integrated output
+		Fx(1:nX,1:nX) = sys.A;
+		Fx((nX+1):end, 1:nX) = sys.C*dt; %integrated output
 		Fx((nX+1):end, (nX+1):end) = eye(nY);
 
 		% design around v (e.g.  light intensity)
 		Fv = zeros(nX+nY,nU);
-		Fv(1:nX,:) = this.B;
+		Fv(1:nX,:) = sys.B;
 
 		Hx = zeros(2*nY,nX+nY);
-		Hx(1:nY,1:nX) = this.C;
+		Hx(1:nY,1:nX) = sys.C;
 		Hx(nY+1:end,nX+1:end) = eye(nY);
 
 		Qctrl = eye(2*nY);
@@ -67,14 +80,22 @@ function [Kx, KintY, Fx, Fv, Hx] = lqr_outputWt(this, qIntY_over_qY, r_over_qY)
 		Kx = K(:,1:nX);
 		KintY = K(:,nX+1:end);
 	else
-		Fx = this.A;
-		Fv = this.B;
-		Hx = this.C;
+		Fx = sys.A;
+		Fv = sys.B;
+		Hx = sys.C;
 
 		Qctrl = eye(nY);
 		Rctrl = eye(nU) .* r_over_qY;
 		Kx = try_dlqr(Fx, Fv, Hx'*Qctrl*Hx, Rctrl);
 		KintY = zeros(nU,nY);
+	end
+
+	if penalize_dv
+		nX = size(this.A,1);
+		Kv = Kx(:, (nX+1):(nX+nU));
+		Kx = Kx(:, 1:nX);
+	else
+		Kv = [];
 	end
 end
 

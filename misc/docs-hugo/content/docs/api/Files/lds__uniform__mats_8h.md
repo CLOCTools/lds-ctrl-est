@@ -37,6 +37,7 @@ This file provides a container for uniformly sized matrices. Users may specify o
 ```cpp
 //===-- ldsCtrlEst_h/lds_uniform_mats.h - Uniform Matrices ------*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -66,7 +67,8 @@ namespace lds {
 template <MatrixListFreeDim D = kMatFreeDimNone>
 class UniformMatrixList : public std::vector<Matrix> {
  private:
-  using std::vector<Matrix>::vector;
+  // TODO(mfbolus): would rather *uncomment* the below for sake of conversion
+  // using std::vector<Matrix>::vector;
   using std::vector<Matrix>::operator=;
   using std::vector<Matrix>::operator[];
   using std::vector<Matrix>::at;
@@ -317,4 +319,4 @@ void UniformMatrixList<D>::CheckDimensions(std::array<size_t, 2> dim) {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

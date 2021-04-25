@@ -45,6 +45,7 @@ int main()
 ```cpp
 //===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -223,4 +224,4 @@ Matrix random_walk(size_t n_t, const Matrix& Q, const Vector& x0) {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT
