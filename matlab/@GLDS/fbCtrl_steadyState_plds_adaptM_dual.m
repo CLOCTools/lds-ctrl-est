@@ -10,7 +10,7 @@ function [u, z, yTrue, yHat, xHat, mHat, uRef, xRef, P, Pm, K, Km] = fbCtrl_stea
 	% Kfb_intY : [nU, nY] integral feedback controller gains
 	% Kfb_v : [nU, nU] or [0,0] input feedback controller gains. If not empty, assumes control designed around updating time-change in u (du).
 	% qM : diagonal elements of assumed process noise for disturbance variation
-	% ctrlGate : logical gate for whether control is enabled
+	% ctrlGate : [1, nTime] logical gate for whether control is enabled
 	% sigma_u_noise : [deafult=0] standard deviation (sigma) of zero-mean Gaussian noise added to control signal
 	% recurseK : [bool] Whether to recursively calculate K (Kalman gain)
 	% adaptSetPoint : [bool] Use adaptively re-estimated disturbance when calculating state-control setpoint.
