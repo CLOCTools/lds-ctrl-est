@@ -1,5 +1,6 @@
 //===-- lds_poisson_fit_em.cpp - PLDS Fit (EM) ----------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,14 +35,15 @@
 /// \brief PLDS E-M fit type
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
+#include <ldsCtrlEst_h/lds_poisson_fit_em.h>
 
 namespace lds {
 namespace poisson {
 
 void FitEM::MaximizeOutput() {
-  data_t tol = 1e-2;           // frac abs change
-  size_t iters_allowed = 100;  // how many iterations allowed for convergence
+  data_t tol = 1e-1;  // 1e-2;           // frac abs change
+  size_t iters_allowed =
+      10;  // 100;  // how many iterations allowed for convergence
 
   data_t nll(0);
   data_t nll_prev(-1);
@@ -91,9 +93,34 @@ void FitEM::MaximizeOutput() {
 void FitEM::RecurseKe(Matrix& Ke, Cube& P_pre, Cube& P_post, size_t t) {
   // predict cov
   P_pre.slice(t) = fit_.A() * P_post.slice(t - 1) * fit_.A().t() + fit_.Q();
+  ForceSymPD(P_pre.slice(t));
+
+  bool is_sympd(false);
+  is_sympd = P_pre.slice(t).is_sympd();
+  if (!is_sympd) {
+    std::cout << "P_PRE NOT SYMPD\n";
+  }
+
   // update cov
-  P_post.slice(t) =
-      inv_sympd(inv_sympd(P_pre.slice(t)) + fit_.C().t() * diag_y_ * fit_.C());
+  Matrix p_inv = inv_sympd(P_pre.slice(t)) + fit_.C().t() * diag_y_ * fit_.C();
+  Matrix p_inv0 = p_inv;
+  ForceSymPD(p_inv);
+
+  is_sympd = p_inv.is_sympd();
+  if (!is_sympd) {
+    std::cout << "P_INV NOT SYMPD\n";
+    p_inv.print("p_inv = ");
+    p_inv0.print("p_inv0 = ");
+  }
+
+  P_post.slice(t) = inv_sympd(p_inv);
+  ForceSymPD(P_post.slice(t));
+
+  is_sympd = P_post.slice(t).is_sympd();
+  if (!is_sympd) {
+    std::cout << "P_POST NOT SYMPD\n";
+  }
+
   // update Ke
   Ke = P_post.slice(t) * fit_.C().t();
 }
@@ -125,9 +152,9 @@ void FitEM::AnalyticalSolveD() {
 
 // TODO(mfbolus): Not sure this is correct! See note below.
 data_t FitEM::NewtonSolveC() {
-  data_t tol = 1e-2;  // frac abs change
+  data_t tol = 1e-1;  // frac abs change
   size_t iters_allowed =
-      100;  // how many iterations of newtons allowed for convergence
+      10;  // 100;  // how many iterations of newtons allowed for convergence
   Vector nll(n_y_, fill::zeros);
 
   Vector f(n_x_, fill::zeros);

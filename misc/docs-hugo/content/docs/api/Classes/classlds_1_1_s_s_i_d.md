@@ -26,7 +26,7 @@ Inherited by [lds::gaussian::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_
 | -------------- | -------------- |
 | void | **[CalcD](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-calcd)**([data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) t_silence =0.1, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) thresh_silence =0.001)<br>Using periods of silence in inputs (u), calculates the output \ bias (d)  |
 | void | **[CreateHankelDataMat](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-createhankeldatamat)**()<br>Creates the block-hankel I/O data matrix.  |
-| virtual void | **[DecomposeData](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-decomposedata)**()<br>Decompose data to lower-triangular matrix (used in Solve)  |
+| virtual void | **[DecomposeData](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-decomposedata)**() =0<br>Decompose data to lower-triangular matrix (used in Solve)  |
 | void | **[CalcSVD](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-calcsvd)**([SSIDWt](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enum-ssidwt) wt)<br>performs the singular value decomposition (SVD)  |
 | void | **[Solve](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-solve)**([data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) wt_dc)<br>solves for LDS parameters  |
 | void | **[RecomputeExtObs](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/#function-recomputeextobs)**()<br>recompute extended observability matrix from estimates of A, C  |
@@ -165,7 +165,7 @@ Creates the block-hankel I/O data matrix. Also calculates I/O gain @ DC.
 ### **DecomposeData**
 
 ```cpp
-virtual void DecomposeData()
+virtual void DecomposeData() =0
 ```
 
 
@@ -367,4 +367,4 @@ Matrix ext_obs_t_;
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

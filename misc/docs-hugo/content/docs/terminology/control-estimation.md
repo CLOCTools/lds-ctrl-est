@@ -49,14 +49,14 @@ If users are employing integral action for more robust tracking at DC and did no
 An additional option available to users is a control law that updates the *change* in `u`,
 
 {{<katex display>}}
-\Delta\mathbf{u}_{t} = \Delta\mathbf{u}^{\rm ref}_t - \mathbf{K}^c_x \left( \widehat{\mathbf{x}}_t - \mathbf{x}^{\rm ref}_t\right)\;,
+\Delta\mathbf{u}_{t} = -\mathbf{K}^c_u \left(\mathbf{u}_{t-1} - \mathbf{u}^{\rm ref}_{t-1} \right) - \mathbf{K}^c_x \left( \widehat{\mathbf{x}}_t - \mathbf{x}^{\rm ref}_t\right)\;,
 {{</katex>}}
 
 {{<katex display>}}
 \mathbf{u}_{t} = \mathbf{u}_{t-1} + \Delta\mathbf{u}_{t} \; .
 {{</katex>}}
 
-This can be useful in cases where users have designed the controller gains by LQR to minimize *not* the amplitude of the input, but the *change* in input, by augmenting the state vector with the input during LQR design.
+Notice that this takes the form of a first-order difference equation for updating control (*i.e.*, {{<katex>}} \Delta\mathbf{u}_{t} = -\mathbf{K}^c_u \mathbf{u}_{t-1} + \epsilon_{t-1} {{</katex>}}), effectively low-pass filtering the input depending on the characteristics of {{<katex>}} \mathbf{K}^c_u {{</katex>}}. This can be useful in cases where users have designed the controller gains by LQR to minimize *not* the amplitude of the input, but the *change* in input, by augmenting the state vector with the input during LQR design.
 
 Integral action and the {{<katex>}} \Delta \mathbf{u} {{</katex>}} control law can be combined. The library keeps track of the controller type by way of [bit masks]({{<relref "../api/modules/group__control__masks/">}}) which can be bit-wise OR'd to use in combination.
 

@@ -37,6 +37,7 @@ This file declares the type for fitting a linear dynamical system by expectation
 ```cpp
 //===-- ldsCtrlEst_h/lds_fit_em.h - EM Fit ----------------------*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -70,10 +71,10 @@ class EM {
   EM() = default;
 
   EM(size_t n_x, data_t dt, UniformMatrixList<kMatFreeDim2>&& u_train,
-       UniformMatrixList<kMatFreeDim2>&& z_train);
+     UniformMatrixList<kMatFreeDim2>&& z_train);
 
   EM(const Fit& fit0, UniformMatrixList<kMatFreeDim2>&& u_train,
-       UniformMatrixList<kMatFreeDim2>&& z_train);
+     UniformMatrixList<kMatFreeDim2>&& z_train);
 
   const Fit& Run(bool calc_dynamics = true, bool calc_Q = true,
                  bool calc_init = true, bool calc_output = true,
@@ -149,9 +150,8 @@ class EM {
 };
 
 template <typename Fit>
-EM<Fit>::EM(size_t n_x, data_t dt,
-                UniformMatrixList<kMatFreeDim2>&& u_train,
-                UniformMatrixList<kMatFreeDim2>&& z_train) {
+EM<Fit>::EM(size_t n_x, data_t dt, UniformMatrixList<kMatFreeDim2>&& u_train,
+            UniformMatrixList<kMatFreeDim2>&& z_train) {
   n_u_ = u_train.at(0).n_rows;
   n_y_ = z_train.at(0).n_rows;
   fit_ = Fit(n_u_, n_x, n_y_, dt);
@@ -162,7 +162,7 @@ EM<Fit>::EM(size_t n_x, data_t dt,
 
 template <typename Fit>
 EM<Fit>::EM(const Fit& fit0, UniformMatrixList<kMatFreeDim2>&& u_train,
-                UniformMatrixList<kMatFreeDim2>&& z_train) {
+            UniformMatrixList<kMatFreeDim2>&& z_train) {
   // make sure fit dims match I/O data
   if (fit0.n_u() != u_train.at(0).n_rows) {
     throw std::runtime_error(
@@ -226,8 +226,8 @@ void EM<Fit>::InitVars() {
 
 template <typename Fit>
 const Fit& EM<Fit>::Run(bool calc_dynamics, bool calc_Q, bool calc_init,
-                          bool calc_output, bool calc_measurement,
-                          size_t max_iter, data_t tol) {
+                        bool calc_output, bool calc_measurement,
+                        size_t max_iter, data_t tol) {
   Reset();  // to initial conditions
 
   size_t n_params =
@@ -312,15 +312,19 @@ void EM<Fit>::Smooth(bool force_common_initial) {
           x_pre.col(t) + k_e * (z_.at(trial).col(t) - y_[trial].col(t));
       y_[trial].col(t) = fit_.C() * x_post.col(t) + fit_.d();
     }
-    ForceSymPD(P_[trial].slice(n_t_[trial] - 1));
 
     // backfilter -> Smoothed estimate
     // Reference:
     // Shumway et Stoffer (1982)
+    ForceSymPD(p_post.slice(n_t_[trial] - 1));
     k_backfilt = Cube(n_x_, n_x_, n_t_[trial], fill::zeros);
     x_[trial].col(n_t_[trial] - 1) = x_post.col(n_t_[trial] - 1);
     P_[trial].slice(n_t_[trial] - 1) = p_post.slice(n_t_[trial] - 1);
     for (size_t t = (n_t_[trial] - 1); t > 0; t--) {
+      // TODO(mfmbolus): should not be necessary to force symm positive def
+      ForceSymPD(p_pre.slice(t));
+      ForceSymPD(p_post.slice(t - 1));
+      ForceSymPD(P_[trial].slice(t));
       k_backfilt.slice(t - 1) =
           p_post.slice(t - 1) * fit_.A().t() * inv_sympd(p_pre.slice(t));
       x_[trial].col(t - 1) =
@@ -415,7 +419,7 @@ void EM<Fit>::Expectation(bool force_common_initial) {
 
 template <typename Fit>
 void EM<Fit>::Maximization(bool calc_dynamics, bool calc_Q, bool calc_init,
-                             bool calc_output, bool calc_measurement) {
+                           bool calc_output, bool calc_measurement) {
   if (calc_output) {
     MaximizeOutput();
   }
@@ -625,4 +629,4 @@ Vector EM<Fit>::UpdateTheta() {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

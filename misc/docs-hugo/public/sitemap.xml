@@ -33,10 +33,6 @@
   </url>
   
   <url>
-    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_4fef79e7177ba769987a8da36c892c5f/</loc>
-  </url>
-  
-  <url>
     <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/terminology/control-estimation/</loc>
   </url>
   
@@ -58,6 +54,10 @@
   
   <url>
     <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_ctrl_8cpp-example/</loc>
+  </url>
+  
+  <url>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_du_plds_ctrl_8cpp-example/</loc>
   </url>
   
   <url>
@@ -85,6 +85,10 @@
   </url>
   
   <url>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__glds__du__plds__ctrl_8cpp/</loc>
+  </url>
+  
+  <url>
     <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__ctrl_8cpp/</loc>
   </url>
   
@@ -105,7 +109,7 @@
   </url>
   
   <url>
-    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_8f2980731aba7ec7b9fcae5764f196e3/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d44c64559bbebec7f509842c48db8b23/</loc>
   </url>
   
   <url>
@@ -209,7 +213,7 @@
   </url>
   
   <url>
-    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_2755d76cbd49ca86cc5d9263eb253d5e/</loc>
+    <loc>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_156a98879751e549d6939ca71a62d61f/</loc>
   </url>
   
   <url>

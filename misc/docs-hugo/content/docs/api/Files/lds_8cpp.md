@@ -31,6 +31,7 @@ This file implements miscellaneous lds namespace functions not bound to a class.
 ```cpp
 //===-- lds.cpp - LDS -----------------------------------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,7 +49,7 @@ This file implements miscellaneous lds namespace functions not bound to a class.
 //===----------------------------------------------------------------------===//
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
+#include <ldsCtrlEst_h/lds.h>
 
 // insert any necessary function definitions here.
 namespace lds {
@@ -61,30 +62,75 @@ void ForceSymPD(Matrix& X) {
   // make symmetric
   X = (X + X.t()) / 2;
 
+  // for eigenval decomp
+  bool did_succeed(true);
   Vector d;
   Matrix u;
-  arma::eig_sym(d, u, X, "std");
-  Matrix d_diag = arma::diagmat(abs(d));  // force to be positive...
-  X = u * d_diag * u.t();
+
+  // for iterative correction
+  // inspired by Higham 2002 but not trying to make a corr matrix
+  // (i.e., not nec unit diag)
+  size_t k(1);
+  bool is_sympd = X.is_sympd();
+
+  while (!is_sympd) {
+    if (k > 100) {
+      throw std::runtime_error(
+          "Failed to make matrix symmetric positive definite.");
+    }
+
+    did_succeed = arma::eig_sym(d, u, X, "std");
+    if (!did_succeed) {
+      throw std::runtime_error("ForceSymPD failed.");
+    }
+
+    data_t min_eig = arma::min(d);
+    X += Matrix(X.n_rows, X.n_cols, fill::eye) * (min_eig + arma::eps(min_eig));
+
+    // Limit(d, arma::eps(0), kInf);  // force to be positive...
+    // Matrix d_diag = arma::diagmat(d);
+    // X = u * d_diag * u.t();
+
+    // TODO(mfbolus): should possibly compensate for the resulting change in
+    // sum of eigenvalues by adding to or rescaling diagonal of new "X"...
+
+    // double check symm
+    X = (X + X.t()) / 2;
+
+    is_sympd = X.is_sympd();
+    k++;
+  }
 }
 
 void ForceSymMinEig(Matrix& X, data_t eig_min) {
   if (!X.is_square()) {
     return;
   }
+
+  // make symmetric
+  X = (X + X.t()) / 2;
+
+  bool did_succeed(true);
   Vector d;
   Matrix u;
-  arma::eig_sym(d, u, X);//, "std");
-  Limit(d, eig_min, kInf);//enforce lower bound
+  did_succeed = arma::eig_sym(d, u, X, "std");
+  if (!did_succeed) {
+    throw std::runtime_error("ForceSymMinEig failed.");
+  }
+  Limit(d, eig_min + arma::eps(eig_min), kInf);  // enforce lower bound
   Matrix d_diag = arma::diagmat(d);
   X = u * d_diag * u.t();
 
-  // make symmetric
+  // double check symmetric
   X = (X + X.t()) / 2;
 }
 
 void lq(Matrix& L, Matrix& Qt, const Matrix& X) {
-  arma::qr_econ(Qt, L, X.t());
+  bool did_succeed(true);
+  did_succeed = arma::qr_econ(Qt, L, X.t());
+  if (!did_succeed) {
+    throw std::runtime_error("LQ decomposition failed.");
+  }
   arma::inplace_trans(L);
   arma::inplace_trans(Qt);
 }
@@ -109,4 +155,4 @@ Matrix calcCov(const Matrix& A, const Matrix& B) {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

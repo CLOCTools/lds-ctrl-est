@@ -13,6 +13,29 @@ title: Files
 
 
 
+- **[examples/eg_glds_ctrl.cpp](/lds-ctrl-est/docs/api/files/eg__glds__ctrl_8cpp/#file-eg_glds_ctrl.cpp)** 
+
+
+
+- **[examples/eg_glds_du_plds_ctrl.cpp](/lds-ctrl-est/docs/api/files/eg__glds__du__plds__ctrl_8cpp/#file-eg_glds_du_plds_ctrl.cpp)** 
+
+
+
+- **[examples/eg_plds_ctrl.cpp](/lds-ctrl-est/docs/api/files/eg__plds__ctrl_8cpp/#file-eg_plds_ctrl.cpp)** 
+
+
+
+- **[examples/eg_plds_est.cpp](/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#file-eg_plds_est.cpp)** 
+
+
+
+- **[examples/eg_plds_switched_ctrl.cpp](/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#file-eg_plds_switched_ctrl.cpp)** 
+
+
+
+
+
+
 
 
 
@@ -132,31 +155,6 @@ title: Files
 
 
 
-
-
-
-- **[examples/eg_glds_ctrl.cpp](/lds-ctrl-est/docs/api/files/eg__glds__ctrl_8cpp/#file-eg_glds_ctrl.cpp)** 
-
-
-
-- **[examples/eg_plds_ctrl.cpp](/lds-ctrl-est/docs/api/files/eg__plds__ctrl_8cpp/#file-eg_plds_ctrl.cpp)** 
-
-
-
-- **[examples/eg_plds_est.cpp](/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#file-eg_plds_est.cpp)** 
-
-
-
-- **[examples/eg_plds_switched_ctrl.cpp](/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#file-eg_plds_switched_ctrl.cpp)** 
-
-
-
-
-
-
-
-
-
 - **[src/lds.cpp](/lds-ctrl-est/docs/api/files/lds_8cpp/#file-lds.cpp)** <br>misc lds namespace functions 
 
 
@@ -183,4 +181,4 @@ title: Files
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:31 EDT

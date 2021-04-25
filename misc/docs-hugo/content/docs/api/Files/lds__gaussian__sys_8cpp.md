@@ -25,6 +25,7 @@ This file implements the type for state estimation (filtering) as well as simula
 ```cpp
 //===-- lds_gaussian_sys.cpp - GLDS ---------------------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,8 +43,7 @@ This file implements the type for state estimation (filtering) as well as simula
 //===----------------------------------------------------------------------===//
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
-
+#include <ldsCtrlEst_h/lds_gaussian_sys.h>
 
 lds::gaussian::System::System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0,
                    data_t q0, data_t r0)
@@ -95,4 +95,4 @@ void lds::gaussian::System::Print() {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

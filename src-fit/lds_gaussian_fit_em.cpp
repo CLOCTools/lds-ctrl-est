@@ -1,5 +1,6 @@
 //===-- lds_gaussian_fit_em.cpp - GLDS Fit (EM) ---------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,7 +31,7 @@
 /// \brief GLDS E-M fit type
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
+#include <ldsCtrlEst_h/lds_gaussian_fit_em.h>
 
 namespace lds {
 namespace gaussian {
@@ -38,6 +39,7 @@ namespace gaussian {
 void FitEM::RecurseKe(Matrix& Ke, Cube& P_pre, Cube& P_post, size_t t) {
   // predict covar
   P_pre.slice(t) = fit_.A() * P_post.slice(t - 1) * fit_.A().t() + fit_.Q();
+  ForceSymPD(P_pre.slice(t));
 
   // update Ke
   Ke = P_pre.slice(t) * fit_.C().t() *
@@ -46,6 +48,7 @@ void FitEM::RecurseKe(Matrix& Ke, Cube& P_pre, Cube& P_post, size_t t) {
   // update covar
   // Reference: Ghahramani et Hinton (1996)
   P_post.slice(t) = P_pre.slice(t) - Ke * fit_.C() * P_pre.slice(t);
+  ForceSymPD(P_post.slice(t));
 }
 
 void FitEM::MaximizeOutput() {

@@ -15,7 +15,7 @@
 <link rel="manifest" href="/lds-ctrl-est/manifest.json">
 <link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/lds-ctrl-est/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/lds-ctrl-est/en.search.min.24d3ce5a4342260448cf2e27a83655125b7508c771ad7d530604570eb26f0962.js" integrity="sha256-JNPOWkNCJgRIzy4nqDZVElt1CMdxrX1TBgRXDrJvCWI="></script>
+<script defer src="/lds-ctrl-est/en.search.min.984a87477490fafea7ec7ed9296bdbe3bb2bba10f5bd70acefff95a0dd30842d.js" integrity="sha256-mEqHR3SQ&#43;v6n7H7ZKWvb47sruhD1vXCs7/&#43;VoN0whC0="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -206,6 +206,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/mex_cpp_util.h - Mex C++ API Utilities -----*- C++ -*-===//
 </span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Copyright 2021 Michael Bolus
 </span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
@@ -233,8 +234,7 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e"></span>
 <span style="color:#66d9ef">namespace</span> armamexcpp {
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">auto</span> m2a_cellmat(matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>CellArray<span style="color:#f92672">&amp;</span> matlab_cell)
-    <span style="color:#f92672">-&gt;</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&gt;</span> {
+std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&gt;</span> m2a_cellmat(matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>CellArray<span style="color:#f92672">&amp;</span> matlab_cell) {
   size_t n_cells <span style="color:#f92672">=</span> matlab_cell.getNumberOfElements();
   std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&gt;</span> arma_mat(n_cells,
                                      arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros));
@@ -247,7 +247,7 @@ https://github.com/alex-shpak/hugo-book
 };
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">auto</span> m2s_vec(matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&amp;</span> matlab_array) <span style="color:#f92672">-&gt;</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> m2s_vec(matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&amp;</span> matlab_array) {
   size_t n_elem <span style="color:#f92672">=</span> matlab_array.getNumberOfElements();
   T<span style="color:#f92672">*</span> ptr <span style="color:#f92672">=</span> matlab_array.release().get();
   std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> vec(ptr, ptr <span style="color:#f92672">+</span> n_elem);
@@ -255,27 +255,46 @@ https://github.com/alex-shpak/hugo-book
 };
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">auto</span> m2a_vec(matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> matlab_array) <span style="color:#f92672">-&gt;</span> arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> m2a_vec(matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> matlab_array) {
   size_t n_elem <span style="color:#f92672">=</span> matlab_array.getNumberOfElements();
-  T<span style="color:#f92672">*</span> ptr <span style="color:#f92672">=</span> matlab_array.release().get();
-  arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> vec(ptr, n_elem);  <span style="color:#75715e">//, false);
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> vec;
+  <span style="color:#75715e">// T* ptr = matlab_array.release().get();
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// arma::Col&lt;T&gt; vec(ptr, n_elem);  //, false);
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// TODO(mfbolus): for some reason, using the above pointer at times leads to
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// getting garbage values. matlab array values may be stored in non-contiguous
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// memory?
+</span><span style="color:#75715e"></span>  arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> vec(n_elem, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> n_elem; k<span style="color:#f92672">++</span>) {
+    vec[k] <span style="color:#f92672">=</span> matlab_array[k];
+  }
+  <span style="color:#66d9ef">return</span> vec;
 };
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">auto</span> m2a_mat(matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> matlab_array) <span style="color:#f92672">-&gt;</span> arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> m2a_mat(matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> matlab_array) {
   <span style="color:#75715e">// ArrayDimensions == std::vector&lt;size_t&gt;
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> dims <span style="color:#f92672">=</span> matlab_array.getDimensions();
-  T<span style="color:#f92672">*</span> ptr <span style="color:#f92672">=</span> matlab_array.release().get();
-
-  <span style="color:#75715e">// mat(ptr_aux_mem, n_rows, n_cols, copy_aux_mem = true, strict = false)
-</span><span style="color:#75715e"></span>  arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> mat(ptr, dims[<span style="color:#ae81ff">0</span>], dims[<span style="color:#ae81ff">1</span>]);  <span style="color:#75715e">//, false);
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> mat;
+  <span style="color:#75715e">// T* ptr = matlab_array.release().get();
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// // mat(ptr_aux_mem, n_rows, n_cols, copy_aux_mem = true, strict = false)
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// arma::Mat&lt;T&gt; mat(ptr, dims[0], dims[1]);  //, false);
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">// TODO(mfbolus): for some reason, using the above pointer at times leads to
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// getting garbage values. matlab array values may be stored in non-contiguous
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// memory?
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// armadillo and matlab both use column-major ordering, so this should work:
+</span><span style="color:#75715e"></span>  size_t n_elem <span style="color:#f92672">=</span> dims[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> dims[<span style="color:#ae81ff">1</span>];
+  arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> mat(dims[<span style="color:#ae81ff">0</span>], dims[<span style="color:#ae81ff">1</span>], arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+  size_t <span style="color:#a6e22e">k</span>(<span style="color:#ae81ff">0</span>);
+  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span> m: matlab_array) {
+    mat[k] <span style="color:#f92672">=</span> m;
+    k<span style="color:#f92672">++</span>;
+  }
+  <span style="color:#66d9ef">return</span> mat;
 };
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">auto</span> a2m_mat(<span style="color:#66d9ef">const</span> arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&amp;</span> arma_mat, matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>ArrayFactory<span style="color:#f92672">&amp;</span> factory)
-    <span style="color:#f92672">-&gt;</span> matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> a2m_mat(<span style="color:#66d9ef">const</span> arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&amp;</span> arma_mat,
+                                    matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>ArrayFactory<span style="color:#f92672">&amp;</span> factory) {
   <span style="color:#66d9ef">const</span> matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> matlab_mat <span style="color:#f92672">=</span> factory.createArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(
       {arma_mat.n_rows, arma_mat.n_cols}, arma_mat.memptr(),
       arma_mat.memptr() <span style="color:#f92672">+</span> arma_mat.n_elem);
@@ -283,8 +302,8 @@ https://github.com/alex-shpak/hugo-book
 };
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">auto</span> a2m_vec(<span style="color:#66d9ef">const</span> arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&amp;</span> arma_vec, matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>ArrayFactory<span style="color:#f92672">&amp;</span> factory)
-    <span style="color:#f92672">-&gt;</span> matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> a2m_vec(<span style="color:#66d9ef">const</span> arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&amp;</span> arma_vec,
+                                    matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>ArrayFactory<span style="color:#f92672">&amp;</span> factory) {
   <span style="color:#66d9ef">const</span> matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> matlab_mat <span style="color:#f92672">=</span>
       factory.createArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>({arma_vec.n_elem, <span style="color:#ae81ff">1</span>}, arma_vec.memptr(),
                              arma_vec.memptr() <span style="color:#f92672">+</span> arma_vec.n_elem);
@@ -292,8 +311,8 @@ https://github.com/alex-shpak/hugo-book
 };
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">auto</span> s2m_vec(<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&amp;</span> std_vec, matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>ArrayFactory<span style="color:#f92672">&amp;</span> factory)
-    <span style="color:#f92672">-&gt;</span> matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> {
+matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> s2m_vec(<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;&amp;</span> std_vec,
+                                    matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>ArrayFactory<span style="color:#f92672">&amp;</span> factory) {
   <span style="color:#66d9ef">const</span> matlab<span style="color:#f92672">::</span>data<span style="color:#f92672">::</span>TypedArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> matlab_mat <span style="color:#f92672">=</span> factory.createArray<span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span>(
       {std_vec.size(), <span style="color:#ae81ff">1</span>}, std_vec.data(), std_vec.data() <span style="color:#f92672">+</span> std_vec.size());
   <span style="color:#66d9ef">return</span> matlab_mat;
@@ -302,7 +321,7 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on 30 March 2021 at 15:49:43 CDT</p>
+<p>Updated on 25 April 2021 at 11:04:30 EDT</p>
 </article>
  
       

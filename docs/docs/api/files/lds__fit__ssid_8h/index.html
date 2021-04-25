@@ -15,7 +15,7 @@
 <link rel="manifest" href="/lds-ctrl-est/manifest.json">
 <link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/lds-ctrl-est/book.min.44110be292c9f873dbe57bd8895d52b387519bad9a89a86ed5c3705e11d6b0d5.css" integrity="sha256-RBEL4pLJ&#43;HPb5XvYiV1Ss4dRm62aiahu1cNwXhHWsNU=">
-<script defer src="/lds-ctrl-est/en.search.min.24d3ce5a4342260448cf2e27a83655125b7508c771ad7d530604570eb26f0962.js" integrity="sha256-JNPOWkNCJgRIzy4nqDZVElt1CMdxrX1TBgRXDrJvCWI="></script>
+<script defer src="/lds-ctrl-est/en.search.min.984a87477490fafea7ec7ed9296bdbe3bb2bba10f5bd70acefff95a0dd30842d.js" integrity="sha256-mEqHR3SQ&#43;v6n7H7ZKWvb47sruhD1vXCs7/&#43;VoN0whC0="></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -226,6 +226,7 @@ https://github.com/alex-shpak/hugo-book
 </h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_fit_ssid.h - SSID Fit ------------------*- C++ -*-===//
 </span><span style="color:#75715e">//
+</span><span style="color:#75715e">// Copyright 2021 Michael Bolus
 </span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
 </span><span style="color:#75715e">//
 </span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
@@ -278,7 +279,7 @@ https://github.com/alex-shpak/hugo-book
 
   <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">CreateHankelDataMat</span>();
 
-  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DecomposeData</span>();
+  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DecomposeData</span>() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 
   <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">CalcSVD</span>(SSIDWt wt);
 
@@ -376,11 +377,16 @@ std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</s
   <span style="color:#75715e">// the weight on minimizing dc I/O gain only works for gaussian,
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// and hopefully not necessary with appropriate dataset.
 </span><span style="color:#75715e"></span>  data_t wt_dc <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-  CreateHankelDataMat();
-  DecomposeData();
-  CalcSVD(ssid_wt);
-  Solve(wt_dc);
-  <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>make_tuple(fit_, s_);
+  <span style="color:#75715e">// std::cout &lt;&lt; &#34;creating hankel mat\n&#34;;
+</span><span style="color:#75715e"></span>  CreateHankelDataMat();
+  <span style="color:#75715e">// std::cout &lt;&lt; &#34;decomposing data\n&#34;;
+</span><span style="color:#75715e"></span>  DecomposeData();
+  <span style="color:#75715e">// std::cout &lt;&lt; &#34;calculating svd\n&#34;;
+</span><span style="color:#75715e"></span>  CalcSVD(ssid_wt);
+  <span style="color:#75715e">// std::cout &lt;&lt; &#34;solving for params\n&#34;;
+</span><span style="color:#75715e"></span>  Solve(wt_dc);
+  <span style="color:#75715e">// std::cout &lt;&lt; &#34;fin\n&#34;;
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>make_tuple(fit_, s_);
 }
 
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
@@ -414,22 +420,25 @@ std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</s
 </span><span style="color:#75715e"></span>  Matrix <span style="color:#a6e22e">z</span>(n_y_, n_t_tot_, fill<span style="color:#f92672">::</span>zeros);
   Matrix <span style="color:#a6e22e">u</span>(n_u_, n_t_tot_, fill<span style="color:#f92672">::</span>zeros);
   size_t <span style="color:#a6e22e">so_far</span>(<span style="color:#ae81ff">0</span>);
+
   <span style="color:#66d9ef">for</span> (size_t trial <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; trial <span style="color:#f92672">&lt;</span> z_.size(); trial<span style="color:#f92672">++</span>) {
     z.submat(<span style="color:#ae81ff">0</span>, so_far, n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, so_far <span style="color:#f92672">+</span> n_t_.at(trial) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> z_.at(trial);
     u.submat(<span style="color:#ae81ff">0</span>, so_far, n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, so_far <span style="color:#f92672">+</span> n_t_.at(trial) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> u_.at(trial);
     so_far <span style="color:#f92672">+=</span> n_t_.at(trial);
   }
+
   <span style="color:#75715e">// remove output bias
 </span><span style="color:#75715e"></span>  z.each_col() <span style="color:#f92672">-=</span> fit_.d();
 
   <span style="color:#75715e">// calculate I/O gain @ DC while data in convenient form
 </span><span style="color:#75715e"></span>  g_dc_ <span style="color:#f92672">=</span> z <span style="color:#f92672">*</span> pinv(u);
-
+  <span style="color:#75715e">// std::cout &lt;&lt; &#34;G0_data = &#34; &lt;&lt; g_dc_ &lt;&lt; &#34;\n&#34;;
+</span><span style="color:#75715e"></span>
   <span style="color:#75715e">// create hankel data matrix
 </span><span style="color:#75715e"></span>  size_t len <span style="color:#f92672">=</span> z.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;  <span style="color:#75715e">// data length in hankel mat
 </span><span style="color:#75715e"></span>
   <span style="color:#75715e">// block-hankel data matrix
-</span><span style="color:#75715e"></span>  D_ <span style="color:#f92672">=</span> Matrix(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> (n_u_ <span style="color:#f92672">+</span> n_y_), len);
+</span><span style="color:#75715e"></span>  D_ <span style="color:#f92672">=</span> Matrix(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> (n_u_ <span style="color:#f92672">+</span> n_y_), len, fill<span style="color:#f92672">::</span>zeros);
   <span style="color:#75715e">// past input
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> u_p <span style="color:#f92672">=</span> D_.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, len <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
   <span style="color:#75715e">// future input
@@ -468,34 +477,20 @@ std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</s
     }
   }
 
-  <span style="color:#75715e">// TODO(mfbolus): subtract mean?
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Vector m = mean(D_,1);
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// D_.each_col() -= m;
-</span><span style="color:#75715e"></span>
   D_ <span style="color:#f92672">/=</span> sqrt(<span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(len));
 }
 
-<span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
-<span style="color:#66d9ef">void</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>DecomposeData() {
-  <span style="color:#75715e">// // do LQ decomp instead of calculating covariance expensive way
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// // Note that &#34;R&#34; in van Overschee is lower-triangular (L), not &#34;R&#34; in QR
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// // decomp. Very confusing.
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Matrix q_t;
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// lq(L_, q_t, D_);
+<span style="color:#75715e">// template &lt;typename Fit&gt;
+</span><span style="color:#75715e">// void SSID&lt;Fit&gt;::DecomposeData() {
+</span><span style="color:#75715e">//   // do LQ decomp instead of calculating covariance expensive way
+</span><span style="color:#75715e">//   // Note that &#34;R&#34; in van Overschee is lower-triangular (L), not &#34;R&#34; in QR
+</span><span style="color:#75715e">//   // decomp. Very confusing.
+</span><span style="color:#75715e">//   Matrix q_t;
+</span><span style="color:#75715e">//   lq(L_, q_t, D_);
+</span><span style="color:#75715e">//   // van Overschee zeros out the other elements.
+</span><span style="color:#75715e">//   L_ = trimatl(L_);
+</span><span style="color:#75715e">// }
 </span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// // van Overschee zeros out the other elements.
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// L_ = trimatl(L_);
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// Depending on dataset, this may be faster:
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Calculate covariance of the data matrix
-</span><span style="color:#75715e"></span>  Matrix cov <span style="color:#f92672">=</span> D_ <span style="color:#f92672">*</span> D_.t();
-  <span style="color:#75715e">// retro-actively do mean subtraction
-</span><span style="color:#75715e"></span>  Vector mu_d <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>mean(D_, <span style="color:#ae81ff">1</span>);
-  cov <span style="color:#f92672">-=</span> mu_d <span style="color:#f92672">*</span> mu_d.t() <span style="color:#f92672">*</span> D_.n_cols;
-  L_ <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>chol(cov, <span style="color:#e6db74">&#34;lower&#34;</span>);
-  L_ <span style="color:#f92672">=</span> trimatl(L_);
-}
-
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
 <span style="color:#66d9ef">void</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>CalcSVD(SSIDWt wt) {
   <span style="color:#75715e">// submats that will be needed:
@@ -535,7 +530,7 @@ std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</s
     <span style="color:#66d9ef">case</span> kSSIDNone: {
       <span style="color:#75715e">// No weighting. (what van Overschee calls &#34;N4SID&#34;)
 </span><span style="color:#75715e"></span>      Matrix O_k_sans_Qt <span style="color:#f92672">=</span> Lup <span style="color:#f92672">*</span> R_11_14 <span style="color:#f92672">+</span> Lyp <span style="color:#f92672">*</span> R_44_14;
-      arma<span style="color:#f92672">::</span>svd(U, s_, V, O_k_sans_Qt);
+      arma<span style="color:#f92672">::</span>svd(U, s_, V, O_k_sans_Qt, <span style="color:#e6db74">&#34;std&#34;</span>);
     } <span style="color:#66d9ef">break</span>;
     <span style="color:#66d9ef">case</span> kSSIDMOESP: {
       <span style="color:#75715e">// MOESP weighting
@@ -545,7 +540,7 @@ std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</s
                   R_23_13.t() <span style="color:#f92672">*</span> inv(R_23_13 <span style="color:#f92672">*</span> R_23_13.t()) <span style="color:#f92672">*</span> R_23_13;
       Matrix O_k_ortho_Uf_sans_Qt <span style="color:#f92672">=</span>
           join_horiz((Lup <span style="color:#f92672">*</span> R_11_13 <span style="color:#f92672">+</span> Lyp <span style="color:#f92672">*</span> R_44_13) <span style="color:#f92672">*</span> Pi, Lyp <span style="color:#f92672">*</span> R_44);
-      svd(U, s_, V, O_k_ortho_Uf_sans_Qt);
+      svd(U, s_, V, O_k_ortho_Uf_sans_Qt, <span style="color:#e6db74">&#34;std&#34;</span>);
     } <span style="color:#66d9ef">break</span>;
     <span style="color:#66d9ef">case</span> kSSIDCVA: {
       <span style="color:#75715e">// CVA weighting
@@ -564,7 +559,7 @@ std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</s
       Matrix w_o_w <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>solve(
           inv_w1, O_k_ortho_Uf_sans_Qt);  <span style="color:#75715e">// alternatively
 </span><span style="color:#75715e"></span>                                          <span style="color:#75715e">// pinv(inv_W1)*O_k_ortho_Uf_sans_Qt
-</span><span style="color:#75715e"></span>      svd(U, s_, V, w_o_w);
+</span><span style="color:#75715e"></span>      svd(U, s_, V, w_o_w, <span style="color:#e6db74">&#34;std&#34;</span>);
 
       U <span style="color:#f92672">=</span> inv_w1 <span style="color:#f92672">*</span> U;
       <span style="color:#66d9ef">break</span>;
@@ -766,7 +761,7 @@ std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</s
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on 30 March 2021 at 15:49:43 CDT</p>
+<p>Updated on 25 April 2021 at 11:04:30 EDT</p>
 </article>
  
       

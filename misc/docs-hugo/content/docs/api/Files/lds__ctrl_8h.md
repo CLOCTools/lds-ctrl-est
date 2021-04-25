@@ -37,6 +37,7 @@ This file declares the type for control of a linear dynamical system ([lds::Cont
 ```cpp
 //===-- ldsCtrlEst_h/lds_control.h - Controller -----------------*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -134,6 +135,12 @@ class Controller {
 
   void set_control_type(size_t control_type);
 
+  // There is no reason u_lb/ub should not be public, but making set methods
+  // anyway.
+  void set_u_lb(data_t u_lb) { u_lb_ = u_lb; };
+
+  void set_u_ub(data_t u_ub) { u_ub_ = u_ub; };
+
   void Reset() {
     sys_.Reset();
     u_ref_.zeros();
@@ -155,7 +162,8 @@ class Controller {
  protected:
   System sys_;  
 
-  Vector u_;  
+  Vector u_;         
+  Vector u_return_;  
 
   Vector g_design_;  
 
@@ -228,8 +236,7 @@ inline Controller<System>::Controller(const System& sys, data_t u_lb,
       u_lb_(u_lb),
       u_ub_(u_ub),
       control_type_(control_type),
-      tau_awu_(lds::kInf)
-{
+      tau_awu_(lds::kInf) {
   InitVars();
 }
 
@@ -296,7 +303,7 @@ inline const Vector& Controller<System>::Control(
   CalcControl(do_control, do_estimation, do_lock_control, sigma_soft_start,
               sigma_u_noise, do_reset_at_control_onset);
 
-  return u_;
+  return u_return_;
 }
 
 template <typename System>
@@ -321,7 +328,7 @@ inline const Vector& Controller<System>::ControlOutputReference(
   CalcControl(do_control, do_estimation, do_lock_control, sigma_soft_start,
               sigma_u_noise, do_reset_at_control_onset);
 
-  return u_;
+  return u_return_;
 }
 
 template <typename System>
@@ -353,18 +360,26 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
     }
 
     if (!do_lock_control) {
-      du_ref_ = u_ref_ - u_ref_prev_;
-
       // first do u -> v change of vars. (v = g.*u)
       // e.g., convert into physical units (e.g., v[=] mW/mm2 rather than driver
       // control voltage u[=]V)
       v_ref_ = g_design_ % u_ref_;
-      dv_ref_ = g_design_ % du_ref_;
 
       // Given FB, calc. the change in control
       if (control_type_ & kControlTypeDeltaU) {
         // if control designed to minimize not u but deltaU (i.e. state aug with
         // u):
+
+        // TODO(mfbolus): Commented out for now. See note below.
+        // du_ref_ = u_ref_ - u_ref_prev_;
+        // dv_ref_ = g_design_ % du_ref_;
+
+        // TODO(mfbolus): Assuming users want *smooth* control signals if using
+        // kControlTypeDeltaU, it should be the case that dv_ref_ is --> 0. May
+        // want to revisit, but I am going to force it to be zero unless a
+        // situation arises that argues for keeping the above.
+        dv_ref_.zeros();
+
         dv_ = dv_ref_;                     // nominally-optimal.
         dv_ -= Kc_ * (sys_.x() - x_ref_);  // instantaneous state error
         dv_ -= Kc_u_ * (v_ - v_ref_);      // penalty on amp u (rel to ref)
@@ -396,13 +411,7 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
 
       // convert back to control voltage u[=]V
       u_ = v_ / sys_.g();
-    }  // else do nothing until lock is low
-
-    // It may be desireable to make inputs more variable.
-    if (sigma_u_noise > 0.0) {
-      u_ += sigma_u_noise * Vector(sys_.n_u(), fill::randn);
-    };
-
+    }       // else do nothing until lock is low
   } else {  // if not control
     // feed through u_ref in open loop
     u_ = u_ref_ % g_design_ / sys_.g();
@@ -415,6 +424,17 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
   // enforce box constraints (and antiwindup)
   AntiWindup();
 
+  // add noise to input?
+  // The value for u that is *returned* to user after addition of any noise,
+  // while keeping controller/estimator blind to this addition.
+  u_return_ = u_;
+  if ((sigma_u_noise > 0.0) && (do_control && !do_lock_control)) {
+    u_return_ += sigma_u_noise * Vector(sys_.n_u(), fill::randn);
+    Limit(u_return_, u_lb_, u_ub_);
+  };
+
+  // For next time step:
+  u_ref_prev_ = u_ref_;
   do_control_prev_ = do_control;
   do_lock_control_prev_ = do_lock_control;
 }  // CalcControl
@@ -496,6 +516,7 @@ void Controller<System>::InitVars() {
   y_ref_ = Vector(sys_.n_y(), fill::zeros);
 
   u_ = Vector(sys_.n_u(), fill::zeros);
+  u_return_ = Vector(sys_.n_u(), fill::zeros);
   u_sat_ = Vector(sys_.n_u(), fill::zeros);
 
   // Might not need all these, so zero elements until later.
@@ -524,4 +545,4 @@ void Controller<System>::InitVars() {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

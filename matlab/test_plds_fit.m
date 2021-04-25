@@ -54,8 +54,9 @@ y_imp = sys.simulate_imp(n_samp_imp);
 %% fit model
 sys_hat = copy(sys);
 n_x_fit = n_x;
+n_h = 50;
 tic()
-sing_vals = plds_ssid_mex(sys_hat, u, z, dt, n_x_fit, 50, d, 1);
+sing_vals = plds_ssid_mex(sys_hat, u, z, dt, n_x_fit, n_h, d);
 toc()
 
 %% compare fit to original
@@ -65,7 +66,7 @@ toc()
 
 figure;
 subplot(121);
-semilogy(sing_vals, 'color', 0.5+zeros(1,3)); hold on;
+semilogy(sing_vals(1:n_h), '-o', 'color', 0.5+zeros(1,3)); hold on;
 semilogy(sing_vals(1:n_x_fit), 'color', 'k', 'linewidth', 2);
 ylabel('Singular Values')
 xlabel('Singular Value Index')
@@ -104,7 +105,7 @@ plot(t, u{eg_trial}','color', zeros(1,3));
 ylabel('Input (a.u.)')
 xlabel('Time (s)')
 
-%%Refit by E-M
+%% Refit by E-M
 do_refit = true;
 if (do_refit)
   calcAB = true; %calculate dynamics (A, B mats)
@@ -126,7 +127,7 @@ if (do_refit)
   subplot(311); hold on;
   plot(t, y{eg_trial}(1,:)/dt,'color', zeros(1,3));
   plot(t, y_em{eg_trial}(1,:)/dt,'color', [0 0 0]+0.5, 'linewidth', 2);
-  legend('ground truth', 'smoothed estimate')
+  legend('ground truth', 'E-M re-estimated')
   ylabel('Output (events/s)')
 
   subplot(312);
@@ -136,7 +137,6 @@ if (do_refit)
   plot(t, u{eg_trial}','color', zeros(1,3));
   ylabel('Input (a.u.)')
   xlabel('Time (s)')
-
 
   figure;
   subplot(122); hold on;

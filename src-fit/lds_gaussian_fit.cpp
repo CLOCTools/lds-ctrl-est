@@ -1,5 +1,6 @@
 //===-- lds_gaussian_fit.cpp - Fit Type for GLDS --------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +25,7 @@
 /// \brief GLDS fit type
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
+#include <ldsCtrlEst_h/lds_gaussian_fit.h>
 
 namespace lds {
 namespace gaussian {

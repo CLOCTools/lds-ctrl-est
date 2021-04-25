@@ -42,6 +42,7 @@ References: [1] Shumway RH, Stoffer DS. (1982) An Approach to Time Series Smooth
 ```cpp
 //===-- ldsCtrlEst_h/lds_gaussian_fit_em.h - GLDS Fit (EM) ------*- C++ -*-===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -88,4 +89,4 @@ class FitEM : public EM<Fit> {
 
 -------------------------------
 
-Updated on 30 March 2021 at 15:49:43 CDT
+Updated on 25 April 2021 at 11:04:30 EDT

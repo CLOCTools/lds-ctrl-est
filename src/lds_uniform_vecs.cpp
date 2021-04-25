@@ -1,5 +1,6 @@
 //===-- ldsCtrlEst_h/lds_uniform_vecs.cpp - Uniform Matrices --------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +23,7 @@
 /// \brief Uniformly sized vectors
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
+#include <ldsCtrlEst_h/lds_uniform_vecs.h>
 
 namespace lds {
 

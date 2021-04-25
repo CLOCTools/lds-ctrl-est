@@ -56,8 +56,9 @@ y_imp = sys.simulate_imp(n_samp_imp);
 %% fit model
 sys_hat = copy(sys);
 n_x_fit = n_x;
+n_h = 50;
 tic()
-sing_vals = glds_ssid_mex(sys_hat, u, z, dt, n_x_fit, 50, d, 2);
+sing_vals = glds_ssid_mex(sys_hat, u, z, dt, n_x_fit, n_h, d);
 toc()
 
 %% compare fit to original
@@ -67,7 +68,7 @@ toc()
 
 figure;
 subplot(121);
-semilogy(sing_vals, 'color', 0.5+zeros(1,3)); hold on;
+semilogy(sing_vals(1:n_h), '-o', 'color', 0.5+zeros(1,3)); hold on;
 semilogy(sing_vals(1:n_x_fit), 'color', 'k', 'linewidth', 2);
 ylabel('Singular Values')
 xlabel('Singular Value Index')
@@ -128,7 +129,7 @@ if (do_refit)
   subplot(211); hold on;
   plot(t, z{eg_trial}(1,:),'color', zeros(1,3));
   plot(t, y_em{eg_trial}(1,:),'color', [0 0 0]+0.5, 'linewidth', 2);
-  legend('measurement', 'smoothed estimate')
+  legend('measurement', 'EM re-estimated')
   ylabel('Output (a.u.)')
 
   subplot(212)

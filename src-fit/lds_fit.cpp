@@ -1,5 +1,6 @@
 //===-- lds_fit.cpp - Fit Type for LDS ------------------------------------===//
 //
+// Copyright 2021 Michael Bolus
 // Copyright 2021 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +25,7 @@
 /// \brief LDS base fit type
 //===----------------------------------------------------------------------===//
 
-#include <ldsCtrlEst>
+#include <ldsCtrlEst_h/lds_fit.h>
 
 namespace lds {
 Fit::Fit(size_t n_u, size_t n_x, size_t n_y, data_t dt) {

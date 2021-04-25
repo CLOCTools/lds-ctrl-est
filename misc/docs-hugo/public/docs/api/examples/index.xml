@@ -15,6 +15,15 @@
     </item>
     
     <item>
+      <title>eg_glds_du_plds_ctrl.cpp</title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_du_plds_ctrl_8cpp-example/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_du_plds_ctrl_8cpp-example/</guid>
+      <description>Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u).</description>
+    </item>
+    
+    <item>
       <title>eg_plds_ctrl.cpp</title>
       <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_ctrl_8cpp-example/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

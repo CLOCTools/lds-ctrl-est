@@ -22,7 +22,7 @@
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/</guid>
       <description>Downloading the Library #  The source code for this library can be downloaded from stanley-rozell/ldsCtrlEst either by downloading a snapshot or cloning the repository via git.
 git clone https://github.com/stanley-rozell/ldsCtrlEst.git By default, this would check out the master branch. In most cases, we suggest downloading or checking out the latest release instead.
-cd /path/to/ldsCtrlEst git checkout 0.5.0 Dependencies #  Note that the primary dependencies of this project listed below must be installed along with their header files and with CMake config files or pkg-config files.</description>
+cd /path/to/ldsCtrlEst git checkout 0.6 Dependencies #  Note that the primary dependencies of this project listed below must be installed along with their header files and with CMake config files or pkg-config files.</description>
     </item>
     
     <item>
@@ -54,15 +54,6 @@ Contributing #  We welcome any community contributions to this project. Please f
     </item>
     
     <item>
-      <title>build</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_4fef79e7177ba769987a8da36c892c5f/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_4fef79e7177ba769987a8da36c892c5f/</guid>
-      <description>build #  Directories #     Name     include     Updated on 30 March 2021 at 15:49:43 CDT</description>
-    </item>
-    
-    <item>
       <title>C&amp;E</title>
       <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/terminology/control-estimation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -88,7 +79,7 @@ Contributing #  We welcome any community contributions to this project. Please f
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__defaults/</guid>
       <description>Defaults #  
 More&amp;hellip; Attributes #      Name     const data_t kDefaultP0 default state estimate covar   const data_t kDefaultQ0 default process noise covar   const data_t kDefaultR0 default output noise covar    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances)
-Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 30 March 2021 at 15:49:43 CDT</description>
+Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 25 April 2021 at 11:04:30 EDT</description>
     </item>
     
     <item>
@@ -98,6 +89,15 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_ctrl_8cpp-example/</guid>
       <description>Example GLDS Control.</description>
+    </item>
+    
+    <item>
+      <title>eg_glds_du_plds_ctrl.cpp</title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_du_plds_ctrl_8cpp-example/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_du_plds_ctrl_8cpp-example/</guid>
+      <description>Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u).</description>
     </item>
     
     <item>
@@ -133,7 +133,7 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d28a4824dc47e487b107a5db32ef43c4/</guid>
-      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 30 March 2021 at 15:49:43 CDT</description>
+      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_glds_du_plds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 25 April 2021 at 11:04:30 EDT</description>
     </item>
     
     <item>
@@ -143,7 +143,17 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__glds__ctrl_8cpp/</guid>
       <description>examples/eg_glds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
-Source code #  //===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
+Source code #  //===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.</description>
+    </item>
+    
+    <item>
+      <title>examples/eg_glds_du_plds_ctrl.cpp</title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__glds__du__plds__ctrl_8cpp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__glds__du__plds__ctrl_8cpp/</guid>
+      <description>examples/eg_glds_du_plds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
+Source code #  //===-- eg_glds_du_plds_ctrl.cpp - Example GLDS Delta u Control of PLDS ---===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.</description>
     </item>
     
     <item>
@@ -153,7 +163,7 @@ Source code #  //===-- eg_glds_ctrl.cpp - Example GLDS Control -----------------
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__ctrl_8cpp/</guid>
       <description>examples/eg_plds_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Going to simulate a switching disturbance (m) acting on system
-Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control ---------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
+Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control ---------------------===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.</description>
     </item>
     
     <item>
@@ -162,7 +172,7 @@ Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control -----------------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/</guid>
-      <description>examples/eg_plds_est.cpp #  Functions #      Name     Matrix random_walk(size_t n_t, const Matrix &amp;amp; Q, const Vector &amp;amp; x0)   int main()    Function Details #  random_walk #  Matrix random_walk( size_t n_t, const Matrix &amp;amp; Q, const Vector &amp;amp; x0 ) main #  int main() Source code #  //===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.</description>
+      <description>examples/eg_plds_est.cpp #  Functions #      Name     Matrix random_walk(size_t n_t, const Matrix &amp;amp; Q, const Vector &amp;amp; x0)   int main()    Function Details #  random_walk #  Matrix random_walk( size_t n_t, const Matrix &amp;amp; Q, const Vector &amp;amp; x0 ) main #  int main() Source code #  //===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.</description>
     </item>
     
     <item>
@@ -171,7 +181,7 @@ Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control -----------------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/</guid>
-      <description>examples/eg_plds_switched_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Source code #  //===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===// // // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
+      <description>examples/eg_plds_switched_ctrl.cpp #  Functions #      Name     auto main()    Function Details #  main #  auto main() Source code #  //===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License.</description>
     </item>
     
     <item>
@@ -185,11 +195,11 @@ Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control -----------------
     
     <item>
       <title>include</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_8f2980731aba7ec7b9fcae5764f196e3/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d44c64559bbebec7f509842c48db8b23/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_8f2980731aba7ec7b9fcae5764f196e3/</guid>
-      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 30 March 2021 at 15:49:43 CDT</description>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d44c64559bbebec7f509842c48db8b23/</guid>
+      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 25 April 2021 at 11:04:30 EDT</description>
     </item>
     
     <item>
@@ -437,10 +447,10 @@ Constructs a new UniformVectorList by moving existing vector of Vector if dimens
     
     <item>
       <title>ldsCtrlEst_h</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_2755d76cbd49ca86cc5d9263eb253d5e/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_156a98879751e549d6939ca71a62d61f/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_2755d76cbd49ca86cc5d9263eb253d5e/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_156a98879751e549d6939ca71a62d61f/</guid>
       <description>ldsCtrlEst_h #  Files #     Name     ldsCtrlEst_h/lds.h lds namespace   ldsCtrlEst_h/lds_ctrl.h Controller.   ldsCtrlEst_h/lds_fit.h LDS base fit type.   ldsCtrlEst_h/lds_fit_em.h subspace identification   ldsCtrlEst_h/lds_fit_ssid.h subspace identification   ldsCtrlEst_h/lds_gaussian.h glds namespace   ldsCtrlEst_h/lds_gaussian_ctrl.h GLDS Controller.   ldsCtrlEst_h/lds_gaussian_fit.h GLDS fit type.   ldsCtrlEst_h/lds_gaussian_fit_em.h GLDS E-M fit type.   ldsCtrlEst_h/lds_gaussian_fit_ssid.h GLDS SSID fit type.   ldsCtrlEst_h/lds_gaussian_sctrl.</description>
     </item>
     
@@ -713,7 +723,7 @@ In the example that follows, another PLDS model (lds::poisson::System) is used i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_68267d1309a1af8e8297ef4c3efbcdba/</guid>
-      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 30 March 2021 at 15:49:43 CDT</description>
+      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 25 April 2021 at 11:04:30 EDT</description>
     </item>
     
     <item>
@@ -767,7 +777,7 @@ In the example that follows, another PLDS model (lds::poisson::System) is used i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacestd/</guid>
-      <description>std #   Updated on 30 March 2021 at 15:49:43 CDT</description>
+      <description>std #   Updated on 25 April 2021 at 11:04:30 EDT</description>
     </item>
     
   </channel>
