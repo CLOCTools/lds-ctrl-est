@@ -32,7 +32,12 @@
 namespace lds {
 /// Linear Dynamical Systems with Poisson observations
 namespace poisson {
-// insert any Poisson-specific things here...
+// TODO(mfbolus): Not sure if defining these as static here makes the most
+// sense. Is there a downside to letting multiple poisson System objects share a
+// common random number generator?
+static std::random_device rd;  ///< random device for simulating poisson data
+static std::mt19937 rng = std::mt19937(
+    rd());  ///< random number generator for simulating poisson data
 }  // namespace poisson
 }  // namespace lds
 
