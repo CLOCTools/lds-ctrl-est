@@ -32,7 +32,7 @@ lds::poisson::System::System(size_t n_u, size_t n_x, size_t n_y, data_t dt,
                              data_t p0, data_t q0)
     : lds::System(n_u, n_x, n_y, dt, p0, q0) {
   diag_y_ = diagmat(y_);
-  chance_ = Vector(n_y, fill::randu);
+  pd_ = std::poisson_distribution<size_t>(0);
 };
 
 // Correct: Given measurement (z) and current input (u), update estimate of the
@@ -53,22 +53,19 @@ void lds::poisson::System::RecurseKe() {
   }
 }
 
-// Measurement: z ~ Poisson(y)
-// n.b., In reality, this is only Poisson where rate `y` and sample period `dt`
-// are sufficiently small there is only ever 0 or 1 events in a period. If
-// either of those is violated, results will be innacurate.
-// Simulate
+// Simulate Measurement: z ~ Poisson(y)
 const lds::Vector& lds::poisson::System::Simulate(const Vector& u_tm1) {
   f(u_tm1, true);  // simulate dynamics with noise added
   h();             // output
 
-  chance_.randu(n_y_);
   z_.zeros();
   for (std::size_t k = 0; k < n_y_; k++) {
-    if ((y_[k]) > chance_[k]) {
-      z_[k] = 1.0;
-    }
+    // construct a Poisson distribution object with mean y[k]
+    pd_ = std::poisson_distribution<size_t>(y_[k]);
+    // pull random sample from this distribution
+    z_[k] = pd_(rng);
   }
+
   return z_;
 }
 // ******************* SYS_T *******************

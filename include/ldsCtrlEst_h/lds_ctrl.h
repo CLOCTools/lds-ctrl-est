@@ -638,6 +638,7 @@ void Controller<System>::InitVars() {
   u_ref_prev_ = Vector(sys_.n_u(), fill::zeros);
   x_ref_ = Vector(sys_.n_x(), fill::zeros);
   y_ref_ = Vector(sys_.n_y(), fill::zeros);
+  cx_ref_ = Vector(sys_.n_y(), fill::zeros);
 
   u_ = Vector(sys_.n_u(), fill::zeros);
   u_return_ = Vector(sys_.n_u(), fill::zeros);

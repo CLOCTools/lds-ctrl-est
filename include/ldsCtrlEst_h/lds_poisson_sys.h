@@ -34,6 +34,9 @@
 // system
 #include "lds_sys.h"
 
+// needed for Poisson random number generation
+#include <random>
+
 namespace lds {
 namespace poisson {
 
@@ -97,9 +100,10 @@ class System : public lds::System {
 
  private:
   // Poisson-output-specific
-  Matrix diag_y_;  ///< diagonal matrix with elements y
-  Vector chance_;  ///< p.r. number for rolling dice if simulating data
-};                  // System
+  Matrix diag_y_;                 ///< diagonal matrix with elements y
+  std::poisson_distribution<size_t>
+      pd_;  ///< poisson distribution for simulating data
+};          // System
 }  // namespace poisson
 }  // namespace lds
 
