@@ -1,5 +1,5 @@
-function [] = save_params_controller(this, savename, qM, Kc, Kc_inty, Kc_u, yRef)
-  % [] = save_params_controller(this, savename, qM, Kc, Kc_inty, Kc_u, yRef)
+function [] = save_params_controller(this, savename, qM, Kc, Kc_inty, Kc_u, y_ref)
+  % [] = save_params_controller(this, savename, qM, Kc, Kc_inty, Kc_u, y_ref)
 
   dt = this.dt;
   A = this.A;
@@ -19,8 +19,8 @@ function [] = save_params_controller(this, savename, qM, Kc, Kc_inty, Kc_u, yRef
 
   if nargin<7
     % doesn't save reference to file
-    save(savename, 'dt', 'A', 'B', 'g', 'm', 'C', 'd', 'x0', 'Ke', 'Ke_m', 'Kc', 'Kc_inty','Kc_u');
+    save(savename, '-v7.3', 'dt', 'A', 'B', 'g', 'm', 'C', 'd', 'x0', 'Ke', 'Ke_m', 'Kc', 'Kc_inty','Kc_u');
   else
-    save(savename, 'dt', 'A', 'B', 'g', 'm', 'C', 'd', 'x0', 'Ke', 'Ke_m', 'Kc', 'Kc_inty', 'Kc_u', 'yRef');
+    save(savename, '-v7.3', 'dt', 'A', 'B', 'g', 'm', 'C', 'd', 'x0', 'Ke', 'Ke_m', 'Kc', 'Kc_inty', 'Kc_u', 'y_ref');
   end
 end

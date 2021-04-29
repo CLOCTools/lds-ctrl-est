@@ -1,5 +1,5 @@
 function [plds, y, x] = fit_plds_output_mle(this, u, z, g, rescaleOnly, wG0)
-% [plds, y, x] = refit_plds_output(this, u, z, g, d, rescaleOnly, wG0)
+% [plds, y, x] = refit_plds_output(this, u, z, g, rescaleOnly, wG0)
 
 % n.b., B was plds in terms of intensity, v
 if iscell(u)
@@ -54,7 +54,7 @@ end
 if rescaleOnly
   C = this.C;
   d = this.d;
-else  
+else
   % get initial guess in the linear regression sense.
   % TODO: not sure of right threshold here.
   ubiSilence = sum(abs(u),1) < 0.1;
@@ -80,8 +80,8 @@ else
   end
 end
 
-tol = 1e-3;
-itersAllowed = 100;
+tol = 1e-2;
+itersAllowed = 1000;
 
 sumZ = sum(z,2);
 cx = zeros(nY,nSamps);

@@ -18,5 +18,5 @@ function [] = save_params(this, savename)
     P0 = zeros(size(x0,1));
   end
 
-  save(savename, 'dt', 'A', 'B', 'g', 'm', 'C', 'd', 'x0', 'P0', 'Q');
+  save(savename, '-v7.3', 'dt', 'A', 'B', 'g', 'm', 'C', 'd', 'x0', 'P0', 'Q');
 end

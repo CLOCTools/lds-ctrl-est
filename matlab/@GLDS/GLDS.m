@@ -87,6 +87,7 @@ matlabSS_to_this(this,sys,g,d);
 
 [sys_du] = create_sys_du(this);
 
+[] = save_params(this, savename, qM);
 [] = save_params_controller(this, savename, qM, Kc, Kc_inty, Kc_u, yRef);
 end%end methods
 
