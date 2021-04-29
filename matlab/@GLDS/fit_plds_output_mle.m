@@ -80,8 +80,8 @@ else
   end
 end
 
-tol = 1e-2;
-itersAllowed = 1000;
+tol = 1e-3;
+itersAllowed = 500;
 
 sumZ = sum(z,2);
 cx = zeros(nY,nSamps);
