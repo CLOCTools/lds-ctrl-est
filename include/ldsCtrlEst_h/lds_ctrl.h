@@ -539,6 +539,7 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
   } else {  // if not control
     // feed through u_ref in open loop
     u_ = u_ref_ % g_design_ / sys_.g();
+    v_ = sys_.g() % u_;
     u_ref_.zeros();
     int_e_.zeros();
     int_e_awu_adjust_.zeros();
