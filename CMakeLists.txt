@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 # set project name and version (MAJOR.minor.patch)
-project(ldsCtrlEst VERSION 0.6.0 LANGUAGES CXX C)
+project(ldsCtrlEst VERSION 0.6.1 LANGUAGES CXX C)
 # some name variants I will be using:
 set(CMAKE_PROJECT_NAME_CAP LDSCTRLEST)#all caps
 
