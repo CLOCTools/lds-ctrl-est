@@ -138,9 +138,9 @@ class System {
   /// Set input matrix
   void set_B(const Matrix& B) { Reassign(B_, B); };
   /// Set process disturbance
-  void set_m(const Vector& m) {
+  void set_m(const Vector& m, bool do_force_assign=false) {
     Reassign(m0_, m);
-    if (!do_adapt_m) {
+    if ((!do_adapt_m) || do_force_assign) {
       Reassign(m_, m);
     }
   };
@@ -160,6 +160,11 @@ class System {
   void set_C(const Matrix& C) { Reassign(C_, C); };
   /// Set output bias
   void set_d(const Vector& d) { Reassign(d_, d); };
+  /// Set state of system
+  void set_x(const Vector& x) {
+    Reassign(x_, x);
+    h();
+  };
 
   /// Reset system variables
   void Reset();
