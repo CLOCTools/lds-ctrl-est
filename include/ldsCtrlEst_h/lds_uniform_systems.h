@@ -198,28 +198,28 @@ inline UniformSystemList<System>& UniformSystemList<System>::operator=(
 template <typename System>
 inline UniformSystemList<System>& UniformSystemList<System>::operator=(
     UniformSystemList&& that) noexcept {
-  // check dimensions
-  // if empty, assume a default constructed object and safe to move
-  if (!this->empty()) {
-    if (this->size() != that.size()) {
-      std::cerr << "Cannot reassign " << this->size() << " systems with "
-                << that.size() << " systems. Skipping.\n";
-      return (*this);
-    }
-
-    // if dimensions a not zero and do not match, skip move with error message.
-    if (dim_[0] + dim_[1] + dim_[2]) {
-      bool does_match = (dim_[0] == that.at(0).n_u()) &&
-                        (dim_[1] == that.at(0).n_x()) &&
-                        (dim_[2] == that.at(0).n_y());
-      if (!does_match) {
-        std::cerr
-            << "Cannot move a UniformSystemList element for an element of "
-               "different size. Skipping.\n";
-        return (*this);
-      }
-    }
-  }
+  // // check dimensions
+  // // if empty, assume a default constructed object and safe to move
+  // if (!this->empty()) {
+  //   if (this->size() != that.size()) {
+  //     std::cerr << "Cannot reassign " << this->size() << " systems with "
+  //               << that.size() << " systems. Skipping.\n";
+  //     return (*this);
+  //   }
+  //
+  //   // if dimensions a not zero and do not match, skip move with error
+  //   message. if (dim_[0] + dim_[1] + dim_[2]) {
+  //     bool does_match = (dim_[0] == that.at(0).n_u()) &&
+  //                       (dim_[1] == that.at(0).n_x()) &&
+  //                       (dim_[2] == that.at(0).n_y());
+  //     if (!does_match) {
+  //       std::cerr
+  //           << "Cannot move a UniformSystemList element for an element of "
+  //              "different size. Skipping.\n";
+  //       return (*this);
+  //     }
+  //   }
+  // }
 
   dim_ = that.dim_;
   std::vector<System>::operator=(std::move(that));

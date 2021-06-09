@@ -184,23 +184,24 @@ inline UniformVectorList& UniformVectorList::operator=(
 
 inline UniformVectorList& UniformVectorList::operator=(
     UniformVectorList&& that) noexcept {
-  // check dimensions
-  if (!this->empty()) {
-    if (this->size() != that.size()) {
-      std::cerr << "Cannot reassign " << this->size() << " vectors with "
-                << that.size() << " vectors. Skipping.\n";
-      return (*this);
-    }
-
-    if (dim_) {
-      size_t other_dim(that.dim());
-      if (dim_ != other_dim) {
-        std::cerr << "Cannot reassign vectors of size " << dim_
-                  << " with matrices of size " << other_dim << ". Skipping.\n";
-        return (*this);
-      }
-    }
-  }
+  // // check dimensions
+  // if (!this->empty()) {
+  //   if (this->size() != that.size()) {
+  //     std::cerr << "Cannot reassign " << this->size() << " vectors with "
+  //               << that.size() << " vectors. Skipping.\n";
+  //     return (*this);
+  //   }
+  //
+  //   if (dim_) {
+  //     size_t other_dim(that.dim());
+  //     if (dim_ != other_dim) {
+  //       std::cerr << "Cannot reassign vectors of size " << dim_
+  //                 << " with matrices of size " << other_dim << ".
+  //                 Skipping.\n";
+  //       return (*this);
+  //     }
+  //   }
+  // }
 
   dim_ = that.dim_;
   std::vector<Vector>::operator=(std::move(that));
