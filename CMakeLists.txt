@@ -50,6 +50,11 @@ include(GNUInstallDirs)
 # Hard-coded for usage later with clangd:
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
+if (WIN32) 
+  # needed to build static library
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
+
 # user settings:
 option(LDSCTRLEST_BUILD_EXAMPLES "Build the example programs." ON)
 option(LDSCTRLEST_BUILD_FIT "Whether to build the fitting accessory code." OFF)
@@ -101,7 +106,12 @@ find_package(PkgConfig REQUIRED)
 find_package(Doxygen COMPONENTS dot
              OPTIONAL_COMPONENTS mscgen dia)
 
-if(LDSCTRLEST_BUILD_STATIC AND NOT APPLE)
+# Use MKL on windows
+if (WIN32)
+  include(MKL)
+endif()
+
+if(LDSCTRLEST_BUILD_STATIC AND NOT APPLE AND NOT WIN32)
   #statically-linking against openblas in this case
   # OpenBLAS
   include(OpenBLAS)
