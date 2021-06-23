@@ -236,6 +236,13 @@ inline void SwitchedController<System>::Switch(size_t idx,
   systems_.at(idx_) = std::move(sys_);
   sys_ = std::move(systems_.at(idx));
 
+  // set the state of this system to that of the previous system
+  // TODO(mfbolus): This will only work as intended if state matrix is the same.
+  // See example fudge in 0.4 branch src/lds_poisson_sctrl.cpp.
+  sys_.set_m(systems_.at(idx_).m(), true);
+  sys_.set_x(systems_.at(idx_).x());
+
+  // swap controller gains
   Kc_list_.Swap(Kc_, idx_);
   Kc_list_.Swap(Kc_, idx);
 
@@ -263,4 +270,4 @@ inline void SwitchedController<System>::Switch(size_t idx,
 
 -------------------------------
 
-Updated on 25 April 2021 at 11:04:30 EDT
+Updated on 22 June 2021 at 23:08:17 CDT

@@ -70,7 +70,7 @@ Inherits from [lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)
 | const Matrix & | **[Ke_m](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-ke_m)**() const<br>Get estimator gain for process disturbance (m)  |
 | void | **[set_A](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_a)**(const Matrix & A)<br>Set state matrix.  |
 | void | **[set_B](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_b)**(const Matrix & B)<br>Set input matrix.  |
-| void | **[set_m](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_m)**(const Vector & m)<br>Set process disturbance.  |
+| void | **[set_m](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_m)**(const Vector & m, bool do_force_assign =false)<br>Set process disturbance.  |
 | void | **[set_g](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_g)**(const Vector & g)<br>Set input gain.  |
 | void | **[set_Q_m](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_q_m)**(const Matrix & Q_m)<br>Set process noise covariance of disturbance evoluation.  |
 | void | **[set_x0](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_x0)**(const Vector & x0)<br>Set initial state.  |
@@ -78,6 +78,7 @@ Inherits from [lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)
 | void | **[set_P0_m](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_p0_m)**(const Matrix & P0_m)<br>Set covariance of initial process disturbance.  |
 | void | **[set_C](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_c)**(const Matrix & C)<br>Set output matrix.  |
 | void | **[set_d](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_d)**(const Vector & d)<br>Set output bias.  |
+| void | **[set_x](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-set_x)**(const Vector & x)<br>Set state of system.  |
 | void | **[Reset](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/#function-reset)**()<br>Reset system variables.  |
 
 **Protected Functions inherited from [lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)**
@@ -303,4 +304,4 @@ bool do_recurse_Ke_ {};
 
 -------------------------------
 
-Updated on 25 April 2021 at 11:04:30 EDT
+Updated on 22 June 2021 at 23:08:17 CDT

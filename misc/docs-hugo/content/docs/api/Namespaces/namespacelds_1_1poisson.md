@@ -19,6 +19,32 @@ Linear Dynamical Systems with Poisson observations. <br>
 | class | **[lds::poisson::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/)** <br>Poisson-observation [SwitchedController]() Type.  |
 | class | **[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/)** <br>Poisson [System]() type.  |
 
+## Attributes
+
+|                | Name           |
+| -------------- | -------------- |
+| std::random_device | **[rd](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/#variable-rd)** <br>random device for simulating poisson data  |
+| std::mt19937 | **[rng](/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/#variable-rng)** <br>random number generator for simulating poisson data  |
+
+
+
+## Attribute Details
+
+### rd
+
+```cpp
+static std::random_device rd;
+```
+
+
+
+### rng
+
+```cpp
+static std::mt19937 rng = std::mt19937(
+    rd());
+```
+
 
 
 
@@ -27,4 +53,4 @@ Linear Dynamical Systems with Poisson observations. <br>
 
 -------------------------------
 
-Updated on 25 April 2021 at 11:04:30 EDT
+Updated on 22 June 2021 at 23:08:17 CDT

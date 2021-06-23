@@ -415,6 +415,7 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
   } else {  // if not control
     // feed through u_ref in open loop
     u_ = u_ref_ % g_design_ / sys_.g();
+    v_ = sys_.g() % u_;
     u_ref_.zeros();
     int_e_.zeros();
     int_e_awu_adjust_.zeros();
@@ -514,6 +515,7 @@ void Controller<System>::InitVars() {
   u_ref_prev_ = Vector(sys_.n_u(), fill::zeros);
   x_ref_ = Vector(sys_.n_x(), fill::zeros);
   y_ref_ = Vector(sys_.n_y(), fill::zeros);
+  cx_ref_ = Vector(sys_.n_y(), fill::zeros);
 
   u_ = Vector(sys_.n_u(), fill::zeros);
   u_return_ = Vector(sys_.n_u(), fill::zeros);
@@ -545,4 +547,4 @@ void Controller<System>::InitVars() {
 
 -------------------------------
 
-Updated on 25 April 2021 at 11:04:30 EDT
+Updated on 22 June 2021 at 23:08:17 CDT
