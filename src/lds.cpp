@@ -42,17 +42,26 @@ void ForceSymPD(Matrix& X) {
   Vector d;
   Matrix u;
 
-  // for iterative correction
-  // inspired by Higham 2002 but not trying to make a corr matrix
-  // (i.e., not nec unit diag)
+  // see first method (which may not be ideal):
+  // https://nhigham.com/2021/02/16/diagonally-perturbing-a-symmetric-matrix-to-make-it-positive-definite/
   size_t k(1);
   bool is_sympd = X.is_sympd();
+  Matrix id = Matrix(X.n_rows, X.n_cols, fill::eye);
 
   while (!is_sympd) {
     if (k > 100) {
+      did_succeed = arma::eig_sym(d, u, X, "std");
+      data_t min_eig = arma::min(d);
+      std::cerr << "After multiple iterations, min eigen val = " << min_eig
+                << ".\n";
       throw std::runtime_error(
           "Failed to make matrix symmetric positive definite.");
+      return;
     }
+
+    // Limit(d, arma::eps(0), kInf);  // force to be positive...
+    // Matrix d_diag = arma::diagmat(d);
+    // X = u * d_diag * u.t();
 
     did_succeed = arma::eig_sym(d, u, X, "std");
     if (!did_succeed) {
@@ -60,19 +69,14 @@ void ForceSymPD(Matrix& X) {
     }
 
     data_t min_eig = arma::min(d);
-    X += Matrix(X.n_rows, X.n_cols, fill::eye) * (min_eig + arma::eps(min_eig));
+    X += id * abs(min_eig) + arma::datum::eps;
 
-    // Limit(d, arma::eps(0), kInf);  // force to be positive...
-    // Matrix d_diag = arma::diagmat(d);
-    // X = u * d_diag * u.t();
-
-    // TODO(mfbolus): should possibly compensate for the resulting change in
-    // sum of eigenvalues by adding to or rescaling diagonal of new "X"...
-
-    // double check symm
+    // make sure symm:
     X = (X + X.t()) / 2;
-
-    is_sympd = X.is_sympd();
+    // double check eigenvals positive after symmetrizing:
+    arma::eig_sym(d, u, X, "std");
+    min_eig = arma::min(d);
+    is_sympd = min_eig > 0;
     k++;
   }
 }
