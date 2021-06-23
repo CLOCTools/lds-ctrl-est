@@ -8,7 +8,9 @@ headless: true
 
 <br />
 
-- [**Getting Started**]({{< relref "docs/getting-started">}})
+- [**Getting Started**]({{< relref "docs/getting-started/getting-started">}})
+  - [Linux/MacOS]({{< relref "docs/getting-started/linux-macos">}})
+  - [Windows]({{< relref "docs/getting-started/windows">}})
 
 <br />
 

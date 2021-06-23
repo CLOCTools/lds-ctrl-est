@@ -52,12 +52,17 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
 # user settings:
 option(LDSCTRLEST_BUILD_EXAMPLES "Build the example programs." ON)
-option(LDSCTRLEST_BUILD_FIT "Whether to build the fitting accessory code." OFF)
+option(LDSCTRLEST_BUILD_FIT "Whether to build the fitting accessory code." ON)
 option(LDSCTRLEST_BUILD_STATIC
   "Whether to statically link library against OpenBLAS \
-  and build a static version of the library." OFF)
+  and build a static version of the library." ON)
 # n.b., if both LDSCTRLEST_BUILD_FIT & LDSCTRLEST_BUILD_STATIC are enabled,
 # Matlab/Octave mex files will be built.
+
+if (WIN32) 
+  # needed to build static library
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
 
 message(STATUS "CMAKE_SYSTEM_NAME          = ${CMAKE_SYSTEM_NAME}"         )
 message(STATUS "CMAKE_CXX_COMPILER_ID      = ${CMAKE_CXX_COMPILER_ID}"     )
@@ -97,11 +102,16 @@ endif()
 
 # pkg-config used for libraries that were not installed with CMake config files.
 # provides `pkg_check_modules`
-find_package(PkgConfig REQUIRED)
+find_package(PkgConfig)
 find_package(Doxygen COMPONENTS dot
              OPTIONAL_COMPONENTS mscgen dia)
 
-if(LDSCTRLEST_BUILD_STATIC AND NOT APPLE)
+# Use MKL on windows
+if (WIN32)
+  include(MKL)
+endif()
+
+if(LDSCTRLEST_BUILD_STATIC AND NOT APPLE AND NOT WIN32)
   #statically-linking against openblas in this case
   # OpenBLAS
   include(OpenBLAS)
@@ -203,7 +213,7 @@ if(LDSCTRLEST_BUILD_STATIC)
     $<INSTALL_INTERFACE:include>)
   set_target_properties(${CMAKE_PROJECT_NAME}Static PROPERTIES VERSION
     ${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR}.${CMAKE_PROJECT_VERSION_PATCH}
-    OUTPUT_NAME ${CMAKE_PROJECT_NAME})
+    OUTPUT_NAME ${CMAKE_PROJECT_NAME}Static)
 endif()
 
 add_subdirectory(src) #add source files...
