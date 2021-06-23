@@ -20,10 +20,10 @@ Note that the primary dependencies of this project listed below must be installe
 # Compilation + Installation
 This project is configured/compiled/installed by way of CMake and (on Unix-based operating systems) GNU Make. For configuration with CMake, there are three available options.
 1. `LDSCTRLEST_BUILD_EXAMPLES`  : [default= ON] whether to build example programs located under `examples/` in the source tree
-2. `LDSCTRLEST_BUILD_FIT`       : [default=OFF] whether to build the auxiliary fitting portion of the source code that is not pertinent to control implementation
-3. `LDSCTRLEST_BUILD_STATIC`    : [default=OFF] whether to statically link against OpenBLAS and create a static ldsCtrlEst library for future use
+2. `LDSCTRLEST_BUILD_FIT`       : [default=ON] whether to build the auxiliary fitting portion of the source code that is not pertinent to control implementation
+3. `LDSCTRLEST_BUILD_STATIC`    : [default=ON] whether to statically link against OpenBLAS and create a static ldsCtrlEst library for future use
 
-*n.b., If both options 2 and 3 are enabled, Matlab/Octave mex functions will be compiled for exposing some of the fitting functionality to Matlab/Octave.*
+*n.b., If both options 2 and 3 are enabled, Matlab/Octave mex functions will be compiled for exposing some of the fitting functionality to Matlab/Octave, assuming these programs are installed.*
 
 Below are example usages of `cmake`/`make` to configure/build the library.
 - For basic project build & install
@@ -44,11 +44,11 @@ Below are example usages of `cmake`/`make` to configure/build the library.
   make install #install to /your/install/prefix
   ```
 
-- To build the *entire* project including fit code, a static library for Matlab compatibility, and the included Matlab `mex` functions for fitting GLDS/PLDS models.
+- To build the *bare bones* project, excluding fit code and Matlab mex code.
   ```shell
   cd /path/to/repository
   mkdir build && cd build
-  cmake -DLDSCTRLEST_BUILD_FIT=1 -DLDSCTRLEST_BUILD_STATIC=1 .. #configure to build the fitting portion of library and statically link openblas and ldsCtrlEst to mex files
+  cmake -DLDSCTRLEST_BUILD_FIT=0 .. #configure not to build the fitting portion of library
   make #build the project
   ```
 

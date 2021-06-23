@@ -105,9 +105,9 @@ class System {
   const Matrix& Ke_m() const { return Ke_m_; };
   void set_A(const Matrix& A) { Reassign(A_, A); };
   void set_B(const Matrix& B) { Reassign(B_, B); };
-  void set_m(const Vector& m) {
+  void set_m(const Vector& m, bool do_force_assign=false) {
     Reassign(m0_, m);
-    if (!do_adapt_m) {
+    if ((!do_adapt_m) || do_force_assign) {
       Reassign(m_, m);
     }
   };
@@ -119,6 +119,10 @@ class System {
   void set_P0_m(const Matrix& P0_m) { Reassign(P0_m_, P0_m); };
   void set_C(const Matrix& C) { Reassign(C_, C); };
   void set_d(const Vector& d) { Reassign(d_, d); };
+  void set_x(const Vector& x) {
+    Reassign(x_, x);
+    h();
+  };
 
   void Reset();
 
@@ -170,4 +174,4 @@ class System {
 
 -------------------------------
 
-Updated on 25 April 2021 at 11:04:30 EDT
+Updated on 22 June 2021 at 23:08:17 CDT

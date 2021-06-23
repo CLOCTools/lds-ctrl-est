@@ -46,7 +46,6 @@ void FitSSID::DecomposeData() {
   // Buesing CoreSSID/ssidN4SIDsmall.m:
   // "Cholesky decomposition of SIG, corresponds to QR of data matrix"
   Matrix cov = arma::cov(D_.t(), 1) * D_.n_cols;  // undo normalization
-  ForceSymPD(cov);
   L_ = arma::chol(cov, "lower");
 }
 

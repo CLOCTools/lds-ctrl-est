@@ -68,6 +68,8 @@ end
 [sys_du] = create_sys_du(this);
 
 [] = save_params(this, savename);
+[] = save_params_controller(this, savename, qM, Kc, Kc_inty, Kc_u, y_ref);
+
 end%end methods
 
 end%classdef

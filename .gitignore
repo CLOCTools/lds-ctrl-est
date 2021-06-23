@@ -92,7 +92,10 @@ Thumbs.db
 # Specific to this project #
 ############################
 build/
+out/
 cpp.sublime-workspace
+.vs/
+.vscode/
 .cache/
 
 # whitelist documentation

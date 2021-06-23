@@ -64,6 +64,9 @@ This file declares and partially defines the type for state estimation (filterin
 // system
 #include "lds_sys.h"
 
+// needed for Poisson random number generation
+#include <random>
+
 namespace lds {
 namespace poisson {
 
@@ -87,9 +90,10 @@ class System : public lds::System {
 
  private:
   // Poisson-output-specific
-  Matrix diag_y_;  
-  Vector chance_;  
-};                  // System
+  Matrix diag_y_;                 
+  std::poisson_distribution<size_t>
+      pd_;  
+};          // System
 }  // namespace poisson
 }  // namespace lds
 
@@ -99,4 +103,4 @@ class System : public lds::System {
 
 -------------------------------
 
-Updated on 25 April 2021 at 11:04:30 EDT
+Updated on 22 June 2021 at 23:08:17 CDT

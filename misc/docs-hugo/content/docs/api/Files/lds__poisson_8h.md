@@ -57,7 +57,12 @@ This file declares and partially defines the namespace for linear dynamical syst
 
 namespace lds {
 namespace poisson {
-// insert any Poisson-specific things here...
+// TODO(mfbolus): Not sure if defining these as static here makes the most
+// sense. Is there a downside to letting multiple poisson System objects share a
+// common random number generator?
+static std::random_device rd;  
+static std::mt19937 rng = std::mt19937(
+    rd());  
 }  // namespace poisson
 }  // namespace lds
 
@@ -67,4 +72,4 @@ namespace poisson {
 
 -------------------------------
 
-Updated on 25 April 2021 at 11:04:30 EDT
+Updated on 22 June 2021 at 23:08:17 CDT
