@@ -30,12 +30,14 @@ Among other things, this project also does not provide methods for trajectory op
 
 
 # Installation
+`ldsCtrlEst` requires [Armadillo](http://arma.sourceforge.net/) for linear algebra as well as [HDF5](https://www.hdfgroup.org/downloads/hdf5/) for saving output. [`vcpkg`](https://vcpkg.io/) is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
 ```
 git clone --recurse-submodules https://github.com/stanley-rozell/lds-ctrl-est.git 
 cd lds-ctrl-est
 # use git submodule update --init if you clone the repo without --recurse-submodules
 ./vcpkg/bootstrap-vcpkg.sh  # or .bat on Windows
-# choose the architecture that matches your machine
+# Install Armadillo and HDF5 dependencies
+# Choose your machine's architecture with the `--triplet` arg
 ./vcpkg/vcpkg install armadillo hdf5 --triplet=[x64-linux|x64-osx|x64-windows]
 ```
 
@@ -45,8 +47,12 @@ cmake -B build
 cmake --build build
 ```
 
-If you want to use `vcpkg` set up somewhere else, add `-DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` to the `cmake` command or [using your IDE's settings](https://github.com/microsoft/vcpkg#using-vcpkg-with-cmake).
+If you want to use `vcpkg` set up somewhere else, add `-DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` to the `cmake` command directly or [through your IDE's settings](https://github.com/microsoft/vcpkg#using-vcpkg-with-cmake).
 
+## Troubleshooting
+If you see an error on Linux about needing `gfortran` in your path, install with `apt install gfortran`.
+
+If the `vcpkg install` command fails, you may want to upgrade your system (e.g., `apt update`, `apt upgrade`) and try again.
 
 # Reporting Issues
 If you encounter bugs when using this library or have specific feature requests that you believe fall within the stated scope of this project, please [open an issue on GitHub](https://github.com/stanley-rozell/lds-ctrl-est/issues) and use an appropriate issue template where possible. You may also fork the repository and submit pull-requests with your suggested changes.
