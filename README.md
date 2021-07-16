@@ -43,7 +43,8 @@ cd lds-ctrl-est
 
 Now generate the cache and build using your IDE or from the command line as follows:
 ```
-cmake -B build
+mkdir build
+cmake -B build -S .
 cmake --build build
 ```
 
