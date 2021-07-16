@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake
+  CACHE STRING "Vcpkg toolchain file")
+
 # set project name and version (MAJOR.minor.patch)
 project(ldsCtrlEst VERSION 0.6.2 LANGUAGES CXX C)
 # some name variants I will be using:
@@ -106,22 +109,9 @@ find_package(PkgConfig)
 find_package(Doxygen COMPONENTS dot
              OPTIONAL_COMPONENTS mscgen dia)
 
-# Use MKL on windows
-if (WIN32)
-  include(MKL)
-endif()
-
-if(LDSCTRLEST_BUILD_STATIC AND NOT APPLE AND NOT WIN32)
-  #statically-linking against openblas in this case
-  # OpenBLAS
-  include(OpenBLAS)
-endif()
-
-# ARMADILLO
-include(Armadillo)
-
-# HDF5
+message(STATUS "CMAKE_PREFIX_PATH = ${CMAKE_PREFIX_PATH}")
 include(HDF5)
+include(Armadillo)
 
 if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   # for mex compat.
@@ -130,6 +120,9 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
 
   # provides function for adding oct/mex file target
   include(Octave)
+
+  # for pybind11 wrappers target
+  include(Python3)
 endif()
 
 # save the CXX flags configured for later use by dependency.
@@ -262,6 +255,21 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   else()
     message(STATUS "Octave was not found. Not building Octave oct/mex files.")
   endif()#end Octave_FOUND
+
+  # python
+  if (Python3_FOUND)
+    # file(
+    #   COPY ${PROJECT_SOURCE_DIR}/python/
+    #   DESTINATION ${PROJECT_BINARY_DIR}/python/
+    #   PATTERN "*.cpp" EXCLUDE
+    #   PATTERN "*.txt" EXCLUDE
+    #   )
+    # add_subdirectory(python)
+    message(STATUS "Python was found")
+  else()
+    message(STATUS "Python was not found. Not building Python files.")
+  endif()
+
 endif()
 
 # build doxygen documention
