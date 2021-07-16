@@ -32,6 +32,7 @@ Among other things, this project also does not provide methods for trajectory op
 # Installation
 ```
 git clone --recurse-submodules https://github.com/stanley-rozell/lds-ctrl-est.git 
+cd lds-ctrl-est
 # use git submodule update --init if you clone the repo without --recurse-submodules
 ./vcpkg/bootstrap-vcpkg.sh  # or .bat on Windows
 # choose the architecture that matches your machine
