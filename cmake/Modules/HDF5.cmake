@@ -1,2 +1,6 @@
 find_package(hdf5 CONFIG REQUIRED)
-list(APPEND PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME hdf5::hdf5-shared hdf5::hdf5_hl-shared)
+if(HDF5_USE_STATIC_LIBRARIES)
+    list(APPEND PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME hdf5::hdf5-static hdf5::hdf5_hl-static)
+else()
+    list(APPEND PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME hdf5::hdf5-shared hdf5::hdf5_hl-shared)
+endif()
