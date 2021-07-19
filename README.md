@@ -31,24 +31,24 @@ Among other things, this project also does not provide methods for trajectory op
 
 # Installation
 `ldsCtrlEst` requires [Armadillo](http://arma.sourceforge.net/) for linear algebra as well as [HDF5](https://www.hdfgroup.org/downloads/hdf5/) for saving output. [`vcpkg`](https://vcpkg.io/) is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
+
+First, clone the repository along with submodules:
 ```
 git clone --recurse-submodules https://github.com/stanley-rozell/lds-ctrl-est.git 
 cd lds-ctrl-est
 # use git submodule update --init if you clone the repo without --recurse-submodules
-./vcpkg/bootstrap-vcpkg.sh  # or .bat on Windows
-# Install Armadillo and HDF5 dependencies
-# Choose your machine's architecture with the `--triplet` arg
-./vcpkg/vcpkg install armadillo hdf5 --triplet=[x64-linux|x64-osx|x64-windows]
 ```
 
-Now generate the cache and build using your IDE or from the command line as follows:
+Now generate the cache and build using your IDE or from the command line as follows.
 ```
 mkdir build
 cmake -B build -S .
 cmake --build build
 ```
 
-If you want to use `vcpkg` set up somewhere else, add `-DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` to the `cmake` command directly or [through your IDE's settings](https://github.com/microsoft/vcpkg#using-vcpkg-with-cmake).
+`vcpkg` will automatically install dependencies into `[build directory]/vcpkg_installed/`:
+
+If you want to use `vcpkg` set up somewhere besides this repo's submodule, add `-DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` to the `cmake` command directly or [through your IDE's settings](https://github.com/microsoft/vcpkg#using-vcpkg-with-cmake).
 
 ## Troubleshooting
 If you see an error on Linux about needing `gfortran` in your path, install with `apt install gfortran`.
