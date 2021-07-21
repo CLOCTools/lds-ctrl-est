@@ -46,7 +46,7 @@ cmake -B build -S .
 cmake --build build
 ```
 
-`vcpkg` will automatically install dependencies into `[build directory]/vcpkg_installed/`:
+The first time, `vcpkg` will automatically install dependencies into `[build directory]/vcpkg_installed/`, which will likely take about 10-20 minutes. Take care not to delete the files here if you don't want to wait for this again.
 
 If you want to use `vcpkg` set up somewhere besides this repo's submodule, add `-DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` to the `cmake` command directly or [through your IDE's settings](https://github.com/microsoft/vcpkg#using-vcpkg-with-cmake).
 
