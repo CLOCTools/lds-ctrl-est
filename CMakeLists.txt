@@ -273,7 +273,7 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
       DESTINATION ${PROJECT_BINARY_DIR}/python/
       PATTERN "*.cpp" EXCLUDE
       PATTERN "*.txt" EXCLUDE
-      PATTERN "pybind11/" EXCLUDE
+      PATTERN "pybind11/*" EXCLUDE
       )
     add_subdirectory(python)
 
