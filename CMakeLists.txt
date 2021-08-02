@@ -1,8 +1,15 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
+################################################################################
+############ VCPKG OPTIONS
+################################################################################
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake
   CACHE STRING "Vcpkg toolchain file")
+# can supposedly be overridden by passing this argument in on the command line
 
+################################################################################
+############ PROJECT SPECIFICATIONS
+################################################################################
 # set project name and version (MAJOR.minor.patch)
 project(ldsCtrlEst VERSION 0.6.2 LANGUAGES CXX C)
 # some name variants I will be using:
@@ -61,6 +68,7 @@ option(LDSCTRLEST_BUILD_STATIC
   and build a static version of the library." ON)
 # n.b., if both LDSCTRLEST_BUILD_FIT & LDSCTRLEST_BUILD_STATIC are enabled,
 # Matlab/Octave mex files will be built.
+option(LDSCTRLEST_BUILD_PYTHON "Build a Python wrapper package using pybind11." ON)
 
 if (WIN32) 
   # needed to build static library
@@ -121,8 +129,10 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   # provides function for adding oct/mex file target
   include(Octave)
 
+  if (LDSCTRLEST_BUILD_PYTHON)
   # for pybind11 wrappers target
-  include(Python3)
+    include(pybind11)
+  endif()
 endif()
 
 # save the CXX flags configured for later use by dependency.
@@ -257,34 +267,18 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   endif()#end Octave_FOUND
 
   # python
-  if (Python3_FOUND)
-    if (SKBUILD)
-      # Scikit-Build does not add your site-packages to the search path automatically,
-      # so we need to add it _or_ the pybind11 specific directory here.
-      execute_process(
-        COMMAND
-          "${PYTHON_EXECUTABLE}" -c
-          "import pybind11; print(pybind11.get_cmake_dir())"
-        OUTPUT_VARIABLE _tmp_dir
-        OUTPUT_STRIP_TRAILING_WHITESPACE COMMAND_ECHO STDOUT)
-      list(APPEND CMAKE_PREFIX_PATH "${_tmp_dir}")
-    endif()
+  if (LDSCTRLEST_BUILD_PYTHON AND pybind11_FOUND AND Python_FOUND)
+    file(
+      COPY ${PROJECT_SOURCE_DIR}/python/
+      DESTINATION ${PROJECT_BINARY_DIR}/python/
+      PATTERN "*.cpp" EXCLUDE
+      PATTERN "*.txt" EXCLUDE
+      PATTERN "pybind11/" EXCLUDE
+      )
+    add_subdirectory(python)
 
-    find_package(pybind11 CONFIG REQUIRED)
-
-    pybind11_add_module(example MODULE python/example.cpp)
-
-    target_compile_definitions(example PRIVATE VERSION_INFO=${PROJECT_VERSION})
-    # file(
-    #   COPY ${PROJECT_SOURCE_DIR}/python/
-    #   DESTINATION ${PROJECT_BINARY_DIR}/python/
-    #   PATTERN "*.cpp" EXCLUDE
-    #   PATTERN "*.txt" EXCLUDE
-    #   )
-    # add_subdirectory(python)
-    message(STATUS "Python was found")
   else()
-    message(STATUS "Python was not found. Not building Python files.")
+    message(STATUS "pybind11 and/or Python was not found. Not building Python modules.")
   endif()
 
 endif()
@@ -479,7 +473,7 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   endif()
 
   #python
-  if(Python3_FOUND)
+  if(LDSCTRLEST_BUILD_PYTHON AND pybind11_FOUND AND Python_FOUND)
     install(
       DIRECTORY ${PROJECT_BINARY_DIR}/python/
       DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/Python

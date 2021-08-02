@@ -5,3 +5,7 @@
 [submodule "vcpkg"]
 	path = vcpkg
 	url = https://github.com/microsoft/vcpkg.git
+[submodule "python/pybind11"]
+	path = python/pybind11
+	url = ../../pybind/pybind11
+	branch = stable

@@ -55,6 +55,11 @@ If you see an error on Linux about needing `gfortran` in your path, install with
 
 If the `vcpkg install` command fails, you may want to upgrade your system (e.g., `apt update`, `apt upgrade`) and try again.
 
+## Python bindings
+With the `LDSCTRLEST_BUILD_PYTHON` setting (on by default) and the `pybind11` submodule initialized, you can build Python bindings. You will probably want to specify the version of Python to use by adding a `-DPYTHON_EXECUTABLE=$(python -c "import sys; print(sys.executable)")` argument to the CMake cache generation command (the first one). The Python statement should automatically use the version of Python in the active environment. If that doesn't work (in an IDE, for instance), just specify the full path.
+
+The bindings need to be generated just once per Python version. Once the build is complete, navigate to the `[build location]/python` folder and run `pip install .` to make it importable anywhere for your current environment.
+
 # Reporting Issues
 If you encounter bugs when using this library or have specific feature requests that you believe fall within the stated scope of this project, please [open an issue on GitHub](https://github.com/stanley-rozell/lds-ctrl-est/issues) and use an appropriate issue template where possible. You may also fork the repository and submit pull-requests with your suggested changes.
 
