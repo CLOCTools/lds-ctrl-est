@@ -9,3 +9,6 @@
 	path = python/pybind11
 	url = ../../pybind/pybind11
 	branch = stable
+[submodule "python/carma"]
+	path = python/carma
+	url = https://github.com/RUrlus/carma.git
