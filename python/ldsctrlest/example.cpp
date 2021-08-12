@@ -1,24 +1,31 @@
+#include <carma>
+#include <armadillo>
 #include <pybind11/pybind11.h>
-
-#define STRINGIFY(x) #x
-#define MACRO_STRINGIFY(x) STRINGIFY(x)
+#include <pybind11/numpy.h>
 
 namespace py = pybind11;
 
 
-int add(int i, int j) {
-    return i + j;
-}
+class MyClass {
+  private:
+    arma::Mat<double> A_;
+  public:
+    MyClass() { A_ = arma::Mat<double>(2, 2); };
+    const arma::Mat<double>& A() const { return A_; };
+    arma::Mat<double>& A_non_const() { return A_; };
+};
 
 PYBIND11_MODULE(example, m) {
-    m.doc() = "pybind11 example plugin"; // optional module docstring
 
-    m.def("add", &add, "A function which adds two numbers");
+    py::class_<MyClass>(m, "MyClass")
+        .def(py::init<>())
 
-    #ifdef VERSION_INFO
-        m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
-    #else
-        m.attr("__version__") = "dev";
-    #endif
+        // 1. this works:
+        .def("A_non_const", &MyClass::A_non_const)
 
+        // 2. doesn't work: 
+        .def("A", &MyClass::A);
+
+        // 3. this works
+        // .def("A", [](const MyClass &self) { return self.A(); });
 }
