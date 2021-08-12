@@ -16,6 +16,7 @@
 *.pyc
 *.pyd
 *.pdb
+*.egg-info/
 
 # Packages #
 ############
