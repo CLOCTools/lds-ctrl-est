@@ -25,14 +25,19 @@ PYBIND11_MODULE(gaussian, m) {
            py::arg("r0") = lds::kDefaultR0)
 
       // getters/setters
-      // .def_property("R", &glds::System::R, &glds::System::set_R)
-      // .def_property("Ke", &glds::System::Ke, &glds::System::set_Ke)
-      // .def_property("Ke_m", &glds::System::Ke_m, &glds::System::set_Ke_m)
+      .def_property(
+          "R", [](const glds::System& self) { return self.R(); },
+          &glds::System::set_R, py::return_value_policy::copy)
+      .def_property(
+          "Ke", [](const glds::System& self) { return self.Ke(); },
+          &glds::System::set_Ke, py::return_value_policy::copy)
+      .def_property(
+          "Ke_m", [](const glds::System& self) { return self.Ke_m(); },
+          &glds::System::set_Ke_m, py::return_value_policy::copy)
 
       // other functions
       // NOTE: this might be unnecessary if functions were virtual,
       // but I'm not touching the base code right now
-      // .def("Simulate", &glds::System::Simulate)
       .def(
           "Simulate",
           [](glds::System& self, const lds::Vector& u_tm1) {

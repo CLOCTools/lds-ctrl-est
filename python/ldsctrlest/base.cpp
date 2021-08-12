@@ -16,16 +16,13 @@ PYBIND11_MODULE(base, m) {
 
   py::class_<lds::System>(m, "System")
       // don't need to wrap constructor; base class not used directly
+
       // getters only
       .def_property_readonly("n_u", &lds::System::n_u)
       .def_property_readonly("n_x", &lds::System::n_x)
       .def_property_readonly("n_y", &lds::System::n_y)
       .def_property_readonly("dt", &lds::System::dt)
       // .def_property_readonly("P", &lds::System::P)
-      // .def_property_readonly(
-      //     "P",
-      //     [](const lds::System &self) { return carma::mat_to_arr(self.P());
-      //     })
       .def_property_readonly(
           "P", [](const lds::System &self) { return self.P(); },
           py::return_value_policy::copy)
@@ -96,6 +93,7 @@ PYBIND11_MODULE(base, m) {
       .def_property("P0_m", nullptr, &lds::System::set_P0_m)
 
       // other functions: shouldn't be called on abstract base class
+      // but since they're not overridden I bind them here
       .def("Reset", &lds::System::Reset)
       // .def("Simulate", &lds::System::Simulate)
       .def("Filter", &lds::System::Filter)
