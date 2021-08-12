@@ -24,7 +24,7 @@ PYBIND11_MODULE(gaussian, m) {
            py::arg("p0") = lds::kDefaultP0, py::arg("q0") = lds::kDefaultQ0,
            py::arg("r0") = lds::kDefaultR0)
 
-      // getters/setters
+      // getters/setters not in base System
       .def_property(
           "R", [](const glds::System& self) { return self.R(); },
           &glds::System::set_R, py::return_value_policy::copy)
