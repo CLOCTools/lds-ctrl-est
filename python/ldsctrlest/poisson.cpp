@@ -52,7 +52,8 @@ PYBIND11_MODULE(poisson, m) {
       .def(py::init<>())
       .def(py::init<size_t, size_t, size_t, data_t>(), "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a)
 
-      // .def_property("R", [](const plds::Fit& self) { return self.R(); }, &plds::Fit::set_R, "measurement noise covariance")
+      // .def_property_readonly("R", [](const plds::Fit& self) { return self.R(); }, 
+      //     py::return_value_policy::copy, "measurement noise covariance (not used in PLDS)")
   ;
 
 #ifdef VERSION_INFO

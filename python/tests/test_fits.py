@@ -5,12 +5,20 @@ import ldsctrlest.poisson as plds
 import pytest
 
 def test_gaussian_fit():
-    # TODO: check R, make sure override works
-    pass
+    # check R, make sure override works
+    gs = glds.Fit(3, 2, 4, .001)
+    gs.R
+    gs.R = np.eye(gs.n_y)
 
-def test_poisson_fit():
-    # TODO: check R, make sure override works
-    pass
+def test_poisson_fit(capfd):
+    # check R, make sure override works
+    ps = plds.Fit(3, 2, 4, .001)
+    ps.R
+
+    # should raise warning since R doesn't do anything in PLDS
+    ps.R = np.eye(ps.n_y)
+    warning = capfd.readouterr().err
+    assert warning.startswith('WARNING')
 
 def _test_base_fit(fit):
     # getters
