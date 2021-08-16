@@ -30,31 +30,16 @@ PYBIND11_MODULE(gaussian, m) {
                     data_t, data_t, data_t>(),
            "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a, "p0"_a = kDefaultP0,
            "q0"_a = kDefaultQ0, "r0"_a = kDefaultR0)
-      //  py::arg("n_u"), py::arg("n_x"), py::arg("n_y"), py::arg("dt"),
-      //  py::arg("p0") = kDefaultP0, py::arg("q0") = kDefaultQ0,
-      //  py::arg("r0") = kDefaultR0)
 
       // getters/setters not in base System
-      .def_property(
-          "R", [](const glds::System& self) { return self.R(); },
-          &glds::System::set_R, py::return_value_policy::copy)
-      .def_property(
-          "Ke", [](const glds::System& self) { return self.Ke(); },
-          &glds::System::set_Ke, py::return_value_policy::copy)
-      .def_property(
-          "Ke_m", [](const glds::System& self) { return self.Ke_m(); },
-          &glds::System::set_Ke_m, py::return_value_policy::copy)
+      .def_property("R", &glds::System::R, &glds::System::set_R)
+      .def_property("Ke", &glds::System::Ke, &glds::System::set_Ke)
+      .def_property("Ke_m", &glds::System::Ke_m, &glds::System::set_Ke_m)
 
       // other functions
       // NOTE: this might be unnecessary if functions were virtual,
       // but I'm not touching the base code right now
-      .def(
-          "Simulate",
-          [](glds::System& self, const Vector& u_tm1) {
-            return self.Simulate(u_tm1);
-          },
-          py::return_value_policy::copy)
-
+      .def("Simulate", &glds::System::Simulate)
       .def("Print", &glds::System::Print)
       .def("__str__", [](glds::System& system) {
         return ldsutils::capture_output([&system]() { system.Print(); });

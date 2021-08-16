@@ -36,12 +36,7 @@ PYBIND11_MODULE(poisson, m) {
       // other functions
       // NOTE: this might be unnecessary if functions were virtual,
       // but I'm not touching the base code right now
-      .def(
-          "Simulate",
-          [](plds::System& self, const Vector& u_tm1) {
-            return self.Simulate(u_tm1);
-          },
-          py::return_value_policy::copy);
+      .def("Simulate", &plds::System::Simulate);
 
 
   /*

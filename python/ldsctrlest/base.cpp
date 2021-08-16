@@ -1,5 +1,6 @@
 #include <ldsCtrlEst_h/lds_fit.h>
 #include <ldsCtrlEst_h/lds_sys.h>
+#include <ldsCtrlEst_h/lds_fit_em.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
@@ -11,6 +12,7 @@
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
 
 namespace py = pybind11;
+using namespace pybind11::literals;
 using namespace std;
 using namespace lds;
 
@@ -33,68 +35,27 @@ PYBIND11_MODULE(base, m) {
     //   .def_property_readonly(
     //       "P", [](const System &self) { return carma::to_numpy_view(self.P()); })
       // see https://github.com/RUrlus/carma/issues/83
-      .def_property_readonly(
-          "P", [](const System &self) { return self.P(); },
-          py::return_value_policy::copy)
-      // .def_property_readonly("P", &System::P)
-      // .def_property_readonly("P_m", &System::P_m)
-      .def_property_readonly(
-          "P_m", [](const System &self) { return self.P_m(); },
-          py::return_value_policy::copy)
-      // .def_property_readonly("cx", &System::cx)
-      .def_property_readonly(
-          "cx", [](const System &self) { return self.cx(); },
-          py::return_value_policy::copy)
-      // .def_property_readonly("y", &System::y)
-      .def_property_readonly(
-          "y", [](const System &self) { return self.y(); },
-          py::return_value_policy::copy)
-      // .def_property_readonly("Ke", &System::Ke)
-      .def_property_readonly(
-          "Ke", [](const System &self) { return self.Ke(); },
-          py::return_value_policy::copy)
-      // .def_property_readonly("Ke_m", &System::Ke_m)
-      .def_property_readonly(
-          "Ke_m", [](const System &self) { return self.Ke_m(); },
-          py::return_value_policy::copy)
+      .def_property_readonly("P", &System::P)
+      .def_property_readonly("P_m", &System::P_m)
+      .def_property_readonly("cx", &System::cx)
+      .def_property_readonly("y", &System::y)
+      .def_property_readonly("Ke", &System::Ke)
+      .def_property_readonly("Ke_m", &System::Ke_m)
 
-      // // getters/setters
-      // .def_property("x", &System::x, &System::set_x)
-      .def_property(
-          "x", [](const System &self) { return self.x(); },
-          &System::set_x, py::return_value_policy::copy)
-      // .def_property("x0", &System::x0, &System::set_x0)
-      .def_property(
-          "x0", [](const System &self) { return self.x0(); },
-          &System::set_x0, py::return_value_policy::copy)
-      // .def_property("m", &System::m, &System::set_m)
+      // getters/setters
+      .def_property("x", &System::x, &System::set_x)
+      .def_property("x0", &System::x0, &System::set_x0)
       // since set_m takes 2 args we can't use it directly in property
       .def("set_m", &System::set_m, py::arg("m"),
-           py::arg("do_force_assign") = false)
+           "do_force_assign"_a = false)
       .def_property(
-          "m", [](const System &self) { return self.m(); },
-          [](System &self, const Vector &m) { self.set_m(m); },
-          py::return_value_policy::copy)
-      // .def_property("A", &System::A, &System::set_A)
-      .def_property(
-          "A", [](const System &self) { return self.A(); },
-          &System::set_A, py::return_value_policy::copy)
-      // .def_property("B", &System::B, &System::set_B)
-      .def_property(
-          "B", [](const System &self) { return self.B(); },
-          &System::set_B, py::return_value_policy::copy)
-      // .def_property("g", &System::g, &System::set_g)
-      .def_property(
-          "g", [](const System &self) { return self.g(); },
-          &System::set_g, py::return_value_policy::copy)
-      // .def_property("C", &System::C, &System::set_C)
-      .def_property(
-          "C", [](const System &self) { return self.C(); },
-          &System::set_C, py::return_value_policy::copy)
-      // .def_property("d", &System::d, &System::set_d)
-      .def_property(
-          "d", [](const System &self) { return self.d(); },
-          &System::set_d, py::return_value_policy::copy)
+          "m", &System::m,
+          [](System &self, const Vector &m) { self.set_m(m); })
+      .def_property("A", &System::A, &System::set_A)
+      .def_property("B", &System::B, &System::set_B)
+      .def_property("g", &System::g, &System::set_g)
+      .def_property("C", &System::C, &System::set_C)
+      .def_property("d", &System::d, &System::set_d)
       // // public field, no get/set functions
       .def_readwrite("do_adapt_m", &System::do_adapt_m)
 
@@ -130,37 +91,17 @@ PYBIND11_MODULE(base, m) {
       .def_property_readonly("dt", &Fit::dt)
 
       // get/set properties
-      .def_property(
-          "A", [](const Fit &self) { return self.A(); }, &Fit::set_A,
-          py::return_value_policy::copy)
-      .def_property(
-          "B", [](const Fit &self) { return self.B(); }, &Fit::set_B,
-          py::return_value_policy::copy)
-      .def_property(
-          "g", [](const Fit &self) { return self.g(); }, &Fit::set_g,
-          py::return_value_policy::copy)
-      .def_property(
-          "m", [](const Fit &self) { return self.m(); }, &Fit::set_m,
-          py::return_value_policy::copy)
-      .def_property(
-          "Q", [](const Fit &self) { return self.Q(); }, &Fit::set_Q,
-          py::return_value_policy::copy)
-      .def_property(
-          "x0", [](const Fit &self) { return self.x0(); },
-          &Fit::set_x0, py::return_value_policy::copy)
-      .def_property(
-          "P0", [](const Fit &self) { return self.P0(); },
-          &Fit::set_P0, py::return_value_policy::copy)
-      .def_property(
-          "C", [](const Fit &self) { return self.C(); }, &Fit::set_C,
-          py::return_value_policy::copy)
-      .def_property(
-          "d", [](const Fit &self) { return self.d(); }, &Fit::set_d,
-          py::return_value_policy::copy)
-      // pure virtual: see if override works correctly
-      .def_property(
-          "R", [](const Fit &self) { return self.R(); }, &Fit::set_R,
-          py::return_value_policy::copy)
+      .def_property("A", &Fit::A, &Fit::set_A)
+      .def_property("B", &Fit::B, &Fit::set_B)
+      .def_property("g", &Fit::g, &Fit::set_g)
+      .def_property("m", &Fit::m, &Fit::set_m)
+      .def_property("Q", &Fit::Q, &Fit::set_Q)
+      .def_property("x0", &Fit::x0, &Fit::set_x0)
+      .def_property("P0", &Fit::P0, &Fit::set_P0)
+      .def_property("C", &Fit::C, &Fit::set_C)
+      .def_property("d", &Fit::d, &Fit::set_d)
+      // pure virtual: override seems to be working as expected
+      .def_property("R", &Fit::R, &Fit::set_R)
 
       // system functions
     //   .def("f",
@@ -183,6 +124,23 @@ PYBIND11_MODULE(base, m) {
       .def("h", [](Fit& self, Matrix& y, const Matrix& x, size_t t) {
           return Vector(self.h(y, x, t));
       });
+    
+  /*
+  ---------------- EM Fit class ---------------------
+  */
+//   py::class_<EM<Fit>>(m, "EM")
+  // constructors
+//   .def(py::init<>())
+//   .def(py::init<size_t, data_t, UniformMatrixList<kMatFreeDim2>&&, UniformMatrixList<kMatFreeDim2>&&>())
+//   .def(py::init<const Fit&, UniformMatrixList<kMatFreeDim2>&&, UniformMatrixList<kMatFreeDim2>&&>())
+
+  // functions
+//   .def("ReturnData", &EM<Fit>::ReturnData)
+
+  // getters
+//   .def_property_readonly()
+  
+//   ;
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
