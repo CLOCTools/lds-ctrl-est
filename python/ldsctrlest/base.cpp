@@ -32,6 +32,7 @@ PYBIND11_MODULE(base, m) {
       // think it's worth the verbosity here. e.g.,:
     //   .def_property_readonly(
     //       "P", [](const System &self) { return carma::to_numpy_view(self.P()); })
+      // see https://github.com/RUrlus/carma/issues/83
       .def_property_readonly(
           "P", [](const System &self) { return self.P(); },
           py::return_value_policy::copy)
