@@ -12,6 +12,8 @@
 
 // this allows for the shorthand "my_arg"_a instead of py::arg("my_arg")
 using namespace pybind11::literals;
+using namespace std;
+using namespace lds;
 
 namespace py = pybind11;
 namespace glds = lds::gaussian;
@@ -24,13 +26,13 @@ PYBIND11_MODULE(gaussian, m) {
   */
   py::class_<glds::System, lds::System>(m, "System")
       .def(py::init<>())  // default constructor
-      .def(py::init<std::size_t, std::size_t, std::size_t, lds::data_t,
-                    lds::data_t, lds::data_t, lds::data_t>(),
-           "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a, "p0"_a = lds::kDefaultP0,
-           "q0"_a = lds::kDefaultQ0, "r0"_a = lds::kDefaultR0)
+      .def(py::init<size_t, size_t, size_t, data_t,
+                    data_t, data_t, data_t>(),
+           "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a, "p0"_a = kDefaultP0,
+           "q0"_a = kDefaultQ0, "r0"_a = kDefaultR0)
       //  py::arg("n_u"), py::arg("n_x"), py::arg("n_y"), py::arg("dt"),
-      //  py::arg("p0") = lds::kDefaultP0, py::arg("q0") = lds::kDefaultQ0,
-      //  py::arg("r0") = lds::kDefaultR0)
+      //  py::arg("p0") = kDefaultP0, py::arg("q0") = kDefaultQ0,
+      //  py::arg("r0") = kDefaultR0)
 
       // getters/setters not in base System
       .def_property(
@@ -48,7 +50,7 @@ PYBIND11_MODULE(gaussian, m) {
       // but I'm not touching the base code right now
       .def(
           "Simulate",
-          [](glds::System& self, const lds::Vector& u_tm1) {
+          [](glds::System& self, const Vector& u_tm1) {
             return self.Simulate(u_tm1);
           },
           py::return_value_policy::copy)
@@ -64,7 +66,7 @@ PYBIND11_MODULE(gaussian, m) {
   py::class_<glds::Fit, lds::Fit>(m, "Fit")
       // constructors
       .def(py::init<>())
-      .def(py::init<size_t, size_t, size_t, lds::data_t>(), "n_u"_a, "n_x"_a,
+      .def(py::init<size_t, size_t, size_t, data_t>(), "n_u"_a, "n_x"_a,
            "n_y"_a, "dt"_a)
       ;
       // .def_property(

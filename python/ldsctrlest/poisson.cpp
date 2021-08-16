@@ -12,6 +12,8 @@
 
 // this allows for the shorthand "my_arg"_a instead of py::arg("my_arg")
 using namespace pybind11::literals;
+using namespace lds;
+using namespace std;
 
 namespace py = pybind11;
 namespace plds = lds::poisson;
@@ -24,10 +26,10 @@ PYBIND11_MODULE(poisson, m) {
   */
   py::class_<plds::System, lds::System>(m, "System")
       .def(py::init<>())  // default constructor
-      .def(py::init<std::size_t, std::size_t, std::size_t, lds::data_t,
-                    lds::data_t, lds::data_t>(),
+      .def(py::init<size_t, size_t, size_t, data_t,
+                    data_t, data_t>(),
            py::arg("n_u"), py::arg("n_x"), py::arg("n_y"), py::arg("dt"),
-           py::arg("p0") = lds::kDefaultP0, py::arg("q0") = lds::kDefaultQ0)
+           py::arg("p0") = kDefaultP0, py::arg("q0") = kDefaultQ0)
 
       // unlike GLDS, PLDS has no getters/setters not in base System
 
@@ -36,7 +38,7 @@ PYBIND11_MODULE(poisson, m) {
       // but I'm not touching the base code right now
       .def(
           "Simulate",
-          [](plds::System& self, const lds::Vector& u_tm1) {
+          [](plds::System& self, const Vector& u_tm1) {
             return self.Simulate(u_tm1);
           },
           py::return_value_policy::copy);
@@ -48,7 +50,7 @@ PYBIND11_MODULE(poisson, m) {
   py::class_<plds::Fit, lds::Fit>(m, "Fit")
       // constructors
       .def(py::init<>())
-      .def(py::init<size_t, size_t, size_t, lds::data_t>(), "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a)
+      .def(py::init<size_t, size_t, size_t, data_t>(), "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a)
 
       // .def_property("R", [](const plds::Fit& self) { return self.R(); }, &plds::Fit::set_R, "measurement noise covariance")
   ;
