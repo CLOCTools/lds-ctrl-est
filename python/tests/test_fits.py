@@ -51,11 +51,11 @@ def _test_base_fit(fit):
     X_post = np.ones((fit.n_x, T))
     U = np.ones((fit.n_u, T))
 
-    # TODO: make sure X is getting updated if side effects are possible
-    # ans = fit.f(X, U, 2)
-    # assert np.all(ans == X[:,2])
-    # ans = fit.f(X, U, 3)
-    # assert np.all(ans == X[:,3])
+    # make sure X is getting updated as a side effect
+    ans = fit.f(X, U, 2)
+    assert np.all(ans == X[:,2])
+    ans = fit.f(X, U, 3)
+    assert np.all(ans == X[:,3])
 
     fit.f(X, U, 2)
     fit.f(X, X_post, U, 2)
