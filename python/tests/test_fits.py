@@ -56,6 +56,8 @@ def _test_base_fit(fit):
     assert np.all(ans == X[:,2])
     ans = fit.f(X, U, 3)
     assert np.all(ans == X[:,3])
+    ans = fit.f(X, X_post, U, 2)
+    assert np.all(ans == X[:,2])
 
     fit.f(X, U, 2)
     fit.f(X, X_post, U, 2)
