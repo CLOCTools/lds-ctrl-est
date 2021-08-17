@@ -6,7 +6,7 @@
 
 #include <carma>
 
-#include "ldsutils.h"
+#include "bindutils.h"
 
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
@@ -74,7 +74,7 @@ PYBIND11_MODULE(base, m) {
 
       .def("Print", &System::Print)
       .def("__str__", [](System &system) {
-        return ldsutils::capture_output([&system]() { system.Print(); });
+        return bindutils::capture_output([&system]() { system.Print(); });
       });
 
   /*
@@ -101,7 +101,7 @@ PYBIND11_MODULE(base, m) {
       .def_property("C", &Fit::C, &Fit::set_C)
       .def_property("d", &Fit::d, &Fit::set_d)
       // pure virtual: override seems to be working as expected
-      .def_property("R", &Fit::R, &Fit::set_R)
+      .def_property("R", &Fit::R, &Fit::set_R, "measurement noise (not used in PLDS)")
 
       // system functions
     //   .def("f",
@@ -126,22 +126,10 @@ PYBIND11_MODULE(base, m) {
       });
     
   /*
-  ---------------- EM Fit class ---------------------
+  ---------------- Uniform mat/vec classes ---------------------
   */
-//   py::class_<EM<Fit>>(m, "EM")
-  // constructors
-//   .def(py::init<>())
-//   .def(py::init<size_t, data_t, UniformMatrixList<kMatFreeDim2>&&, UniformMatrixList<kMatFreeDim2>&&>())
-//   .def(py::init<const Fit&, UniformMatrixList<kMatFreeDim2>&&, UniformMatrixList<kMatFreeDim2>&&>())
-
-  // functions
-//   .def("ReturnData", &EM<Fit>::ReturnData)
-
-  // getters
-//   .def_property_readonly()
-  
-//   ;
-
+  // need to define for each template parameter (Dth dimension free to vary)
+  bindutils::define_UniformMatrixList<kMatFreeDimNone>(m, "FreeDimNone");
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else

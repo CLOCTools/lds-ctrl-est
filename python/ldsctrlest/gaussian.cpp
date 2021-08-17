@@ -1,11 +1,12 @@
-#include <ldsCtrlEst_h/lds_gaussian_fit.h>
 #include <ldsCtrlEst_h/lds_gaussian_sys.h>
+#include <ldsCtrlEst_h/lds_gaussian_fit.h>
+#include <ldsCtrlEst_h/lds_gaussian_fit_em.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
 #include <carma>
 
-#include "ldsutils.h"
+#include "bindutils.h"
 
 #define STRINGIFY(x) #x
 #define MACRO_STRINGIFY(x) STRINGIFY(x)
@@ -42,7 +43,7 @@ PYBIND11_MODULE(gaussian, m) {
       .def("Simulate", &glds::System::Simulate)
       .def("Print", &glds::System::Print)
       .def("__str__", [](glds::System& system) {
-        return ldsutils::capture_output([&system]() { system.Print(); });
+        return bindutils::capture_output([&system]() { system.Print(); });
       });
 
   /*
@@ -54,9 +55,13 @@ PYBIND11_MODULE(gaussian, m) {
       .def(py::init<size_t, size_t, size_t, data_t>(), "n_u"_a, "n_x"_a,
            "n_y"_a, "dt"_a)
       ;
-      // .def_property(
-      //     "R", [](const glds::Fit& self) { return self.R(); },
-      //     &glds::Fit::set_R, "measurement noise covariance");
+
+  /*
+  ---------------- EM Fit class ---------------------
+  */
+  // bindutils::define_FitEM_base<glds::Fit, glds::FitEM>(m)
+      
+  // ;
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
