@@ -113,9 +113,6 @@ PYBIND11_MODULE(base, m) {
       .def("f", [](Fit& self, py::array_t<data_t>& x, const Matrix& u, size_t t) {
           Matrix x_arma = carma::arr_to_mat(x, false);
           Vector result = Vector(self.f(x_arma, u, t));
-        //   cout << x_arma;
-        //   x_arma = x_arma.zeros();
-        //   cout << x_arma;
           return carma::col_to_arr(result, true);
       })
       .def("f", [](Fit& self, Matrix& x_pre, const Matrix& x_post, const Matrix& u, size_t t) {
@@ -126,10 +123,14 @@ PYBIND11_MODULE(base, m) {
       });
     
   /*
-  ---------------- Uniform mat/vec classes ---------------------
+  ---------------- Uniform mat, vec, system classes ---------------------
   */
-  // need to define for each template parameter (Dth dimension free to vary)
-  bindutils::define_UniformMatrixList<kMatFreeDimNone>(m, "FreeDimNone");
+  // need to define separate Py class for each template parameter (Dth dimension free to vary)
+//   bindutils::define_UniformMatrixList<kMatFreeDimNone>(m, "FreeDimNone");
+//   bindutils::define_UniformMatrixList<kMatFreeDim1>(m, "FreeDim1");
+//   bindutils::define_UniformMatrixList<kMatFreeDim2>(m, "FreeDim2");
+  // see 
+
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else

@@ -14,7 +14,7 @@ using namespace pybind11::literals;
 using namespace std;
 using namespace lds;
 
-namespace ldsutils {
+namespace bindutils {
 
 string capture_output(const function<void(void)> &f) {
   ostringstream capture_out;
@@ -47,12 +47,19 @@ py::class_<FitEMType, lds::EM<FitType>> define_FitEM_base(py::module &m) {
            "calc_measurement"_a = true, "max_iter"_a = 100, "tol"_a = 1e-2);
 }
 
+// again need to use templates, which I can't do in the PYBIND11_MODULE block
 template <MatrixListFreeDim D>
 py::class_<UniformMatrixList<D>, vector<Matrix>> define_UniformMatrixList(
-    py::module &m, string py_class_suffix) {
-  return py::class_<UniformMatrixList<D>>(m,
-                                          "UniformMatrixList" + py_class_suffix)
-      .def(py::init<>());
+    py::module& m, string py_class_suffix) {
+
+  string py_class_name = string("UniformMatrixList") + py_class_suffix;
+  return py::class_<UniformMatrixList<D>, vector<Matrix>>(m, py_class_name.c_str())
+      .def(py::init<const vector<Matrix>&>())
+      .def(py::init<vector<Matrix>&&>())
+      .def(py::init<const UniformMatrixList<D>&>())
+      .def(py::init<UniformMatrixList<D>&&>())
+
+      ;
 }
 
-}  // namespace ldsutils
+}  // namespace bindutils
