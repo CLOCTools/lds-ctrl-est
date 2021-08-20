@@ -1,12 +1,13 @@
 #include <ldsCtrlEst_h/lds_fit_em.h>
+#include <ldsCtrlEst_h/lds_uniform_mats.h>
+#include <ldsCtrlEst_h/lds_uniform_systems.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit_em.h>
 #include <ldsCtrlEst_h/lds_poisson_fit_em.h>
-
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <carma>
 
+#include <carma>
 #include <functional>
 #include <iostream>
 #include <string>
@@ -50,32 +51,63 @@ py::class_<FitEMType, lds::EM<FitType>> define_FitEM_base(py::module &m) {
            "calc_measurement"_a = true, "max_iter"_a = 100, "tol"_a = 1e-2);
 }
 
-void println(string message) {
-  cerr << message << endl;
-}
+void println(string message) { cerr << message << endl; }
 
 // again need to use templates, which I can't do in the PYBIND11_MODULE block
 template <MatrixListFreeDim D>
-py::class_<UniformMatrixList<D>, vector<Matrix>> define_UniformMatrixList(
-    py::module& m, string py_class_suffix) {
-
+py::class_<UniformMatrixList<D>> define_UniformMatrixList(
+    py::module &m, string py_class_suffix) {
+  using UML = UniformMatrixList<D>;
   string py_class_name = string("UniformMatrixList") + py_class_suffix;
-  return py::class_<UniformMatrixList<D>>(m, py_class_name.c_str())
-      // had problems binding constructors directly, so I'll do manual conversion
-      .def(py::init([](const vector<py::array_t<data_t>>& arrs) {
+  return py::class_<UML>(m, py_class_name.c_str())
+      // had problems binding constructors directly, so I'll do manual
+      // conversion
+      .def(py::init([](const vector<py::array_t<data_t>> &arrs) {
         vector<Matrix> mats;
         for (auto a : arrs) {
-          mats.push_back(carma::arr_to_mat(a)); // should be copying
+          mats.push_back(carma::arr_to_mat(a));  // should be copying
         }
-        return UniformMatrixList<D>(mats);
+        return UML(mats);
       }))
-      .def("dim", &UniformMatrixList<D>::dim, "n"_a = size_t(0), "gets dimensions of uniformly sized matrices")
-      .def_property_readonly("size", py::overload_cast<>(&UniformMatrixList<D>::size), "size of container")
-      .def("at", [](UniformMatrixList<D>& self, size_t n) { return carma::to_numpy_view(self.at(n)); }, "n"_a, "gets nth element")
-      .def("__getitem__", [](UniformMatrixList<D>& self, size_t n) { return carma::to_numpy_view(self.at(n)); }, "n"_a, "gets nth element")
-      .def("Swap", &UniformMatrixList<D>::Swap, "that"_a, "n"_a, "swaps input matrix with n^th matrix of list")
-      ;
+      .def("dim", &UML::dim, "n"_a = size_t(0),
+           "gets dimensions of uniformly sized matrices")
+      .def_property_readonly("size", py::overload_cast<>(&UML::size),
+                             "size of container")
+      // don't know why I get warnings about at(), or why things go wrong when I try to bind
+      // it directly, but this is working at least:
+      .def(
+          "at",
+          [](const UML &self, size_t n) {
+            return carma::to_numpy_view(self.at(n));
+          },
+          "n"_a, "gets nth element")
+      .def(
+          "__getitem__",
+          [](const UML &self, size_t n) {
+            return carma::to_numpy_view(self.at(n));
+          },
+          "n"_a, "gets nth element")
+      .def("Swap", &UML::Swap, "that"_a, "n"_a,
+           "swaps input matrix with n^th matrix of list");
+}
+
+template <typename System>
+py::class_<UniformSystemList<System>> define_UniformSystemList(
+    py::module &m) {
+  using USL = UniformSystemList<System>;
+
+  return py::class_<USL>(m, "UniformSystemList")
+      .def(py::init([](const vector<System> &systems) { return USL(systems); }))
+      .def_property_readonly("dim", &USL::dim,
+                             "gets dimensions of uniformly sized systems")
+      .def_property_readonly("size", py::overload_cast<>(&USL::size),
+                             "size of container")
+      .def("at", py::overload_cast<size_t>(&vector<System>::at), "n"_a,
+           "gets n^th system of list")
+      .def("__getitem__", py::overload_cast<size_t>(&vector<System>::at), "n"_a,
+           "gets n^th system of list")
+      .def("Swap", &USL::Swap, "that"_a, "n"_a,
+           "swaps input system with n^th system of list");
 }
 
 }  // namespace bindutils
-

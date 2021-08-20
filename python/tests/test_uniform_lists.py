@@ -3,7 +3,9 @@ import numpy as np
 import pytest
 
 import ldsctrlest
-from ldsctrlest import UniformMatrixList as UML, UniformVectorList as UVL
+from ldsctrlest import UniformMatrixList as UML, UniformVectorList as UVL, UniformSystemList as USL
+from ldsctrlest.gaussian import System as GLDS
+from ldsctrlest.poisson import System as PLDS
 
 arr2x2 = np.eye(2)
 arr3x3 = np.eye(3)
@@ -95,6 +97,46 @@ def test_uniform_vec_list(capfd):
     with pytest.raises(TypeError):
         uvl.Swap(np.zeros(4), -1)
 
+def _test_USL(usl1, usl2, sys_list_bad_dims, sys_list_mismatched_types, capfd):
+    with pytest.raises(RuntimeError):
+        USL(sys_list_bad_dims)
+    with pytest.raises(TypeError):
+        USL(sys_list_mismatched_types)
+
+    with pytest.raises(TypeError):
+        usl1[-1]
+    with pytest.raises(IndexError):
+        usl1[42]
+
+    usl1.Swap(usl1[2], 42)
+    warning = capfd.readouterr().err
+    assert warning.startswith("Requested UniformSystemList element out of bounds")
+
+    assert usl1.dim == [1,1,1]
+    assert usl2.dim == [2,2,2]
+
+def test_gaussian_uniform_sys_list(capfd):
+    gs1 = GLDS(1, 1, 1, 0.001)
+    gs2 = GLDS(2, 2, 2, 0.001)
+    good_sys_list = [gs1, gs1, gs1]
+    sys_list_bad_dims = [gs1, gs1, gs2]
+    sys_list_mismatched_types = [gs1, PLDS(1, 1, 1, .001)]
+    _test_USL(USL([gs1, gs1, gs1]), USL([gs2, gs2, gs2]), sys_list_bad_dims, sys_list_mismatched_types, capfd)
+
+def test_poisson_uniform_sys_list(capfd):
+    ps1 = PLDS(1, 1, 1, 0.001)
+    ps2 = PLDS(2, 2, 2, 0.001)
+    good_sys_list = [ps1, ps1, ps1]
+    sys_list_bad_dims = [ps1, ps1, ps2]
+    sys_list_mismatched_types = [ps1, GLDS(1, 1, 1, .001)]
+    _test_USL(USL([ps1, ps1, ps1]), USL([ps2, ps2, ps2]), sys_list_bad_dims, sys_list_mismatched_types, capfd)
 
 def test_uniform_sys_list(capfd):
-    pass
+    gs1 = GLDS(1, 1, 1, 0.001)
+    gs2 = GLDS(2, 2, 2, 0.001)
+    ps1 = PLDS(1, 1, 1, 0.001)
+    ps2 = PLDS(2, 2, 2, 0.001)
+    usl = USL([gs1, gs1, gs1])
+
+    with pytest.raises(TypeError):
+        USL([gs1, ps1])       

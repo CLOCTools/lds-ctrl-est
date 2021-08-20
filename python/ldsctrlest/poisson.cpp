@@ -48,6 +48,12 @@ PYBIND11_MODULE(poisson, m) {
       .def(py::init<size_t, size_t, size_t, data_t>(), "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a)
   ;
 
+  /*
+  ---------------- UniformSystemList class ---------------------
+  */
+  bindutils::define_UniformSystemList<plds::System>(m);
+
+
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else

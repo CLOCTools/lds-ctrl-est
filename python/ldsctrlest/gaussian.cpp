@@ -57,6 +57,11 @@ PYBIND11_MODULE(gaussian, m) {
       ;
 
   /*
+  ---------------- UniformSystemList class ---------------------
+  */
+  bindutils::define_UniformSystemList<glds::System>(m);
+
+  /*
   ---------------- EM Fit class ---------------------
   */
   // bindutils::define_FitEM_base<glds::Fit, glds::FitEM>(m)

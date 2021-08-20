@@ -3,6 +3,8 @@
 #include <ldsCtrlEst_h/lds_fit_em.h>
 #include <ldsCtrlEst_h/lds_uniform_vecs.h>
 #include <ldsCtrlEst_h/lds_uniform_systems.h>
+#include <ldsCtrlEst_h/lds_gaussian_sys.h>
+#include <ldsCtrlEst_h/lds_poisson_sys.h>
 
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
@@ -121,7 +123,7 @@ PYBIND11_MODULE(base, m) {
       });
     
   /*
-  ---------------- Uniform mat, vec, system classes ---------------------
+  ---------------- Uniform mat and vec classes ---------------------
   */
   // need to define separate Py class for each template parameter (Dth dimension free to vary)
   bindutils::define_UniformMatrixList<kMatFreeDimNone>(m, "FreeDimNone");
@@ -136,6 +138,7 @@ PYBIND11_MODULE(base, m) {
       .def("__getitem__", [](UniformVectorList& self, size_t n) { return carma::to_numpy_view(self.at(n)); }, "n"_a, "gets nth element")
       .def("Swap", &UniformVectorList::Swap, "that"_a, "n"_a, "swaps input vector with n^th vector of list")
       ;
+  
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
