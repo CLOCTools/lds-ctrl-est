@@ -313,8 +313,8 @@ template <MatrixListFreeDim D>
 UniformMatrixList<D>::UniformMatrixList(UniformMatrixList<D>&& that) noexcept
     : vector(std::move(that)) {
   for (size_t k = 0; k < this->size(); k++) {
-    dim_[k][0] = (*this)[k].n_rows;
-    dim_[k][1] = (*this)[k].n_cols;
+    array<size_t, 2> dim_k({this->at(k).n_rows, this->at(k).n_cols});
+    dim_.push_back(dim_k);
   }
 }
 
