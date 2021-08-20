@@ -1,9 +1,12 @@
 #include <ldsCtrlEst_h/lds_fit.h>
 #include <ldsCtrlEst_h/lds_sys.h>
 #include <ldsCtrlEst_h/lds_fit_em.h>
+#include <ldsCtrlEst_h/lds_uniform_vecs.h>
+#include <ldsCtrlEst_h/lds_uniform_systems.h>
+
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
-
+#include <pybind11/stl.h>
 #include <carma>
 
 #include "bindutils.h"
@@ -104,12 +107,7 @@ PYBIND11_MODULE(base, m) {
       .def_property("R", &Fit::R, &Fit::set_R, "measurement noise (not used in PLDS)")
 
       // system functions
-    //   .def("f",
-    //        py::overload_cast<Matrix &, const Matrix &, size_t>(
-    //            &Fit::f),
-    //        "system dynamics function")
       // x should be changed: borrow memory
-      // TODO: is this even possible? maybe not
       .def("f", [](Fit& self, py::array_t<data_t>& x, const Matrix& u, size_t t) {
           Matrix x_arma = carma::arr_to_mat(x, false);
           Vector result = Vector(self.f(x_arma, u, t));
@@ -126,10 +124,18 @@ PYBIND11_MODULE(base, m) {
   ---------------- Uniform mat, vec, system classes ---------------------
   */
   // need to define separate Py class for each template parameter (Dth dimension free to vary)
-//   bindutils::define_UniformMatrixList<kMatFreeDimNone>(m, "FreeDimNone");
-//   bindutils::define_UniformMatrixList<kMatFreeDim1>(m, "FreeDim1");
-//   bindutils::define_UniformMatrixList<kMatFreeDim2>(m, "FreeDim2");
-  // see 
+  bindutils::define_UniformMatrixList<kMatFreeDimNone>(m, "FreeDimNone");
+  bindutils::define_UniformMatrixList<kMatFreeDim1>(m, "FreeDim1");
+  bindutils::define_UniformMatrixList<kMatFreeDim2>(m, "FreeDim2");
+
+  py::class_<UniformVectorList>(m, "UniformVectorList")
+      .def(py::init<const vector<Vector>&>())
+      .def_property_readonly("dim", &UniformVectorList::dim, "gets dimensionality of the uniformly sized vectors")
+      .def_property_readonly("size", py::overload_cast<>(&UniformVectorList::size), "size of the container")
+      .def("at", [](UniformVectorList& self, size_t n) { return carma::to_numpy_view(self.at(n)); }, "n"_a, "gets nth element")
+      .def("__getitem__", [](UniformVectorList& self, size_t n) { return carma::to_numpy_view(self.at(n)); }, "n"_a, "gets nth element")
+      .def("Swap", &UniformVectorList::Swap, "that"_a, "n"_a, "swaps input vector with n^th vector of list")
+      ;
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
