@@ -1,6 +1,4 @@
-from typing import Type
 import ldsctrlest.base
-from ldsctrlest.base import UniformVectorList
 import ldsctrlest.gaussian
 import ldsctrlest.poisson
 
