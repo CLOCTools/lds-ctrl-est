@@ -40,12 +40,12 @@ class UniformMatrixList : public std::vector<Matrix> {
   // using std::vector<Matrix>::vector;
   using std::vector<Matrix>::operator=;
   using std::vector<Matrix>::operator[];
-  using std::vector<Matrix>::at;
   using std::vector<Matrix>::begin;
   using std::vector<Matrix>::end;
   using std::vector<Matrix>::size;
 
  public:
+  using std::vector<Matrix>::at;
   /**
    * @brief      Constructs a new UniformMatrixList.
    */
@@ -182,6 +182,10 @@ inline void UniformMatrixList<D>::Swap(Matrix& that, size_t n) {
 template <MatrixListFreeDim D>
 inline UniformMatrixList<D>& UniformMatrixList<D>::operator=(
     const UniformMatrixList<D>& that) {
+  // make sure dim_ vector is initialized
+  if (dim_.empty()) {
+    dim_ = std::vector<std::array<size_t, 2>>(that.size(), {0, 0});
+  }
   // check dimensions
   if (!this->empty()) {
     if (this->size() != that.size()) {
@@ -313,7 +317,7 @@ template <MatrixListFreeDim D>
 UniformMatrixList<D>::UniformMatrixList(UniformMatrixList<D>&& that) noexcept
     : vector(std::move(that)) {
   for (size_t k = 0; k < this->size(); k++) {
-    array<size_t, 2> dim_k({this->at(k).n_rows, this->at(k).n_cols});
+    std::array<size_t, 2> dim_k({this->at(k).n_rows, this->at(k).n_cols});
     dim_.push_back(dim_k);
   }
 }
