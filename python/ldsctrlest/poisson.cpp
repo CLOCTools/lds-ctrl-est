@@ -1,9 +1,9 @@
+#include <carma>  // must come before armadillo
+
 #include <ldsCtrlEst_h/lds_poisson_sys.h>
 #include <ldsCtrlEst_h/lds_poisson_fit.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
-
-#include <carma>
 
 #include "bindutils.h"
 
@@ -53,6 +53,12 @@ PYBIND11_MODULE(poisson, m) {
   */
   bindutils::define_UniformSystemList<plds::System>(m);
 
+  /*
+  ---------------- EM Fit class ---------------------
+  */
+  bindutils::define_FitEM_base<plds::Fit, plds::FitEM>(m)
+      
+  ;
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

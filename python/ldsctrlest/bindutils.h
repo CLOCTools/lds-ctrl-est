@@ -1,13 +1,13 @@
+#include <carma>  // must be included before armadillo (included in ldsCtrlEst)
 #include <ldsCtrlEst_h/lds_fit_em.h>
-#include <ldsCtrlEst_h/lds_uniform_mats.h>
-#include <ldsCtrlEst_h/lds_uniform_systems.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit_em.h>
 #include <ldsCtrlEst_h/lds_poisson_fit_em.h>
+#include <ldsCtrlEst_h/lds_uniform_mats.h>
+#include <ldsCtrlEst_h/lds_uniform_systems.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
-#include <carma>
 #include <functional>
 #include <iostream>
 #include <string>
@@ -36,14 +36,20 @@ string capture_output(const function<void(void)> &f) {
 // Poisson) so this function defines the base EM<Fit> functionality to avoid
 // repeating it.
 template <typename FitType, typename FitEMType>
-py::class_<FitEMType, lds::EM<FitType>> define_FitEM_base(py::module &m) {
-  return py::class_<FitEMType, lds::EM<FitType>>(m, "FitEM")
+py::class_<FitEMType> define_FitEM_base(py::module &m) {
+  return py::class_<FitEMType>(m, "FitEM")
       // constructors
       .def(py::init<>())
-      .def(py::init<size_t, data_t, UniformMatrixList<kMatFreeDim2> &&,
-                    UniformMatrixList<kMatFreeDim2> &&>())
-      .def(py::init<const FitType &, UniformMatrixList<kMatFreeDim2> &&,
-                    UniformMatrixList<kMatFreeDim2> &&>())
+      // .def(py::init<size_t, data_t, UniformMatrixList<kMatFreeDim2>&,
+      //               UniformMatrixList<kMatFreeDim2>&>())
+      // automatic signature matching not working here, with && on mat lists?
+      .def(py::init([](size_t n_x, data_t dt,
+                       UniformMatrixList<kMatFreeDim2> &u_train,
+                       UniformMatrixList<kMatFreeDim2> &z_train) {
+        return FitEMType(n_x, dt, move(u_train), move(z_train));
+      }))
+      // .def(py::init<const FitType &, UniformMatrixList<kMatFreeDim2> &&,
+      // UniformMatrixList<kMatFreeDim2> &&>())
 
       // functions
       .def("Run", &FitEMType::Run, "calc_dynamics"_a = true, "calc_Q"_a = true,
@@ -73,8 +79,8 @@ py::class_<UniformMatrixList<D>> define_UniformMatrixList(
            "gets dimensions of uniformly sized matrices")
       .def_property_readonly("size", py::overload_cast<>(&UML::size),
                              "size of container")
-      // don't know why I get warnings about at(), or why things go wrong when I try to bind
-      // it directly, but this is working at least:
+      // don't know why I get warnings about at(), or why things go wrong when I
+      // try to bind it directly, but this is working at least:
       .def(
           "at",
           [](const UML &self, size_t n) {
@@ -92,8 +98,7 @@ py::class_<UniformMatrixList<D>> define_UniformMatrixList(
 }
 
 template <typename System>
-py::class_<UniformSystemList<System>> define_UniformSystemList(
-    py::module &m) {
+py::class_<UniformSystemList<System>> define_UniformSystemList(py::module &m) {
   using USL = UniformSystemList<System>;
 
   return py::class_<USL>(m, "UniformSystemList")

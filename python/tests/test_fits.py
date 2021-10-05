@@ -6,13 +6,13 @@ import pytest
 
 def test_gaussian_fit():
     # check R, make sure override works
-    gs = glds.Fit(3, 2, 4, .001)
+    gs = glds.Fit(30, 20, 40, .001)
     gs.R
     gs.R = np.eye(gs.n_y)
 
 def test_poisson_fit(capfd):
     # check R, make sure override works
-    ps = plds.Fit(3, 2, 4, .001)
+    ps = plds.Fit(30, 20, 40, .001)
     ps.R
 
     # should raise warning since R doesn't do anything in PLDS
@@ -64,5 +64,7 @@ def _test_base_fit(fit):
     fit.h(np.ones((fit.n_y, T)), X, 2)
 
 def test_base_fits():
-    _test_base_fit(plds.Fit(3, 2, 4, .001))
-    _test_base_fit(glds.Fit(3, 2, 4, .001))
+    _test_base_fit(plds.Fit(2, 3, 4, .001))
+    _test_base_fit(plds.Fit(12, 13, 14, .001))
+    _test_base_fit(glds.Fit(2, 3, 4, .001))
+    _test_base_fit(glds.Fit(12, 13, 14, .001))

@@ -1,10 +1,9 @@
+#include <carma> // must be included before armadillo (included in ldsCtrlEst)
 #include <ldsCtrlEst_h/lds_gaussian_sys.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit_em.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
-
-#include <carma>
 
 #include "bindutils.h"
 
@@ -64,9 +63,9 @@ PYBIND11_MODULE(gaussian, m) {
   /*
   ---------------- EM Fit class ---------------------
   */
-  // bindutils::define_FitEM_base<glds::Fit, glds::FitEM>(m)
+  bindutils::define_FitEM_base<glds::Fit, glds::FitEM>(m)
       
-  // ;
+  ;
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

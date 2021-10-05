@@ -1,3 +1,5 @@
+#include <carma>  // must come before armadillo
+
 #include <ldsCtrlEst_h/lds_fit.h>
 #include <ldsCtrlEst_h/lds_sys.h>
 #include <ldsCtrlEst_h/lds_fit_em.h>
@@ -9,7 +11,6 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-#include <carma>
 
 #include "bindutils.h"
 
