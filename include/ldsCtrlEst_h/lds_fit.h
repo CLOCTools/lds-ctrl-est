@@ -50,6 +50,8 @@ class Fit {
    */
   Fit(size_t n_u, size_t n_x, size_t n_y, data_t dt);
 
+  virtual ~Fit() = default;
+
   // get methods
   /// gets number of inputs
   size_t n_u() const { return n_u_; };
@@ -98,7 +100,7 @@ class Fit {
   virtual void set_R(const Matrix& R) = 0;
   /// sets initial state estimate
   void set_x0(const Vector& x0) { Reassign(x0_, x0); };
-  /// sets intial state estimate covariance
+  /// sets initial state estimate covariance
   void set_P0(const Matrix& P0) {
     Reassign(P0_, P0);
     ForceSymPD(P0_);

@@ -53,8 +53,10 @@ class System {
   System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0 = kDefaultP0,
          data_t q0 = kDefaultQ0);
 
+  virtual ~System() {}
+
   /**
-   * Given current measurment and input, filter data to produce causal state
+   * Given current measurement and input, filter data to produce causal state
    * estimates using Kalman filtering, which procedes by predicting the state
    * and subsequently updating.
    *
