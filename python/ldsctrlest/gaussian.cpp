@@ -63,9 +63,7 @@ PYBIND11_MODULE(gaussian, m) {
   /*
   ---------------- EM Fit class ---------------------
   */
-  bindutils::define_FitEM_base<glds::Fit, glds::FitEM>(m)
-      
-  ;
+  bindutils::define_FitEM_base<glds::Fit, glds::FitEM>(m);
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

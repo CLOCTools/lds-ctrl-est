@@ -40,21 +40,26 @@ py::class_<FitEMType> define_FitEM_base(py::module &m) {
   return py::class_<FitEMType>(m, "FitEM")
       // constructors
       .def(py::init<>())
-      // .def(py::init<size_t, data_t, UniformMatrixList<kMatFreeDim2>&,
-      //               UniformMatrixList<kMatFreeDim2>&>())
-      // automatic signature matching not working here, with && on mat lists?
-      .def(py::init([](size_t n_x, data_t dt,
-                       UniformMatrixList<kMatFreeDim2> &u_train,
-                       UniformMatrixList<kMatFreeDim2> &z_train) {
-        return FitEMType(n_x, dt, move(u_train), move(z_train));
-      }))
-      // .def(py::init<const FitType &, UniformMatrixList<kMatFreeDim2> &&,
-      // UniformMatrixList<kMatFreeDim2> &&>())
+      .def(py::init<size_t, data_t, UniformMatrixList<kMatFreeDim2>,
+                    UniformMatrixList<kMatFreeDim2>>())
+      .def(py::init<const FitType &, UniformMatrixList<kMatFreeDim2>,
+                    UniformMatrixList<kMatFreeDim2>>())
 
       // functions
       .def("Run", &FitEMType::Run, "calc_dynamics"_a = true, "calc_Q"_a = true,
            "calc_init"_a = true, "calc_output"_a = true,
-           "calc_measurement"_a = true, "max_iter"_a = 100, "tol"_a = 1e-2);
+           "calc_measurement"_a = true, "max_iter"_a = 100, "tol"_a = 1e-2)
+      .def("ReturnData", &FitEMType::ReturnData, "Returns the input/output data to caller")
+
+      // getters
+      .def_property_readonly("x", &FitEMType::x, "estimated state (over time)")
+      .def_property_readonly("y", &FitEMType::y, "estimated output (over time)")
+      .def_property_readonly("sum_E_x_t_x_t", &FitEMType::sum_E_x_t_x_t, "state-input covariance")
+      .def_property_readonly("sum_E_xu_tm1_xu_tm1", &FitEMType::sum_E_xu_tm1_xu_tm1, "state-input covariance (t-minus-1")
+      .def_property_readonly("sum_E_xu_t_xu_tm1", &FitEMType::sum_E_xu_t_xu_tm1, "single-lag state-input covariance")
+      .def_property_readonly("n_t_tot", &FitEMType::n_t_tot, "total number of time samples")
+      .def_property_readonly("theta", &FitEMType::theta, "parameters updated in M step")
+      ;
 }
 
 void println(string message) { cerr << message << endl; }
@@ -79,6 +84,7 @@ py::class_<UniformMatrixList<D>> define_UniformMatrixList(
            "gets dimensions of uniformly sized matrices")
       .def_property_readonly("size", py::overload_cast<>(&UML::size),
                              "size of container")
+      .def("__len__", py::overload_cast<>(&UML::size))
       // don't know why I get warnings about at(), or why things go wrong when I
       // try to bind it directly, but this is working at least:
       .def(
