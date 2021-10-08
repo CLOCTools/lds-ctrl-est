@@ -2,6 +2,8 @@
 
 #include <ldsCtrlEst_h/lds_poisson_sys.h>
 #include <ldsCtrlEst_h/lds_poisson_fit.h>
+#include <ldsCtrlEst_h/lds_poisson_fit_em.h>
+#include <ldsCtrlEst_h/lds_poisson_fit_ssid.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
@@ -57,6 +59,11 @@ PYBIND11_MODULE(poisson, m) {
   ---------------- EM Fit class ---------------------
   */
   bindutils::define_FitEM_base<plds::Fit, plds::FitEM>(m);
+
+  /*
+  ---------------- SSID Fit class ---------------------
+  */
+  bindutils::define_FitSSID_base<plds::Fit, plds::FitSSID>(m);
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

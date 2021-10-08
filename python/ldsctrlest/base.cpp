@@ -140,6 +140,13 @@ PYBIND11_MODULE(base, m) {
       .def("Swap", &UniformVectorList::Swap, "that"_a, "n"_a, "swaps input vector with n^th vector of list")
       ;
   
+  /*
+  ---------------- SSIDWt enum ---------------------
+  */
+  py::enum_<SSIDWt>(m, "SSIDWt")
+      .value("kNone", SSIDWt::kSSIDNone)
+      .value("kMOESP", SSIDWt::kSSIDMOESP)
+      .value("kCVA", SSIDWt::kSSIDCVA);
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

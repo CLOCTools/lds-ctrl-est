@@ -4,7 +4,8 @@ import ldsctrlest.poisson
 
 __version__ = ldsctrlest.base.__version__
 
-from ldsctrlest.base import UniformVectorList
+from ldsctrlest.base import UniformVectorList, SSIDWt
+# from ldsctrlest.base.SSIDWt import kSSIDNone, kSSIDMOESP, kSSIDCVA
 
 def UniformMatrixList(mats, free_dim=0):
     if free_dim == 0:

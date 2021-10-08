@@ -2,6 +2,7 @@
 #include <ldsCtrlEst_h/lds_gaussian_sys.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit_em.h>
+#include <ldsCtrlEst_h/lds_gaussian_fit_ssid.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
@@ -64,6 +65,11 @@ PYBIND11_MODULE(gaussian, m) {
   ---------------- EM Fit class ---------------------
   */
   bindutils::define_FitEM_base<glds::Fit, glds::FitEM>(m);
+
+  /*
+  ---------------- SSID Fit class ---------------------
+  */
+  bindutils::define_FitSSID_base<glds::Fit, glds::FitSSID>(m);
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

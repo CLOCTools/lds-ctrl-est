@@ -62,6 +62,24 @@ py::class_<FitEMType> define_FitEM_base(py::module &m) {
       ;
 }
 
+template <typename FitType, typename FitSSIDType>
+py::class_<FitSSIDType> define_FitSSID_base(py::module &m) {
+  return py::class_<FitSSIDType>(m, "FitSSID")
+      // constructors
+      .def(py::init<>())
+      // .def(py::init<size_t, size_t, data_t, UniformMatrixList<kMatFreeDim2>,
+      //               UniformMatrixList<kMatFreeDim2>>(),
+      //      "n_x"_a, "n_h"_a, "dt"_a, "u_train"_a, "z_train"_a)
+      .def(py::init<size_t, size_t, data_t, UniformMatrixList<kMatFreeDim2>,
+                    UniformMatrixList<kMatFreeDim2>, const Vector&>(),
+           "n_x"_a, "n_h"_a, "dt"_a, "u_train"_a, "z_train"_a, "d"_a = Vector(1).fill(-kInf))
+
+      // functions
+      .def("Run", &FitSSIDType::Run, "ssid_wt"_a)
+      .def("ReturnData", &FitSSIDType::ReturnData, "Returns the input/output data to caller")
+      ;
+}
+
 void println(string message) { cerr << message << endl; }
 
 // again need to use templates, which I can't do in the PYBIND11_MODULE block
