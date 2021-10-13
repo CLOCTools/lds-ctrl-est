@@ -148,6 +148,13 @@ PYBIND11_MODULE(base, m) {
       .value("kMOESP", SSIDWt::kSSIDMOESP)
       .value("kCVA", SSIDWt::kSSIDCVA);
 
+  /*
+  ---------------- Control type bitmasks ---------------------
+  */
+  m.attr("kControlTypeDeltaU") = kControlTypeDeltaU;
+  m.attr("kControlTypeIntY") = kControlTypeIntY;
+  m.attr("kControlTypeAdaptM") = kControlTypeAdaptM;
+
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else

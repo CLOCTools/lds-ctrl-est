@@ -4,6 +4,7 @@
 #include <ldsCtrlEst_h/lds_poisson_fit_em.h>
 #include <ldsCtrlEst_h/lds_uniform_mats.h>
 #include <ldsCtrlEst_h/lds_uniform_systems.h>
+#include <ldsCtrlEst_h/lds_ctrl.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -137,6 +138,48 @@ py::class_<UniformSystemList<System>> define_UniformSystemList(py::module &m) {
            "gets n^th system of list")
       .def("Swap", &USL::Swap, "that"_a, "n"_a,
            "swaps input system with n^th system of list");
+}
+
+template <typename Ctrl, typename System>
+py::class_<Ctrl> define_Controller(py::module &m) {
+  return py::class_<Ctrl>(m, "Controller")
+      // constructors
+      .def(py::init<>())
+      // only binding copy constructor, not move constructor
+      .def(py::init<const System &, data_t, data_t, size_t>(), "sys"_a,
+           "u_lb"_a, "u_ub"_a, "control_type"_a = 0)
+
+      // functions
+      .def("Control", &Ctrl::Control, "z"_a, "do_control"_a = true,
+           "do_lock_control"_a = false, "sigma_soft_start"_a = 0,
+           "sigma_u_noise"_a = 0, "do_reset_at_control_onset"_a = true,
+           "updates control signal (single-step)")
+      .def("ControlOutputReference", &Ctrl::ControlOutputReference, "z"_a,
+           "do_control"_a = true, "do_estimation"_a = true,
+           "do_lock_control"_a = false, "sigma_soft_start"_a = 0,
+           "sigma_u_noise"_a = 0, "do_reset_at_control_onset"_a = true,
+           "updates control signal, given previously set y_ref (single-step)")
+      .def("Reset", &Ctrl::Reset, "reset system and control variables")
+      .def("Print", &Ctrl::Print, "prints variables to stdout")
+      .def("__str__",
+           [](Ctrl &ctrl) {
+             return capture_output([&ctrl]() { ctrl.Print(); });
+           })
+
+      // getters/setters
+      .def_property("sys", &Ctrl::sys, &Ctrl::set_sys)
+      .def_property("Kc", &Ctrl::Kc, &Ctrl::set_Kc)
+      .def_property("Kc_inty", &Ctrl::Kc_inty, &Ctrl::set_Kc_inty)
+      .def_property("Kc_u", &Ctrl::Kc_u, &Ctrl::set_Kc_u)
+      .def_property("g_design", &Ctrl::g_design, &Ctrl::set_g_design)
+      .def_property("u_ref", &Ctrl::u_ref, &Ctrl::set_u_ref)
+      .def_property("x_ref", &Ctrl::x_ref, &Ctrl::set_x_ref)
+      .def_property("y_ref", &Ctrl::y_ref, &Ctrl::set_y_ref)
+      .def_property("control_type", &Ctrl::control_type,
+                    &Ctrl::set_control_type)
+      .def_property("tau_awu", &Ctrl::tau_awu, &Ctrl::set_tau_awu)
+      .def_property("u_lb", &Ctrl::u_lb, &Ctrl::set_u_lb)
+      .def_property("u_ub", &Ctrl::u_ub, &Ctrl::set_u_ub);
 }
 
 }  // namespace bindutils

@@ -1,6 +1,7 @@
 #include <carma>  // must come before armadillo
 
 #include <ldsCtrlEst_h/lds_poisson_sys.h>
+#include <ldsCtrlEst_h/lds_poisson_ctrl.h>
 #include <ldsCtrlEst_h/lds_poisson_fit.h>
 #include <ldsCtrlEst_h/lds_poisson_fit_em.h>
 #include <ldsCtrlEst_h/lds_poisson_fit_ssid.h>
@@ -64,6 +65,11 @@ PYBIND11_MODULE(poisson, m) {
   ---------------- SSID Fit class ---------------------
   */
   bindutils::define_FitSSID_base<plds::Fit, plds::FitSSID>(m);
+
+  /*
+  ---------------- Controller class ---------------------
+  */
+  bindutils::define_Controller<plds::Controller, plds::System>(m);
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
