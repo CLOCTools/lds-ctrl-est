@@ -2,6 +2,7 @@
 
 #include <ldsCtrlEst_h/lds_poisson_sys.h>
 #include <ldsCtrlEst_h/lds_poisson_ctrl.h>
+#include <ldsCtrlEst_h/lds_poisson_sctrl.h>
 #include <ldsCtrlEst_h/lds_poisson_fit.h>
 #include <ldsCtrlEst_h/lds_poisson_fit_em.h>
 #include <ldsCtrlEst_h/lds_poisson_fit_ssid.h>
@@ -59,17 +60,28 @@ PYBIND11_MODULE(poisson, m) {
   /*
   ---------------- EM Fit class ---------------------
   */
-  bindutils::define_FitEM_base<plds::Fit, plds::FitEM>(m);
+  bindutils::define_FitEM<plds::Fit, plds::FitEM>(m);
 
   /*
   ---------------- SSID Fit class ---------------------
   */
-  bindutils::define_FitSSID_base<plds::Fit, plds::FitSSID>(m);
+  bindutils::define_FitSSID<plds::Fit, plds::FitSSID>(m);
+
+  /*
+  ---------------- base Controller class ---------------------
+  */
+  // inherited by Controller and SwitchedController
+  bindutils::define_BaseController<plds::System>(m);
 
   /*
   ---------------- Controller class ---------------------
   */
   bindutils::define_Controller<plds::Controller, plds::System>(m);
+
+  /*
+  ---------------- Switched Controller class ---------------------
+  */
+  bindutils::define_SwitchedController<plds::SwitchedController, plds::System>(m);
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

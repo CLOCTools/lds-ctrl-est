@@ -5,6 +5,9 @@
 #include <ldsCtrlEst_h/lds_uniform_mats.h>
 #include <ldsCtrlEst_h/lds_uniform_systems.h>
 #include <ldsCtrlEst_h/lds_ctrl.h>
+#include <ldsCtrlEst_h/lds_sctrl.h>
+#include <ldsCtrlEst_h/lds_uniform_mats.h>
+#include <ldsCtrlEst_h/lds_uniform_vecs.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
@@ -37,7 +40,7 @@ string capture_output(const function<void(void)> &f) {
 // Poisson) so this function defines the base EM<Fit> functionality to avoid
 // repeating it.
 template <typename FitType, typename FitEMType>
-py::class_<FitEMType> define_FitEM_base(py::module &m) {
+py::class_<FitEMType> define_FitEM(py::module &m) {
   return py::class_<FitEMType>(m, "FitEM")
       // constructors
       .def(py::init<>())
@@ -64,7 +67,7 @@ py::class_<FitEMType> define_FitEM_base(py::module &m) {
 }
 
 template <typename FitType, typename FitSSIDType>
-py::class_<FitSSIDType> define_FitSSID_base(py::module &m) {
+py::class_<FitSSIDType> define_FitSSID(py::module &m) {
   return py::class_<FitSSIDType>(m, "FitSSID")
       // constructors
       .def(py::init<>())
@@ -140,15 +143,10 @@ py::class_<UniformSystemList<System>> define_UniformSystemList(py::module &m) {
            "swaps input system with n^th system of list");
 }
 
-template <typename Ctrl, typename System>
-py::class_<Ctrl> define_Controller(py::module &m) {
-  return py::class_<Ctrl>(m, "Controller")
-      // constructors
-      .def(py::init<>())
-      // only binding copy constructor, not move constructor
-      .def(py::init<const System &, data_t, data_t, size_t>(), "sys"_a,
-           "u_lb"_a, "u_ub"_a, "control_type"_a = 0)
-
+template <typename System>
+py::class_<Controller<System>> define_BaseController(py::module &m) {
+  using Ctrl = Controller<System>;
+  return py::class_<Ctrl>(m, "BaseController")
       // functions
       .def("Control", &Ctrl::Control, "z"_a, "do_control"_a = true,
            "do_lock_control"_a = false, "sigma_soft_start"_a = 0,
@@ -174,12 +172,55 @@ py::class_<Ctrl> define_Controller(py::module &m) {
       .def_property("g_design", &Ctrl::g_design, &Ctrl::set_g_design)
       .def_property("u_ref", &Ctrl::u_ref, &Ctrl::set_u_ref)
       .def_property("x_ref", &Ctrl::x_ref, &Ctrl::set_x_ref)
-      .def_property("y_ref", &Ctrl::y_ref, &Ctrl::set_y_ref)
       .def_property("control_type", &Ctrl::control_type,
                     &Ctrl::set_control_type)
       .def_property("tau_awu", &Ctrl::tau_awu, &Ctrl::set_tau_awu)
       .def_property("u_lb", &Ctrl::u_lb, &Ctrl::set_u_lb)
       .def_property("u_ub", &Ctrl::u_ub, &Ctrl::set_u_ub);
+}
+
+template <typename Ctrl, typename System>
+py::class_<Ctrl, Controller<System>> define_Controller(py::module &m) {
+  return py::class_<Ctrl, Controller<System>>(m, "Controller")
+      // constructors
+      .def(py::init<>())
+      // only binding copy constructor, not move constructor
+      .def(py::init<const System &, data_t, data_t, size_t>(), "sys"_a,
+           "u_lb"_a, "u_ub"_a, "control_type"_a = 0)
+
+      .def_property("y_ref", &Ctrl::y_ref, &Ctrl::set_y_ref);
+}
+
+template <typename SCtrl, typename System>
+py::class_<SCtrl, Controller<System>> define_SwitchedController(py::module &m) {
+  return py::class_<SCtrl, Controller<System>>(m, "SwitchedController")
+      // constructors
+      .def(py::init<>())
+      // only binding copy constructor, not move constructor
+      .def(py::init<const std::vector<System> &, data_t, data_t, size_t>(),
+           "systems"_a, "u_lb"_a, "u_ub"_a, "control_type"_a = 0)
+
+      // functions
+      .def("Switch", &SCtrl::Switch, "idx"_a, "do_force_switch"_a = false,
+           "switch to a different sub-system/controller")
+
+      // setters
+      // using copy, not moves, specified with overload_cast
+      .def_property(
+          "Kc", nullptr,
+          py::overload_cast<const UniformMatrixList<> &>(&SCtrl::set_Kc))
+      .def_property(
+          "Kc_inty", nullptr,
+          py::overload_cast<const UniformMatrixList<> &>(&SCtrl::set_Kc_inty))
+      .def_property(
+          "Kc_u", nullptr,
+          py::overload_cast<const UniformMatrixList<> &>(&SCtrl::set_Kc_u))
+      .def_property(
+          "g_design", nullptr,
+          py::overload_cast<const UniformVectorList &>(&SCtrl::set_g_design))
+
+      // getter/setter
+      .def_property("y_ref", &SCtrl::y_ref, &SCtrl::set_y_ref);
 }
 
 }  // namespace bindutils

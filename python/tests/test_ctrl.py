@@ -69,8 +69,8 @@ def _test_ctrl(Ctrl, Sys, n_u, n_x, n_y):
     ctrl.Control(_noisy_y(ctrl.sys))
 
     # adaptive control
-    ctrl.control_type = kControlTypeIntY | kControlTypeAdaptM
     ctrl.sys.do_adapt_m = True
+    ctrl.control_type = kControlTypeIntY | kControlTypeAdaptM
     ctrl.Control(_noisy_y(ctrl.sys))
 
 
