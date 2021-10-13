@@ -28,6 +28,7 @@ def _test_ctrl(Ctrl, Sys, n_u, n_x, n_y):
 
     # configure controller
     ctrl = Ctrl(sys, -5, 5, 0x0)
+    ctrl.Reset()
     ctrl.y_ref = rand(n_y)
     ctrl.Kc = 100*np.ones((n_u, n_x))
     ctrl.g_design = sys.g
