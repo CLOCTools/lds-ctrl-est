@@ -155,6 +155,13 @@ PYBIND11_MODULE(base, m) {
   m.attr("kControlTypeIntY") = kControlTypeIntY;
   m.attr("kControlTypeAdaptM") = kControlTypeAdaptM;
 
+  /*
+  ---------------- Default parameters ---------------------
+  */
+  m.attr("kDefaultP0") = kDefaultP0;
+  m.attr("kDefaultQ0") = kDefaultQ0;
+  m.attr("kDefaultR0") = kDefaultR0;
+
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
 #else
