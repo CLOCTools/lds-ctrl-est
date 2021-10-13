@@ -156,6 +156,12 @@ class Controller {
   const Vector& y_ref() const { return y_ref_; };
   /// Get controller type
   size_t control_type() const { return control_type_; };
+  /// Get time constant of anti-integral-windup
+  data_t tau_awu() const { return tau_awu_; };
+  /// Get control lower bound
+  data_t u_lb() const { return u_lb_; };
+  /// Get control upper bound
+  data_t u_ub() const { return u_ub_; };
 
   // set methods
   /// Set system
