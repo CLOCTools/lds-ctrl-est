@@ -71,7 +71,6 @@ controller_system.B = b_controller
 controller_system.m = m_controller
 controller_system.R = r_controller
 controller_system.Reset()  # reset to new m
-print(controller_system)
 
 # going to adaptively re-estimate the disturbance
 controller_system.do_adapt_m = True

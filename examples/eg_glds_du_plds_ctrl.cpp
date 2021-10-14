@@ -104,7 +104,6 @@ auto main() -> int {
     controller_system.set_Q(q_controller);
     controller_system.set_R(r_controller);
     controller_system.Reset();  // reset to new m
-    controller_system.Print();
 
     // going to adaptively re-estimate the disturbance
     controller_system.do_adapt_m = true;
