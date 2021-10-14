@@ -181,7 +181,7 @@ auto main() -> int {
   Matrix x_true(n_x, n_t, arma::fill::zeros);
   Matrix m_true(n_x, n_t, arma::fill::zeros);
 
-  // get initial val
+  // set initial val
   y_hat.submat(0, 0, n_y - 1, 0) = controller.sys().y();
   y_true.submat(0, 0, n_y - 1, 0) = controlled_system.y();
 

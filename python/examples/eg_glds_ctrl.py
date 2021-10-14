@@ -14,7 +14,7 @@ n_x = 1
 n_y = 1
 
 # number of time steps for simulation.
-n_t = 5 / dt
+n_t = int(5 / dt)
 
 # construct ground truth system to be controlled...
 # initializes to random walk model with top-most n_y state observed
@@ -67,7 +67,6 @@ r_controller = np.eye(n_y) * ldsctrlest.kDefaultR0
 
 controller_system = controlled_system.copy()
 controller_system.B = b_controller
-assert controller_system.B != controlled_system.B
 controller_system.m = m_controller
 controller_system.R = r_controller
 controller_system.Reset()  # reset to new m
@@ -97,8 +96,8 @@ do_adaptive_set_point = False
 
 # Reference/target output, controller gains
 y_ref0 = np.ones(n_y) * 20 * dt
-k_x = np.ones(n_u, n_x) * 100     # gains on state error
-k_inty = np.ones(n_u, n_y) * 1e3  # gains on integrated error
+k_x = np.ones((n_u, n_x)) * 100     # gains on state error
+k_inty = np.ones((n_u, n_y)) * 1e3  # gains on integrated error
 
 # setting initial state to target to avoid error at onset:
 x0 = np.ones(n_x) * y_ref0[0]
@@ -155,7 +154,7 @@ y_true = np.zeros((n_y, n_t))
 x_true = np.zeros((n_x, n_t))
 m_true = np.zeros((n_x, n_t))
 
-# get initial val
+# set initial val
 y_hat[:, 0] = controller.sys.y
 y_true[:, 0] = controlled_system.y
 
@@ -197,13 +196,13 @@ for t in range(1, n_t):
     x_true[:, t] = controlled_system.x
     m_true[:, t] = controlled_system.m
 
-    y_hat[:, t] = controller.y
-    x_hat[:, t] = controller.x
-    m_hat[:, t] = controller.m
+    y_hat[:, t] = controller.sys.y
+    x_hat[:, t] = controller.sys.x
+    m_hat[:, t] = controller.sys.m
 
 finish = time.perf_counter()
 sim_time_ms = (finish - start) * 1000
 print(f"Finished simulation in {sim_time_ms} ms.")
-print(f"(app. {sim_time_ms / n_t} us/time-step")
+print(f"(app. {sim_time_ms * 1000 / n_t} us/time-step)")
 
 print("fin.")
