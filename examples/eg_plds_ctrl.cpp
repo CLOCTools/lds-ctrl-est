@@ -66,7 +66,7 @@ auto main() -> int {
   data_t m_high = log(20 * dt) * (1 - a_true[0]);
   data_t pr_hi2lo = pr_lo2hi;
 
-  Vector m0_true = Vector(n_y, arma::fill::ones) * m_low;
+  Vector m0_true = Vector(n_x, arma::fill::ones) * m_low;
   // construct ground truth system to be controlled...
   lds::poisson::System controlled_system(n_u, n_x, n_y, dt);
 
@@ -91,7 +91,7 @@ auto main() -> int {
     lds::poisson::System controller_system(controlled_system);
 
     // for this example, assume model correct, except disturbance
-    Vector m0_controller = Vector(n_y, arma::fill::ones) * m_low;
+    Vector m0_controller = Vector(n_x, arma::fill::ones) * m_low;
     Vector x0_controller = arma::log(y_ref0);
     controller_system.set_m(m0_controller);
     controller_system.set_x0(x0_controller);
@@ -167,12 +167,12 @@ auto main() -> int {
     if (which_m == 0)  // low disturbance
     {
       if (chance[0] < pr_lo2hi) {  // switches low -> high disturbance
-        m0_true = std::vector<data_t>(n_y, m_high);
+        m0_true = std::vector<data_t>(n_x, m_high);
         which_m = 1;
       }
     } else {                       // high disturbance
       if (chance[0] < pr_hi2lo) {  // swithces high -> low disturbance
-        m0_true = std::vector<data_t>(n_y, m_low);
+        m0_true = std::vector<data_t>(n_x, m_low);
         which_m = 0;
       }
     }
