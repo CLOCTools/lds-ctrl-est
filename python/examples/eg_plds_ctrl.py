@@ -1,3 +1,5 @@
+# %%
+# Simulation
 import time
 import numpy as np
 
@@ -71,13 +73,13 @@ controller_system.do_adapt_m = True
 # set adaptation rate by changing covariance of assumed process noise
 # acting on random-walk evolution of m
 q_m = np.eye(n_x) * 1e-5
-controller_system.Q_m =q_m
+controller_system.Q_m = q_m
 
 u_lb = 0.0
 u_ub = 5.0
 
 # Create the controller
-controller = plds.Controller(controlled_system, u_lb, u_ub)
+controller = plds.Controller(controller_system, u_lb, u_ub)
 
 # set controller type
 controller.control_type = control_type
@@ -138,7 +140,7 @@ for t in range(1, n_t):
             which_m = 1
     else:                         # high disturbance
         if (chance < pr_hi2lo):   # switches high -> low disturbance
-            m0_true = np.ones(n_x) * m_high
+            m0_true = np.ones(n_x) * m_low
             which_m = 0
     controlled_system.m = m0_true
 
@@ -174,3 +176,41 @@ print(f"Finished simulation in {sim_time_ms} ms.")
 print(f"(app. {sim_time_ms * 1000 / n_t} us/time-step)")
 
 print("fin.")
+
+# %%
+# Plotting
+import matplotlib.pyplot as plt
+
+t = np.arange(0, n_t * dt, dt)
+t_z = t[z.flatten() > 0]
+z_t = z.flatten()[z.flatten() > 0]
+
+c_data = 0.25 + np.zeros((1, 3))
+c_true = 0.5 + np.zeros((1, 3))
+c_est = [0.85, 0.5, 0.85]
+c_ref = [0.25, 0.75, 0]
+
+fig, axs = plt.subplots(4, 1, figsize=(8, 8))
+axs[0].plot(t, y_ref.T/dt, linewidth=2, c=c_ref)
+axs[0].plot(t_z, z_t*10, ".", markersize=2, c=c_data)
+axs[0].plot(t, y_hat.T/dt, linewidth=2, c=c_est)
+axs[0].plot(t, y_true.T/dt, linewidth=2, c=c_true)
+axs[0].legend(["reference", "measurements", "estimated output", "ground truth"])
+axs[0].set(ylabel="(events/s)", ylim=(0, 100))
+
+axs[1].plot(t, x_hat.T, linewidth=2, c=c_est)
+axs[1].plot(t, x_true.T, linewidth=2, c=c_true)
+axs[1].legend(["estimated", "ground truth"])
+axs[1].set_ylabel("States\n(a.u.)")
+
+axs[2].plot(t, m_hat.T, linewidth=2, c=c_est)
+axs[2].plot(t, m_true.T, linewidth=2, c=c_true)
+axs[2].legend(["estimated", "ground truth"])
+axs[2].set_ylabel("Disturbance\n(a.u.)")
+
+axs[3].plot(t, u.T, linewidth=2, c=c_data)
+axs[3].set(ylabel="Input\n(V)", xlabel="Time (s)")
+
+fig.suptitle("eg_plds_ctrl output")
+fig.savefig("eg_plds_ctrl_output.png", bbox_inches='tight', facecolor='w')
+print("eg_plds_ctrl_output.png saved")

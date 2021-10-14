@@ -176,7 +176,7 @@ for t in range(1, n_t):
             which_m = 1
     else:  # high disturbance
         if chance < pr_hi2lo:  # switches high -> low disturbance
-            m0_true = np.ones(n_x) * m_high
+            m0_true = np.ones(n_x) * m_low
             which_m = 0
     controlled_system.m = m0_true
 
@@ -224,7 +224,6 @@ axs[0].plot(t, y_hat.T, linewidth=2, c=c_est)
 axs[0].plot(t, y_ref.T, linewidth=2, c=c_ref)
 axs[0].legend(["measurements", "estimated output", "reference"])
 axs[0].set_ylabel("(a.u.)")
-# axs[0].set(ylabel="(a.u.)", title="output")
 
 axs[1].plot(t, x_hat.T, linewidth=2, c=c_est)
 axs[1].plot(t, x_true.T, linewidth=2, c=c_true)
