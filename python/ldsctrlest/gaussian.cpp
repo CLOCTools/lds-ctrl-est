@@ -33,6 +33,9 @@ PYBIND11_MODULE(gaussian, m) {
                     data_t, data_t, data_t>(),
            "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a, "p0"_a = kDefaultP0,
            "q0"_a = kDefaultQ0, "r0"_a = kDefaultR0)
+      .def("copy", [](const glds::System& self) {
+        return glds::System(self);
+      })
 
       // getters/setters not in base System
       .def_property("R", &glds::System::R, &glds::System::set_R)

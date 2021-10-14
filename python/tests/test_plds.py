@@ -71,3 +71,13 @@ def test_plds_sys_set():
     ps.Q_m = np.zeros((ps.n_x, ps.n_x))
     ps.P0 = np.zeros((ps.n_x, ps.n_x))
     ps.P0_m = np.zeros((ps.n_x, ps.n_x))
+
+def test_plds_copy():
+    ps = PLDS(2, 2, 2, .001, p0=.4, q0=7)
+    ps.A = np.random.rand(2, 2)
+    ps2 = ps.copy()
+    assert ps != ps2
+    assert np.all(ps.A == ps2.A)
+
+    ps2.A = np.random.rand(2, 2)
+    assert not np.all(ps.A == ps2.A)

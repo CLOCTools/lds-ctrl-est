@@ -34,6 +34,9 @@ PYBIND11_MODULE(poisson, m) {
                     data_t, data_t>(),
            py::arg("n_u"), py::arg("n_x"), py::arg("n_y"), py::arg("dt"),
            py::arg("p0") = kDefaultP0, py::arg("q0") = kDefaultQ0)
+      .def("copy", [](const plds::System& self) {
+        return plds::System(self);
+      })
 
       // unlike GLDS, PLDS has no getters/setters not in base System
 

@@ -72,3 +72,13 @@ def test_glds_sys_set():
     gs.Q_m = np.zeros((gs.n_x, gs.n_x))
     gs.P0 = np.zeros((gs.n_x, gs.n_x))
     gs.P0_m = np.zeros((gs.n_x, gs.n_x))
+
+def test_glds_copy():
+    gs = GLDS(2, 2, 2, .001, p0=.4, q0=7)
+    gs.A = np.random.rand(2, 2)
+    gs2 = gs.copy()
+    assert gs != gs2
+    assert np.all(gs.A == gs2.A)
+
+    gs2.A = np.random.rand(2, 2)
+    assert not np.all(gs.A == gs2.A)
