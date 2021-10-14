@@ -1,3 +1,4 @@
+# %%
 import time
 
 import numpy as np
@@ -96,7 +97,7 @@ do_adaptive_set_point = False
 
 # Reference/target output, controller gains
 y_ref0 = np.ones(n_y) * 20 * dt
-k_x = np.ones((n_u, n_x)) * 100     # gains on state error
+k_x = np.ones((n_u, n_x)) * 100  # gains on state error
 k_inty = np.ones((n_u, n_y)) * 1e3  # gains on integrated error
 
 # setting initial state to target to avoid error at onset:
@@ -104,7 +105,7 @@ x0 = np.ones(n_x) * y_ref0[0]
 
 # set up controller type bit mask so controller knows how to proceed
 control_type = 0
-if (do_adaptive_set_point):
+if do_adaptive_set_point:
     # adapt set point with estimated disturbance
     control_type = control_type | ldsctrlest.kControlTypeAdaptM
 else:
@@ -169,12 +170,12 @@ start = time.perf_counter()
 for t in range(1, n_t):
     # simulate a stochastically switched disturbance
     chance = np.random.rand()
-    if (which_m == 0):  # low disturbance
-        if (chance < pr_lo2hi):   # switches low -> high disturbance
+    if which_m == 0:  # low disturbance
+        if chance < pr_lo2hi:  # switches low -> high disturbance
             m0_true = np.ones(n_x) * m_high
             which_m = 1
-    else:                         # high disturbance
-        if (chance < pr_hi2lo):   # switches high -> low disturbance
+    else:  # high disturbance
+        if chance < pr_hi2lo:  # switches high -> low disturbance
             m0_true = np.ones(n_x) * m_high
             which_m = 0
     controlled_system.m = m0_true
@@ -206,3 +207,39 @@ print(f"Finished simulation in {sim_time_ms} ms.")
 print(f"(app. {sim_time_ms * 1000 / n_t} us/time-step)")
 
 print("fin.")
+
+# %%
+# Plotting
+import matplotlib.pyplot as plt
+
+t = np.arange(0, n_t * dt, dt)
+c_data = 0.25 + np.zeros((1, 3))
+c_true = 0.5 + np.zeros((1, 3))
+c_est = [0.85, 0.5, 0.85]
+c_ref = [0.25, 0.75, 0]
+
+fig, axs = plt.subplots(4, 1, figsize=(8, 8))
+axs[0].plot(t, z.T, linewidth=0.5, c=c_data)
+axs[0].plot(t, y_hat.T, linewidth=2, c=c_est)
+axs[0].plot(t, y_ref.T, linewidth=2, c=c_ref)
+axs[0].legend(["measurements", "estimated output", "reference"])
+axs[0].set_ylabel("(a.u.)")
+# axs[0].set(ylabel="(a.u.)", title="output")
+
+axs[1].plot(t, x_hat.T, linewidth=2, c=c_est)
+axs[1].plot(t, x_true.T, linewidth=2, c=c_true)
+axs[1].legend(["estimated", "ground truth"])
+axs[1].set_ylabel("States\n(a.u.)")
+
+axs[2].plot(t, m_hat.T, linewidth=2, c=c_est)
+axs[2].plot(t, m_true.T, linewidth=2, c=c_true)
+axs[2].legend(["estimated", "ground truth"])
+axs[2].set_ylabel("Disturbance\n(a.u.)")
+
+axs[3].plot(t, u.T, linewidth=2, c=c_data)
+axs[3].set(ylabel="Input\n(V)", xlabel="Time (s)")
+
+fig.suptitle("eg_glds_ctrl output")
+fig.savefig("eg_glds_ctrl_output.png", bbox_inches='tight', facecolor='w')
+print("eg_glds_ctrl_output.png saved")
+# %%
