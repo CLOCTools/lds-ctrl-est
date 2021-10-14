@@ -8,9 +8,9 @@ if(LDSCTRLEST_INSTALL)
 else()
   add_subdirectory(python/carma)
 endif()
-# carma must be linked to ldsCtrlEst, not just binding modules
+# carma and Python must be linked to ldsCtrlEst, not just binding modules
 # since carma needs to be able to change how Armadillo manages memory
-list(APPEND PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME carma::carma)
+list(APPEND PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME carma::carma Python3::Python)
 # in case you pass in PYTHON_EXECUTABLE directly
 if (Python3_FOUND OR PYTHON_EXECUTABLE)
   set(Python_FOUND TRUE)
