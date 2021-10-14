@@ -128,7 +128,7 @@ auto main() -> int {
   controller.Print();
   cout << ".....................................\n";
 
-  // create Matrixrix to save outputs in...
+  // create Matrix to save outputs in...
   Matrix y_ref = Matrix(n_y, n_t, arma::fill::zeros);
   y_ref.each_col() += y_ref0;
 

@@ -161,7 +161,7 @@ auto main() -> int {
   cout << ".....................................\n";
 
   // set up variables for simulation
-  // create Matrixrix to save outputs in...
+  // create Matrix to save outputs in...
   Matrix y_ref = Matrix(n_y, n_t, arma::fill::ones) * y_ref0[0];
 
   // Simulated measurements
