@@ -128,9 +128,9 @@ controller.Kc_inty = k_inty
 controller.g_design = g_design
 
 print(".....................................")
-print("control system:")
+print("controller:")
 print(".....................................")
-print(controller_system)
+print(controller)
 print(".....................................")
 
 # set up variables for simulation
