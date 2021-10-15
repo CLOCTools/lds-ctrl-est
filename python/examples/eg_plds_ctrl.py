@@ -99,7 +99,7 @@ print(".....................................")
 print(controller)
 print(".....................................")
 
-# create Matrixrix to save outputs in...
+# create Matrix to save outputs in...
 y_ref = np.repeat(y_ref0.reshape((-1, 1)), n_t, axis=1)
 
 # Simulated measurements

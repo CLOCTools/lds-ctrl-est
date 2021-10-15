@@ -134,7 +134,7 @@ print(controller_system)
 print(".....................................")
 
 # set up variables for simulation
-# create Matrixrix to save outputs in...
+# create Matrix to save outputs in...
 y_ref = np.ones((n_y, n_t)) * y_ref0[0]
 
 # Simulated measurements
