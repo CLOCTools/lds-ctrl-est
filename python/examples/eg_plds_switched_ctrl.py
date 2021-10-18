@@ -149,7 +149,7 @@ start = time.perf_counter()
 for t in range(1, n_t):
     # simulate a stochastically switched disturbance
     chance = np.random.rand()
-    if which_m == 0:  # mode1
+    if which_mode == 1:  # mode1
         if chance < pr_21:
             which_mode = 2
             controlled_system.B = b2
@@ -161,7 +161,6 @@ for t in range(1, n_t):
             controlled_system.B = b1
             if do_switch_ctrl:
                 switched_controller.Switch(0)
-    controlled_system.m = m0_true
 
     # Simulate the true system.
     z[:, t] = controlled_system.Simulate(u[:, t - 1])
@@ -194,21 +193,20 @@ c_est = [0.85, 0.5, 0.85]
 c_ref = [0.25, 0.75, 0]
 
 fig, axs = plt.subplots(4, 1, figsize=(8, 8))
-axs[0].plot(t, z.T, linewidth=0.5, c=c_data)
-axs[0].plot(t, y_hat.T, linewidth=2, c=c_est)
-axs[0].plot(t, y_ref.T, linewidth=2, c=c_ref)
-axs[0].legend(["measurements", "estimated output", "reference"])
-axs[0].set_ylabel("(a.u.)")
+axs[0].plot(t, z.T, ".", markersize=0.5, c=c_data)
+axs[0].plot(t, y_hat.T/dt, linewidth=2, c=c_est)
+axs[0].plot(t, y_ref.T/dt, linewidth=2, c=c_ref)
+axs[0].plot(t, y_true.T/dt, linewidth=2, c=c_true)
+axs[0].legend(["measurements", "estimated output", "reference", "ground truth"])
+axs[0].set_ylabel("(events/s)")
 
 axs[1].plot(t, x_hat.T, linewidth=2, c=c_est)
 axs[1].plot(t, x_true.T, linewidth=2, c=c_true)
 axs[1].legend(["estimated", "ground truth"])
 axs[1].set_ylabel("States\n(a.u.)")
 
-axs[2].plot(t, m_hat.T, linewidth=2, c=c_est)
-axs[2].plot(t, m_true.T, linewidth=2, c=c_true)
-axs[2].legend(["estimated", "ground truth"])
-axs[2].set_ylabel("Disturbance\n(a.u.)")
+axs[2].plot(t, mode.T, linewidth=2, c=c_true)
+axs[2].set(ylabel="Mode", ylim=(0, 3))
 
 axs[3].plot(t, u.T, linewidth=2, c=c_data)
 axs[3].set(ylabel="Input\n(V)", xlabel="Time (s)")
