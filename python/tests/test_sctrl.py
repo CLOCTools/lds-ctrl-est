@@ -13,6 +13,8 @@ from ldsctrlest import (
 from ldsctrlest.gaussian import SwitchedController as SGCtrl, System as GSys
 from ldsctrlest.poisson import SwitchedController as SPCtrl, System as PSys
 
+np.random.seed(1847)
+
 dt = 0.001
 
 

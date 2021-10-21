@@ -7,6 +7,8 @@ from ldsctrlest import SSIDWt
 from ldsctrlest.gaussian import FitSSID as GFitSSID, Fit as GFit
 from ldsctrlest.poisson import FitSSID as PFitSSID, Fit as PFit
 
+np.random.seed(1847)
+
 dt = 0.001
 
 
@@ -45,4 +47,3 @@ def test_GFitSSID():
 def test_PFitSSID():
     _test_FitSSID(PFitSSID, 3, 2, 4)
     _test_FitSSID(PFitSSID, 13, 12, 14)
-

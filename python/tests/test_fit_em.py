@@ -5,6 +5,8 @@ import ldsctrlest
 from ldsctrlest.gaussian import FitEM as GFitEM, Fit as GFit
 from ldsctrlest.poisson import FitEM as PFitEM, Fit as PFit
 
+np.random.seed(1847)
+
 dt = 0.001
 
 
@@ -50,6 +52,3 @@ def test_GFitEM():
 def test_PFitEM():
     _test_FitEM(PFitEM, 3, 2, 4, PFit)
     _test_FitEM(PFitEM, 13, 12, 14, PFit)
-
-
-# test_GFitEM()

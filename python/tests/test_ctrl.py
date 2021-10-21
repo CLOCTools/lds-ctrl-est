@@ -7,6 +7,8 @@ from ldsctrlest import kControlTypeIntY, kControlTypeDeltaU, kControlTypeAdaptM
 from ldsctrlest.gaussian import Controller as GCtrl, System as GSys
 from ldsctrlest.poisson import Controller as PCtrl, System as PSys
 
+np.random.seed(1847)
+
 dt = 0.001
 
 def _noisy_y(sys):
