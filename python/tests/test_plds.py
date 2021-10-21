@@ -3,11 +3,12 @@ import pytest
 
 from ldsctrlest.poisson import System as PLDS
 
+
 def test_plds_sys():
     PLDS()
-    PLDS(2, 2, 2, .001)
-    PLDS(2, 2, 2, .001, p0=.4)
-    ps = PLDS(2, 2, 2, .001, q0=.4, p0=7)
+    PLDS(2, 2, 2, 0.001)
+    PLDS(2, 2, 2, 0.001, p0=0.4)
+    ps = PLDS(2, 2, 2, 0.001, q0=0.4, p0=7)
     with pytest.raises(TypeError):
         PLDS(42)
     ps.__str__()
@@ -24,18 +25,19 @@ def test_plds_sys():
     ps.Reset()
     with pytest.raises(TypeError):
         ps.Simulate()
-    
+
     with pytest.raises(TypeError):
         PLDS(42)
 
+
 def test_plds_sys_get_set():
-    ps = PLDS(3, 2, 4, .001, p0=.4, q0=7)
+    ps = PLDS(3, 2, 4, 0.001, p0=0.4, q0=7)
     assert len(ps.x) == 2
     ps.x = [7, 7]
     assert np.all(ps.x == [7, 7])
 
     ps.x0
-    ps.x0 = [1,2]
+    ps.x0 = [1, 2]
     ps.m
     ps.m = [3, 4]
     ps.set_m([3, 4], do_force_assign=True)
@@ -52,28 +54,32 @@ def test_plds_sys_get_set():
     ps.do_adapt_m
     ps.do_adapt_m = True
 
+    ps.Q
+    ps.Q = np.zeros((ps.n_x, ps.n_x))
+    ps.Q_m
+    ps.Q_m = np.zeros((ps.n_x, ps.n_x))
+    ps.P0
+    ps.P0 = np.zeros((ps.n_x, ps.n_x))
+    ps.P0_m
+    ps.P0_m = np.zeros((ps.n_x, ps.n_x))
+
+
 def test_plds_sys_get():
-    ps = PLDS(2, 2, 2, .001, p0=.4, q0=7)
+    ps = PLDS(2, 2, 2, 0.001, p0=0.4, q0=7)
     ps.n_u
     ps.n_x
     ps.n_y
     ps.dt
-    ps.P 
+    ps.P
     ps.P_m
     ps.cx
     ps.y
     ps.Ke
     ps.Ke_m
 
-def test_plds_sys_set():
-    ps = PLDS(2, 2, 2, .001, p0=.4, q0=7)
-    ps.Q = np.zeros((ps.n_x, ps.n_x))
-    ps.Q_m = np.zeros((ps.n_x, ps.n_x))
-    ps.P0 = np.zeros((ps.n_x, ps.n_x))
-    ps.P0_m = np.zeros((ps.n_x, ps.n_x))
 
 def test_plds_copy():
-    ps = PLDS(2, 2, 2, .001, p0=.4, q0=7)
+    ps = PLDS(2, 2, 2, 0.001, p0=0.4, q0=7)
     ps.A = np.random.rand(2, 2)
     ps2 = ps.copy()
     assert ps != ps2

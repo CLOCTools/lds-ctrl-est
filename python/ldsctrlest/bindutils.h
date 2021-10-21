@@ -36,6 +36,64 @@ string capture_output(const function<void(void)> &f) {
   return captured_output;
 }
 
+// most shared System functionality is in base System class
+// but here we define shared functions that just need to
+// be templated
+template <typename Sys>
+py::class_<Sys> define_System(py::module &m) {
+  return py::class_<Sys, lds::System>(m, "System")
+      .def(py::init<>())  // default constructor
+      .def("copy", [](const Sys& self) {
+        return Sys(self);
+      })
+      .def("Simulate", &Sys::Simulate)
+      .def("Print", &Sys::Print)
+      .def("__str__", [](Sys& system) {
+        return bindutils::capture_output([&system]() { system.Print(); });
+      })
+      // see matlab/[GLDS|PLDS]/simulate.m
+      .def("simulate_block", [](Sys& sys, vector<Matrix> u) -> vector<vector<Matrix>> {
+        vector<Matrix> x;
+        vector<Matrix> y;
+        vector<Matrix> z;
+        for (size_t k = 0; k < u.size(); k++) {
+          size_t n_t = arma::size(u[k])[1];
+          Matrix x_k(sys.n_x(), n_t, fill::zeros);
+          Matrix y_k(sys.n_y(), n_t, fill::zeros);
+          Matrix z_k(sys.n_y(), n_t, fill::zeros);
+          // Matrix x_noise_k(sys.n_x(), n_t, fill::zeros);
+          // if (add_noise) {
+          //   x_noise_k = arma::mvnrnd(Vector(sys.n_x(), fill::zeros), sys.Q(), n_t);
+          // }
+          // Matrix y_noise_k = arma::mvnrnd(Vector(sys.n_y(), fill::zeros), sys.R(), n_t);
+          for (size_t t = 1; t < n_t; t++) {
+            z_k.col(t) = sys.Simulate(u[k].col(t - 1));
+            y_k.col(t) = sys.y();
+            x_k.col(t) = sys.x();
+          }
+          x.push_back(x_k);
+          y.push_back(y_k);
+          z.push_back(z_k);
+        } 
+        return {y, x, z};
+      }, "simulates for multiple trials/timesteps. u is list of n_u X n_t arrays")
+      // see matlab/[GLDS|PLDS]/simulate_imp.m
+      .def("simulate_imp", [](Sys& sys, size_t n_t) {
+        vector<Matrix> cx_imp(sys.n_u(), Matrix(sys.n_x(), n_t, fill::zeros));
+        Vector u_imp(n_t, fill::zeros);
+        u_imp[0] = 1;
+        for (size_t which_u = 0; which_u < sys.n_u(); which_u++) {
+          Vector x(sys.n_x(), fill::zeros);
+          for (size_t t = 1; t < n_t; t++) {
+            x = sys.A()*x + sys.B().col(which_u) * (sys.g()[which_u]) * u_imp[t-1];
+            cx_imp[which_u].col(t) = sys.C()*x;
+          }
+        }
+        return cx_imp;
+      }, "simulates impulse response. returns list of length n_u of n_y X n_t arrays. result is Cx: y for GLDS, logy for PLDS.")
+  ;
+}
+
 // The FitEM classes are children of abstract EM<Fit> (either Gaussian or
 // Poisson) so this function defines the base EM<Fit> functionality to avoid
 // repeating it.
@@ -71,9 +129,6 @@ py::class_<FitSSIDType> define_FitSSID(py::module &m) {
   return py::class_<FitSSIDType>(m, "FitSSID")
       // constructors
       .def(py::init<>())
-      // .def(py::init<size_t, size_t, data_t, UniformMatrixList<kMatFreeDim2>,
-      //               UniformMatrixList<kMatFreeDim2>>(),
-      //      "n_x"_a, "n_h"_a, "dt"_a, "u_train"_a, "z_train"_a)
       .def(py::init<size_t, size_t, data_t, UniformMatrixList<kMatFreeDim2>,
                     UniformMatrixList<kMatFreeDim2>, const Vector&>(),
            "n_x"_a, "n_h"_a, "dt"_a, "u_train"_a, "z_train"_a, "d"_a = Vector(1).fill(-kInf))

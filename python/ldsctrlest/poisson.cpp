@@ -28,23 +28,12 @@ PYBIND11_MODULE(poisson, m) {
   /*
   ---------------- Poisson System class ---------------------
   */
-  py::class_<plds::System, lds::System>(m, "System")
-      .def(py::init<>())  // default constructor
-      .def(py::init<size_t, size_t, size_t, data_t,
-                    data_t, data_t>(),
-           py::arg("n_u"), py::arg("n_x"), py::arg("n_y"), py::arg("dt"),
-           py::arg("p0") = kDefaultP0, py::arg("q0") = kDefaultQ0)
-      .def("copy", [](const plds::System& self) {
-        return plds::System(self);
-      })
-
+  bindutils::define_System<plds::System>(m)
       // unlike GLDS, PLDS has no getters/setters not in base System
-
-      // other functions
-      // NOTE: this might be unnecessary if functions were virtual,
-      // but I'm not touching the base code right now
-      .def("Simulate", &plds::System::Simulate);
-
+      // the only unique thing is the constructor
+      .def(py::init<size_t, size_t, size_t, data_t, data_t, data_t>(),
+           py::arg("n_u"), py::arg("n_x"), py::arg("n_y"), py::arg("dt"),
+           py::arg("p0") = kDefaultP0, py::arg("q0") = kDefaultQ0);
 
   /*
   ---------------- Poisson Fit class ---------------------
@@ -52,8 +41,8 @@ PYBIND11_MODULE(poisson, m) {
   py::class_<plds::Fit, lds::Fit>(m, "Fit")
       // constructors
       .def(py::init<>())
-      .def(py::init<size_t, size_t, size_t, data_t>(), "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a)
-  ;
+      .def(py::init<size_t, size_t, size_t, data_t>(), "n_u"_a, "n_x"_a,
+           "n_y"_a, "dt"_a);
 
   /*
   ---------------- UniformSystemList class ---------------------

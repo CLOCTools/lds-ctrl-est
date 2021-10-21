@@ -27,29 +27,16 @@ PYBIND11_MODULE(gaussian, m) {
   /*
   ---------------- Gaussian System class ---------------------
   */
-  py::class_<glds::System, lds::System>(m, "System")
-      .def(py::init<>())  // default constructor
+  bindutils::define_System<glds::System>(m)
       .def(py::init<size_t, size_t, size_t, data_t,
                     data_t, data_t, data_t>(),
            "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a, "p0"_a = kDefaultP0,
            "q0"_a = kDefaultQ0, "r0"_a = kDefaultR0)
-      .def("copy", [](const glds::System& self) {
-        return glds::System(self);
-      })
 
       // getters/setters not in base System
       .def_property("R", &glds::System::R, &glds::System::set_R)
       .def_property("Ke", &glds::System::Ke, &glds::System::set_Ke)
-      .def_property("Ke_m", &glds::System::Ke_m, &glds::System::set_Ke_m)
-
-      // other functions
-      // NOTE: this might be unnecessary if functions were virtual,
-      // but I'm not touching the base code right now
-      .def("Simulate", &glds::System::Simulate)
-      .def("Print", &glds::System::Print)
-      .def("__str__", [](glds::System& system) {
-        return bindutils::capture_output([&system]() { system.Print(); });
-      });
+      .def_property("Ke_m", &glds::System::Ke_m, &glds::System::set_Ke_m);
 
   /*
   ---------------- Gaussian Fit class ---------------------

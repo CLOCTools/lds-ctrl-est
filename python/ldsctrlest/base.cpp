@@ -64,24 +64,16 @@ PYBIND11_MODULE(base, m) {
       .def_property("d", &System::d, &System::set_d)
       // // public field, no get/set functions
       .def_readwrite("do_adapt_m", &System::do_adapt_m)
-
-      // // setters only
-      .def_property("Q", nullptr, &System::set_Q)
-      .def_property("Q_m", nullptr, &System::set_Q_m)
-      .def_property("P0", nullptr, &System::set_P0)
-      .def_property("P0_m", nullptr, &System::set_P0_m)
+      .def_property("Q", &System::Q, &System::set_Q)
+      .def_property("Q_m", &System::Q_m, &System::set_Q_m)
+      .def_property("P0", &System::P0, &System::set_P0)
+      .def_property("P0_m", &System::P0_m, &System::set_P0_m)
 
       // other functions: shouldn't be called on abstract base class
       // but since they're not overridden I bind them here
       .def("Reset", &System::Reset)
-      // .def("Simulate", &System::Simulate)
       .def("Filter", &System::Filter)
-      .def("f", &System::f)
-
-      .def("Print", &System::Print)
-      .def("__str__", [](System &system) {
-        return bindutils::capture_output([&system]() { system.Print(); });
-      });
+      .def("f", &System::f);
 
   /*
   ---------------- Fit class ---------------------
