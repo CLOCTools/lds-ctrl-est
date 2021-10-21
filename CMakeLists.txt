@@ -60,9 +60,6 @@ include(GNUInstallDirs)
 # Hard-coded for usage later with clangd:
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
-# Make install optional, especially because it requires the user to install carma
-OPTION(LDSCTRLEST_INSTALL "Install ldsCtrlEst" OFF)
-
 # user settings:
 option(LDSCTRLEST_BUILD_EXAMPLES "Build the example programs." ON)
 option(LDSCTRLEST_BUILD_FIT "Whether to build the fitting accessory code." ON)
@@ -71,7 +68,7 @@ option(LDSCTRLEST_BUILD_STATIC
   and build a static version of the library." ON)
 # n.b., if both LDSCTRLEST_BUILD_FIT & LDSCTRLEST_BUILD_STATIC are enabled,
 # Matlab/Octave mex files will be built.
-option(LDSCTRLEST_BUILD_PYTHON "Build a Python wrapper package using pybind11." ON)
+option(LDSCTRLEST_BUILD_PYTHON "Build a Python wrapper package using pybind11." OFF)
 
 if (WIN32) 
   # needed to build static library
@@ -81,7 +78,6 @@ endif()
 message(STATUS "CMAKE_SYSTEM_NAME          = ${CMAKE_SYSTEM_NAME}"         )
 message(STATUS "CMAKE_CXX_COMPILER_ID      = ${CMAKE_CXX_COMPILER_ID}"     )
 message(STATUS "CMAKE_CXX_COMPILER_VERSION = ${CMAKE_CXX_COMPILER_VERSION}")
-message(STATUS "LDSCTRLEST_INSTALL         = ${LDSCTRLEST_INSTALL}" )
 message(STATUS "LDSCTRLEST_BUILD_FIT       = ${LDSCTRLEST_BUILD_FIT}" )
 message(STATUS "LDSCTRLEST_BUILD_STATIC    = ${LDSCTRLEST_BUILD_STATIC}" )
 message(STATUS "LDSCTRLEST_BUILD_EXAMPLES  = ${LDSCTRLEST_BUILD_EXAMPLES}" )
@@ -315,7 +311,7 @@ endif()
 ################################################################################
 ############ Install Configuration
 ################################################################################
-if(LDSCTRLEST_INSTALL)
+if(NOT LDSCTRLEST_BUILD_PYTHON)  # because Python build requires carma install
   message(STATUS ""                                                      )
   message(STATUS "CMAKE_INSTALL_PREFIX     = ${CMAKE_INSTALL_PREFIX}"    )
   message(STATUS "CMAKE_INSTALL_LIBDIR     = ${CMAKE_INSTALL_LIBDIR}"    )
@@ -483,7 +479,7 @@ if(LDSCTRLEST_INSTALL)
       )
     endif()
 
-    #python
+    #python - useless for now since Python build incompatible with install
     if(LDSCTRLEST_BUILD_PYTHON)
       install(
         DIRECTORY ${PROJECT_BINARY_DIR}/python/
@@ -497,5 +493,5 @@ if(LDSCTRLEST_INSTALL)
     endif()
 
   endif() #(LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
-endif() #(LDSCTRLEST_INSTALL)
+endif() #(NOT LDSCTRLEST_BUILD_PYTHON)
 # TODO(mfbolus): TESTING! eg cmake/Help/guide/tutorial/Complete/CMakesLists.txt
