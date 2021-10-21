@@ -135,6 +135,15 @@ class System {
   const Matrix& Ke() const { return Ke_; };
   /// Get estimator gain for process disturbance (m)
   const Matrix& Ke_m() const { return Ke_m_; };
+  /// Get process noise covariance
+  const Matrix& Q() { return Q_; };
+  /// Get process noise covariance of disturbance evoluation
+  const Matrix& Q_m() { return Q_m_; };
+  /// Get covariance of initial state
+  const Matrix& P0() { return P0_; };
+  /// Get covariance of initial process disturbance
+  const Matrix& P0_m() { return P0_m_; };
+
   /// Set state matrix
   void set_A(const Matrix& A) { Reassign(A_, A); };
   /// Set input matrix
