@@ -61,11 +61,6 @@ py::class_<Sys> define_System(py::module &m) {
           Matrix x_k(sys.n_x(), n_t, fill::zeros);
           Matrix y_k(sys.n_y(), n_t, fill::zeros);
           Matrix z_k(sys.n_y(), n_t, fill::zeros);
-          // Matrix x_noise_k(sys.n_x(), n_t, fill::zeros);
-          // if (add_noise) {
-          //   x_noise_k = arma::mvnrnd(Vector(sys.n_x(), fill::zeros), sys.Q(), n_t);
-          // }
-          // Matrix y_noise_k = arma::mvnrnd(Vector(sys.n_y(), fill::zeros), sys.R(), n_t);
           for (size_t t = 1; t < n_t; t++) {
             z_k.col(t) = sys.Simulate(u[k].col(t - 1));
             y_k.col(t) = sys.y();
