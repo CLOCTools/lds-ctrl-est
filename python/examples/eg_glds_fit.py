@@ -54,12 +54,12 @@ u = []  # will be list of arrays
 for trial in range(n_trials):
     u.append(np.zeros((n_u, n_samp)))
     for k in range(1, n_samp):
-        u_t = 0.975*u[trial][:,k-1] + 1e-1*np.random.normal(size=n_u)
+        u_t = 0.975 * u[trial][:, k - 1] + 1e-1 * np.random.normal(size=n_u)
         u[trial][:, k] = u_t
 
 y, x, z = sys.simulate_block(u)
 
-n_samp_imp = int(np.ceil(0.1/dt))
+n_samp_imp = int(np.ceil(0.1 / dt))
 y_imp = sys.simulate_imp(n_samp_imp)
 t_imp = np.arange(0, n_samp_imp * dt, dt)
 
@@ -77,7 +77,7 @@ print(f"Finished SSID in {(stop-start)*1000} ms.")
 
 # compare fit to original without state noise
 sys_hat = sys.copy()
-for attr in ['A', 'B', 'C', 'g', 'Q', 'x0', 'P0', 'd']:
+for attr in ["A", "B", "C", "g", "Q", "x0", "P0", "d"]:
     setattr(sys_hat, attr, getattr(fit, attr))
 sys_hat.Q = np.zeros_like(sys_hat.Q)
 y_hat, x_hat, _ = sys_hat.simulate_block(u)
@@ -89,7 +89,7 @@ import matplotlib.pyplot as plt
 
 fig, axs = plt.subplots(1, 2)
 axs[0].semilogy(sing_vals[:n_h], "-o", color=[0.5, 0.5, 0.5])
-axs[0].semilogy(sing_vals[:n_h], color='k', linewidth=2)
+axs[0].semilogy(sing_vals[:n_h], color="k", linewidth=2)
 axs[0].set(ylabel="Singular Values", xlabel="Singular Value Index")
 
 l1 = axs[1].plot(t_imp, y_imp[0].T, "-", c="k", linewidth=2)
@@ -112,13 +112,21 @@ fig, axs = plt.subplots(3, 1, figsize=(6, 5))
 axs[0].plot(t, z[eg_trial][0, :], "k-")
 axs[0].plot(t, y_hat[eg_trial][0, :], "-", c="gray", linewidth=2)
 axs[0].legend(["measurement", "fit"])
-axs[0].set(ylabel="Output 1 (a.u.)", xlabel="Time (s)", title=f"proportion var explained (training): {pve[0]:0.3f}")
+axs[0].set(
+    ylabel="Output 1 (a.u.)",
+    xlabel="Time (s)",
+    title=f"proportion var explained (training): {pve[0]:0.3f}",
+)
 
 axs[1].plot(t, z[eg_trial][1, :], "k-")
 axs[1].plot(t, y_hat[eg_trial][1, :], "-", c="gray", linewidth=2)
-axs[1].set(ylabel="Output 2 (a.u.)", xlabel="Time (s)", title=f"proportion var explained (training): {pve[1]:0.3f}")
+axs[1].set(
+    ylabel="Output 2 (a.u.)",
+    xlabel="Time (s)",
+    title=f"proportion var explained (training): {pve[1]:0.3f}",
+)
 
-axs[2].plot(t, u[eg_trial].T, 'k')
+axs[2].plot(t, u[eg_trial].T, "k")
 axs[2].set(ylabel="Input (a.u.)", xlabel="Time (s)")
 
 fig.tight_layout()
@@ -128,29 +136,32 @@ fig.show()
 # exit before EM for the sake of a fast test suite
 # (EM takes 30 seconds)
 import sys
+
 sys.exit()
 
 # %%
 # Refit by E-M
-calc_dynamics = True #calculate dynamics (A, B mats)
-calc_Q = True #calculate process noise cov (Q)
-calc_init = True #calculate initial conditions
-calc_output = True #calculate output (C)
-calc_measurement = True #calculate output noise (R)
+calc_dynamics = True  # calculate dynamics (A, B mats)
+calc_Q = True  # calculate process noise cov (Q)
+calc_init = True  # calculate initial conditions
+calc_output = True  # calculate output (C)
+calc_measurement = True  # calculate output noise (R)
 max_iter = 100
 tol = 1e-2
 
 em = glds.FitEM(fit, u_train, z_train)
 
 start = time.perf_counter()
-fit_em = em.Run(calc_dynamics, calc_Q, calc_init, calc_output, calc_measurement, max_iter, tol)
+fit_em = em.Run(
+    calc_dynamics, calc_Q, calc_init, calc_output, calc_measurement, max_iter, tol
+)
 stop = time.perf_counter()
 print(f"Finished EM fit in {(stop-start)*1000} ms.")
 
 # %%
 # compare EM fit to original without state noise
 sys_hat_em = sys_hat.copy()
-for attr in ['A', 'B', 'C', 'g', 'Q', 'x0', 'P0', 'd']:
+for attr in ["A", "B", "C", "g", "Q", "x0", "P0", "d"]:
     setattr(sys_hat_em, attr, getattr(fit_em, attr))
 sys_hat_em.Q = np.zeros_like(sys_hat_em.Q)
 y_hat_em, x_hat_em, _ = sys_hat_em.simulate_block(u)
@@ -165,7 +176,7 @@ axs[0].plot(t, y_hat_em[eg_trial][0, :], "-", c="gray", linewidth=2)
 axs[0].legend(["measurement", "EM re-estimated"])
 axs[0].set(ylabel="Output (a.u.)", xlabel="Time (s)")
 
-axs[1].plot(t, u[eg_trial].T, 'k')
+axs[1].plot(t, u[eg_trial].T, "k")
 axs[1].set(ylabel="Input (a.u.)", xlabel="Time (s)")
 
 fig.tight_layout()
@@ -176,7 +187,7 @@ fig.show()
 fig, axs = plt.subplots(1, 2)
 
 l1 = axs[1].plot(t_imp, y_imp[0].T, "-", c="k", linewidth=2)
-l2 = axs[1].plot(t_imp, y_imp_hat_em[0].T, "-", c='gray', linewidth=2)
+l2 = axs[1].plot(t_imp, y_imp_hat_em[0].T, "-", c="gray", linewidth=2)
 axs[1].legend([l1[0], l2[0]], ["ground truth", "EM re-estimated"])
 axs[1].set(ylabel="Impulse Response (a.u.)", xlabel="Time (s)")
 fig.tight_layout()
@@ -193,13 +204,21 @@ fig, axs = plt.subplots(3, 1, figsize=(6, 5))
 axs[0].plot(t, z[eg_trial][0, :], "k-")
 axs[0].plot(t, y_hat_em[eg_trial][0, :], "-", c="gray", linewidth=2)
 axs[0].legend(["measurement", "EM re-estimated"])
-axs[0].set(ylabel="Output 1 (a.u.)", xlabel="Time (s)", title=f"EM-refit proportion var explained (training): {pve_em[0]:0.3f}")
+axs[0].set(
+    ylabel="Output 1 (a.u.)",
+    xlabel="Time (s)",
+    title=f"EM-refit proportion var explained (training): {pve_em[0]:0.3f}",
+)
 
 axs[1].plot(t, z[eg_trial][1, :], "k-")
 axs[1].plot(t, y_hat_em[eg_trial][1, :], "-", c="gray", linewidth=2)
-axs[1].set(ylabel="Output 2 (a.u.)", xlabel="Time (s)", title=f"EM-refit proportion var explained (training): {pve_em[1]:0.3f}")
+axs[1].set(
+    ylabel="Output 2 (a.u.)",
+    xlabel="Time (s)",
+    title=f"EM-refit proportion var explained (training): {pve_em[1]:0.3f}",
+)
 
-axs[2].plot(t, u[eg_trial].T, 'k')
+axs[2].plot(t, u[eg_trial].T, "k")
 axs[2].set(ylabel="Input (a.u.)", xlabel="Time (s)")
 
 fig.tight_layout()
