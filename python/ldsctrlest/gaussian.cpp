@@ -32,6 +32,20 @@ PYBIND11_MODULE(gaussian, m) {
                     data_t, data_t, data_t>(),
            "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a, "p0"_a = kDefaultP0,
            "q0"_a = kDefaultQ0, "r0"_a = kDefaultR0)
+      // construct from fit for convience
+      .def(py::init([](const glds::Fit& fit) {
+        glds::System sys(fit.n_u(), fit.n_x(), fit.n_y(), fit.dt());
+        sys.set_A(fit.A());
+        sys.set_B(fit.B());
+        sys.set_C(fit.C());
+        sys.set_g(fit.g());
+        sys.set_Q(fit.Q());
+        sys.set_R(fit.R());
+        sys.set_x0(fit.x0());
+        sys.set_P0(fit.P0());
+        sys.set_d(fit.d());
+        return sys;
+      }))
 
       // getters/setters not in base System
       .def_property("R", &glds::System::R, &glds::System::set_R)

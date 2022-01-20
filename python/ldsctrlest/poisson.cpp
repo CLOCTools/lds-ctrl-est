@@ -33,7 +33,20 @@ PYBIND11_MODULE(poisson, m) {
       // the only unique thing is the constructor
       .def(py::init<size_t, size_t, size_t, data_t, data_t, data_t>(),
            py::arg("n_u"), py::arg("n_x"), py::arg("n_y"), py::arg("dt"),
-           py::arg("p0") = kDefaultP0, py::arg("q0") = kDefaultQ0);
+           py::arg("p0") = kDefaultP0, py::arg("q0") = kDefaultQ0)
+      // construct from fit for convience
+      .def(py::init([](const plds::Fit& fit) {
+        plds::System sys(fit.n_u(), fit.n_x(), fit.n_y(), fit.dt());
+        sys.set_A(fit.A());
+        sys.set_B(fit.B());
+        sys.set_C(fit.C());
+        sys.set_g(fit.g());
+        sys.set_Q(fit.Q());
+        sys.set_x0(fit.x0());
+        sys.set_P0(fit.P0());
+        sys.set_d(fit.d());
+        return sys;
+      }));
 
   /*
   ---------------- Poisson Fit class ---------------------

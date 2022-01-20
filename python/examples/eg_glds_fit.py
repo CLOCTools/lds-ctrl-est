@@ -77,9 +77,7 @@ stop = time.perf_counter()
 print(f"Finished SSID in {(stop-start)*1000} ms.")
 
 # compare fit to original without state noise
-sys_hat = sys.copy()
-for attr in ["A", "B", "C", "g", "Q", "R", "x0", "P0", "d"]:
-    setattr(sys_hat, attr, getattr(fit, attr))
+sys_hat = glds.System(fit)
 sys_hat.Q = np.zeros_like(sys_hat.Q)
 y_hat, x_hat, _ = sys_hat.simulate_block(u)
 y_imp_hat = sys_hat.simulate_imp(n_samp_imp)
@@ -159,9 +157,7 @@ print(f"Finished EM fit in {(stop-start)*1000} ms.")
 
 # %%
 # compare EM fit to original without state noise
-sys_hat_em = sys_hat.copy()
-for attr in ["A", "B", "C", "g", "Q", "R", "x0", "P0", "d"]:
-    setattr(sys_hat_em, attr, getattr(fit_em, attr))
+sys_hat_em = glds.System(fit_em)
 sys_hat_em.Q = np.zeros_like(sys_hat_em.Q)
 y_hat_em, x_hat_em, _ = sys_hat_em.simulate_block(u)
 y_imp_hat_em = sys_hat_em.simulate_imp(n_samp_imp)
