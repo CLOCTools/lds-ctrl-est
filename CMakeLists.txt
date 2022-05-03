@@ -12,6 +12,7 @@ set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/
 ################################################################################
 # set project name and version (MAJOR.minor.patch)
 project(ldsCtrlEst VERSION 0.6.2 LANGUAGES CXX C)
+include(CTest)
 # some name variants I will be using:
 set(CMAKE_PROJECT_NAME_CAP LDSCTRLEST)#all caps
 

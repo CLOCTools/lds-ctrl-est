@@ -50,6 +50,8 @@ The first time, `vcpkg` will automatically install dependencies into `[build dir
 
 If you want to use `vcpkg` set up somewhere besides this repo's submodule, add `-DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` to the `cmake` command directly or [through your IDE's settings](https://github.com/microsoft/vcpkg#using-vcpkg-with-cmake).
 
+You can verify the installation is working by running `ctest` from the command line, which runs all the example scripts.
+
 ## Troubleshooting
 If you see an error on Linux about needing `gfortran` in your path, install with `apt install gfortran`.
 
@@ -58,7 +60,7 @@ If the `vcpkg install` command fails, you may want to upgrade your system (e.g.,
 ## Python bindings
 With the `LDSCTRLEST_BUILD_PYTHON` setting (on by default) and the `pybind11` submodule initialized, you can build Python bindings. You will probably want to specify the installation of Python to use by adding a `-DPython_ROOT_DIR=[path/to/install/dir]` argument to the CMake cache generation command (the first one). 
 
-The bindings need to be generated just once per Python version. Once the build is complete, navigate to the `[build location]/python` folder and run `pip install .` to make it importable anywhere for your current environment. *The file structure only works correctly for this if you use a single-config generator like Ninja, though.*
+The bindings need to be generated just once per Python version. Once the build is complete, navigate to the `[build location]/python` folder and run `pip install .` to make it importable anywhere for your current environment. *The file structure only works correctly for this if you use a single-config generator like Ninja, though.* You can verify the installation was successful by running `pytest` from the `build/python` directory.
 
 Also, beware that a single build might not work for both the standalone library and the Python package, since the conversion between NumPy and Armadillo alters the way Armadillo allocates memory. In this case you may want to build once with `-DLDSCTRLEST_BUILD_PYTHON=ON`, install the package, then again with  `-DLDSCTRLEST_BUILD_PYTHON=OFF` for the pure C++ build to work correctly.
 
