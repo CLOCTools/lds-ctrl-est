@@ -105,3 +105,5 @@ cpp.sublime-workspace
 # whitelist documentation
 !docs/**
 !misc/docs-hugo/**
+# but not second built site--that's already in docs
+misc/docs-hugo/public/*
