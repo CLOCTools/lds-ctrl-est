@@ -7,14 +7,16 @@
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="ldsCtrlEst_h/lds_uniform_mats.h" />
 <meta property="og:description" content="List of uniformly sized matrices." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__uniform__mats_8h/" />
+<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__uniform__mats_8h/" /><meta property="article:section" content="docs" />
+
+
 
 <title>ldsCtrlEst_h/lds_uniform_mats.h | LDS C&amp;E</title>
 <link rel="manifest" href="/lds-ctrl-est/manifest.json">
 <link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/lds-ctrl-est/book.min.1f18e1770470f1550b743441539a68f3687608045f0f23eebeb7810c1ac57077.css" integrity="sha256-HxjhdwRw8VULdDRBU5po82h2CARfDyPuvreBDBrFcHc=" crossorigin="anonymous">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
   <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
-  <script defer src="/lds-ctrl-est/en.search.min.80cd14d7c8667f450e8f403ef9a5edfd9496696a1fb6e75c14942a43f310854e.js" integrity="sha256-gM0U18hmf0UOj0A&#43;&#43;aXt/ZSWaWoftudcFJQqQ/MQhU4=" crossorigin="anonymous"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.0744557ce8943df18f25ec78a891133fda6bb440b570daa965345e7d14ef6221.js" integrity="sha256-B0RVfOiUPfGPJex4qJETP9prtEC1cNqpZTRefRTvYiE=" crossorigin="anonymous"></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -61,12 +63,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
-<ul>
-<li><a href="/lds-ctrl-est/docs/getting-started/linux-macos/">Linux/MacOS</a></li>
-<li><a href="/lds-ctrl-est/docs/getting-started/windows/">Windows</a></li>
-</ul>
-</li>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a></li>
 </ul>
 <p><br /></p>
 <ul>
@@ -126,7 +123,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){var menu=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
 
 
  
@@ -212,7 +209,7 @@ https://github.com/alex-shpak/hugo-book
 <tbody>
 <tr>
 <td>class</td>
-<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/">lds::UniformMatrixList</a></strong></td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1uniformmatrixlist/">lds::UniformMatrixList</a></strong></td>
 </tr>
 </tbody>
 </table>
@@ -261,12 +258,12 @@ https://github.com/alex-shpak/hugo-book
 </span><span style="color:#75715e"></span>  <span style="color:#75715e">// using std::vector&lt;Matrix&gt;::vector;
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Matrix<span style="color:#f92672">&gt;::</span><span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>;
   <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Matrix<span style="color:#f92672">&gt;::</span><span style="color:#66d9ef">operator</span>[];
-  <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Matrix<span style="color:#f92672">&gt;::</span>at;
   <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Matrix<span style="color:#f92672">&gt;::</span>begin;
   <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Matrix<span style="color:#f92672">&gt;::</span>end;
   <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Matrix<span style="color:#f92672">&gt;::</span>size;
 
  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+  <span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Matrix<span style="color:#f92672">&gt;::</span>at;
   UniformMatrixList() <span style="color:#f92672">=</span> <span style="color:#66d9ef">default</span>;
 
   <span style="color:#66d9ef">explicit</span> <span style="color:#a6e22e">UniformMatrixList</span>(<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Matrix<span style="color:#f92672">&gt;&amp;</span> mats,
@@ -337,6 +334,10 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span>MatrixListFreeDim D<span style="color:#f92672">&gt;</span>
 <span style="color:#66d9ef">inline</span> UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92672">&gt;&amp;</span> UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92672">&gt;::</span><span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(
     <span style="color:#66d9ef">const</span> UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92672">&gt;&amp;</span> that) {
+  <span style="color:#75715e">// make sure dim_ vector is initialized
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (dim_.empty()) {
+    dim_ <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>size_t, <span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;&gt;</span>(that.size(), {<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>});
+  }
   <span style="color:#75715e">// check dimensions
 </span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>empty()) {
     <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>size() <span style="color:#f92672">!=</span> that.size()) {
@@ -387,46 +388,50 @@ https://github.com/alex-shpak/hugo-book
 <span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span>MatrixListFreeDim D<span style="color:#f92672">&gt;</span>
 <span style="color:#66d9ef">inline</span> UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92672">&gt;&amp;</span> UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92672">&gt;::</span><span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(
     UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92672">&gt;&amp;&amp;</span> that) <span style="color:#66d9ef">noexcept</span> {
-  <span style="color:#75715e">// check dimensions
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// if empty, assume a default constructed object and safe to move
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span><span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>empty()) {
-    <span style="color:#66d9ef">if</span> (<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>size() <span style="color:#f92672">!=</span> that.size()) {
-      std<span style="color:#f92672">::</span>cerr <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Cannot reassign &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>size() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; matrices with &#34;</span>
-                <span style="color:#f92672">&lt;&lt;</span> that.size() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; matrices. Skipping.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-      <span style="color:#66d9ef">return</span> (<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>);
-    }
-
-    <span style="color:#75715e">// if dimensions a not zero and do not match, skip move with error message.
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">bool</span> dims_nonzero <span style="color:#f92672">=</span> true;
-    <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">auto</span> d : dim_) {
-      <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>(D <span style="color:#f92672">==</span> kMatFreeDim1) <span style="color:#f92672">&amp;&amp;</span> (d[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1</span>)) {
-        dims_nonzero <span style="color:#f92672">=</span> false;
-        <span style="color:#66d9ef">break</span>;
-      }
-      <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>(D <span style="color:#f92672">==</span> kMatFreeDim2) <span style="color:#f92672">&amp;&amp;</span> (d[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1</span>)) {
-        dims_nonzero <span style="color:#f92672">=</span> false;
-        <span style="color:#66d9ef">break</span>;
-      }
-    }
-    <span style="color:#66d9ef">if</span> (dims_nonzero) {
-      <span style="color:#66d9ef">bool</span> does_match <span style="color:#f92672">=</span> true;
-      <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>(D <span style="color:#f92672">==</span> kMatFreeDim1)) {
-        does_match <span style="color:#f92672">=</span> does_match <span style="color:#f92672">&amp;&amp;</span> (dim_[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> that.at(<span style="color:#ae81ff">0</span>).n_rows);
-      }
-
-      <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>(D <span style="color:#f92672">==</span> kMatFreeDim2)) {
-        does_match <span style="color:#f92672">=</span> does_match <span style="color:#f92672">&amp;&amp;</span> (dim_[<span style="color:#ae81ff">0</span>][<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> that.at(<span style="color:#ae81ff">0</span>).n_cols);
-      }
-
-      <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>does_match) {
-        std<span style="color:#f92672">::</span>cerr
-            <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Cannot move a UniformMatrixList element for an element of &#34;</span>
-               <span style="color:#e6db74">&#34;different size. Skipping.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-        <span style="color:#66d9ef">return</span> (<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>);
-      }
-    }
-  }
-
+  <span style="color:#75715e">// // check dimensions
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// // if empty, assume a default constructed object and safe to move
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// if (!this-&gt;empty()) {
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//   if (this-&gt;size() != that.size()) {
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     std::cerr &lt;&lt; &#34;Cannot reassign &#34; &lt;&lt; this-&gt;size() &lt;&lt; &#34; matrices with &#34;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//               &lt;&lt; that.size() &lt;&lt; &#34; matrices. Skipping.\n&#34;;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     return (*this);
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//   }
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//   // if dimensions a not zero and do not match, skip move with error
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//   message. bool dims_nonzero = true; for (auto d : dim_) {
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     if (!(D == kMatFreeDim1) &amp;&amp; (d[0] &lt; 1)) {
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       dims_nonzero = false;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       break;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     }
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     if (!(D == kMatFreeDim2) &amp;&amp; (d[1] &lt; 1)) {
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       dims_nonzero = false;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       break;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     }
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//   }
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//   if (dims_nonzero) {
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     bool does_match = true;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     if (!(D == kMatFreeDim1)) {
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       does_match = does_match &amp;&amp; (dim_[0][0] == that.at(0).n_rows);
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     }
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     if (!(D == kMatFreeDim2)) {
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       does_match = does_match &amp;&amp; (dim_[0][1] == that.at(0).n_cols);
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     }
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     if (!does_match) {
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       this-&gt;at(0).print(&#34;this[0] = &#34;);
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       that.at(0).print(&#34;that[0] = &#34;);
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       std::cerr
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//           &lt;&lt; &#34;Cannot move a UniformMatrixList element of size (&#34; &lt;&lt;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//           that.at(0).n_rows &lt;&lt; &#34;,&#34; &lt;&lt; that.at(0).n_cols &lt;&lt; &#34;) for an
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//           element of size (&#34; &lt;&lt; dim_[0][0] &lt;&lt; &#34;,&#34; &lt;&lt; dim_[0][1] &lt;&lt; &#34;).
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//           Skipping.\n&#34;;
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//       return (*this);
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//     }
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">//   }
+</span><span style="color:#75715e"></span>  <span style="color:#75715e">// }
+</span><span style="color:#75715e"></span>
   dim_ <span style="color:#f92672">=</span> that.dim_;
   std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>Matrix<span style="color:#f92672">&gt;::</span><span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(std<span style="color:#f92672">::</span>move(that));
 
@@ -464,8 +469,8 @@ UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92
 UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92672">&gt;::</span>UniformMatrixList(UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92672">&gt;&amp;&amp;</span> that) <span style="color:#66d9ef">noexcept</span>
     <span style="color:#f92672">:</span> vector(std<span style="color:#f92672">::</span>move(that)) {
   <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>size(); k<span style="color:#f92672">++</span>) {
-    dim_[k][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>)[k].n_rows;
-    dim_[k][<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span><span style="color:#66d9ef">this</span>)[k].n_cols;
+    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>size_t, <span style="color:#ae81ff">2</span><span style="color:#f92672">&gt;</span> dim_k({<span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>at(k).n_rows, <span style="color:#66d9ef">this</span><span style="color:#f92672">-&gt;</span>at(k).n_cols});
+    dim_.push_back(dim_k);
   }
 }
 
@@ -505,7 +510,7 @@ UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92
 </span><span style="color:#75715e"></span>
 <span style="color:#75715e">#endif
 </span></code></pre></div><hr>
-<p>Updated on 22 June 2021 at 23:08:17 CDT</p>
+<p>Updated on  4 May 2022 at 15:48:59 Eastern Daylight Time</p>
 </article>
  
       
@@ -522,8 +527,7 @@ UniformMatrixList<span style="color:#f92672">&lt;</span>D<span style="color:#f92
 
 
 
-  <script>(function(){function select(element){const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(element);selection.removeAllRanges();selection.addRange(range);}
-document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("click",function(event){select(code.parentElement);if(navigator.clipboard){navigator.clipboard.writeText(code.parentElement.textContent);}});});})();</script>
+  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
 
 
  

@@ -7,12 +7,12 @@
     <generator>Hugo -- gohugo.io</generator><atom:link href="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>lds::Controller</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1controller/</guid>
       <description>lds::Controller #  More&amp;hellip;
-Inherited by lds::SwitchedController&amp;lt; System &amp;gt;, lds::gaussian::Controller, lds::poisson::Controller
+Inherited by lds::gaussian::Controller, lds::poisson::Controller, lds::SwitchedController&amp;lt; System &amp;gt;
 Public Functions #      Name      Controller() =default
 Constructs a new Controller.    Controller(const System &amp;amp; sys, data_t u_lb, data_t u_ub, size_t control_type =0)
 Constructs a new Controller.    Controller(System &amp;amp;&amp;amp; sys, data_t u_lb, data_t u_ub, size_t control_type =0)
@@ -21,10 +21,10 @@ Constructs a new Controller by moving the system object.</description>
     
     <item>
       <title>lds::EM</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1em/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1em/</guid>
       <description>lds::EM #  More&amp;hellip;
 Inherited by lds::gaussian::FitEM, lds::poisson::FitEM
 Public Functions #      Name      EM() =default
@@ -35,127 +35,127 @@ Constructs a new EMFit type.</description>
     
     <item>
       <title>lds::Fit</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1fit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1fit/</guid>
       <description>LDS Fit Type.</description>
     </item>
     
     <item>
       <title>lds::gaussian::Controller</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1controller/</guid>
       <description>Gaussian-observation Controller Type.</description>
     </item>
     
     <item>
       <title>lds::gaussian::Fit</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fit/</guid>
       <description>GLDS Fit Type.</description>
     </item>
     
     <item>
       <title>lds::gaussian::FitEM</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fitem/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fitem/</guid>
       <description>GLDS E-M Fit Type.</description>
     </item>
     
     <item>
       <title>lds::gaussian::FitSSID</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fitssid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fitssid/</guid>
       <description>Subspace Identification (SSID) for GLDS.</description>
     </item>
     
     <item>
       <title>lds::gaussian::SwitchedController</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1switchedcontroller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1switchedcontroller/</guid>
       <description>Gaussian-observation SwitchedController Type.</description>
     </item>
     
     <item>
       <title>lds::gaussian::System</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/</guid>
       <description>Gaussian LDS Type.</description>
     </item>
     
     <item>
       <title>lds::poisson::Controller</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1controller/</guid>
       <description>PLDS Controller Type.</description>
     </item>
     
     <item>
       <title>lds::poisson::Fit</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fit/</guid>
       <description>PLDS Fit Type.</description>
     </item>
     
     <item>
       <title>lds::poisson::FitEM</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitem/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitem/</guid>
       <description>PLDS E-M Fit Type.</description>
     </item>
     
     <item>
       <title>lds::poisson::FitSSID</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitssid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitssid/</guid>
       <description>Subspace Identification (SSID) for PLDS.</description>
     </item>
     
     <item>
       <title>lds::poisson::SwitchedController</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1switchedcontroller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1switchedcontroller/</guid>
       <description>Poisson-observation SwitchedController Type.</description>
     </item>
     
     <item>
       <title>lds::poisson::System</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1system/</guid>
       <description>Poisson System type.</description>
     </item>
     
     <item>
       <title>lds::SSID</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/</guid>
       <description>lds::SSID #  More&amp;hellip;
 Inherited by lds::gaussian::FitSSID, lds::poisson::FitSSID
 Public Functions #      Name      SSID() =default
@@ -166,28 +166,28 @@ Runs fitting by subspace identification (SSID)   std::tuple&amp;lt; UniformMatri
     
     <item>
       <title>lds::SwitchedController</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_switched_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1switchedcontroller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_switched_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1switchedcontroller/</guid>
       <description>SwitchedController Type.</description>
     </item>
     
     <item>
       <title>lds::System</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_system/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_system/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1system/</guid>
       <description>Linear Dynamical System Type.</description>
     </item>
     
     <item>
       <title>lds::UniformMatrixList</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformmatrixlist/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformmatrixlist/</guid>
       <description>lds::UniformMatrixList #  More&amp;hellip;
 Inherits from std::vector&amp;lt; Matrix &amp;gt;
 Public Functions #      Name      UniformMatrixList() =default
@@ -197,10 +197,10 @@ Constructs a new UniformMatrixList by copying existing vector of Matrix if dimen
     
     <item>
       <title>lds::UniformSystemList</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformsystemlist/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformsystemlist/</guid>
       <description>lds::UniformSystemList #  More&amp;hellip;
 Inherits from std::vector&amp;lt; System &amp;gt;
 Public Functions #      Name      UniformSystemList() =default
@@ -210,10 +210,10 @@ Constructs a new UniformSystemList by copying existing vector of System if dimen
     
     <item>
       <title>lds::UniformVectorList</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_vector_list/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformvectorlist/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_vector_list/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformvectorlist/</guid>
       <description>lds::UniformVectorList #  Inherits from std::vector&amp;lt; Vector &amp;gt;
 Public Functions #      Name      UniformVectorList() =default
 Constructs a new UniformVectorList.    UniformVectorList(const std::vector&amp;lt; Vector &amp;gt; &amp;amp; vecs, size_t dim =0)

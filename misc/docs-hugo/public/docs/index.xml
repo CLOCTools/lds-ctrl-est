@@ -11,9 +11,10 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/getting-started/</guid>
-      <description>Getting Started #  This library uses the cross-platform tool CMake to run on Linux, MacOS, and Windows. For general information on the dependencies and configuration, see the instructions for Linux/MacOS. Additional Windows-specific instructions can be found here.
-Linux/MacOS
-Windows</description>
+      <description>Getting Started #  This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
+ldsCtrlEst requires Armadillo for linear algebra as well as HDF5 for saving output. vcpkg is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
+Downloading the Library #  First, clone the repository along with submodules:
+git clone --recurse-submodules https://github.</description>
     </item>
     
     <item>
@@ -52,7 +53,7 @@ In addition to the dependencies mentioned in Linux/MacOS, on Windows, this libra
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/terminology/model/</guid>
-      <description>Model Definitions #  This library provides methods for control and estimation of linear dynamical systems (LDS) of the following form:   \[\mathbf{x}_{t&amp;#43;1} = f\left( \mathbf{x}_{t}, \mathbf{v}_{t} \right) = \mathbf{A} \mathbf{x}_{t} &amp;#43; \mathbf{B} \mathbf{v}_{t} &amp;#43; \mathbf{m}_{t} &amp;#43; \mathbf{w}_{t}\]   \[\mathbf{y}_{t} = h\left( \mathbf{x}_{t} \right)\]  t : time index x : system state v = g%u : input (e.g., in physical units used for model fit) u : control signal sent to actuator (e.</description>
+      <description>Model Definitions #  This library provides methods for control and estimation of linear dynamical systems (LDS) of the following form:   \[\mathbf{x}_{t&amp;#43;1} = f\left( \mathbf{x}_{t}, \mathbf{v}_{t} \right) = \mathbf{A} \mathbf{x}_{t} &amp;#43; \mathbf{B} \mathbf{v}_{t} &amp;#43; \mathbf{m}_{t} &amp;#43; \mathbf{w}_{t}\]   \[\mathbf{y}_{t} = h\left( \mathbf{x}_{t} \right)\]  t : time indexx : system statev = g%u : input (e.g., in physical units used for model fit)u : control signal sent to actuator (e.</description>
     </item>
     
   </channel>

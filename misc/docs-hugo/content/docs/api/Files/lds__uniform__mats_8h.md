@@ -20,7 +20,7 @@ List of uniformly sized matrices.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)**  |
+| class | **[lds::UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1uniformmatrixlist/)**  |
 
 ## Detailed Description
 
@@ -71,12 +71,12 @@ class UniformMatrixList : public std::vector<Matrix> {
   // using std::vector<Matrix>::vector;
   using std::vector<Matrix>::operator=;
   using std::vector<Matrix>::operator[];
-  using std::vector<Matrix>::at;
   using std::vector<Matrix>::begin;
   using std::vector<Matrix>::end;
   using std::vector<Matrix>::size;
 
  public:
+  using std::vector<Matrix>::at;
   UniformMatrixList() = default;
 
   explicit UniformMatrixList(const std::vector<Matrix>& mats,
@@ -147,6 +147,10 @@ inline void UniformMatrixList<D>::Swap(Matrix& that, size_t n) {
 template <MatrixListFreeDim D>
 inline UniformMatrixList<D>& UniformMatrixList<D>::operator=(
     const UniformMatrixList<D>& that) {
+  // make sure dim_ vector is initialized
+  if (dim_.empty()) {
+    dim_ = std::vector<std::array<size_t, 2>>(that.size(), {0, 0});
+  }
   // check dimensions
   if (!this->empty()) {
     if (this->size() != that.size()) {
@@ -197,45 +201,49 @@ inline UniformMatrixList<D>& UniformMatrixList<D>::operator=(
 template <MatrixListFreeDim D>
 inline UniformMatrixList<D>& UniformMatrixList<D>::operator=(
     UniformMatrixList<D>&& that) noexcept {
-  // check dimensions
-  // if empty, assume a default constructed object and safe to move
-  if (!this->empty()) {
-    if (this->size() != that.size()) {
-      std::cerr << "Cannot reassign " << this->size() << " matrices with "
-                << that.size() << " matrices. Skipping.\n";
-      return (*this);
-    }
-
-    // if dimensions a not zero and do not match, skip move with error message.
-    bool dims_nonzero = true;
-    for (auto d : dim_) {
-      if (!(D == kMatFreeDim1) && (d[0] < 1)) {
-        dims_nonzero = false;
-        break;
-      }
-      if (!(D == kMatFreeDim2) && (d[1] < 1)) {
-        dims_nonzero = false;
-        break;
-      }
-    }
-    if (dims_nonzero) {
-      bool does_match = true;
-      if (!(D == kMatFreeDim1)) {
-        does_match = does_match && (dim_[0][0] == that.at(0).n_rows);
-      }
-
-      if (!(D == kMatFreeDim2)) {
-        does_match = does_match && (dim_[0][1] == that.at(0).n_cols);
-      }
-
-      if (!does_match) {
-        std::cerr
-            << "Cannot move a UniformMatrixList element for an element of "
-               "different size. Skipping.\n";
-        return (*this);
-      }
-    }
-  }
+  // // check dimensions
+  // // if empty, assume a default constructed object and safe to move
+  // if (!this->empty()) {
+  //   if (this->size() != that.size()) {
+  //     std::cerr << "Cannot reassign " << this->size() << " matrices with "
+  //               << that.size() << " matrices. Skipping.\n";
+  //     return (*this);
+  //   }
+  //
+  //   // if dimensions a not zero and do not match, skip move with error
+  //   message. bool dims_nonzero = true; for (auto d : dim_) {
+  //     if (!(D == kMatFreeDim1) && (d[0] < 1)) {
+  //       dims_nonzero = false;
+  //       break;
+  //     }
+  //     if (!(D == kMatFreeDim2) && (d[1] < 1)) {
+  //       dims_nonzero = false;
+  //       break;
+  //     }
+  //   }
+  //
+  //   if (dims_nonzero) {
+  //     bool does_match = true;
+  //     if (!(D == kMatFreeDim1)) {
+  //       does_match = does_match && (dim_[0][0] == that.at(0).n_rows);
+  //     }
+  //
+  //     if (!(D == kMatFreeDim2)) {
+  //       does_match = does_match && (dim_[0][1] == that.at(0).n_cols);
+  //     }
+  //
+  //     if (!does_match) {
+  //       this->at(0).print("this[0] = ");
+  //       that.at(0).print("that[0] = ");
+  //       std::cerr
+  //           << "Cannot move a UniformMatrixList element of size (" <<
+  //           that.at(0).n_rows << "," << that.at(0).n_cols << ") for an
+  //           element of size (" << dim_[0][0] << "," << dim_[0][1] << ").
+  //           Skipping.\n";
+  //       return (*this);
+  //     }
+  //   }
+  // }
 
   dim_ = that.dim_;
   std::vector<Matrix>::operator=(std::move(that));
@@ -274,8 +282,8 @@ template <MatrixListFreeDim D>
 UniformMatrixList<D>::UniformMatrixList(UniformMatrixList<D>&& that) noexcept
     : vector(std::move(that)) {
   for (size_t k = 0; k < this->size(); k++) {
-    dim_[k][0] = (*this)[k].n_rows;
-    dim_[k][1] = (*this)[k].n_cols;
+    std::array<size_t, 2> dim_k({this->at(k).n_rows, this->at(k).n_cols});
+    dim_.push_back(dim_k);
   }
 }
 
@@ -319,4 +327,4 @@ void UniformMatrixList<D>::CheckDimensions(std::array<size_t, 2> dim) {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on  4 May 2022 at 15:48:59 Eastern Daylight Time

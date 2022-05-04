@@ -21,13 +21,13 @@ GLDS switched controller type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)** <br>Gaussian-observation [SwitchedController]() Type.  |
+| class | **[lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1switchedcontroller/)** <br>Gaussian-observation [SwitchedController]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Gaussian-output linear dynamical systems ([lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)). 
+This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Gaussian-output linear dynamical systems ([lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1switchedcontroller/)). 
 
 
 
@@ -111,4 +111,4 @@ class SwitchedController : public lds::SwitchedController<System> {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on  4 May 2022 at 15:48:59 Eastern Daylight Time

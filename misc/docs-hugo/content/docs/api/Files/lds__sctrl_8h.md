@@ -20,13 +20,13 @@ SwitchedController type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1_switched_controller/)** <br>[SwitchedController]() Type.  |
+| class | **[lds::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1switchedcontroller/)** <br>[SwitchedController]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares the type for switched control of a system approximated as multiple discrete Gaussian-output linear dynamical systems ([lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/)). 
+This file declares the type for switched control of a system approximated as multiple discrete Gaussian-output linear dynamical systems ([lds::gaussian::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1switchedcontroller/)). 
 
 
 
@@ -59,6 +59,8 @@ This file declares the type for switched control of a system approximated as mul
 #define LDSCTRLEST_LDS_SCTRL_H
 
 #include "lds_ctrl.h"
+#include "lds_uniform_mats.h"
+#include "lds_uniform_vecs.h"
 
 namespace lds {
 template <typename System>
@@ -270,4 +272,4 @@ inline void SwitchedController<System>::Switch(size_t idx,
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on  4 May 2022 at 15:48:59 Eastern Daylight Time

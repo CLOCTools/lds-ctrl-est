@@ -20,7 +20,7 @@ LDS base fit type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/)** <br>LDS [Fit]() Type.  |
+| class | **[lds::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1fit/)** <br>LDS [Fit]() Type.  |
 
 ## Detailed Description
 
@@ -67,6 +67,8 @@ class Fit {
  public:
   Fit() = default;
   Fit(size_t n_u, size_t n_x, size_t n_y, data_t dt);
+
+  virtual ~Fit() = default;
 
   // get methods
   size_t n_u() const { return n_u_; };
@@ -146,4 +148,4 @@ class Fit {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on  4 May 2022 at 15:48:58 Eastern Daylight Time

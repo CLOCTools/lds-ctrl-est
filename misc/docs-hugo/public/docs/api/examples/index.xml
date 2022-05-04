@@ -11,7 +11,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_ctrl_8cpp-example/</guid>
-      <description>Example GLDS Control.</description>
+      <description>eg_glds_ctrl.cpp #  Example GLDS Control
+//===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.apache.org/licenses/LICENSE-2.0 // // Unless required by applicable law or agreed to in writing, software // distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS, // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</description>
     </item>
     
     <item>
@@ -20,7 +21,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_du_plds_ctrl_8cpp-example/</guid>
-      <description>Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u).</description>
+      <description>eg_glds_du_plds_ctrl.cpp #  Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u).
+//===-- eg_glds_du_plds_ctrl.cpp - Example GLDS Delta u Control of PLDS ---===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.</description>
     </item>
     
     <item>
@@ -29,7 +31,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_ctrl_8cpp-example/</guid>
-      <description>Example PLDS Control.</description>
+      <description>eg_plds_ctrl.cpp #  Example PLDS Control
+//===-- eg_plds_ctrl.cpp - Example PLDS Control ---------------------===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.apache.org/licenses/LICENSE-2.0 // // Unless required by applicable law or agreed to in writing, software // distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS, // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</description>
     </item>
     
     <item>
@@ -38,7 +41,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_est_8cpp-example/</guid>
-      <description>Example PLDS Estimation.</description>
+      <description>eg_plds_est.cpp #  Example PLDS Estimation
+//===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.apache.org/licenses/LICENSE-2.0 // // Unless required by applicable law or agreed to in writing, software // distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS, // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</description>
     </item>
     
     <item>
@@ -47,7 +51,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_switched_ctrl_8cpp-example/</guid>
-      <description>Example Switched PLDS Control.</description>
+      <description>eg_plds_switched_ctrl.cpp #  Example Switched PLDS Control
+//===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.apache.org/licenses/LICENSE-2.0 // // Unless required by applicable law or agreed to in writing, software // distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS, // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</description>
     </item>
     
   </channel>

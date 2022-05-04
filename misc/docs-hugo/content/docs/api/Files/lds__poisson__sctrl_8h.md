@@ -21,13 +21,13 @@ PLDS switched controller type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/)** <br>Poisson-observation [SwitchedController]() Type.  |
+| class | **[lds::poisson::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1switchedcontroller/)** <br>Poisson-observation [SwitchedController]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Poisson-output linear dynamical systems ([lds::poisson::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/)). 
+This file declares and partially defines the type for switched feedback control of a system approximated as multiple discrete Poisson-output linear dynamical systems ([lds::poisson::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1switchedcontroller/)). 
 
 
 
@@ -60,6 +60,7 @@ This file declares and partially defines the type for switched feedback control 
 #define LDSCTRLEST_LDS_POISSON_SWITCHED_CTRL_H
 
 #include "lds_poisson_ctrl.h"
+#include "lds_sctrl.h"
 
 namespace lds {
 namespace poisson {
@@ -113,4 +114,4 @@ class SwitchedController : public lds::SwitchedController<System> {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on  4 May 2022 at 15:48:59 Eastern Daylight Time

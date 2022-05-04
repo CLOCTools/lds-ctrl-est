@@ -21,7 +21,7 @@ PLDS E-M fit type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::FitEM](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/)** <br>PLDS E-M [Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/) Type.  |
+| class | **[lds::poisson::FitEM](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitem/)** <br>PLDS E-M [Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fit/) Type.  |
 
 ## Detailed Description
 
@@ -95,4 +95,4 @@ class FitEM : public EM<Fit> {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on  4 May 2022 at 15:48:59 Eastern Daylight Time

@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Gaussian LDS Type.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="lds::gaussian::System" />
+<meta property="og:description" content="Gaussian LDS Type." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/" /><meta property="article:section" content="docs" />
+
+
+
+<title>lds::gaussian::System | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.0744557ce8943df18f25ec78a891133fda6bb440b570daa965345e7d14ef6221.js" integrity="sha256-B0RVfOiUPfGPJex4qJETP9prtEC1cNqpZTRefRTvYiE=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<p><br /></p>
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<p><br /></p>
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::gaussian::System</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsgaussiansystem">lds::gaussian::System</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#protected-functions">Protected Functions</a></li>
+        <li><a href="#protected-attributes">Protected Attributes</a></li>
+        <li><a href="#additional-inherited-members">Additional inherited members</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#system"><strong>System</strong></a></li>
+            <li><a href="#system-1"><strong>System</strong></a></li>
+            <li><a href="#simulate"><strong>Simulate</strong></a></li>
+            <li><a href="#r"><strong>R</strong></a></li>
+            <li><a href="#set_q"><strong>set_Q</strong></a></li>
+            <li><a href="#set_r"><strong>set_R</strong></a></li>
+            <li><a href="#set_ke"><strong>set_Ke</strong></a></li>
+            <li><a href="#set_ke_m"><strong>set_Ke_m</strong></a></li>
+            <li><a href="#print"><strong>Print</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-function-details">Protected Function Details</a>
+          <ul>
+            <li><a href="#h"><strong>h</strong></a></li>
+            <li><a href="#recurseke"><strong>RecurseKe</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-attribute-details">Protected Attribute Details</a>
+          <ul>
+            <li><a href="#r_">**R_**</a></li>
+            <li><a href="#do_recurse_ke_">**do_recurse_Ke_**</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsgaussiansystem">
+  lds::gaussian::System
+  <a class="anchor" href="#ldsgaussiansystem">#</a>
+</h1>
+<p>Gaussian LDS Type. 
+<br /> <code>#include &lt;lds_gaussian_sys.h&gt;</code></p>
+<p>Inherits from <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/">lds::System</a></p>
+<h2 id="public-functions">
+  Public Functions
+  <a class="anchor" href="#public-functions">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-system">System</a></strong>() =default<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/">System</a>.</td>
+</tr>
+<tr>
+<td></td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-system">System</a></strong>(std::size_t n_u, std::size_t n_x, std::size_t n_y, <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a> dt, <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a> p0 =kDefaultP0, <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a> q0 =kDefaultQ0, <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a> r0 =kDefaultR0)<br>Constructs a new Gaussian <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/">System</a>.</td>
+</tr>
+<tr>
+<td>virtual const Vector &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-simulate">Simulate</a></strong>(const Vector &amp; u_tm1) override<br>Simulate system measurement.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-r">R</a></strong>() const<br>Get output noise covariance.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-set-q">set_Q</a></strong>(const Matrix &amp; Q)</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-set-r">set_R</a></strong>(const Matrix &amp; R)<br>Set output noise covariance.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-set-ke">set_Ke</a></strong>(const Matrix &amp; Ke)<br>Set estimator gain.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-set-ke-m">set_Ke_m</a></strong>(const Matrix &amp; Ke_m)<br>Set disturbance estimator gain.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-print">Print</a></strong>()<br>Print system variables to stdout.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="protected-functions">
+  Protected Functions
+  <a class="anchor" href="#protected-functions">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-h">h</a></strong>() override<br><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/">System</a> output function.</td>
+</tr>
+<tr>
+<td>virtual void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#function-recurseke">RecurseKe</a></strong>() override<br>Recursively update estimator gain.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="protected-attributes">
+  Protected Attributes
+  <a class="anchor" href="#protected-attributes">#</a>
+</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#variable-r-">R_</a></strong> <br>covariance of output noise</td>
+</tr>
+<tr>
+<td>bool</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/#variable-do-recurse-ke-">do_recurse_Ke_</a></strong> <br>whether to recursively calculate estimator gain</td>
+</tr>
+</tbody>
+</table>
+<h2 id="additional-inherited-members">
+  Additional inherited members
+  <a class="anchor" href="#additional-inherited-members">#</a>
+</h2>
+<p><strong>Public Functions inherited from <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/">lds::System</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>virtual</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-~system">~System</a></strong>()</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-filter">Filter</a></strong>(const Vector &amp; u_tm1, const Vector &amp; z)<br>Filter data to produce causal state estimates.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-f">f</a></strong>(const Vector &amp; u, bool do_add_noise =false)<br>system dynamics function</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-n-u">n_u</a></strong>() const<br>Get number of inputs.</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-n-x">n_x</a></strong>() const<br>Get number of states.</td>
+</tr>
+<tr>
+<td>size_t</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-n-y">n_y</a></strong>() const<br>Get number of outputs.</td>
+</tr>
+<tr>
+<td><a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a></td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-dt">dt</a></strong>() const<br>Get sample period.</td>
+</tr>
+<tr>
+<td>const Vector &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-x">x</a></strong>() const<br>Get current state.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-p">P</a></strong>() const<br>Get covariance of state estimate.</td>
+</tr>
+<tr>
+<td>const Vector &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-m">m</a></strong>() const<br>Get current process disturbance/bias.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-p-m">P_m</a></strong>() const<br>Get covariance of process disturbance estimate.</td>
+</tr>
+<tr>
+<td>const Vector &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-cx">cx</a></strong>() const<br>Get C*x.</td>
+</tr>
+<tr>
+<td>const Vector &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-y">y</a></strong>() const<br>Get output.</td>
+</tr>
+<tr>
+<td>const Vector &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-x0">x0</a></strong>() const<br>Get initial state.</td>
+</tr>
+<tr>
+<td>const Vector &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-m0">m0</a></strong>() const<br>Get initial disturbance.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-a">A</a></strong>() const<br>Get state matrix.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-b">B</a></strong>() const<br>Get input matrix.</td>
+</tr>
+<tr>
+<td>const Vector &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-g">g</a></strong>() const<br>Get input gain/conversion factor.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-c">C</a></strong>() const<br>Get output matrix.</td>
+</tr>
+<tr>
+<td>const Vector &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-d">d</a></strong>() const<br>Get output bias.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-ke">Ke</a></strong>() const<br>Get estimator gain.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-ke-m">Ke_m</a></strong>() const<br>Get estimator gain for process disturbance (m)</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-q">Q</a></strong>()<br>Get process noise covariance.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-q-m">Q_m</a></strong>()<br>Get process noise covariance of disturbance evoluation.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-p0">P0</a></strong>()<br>Get covariance of initial state.</td>
+</tr>
+<tr>
+<td>const Matrix &amp;</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-p0-m">P0_m</a></strong>()<br>Get covariance of initial process disturbance.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-a">set_A</a></strong>(const Matrix &amp; A)<br>Set state matrix.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-b">set_B</a></strong>(const Matrix &amp; B)<br>Set input matrix.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-m">set_m</a></strong>(const Vector &amp; m, bool do_force_assign =false)<br>Set process disturbance.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-g">set_g</a></strong>(const Vector &amp; g)<br>Set input gain.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-q-m">set_Q_m</a></strong>(const Matrix &amp; Q_m)<br>Set process noise covariance of disturbance evoluation.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-x0">set_x0</a></strong>(const Vector &amp; x0)<br>Set initial state.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-p0">set_P0</a></strong>(const Matrix &amp; P0)<br>Set covariance of initial state.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-p0-m">set_P0_m</a></strong>(const Matrix &amp; P0_m)<br>Set covariance of initial process disturbance.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-c">set_C</a></strong>(const Matrix &amp; C)<br>Set output matrix.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-d">set_d</a></strong>(const Vector &amp; d)<br>Set output bias.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-set-x">set_x</a></strong>(const Vector &amp; x)<br>Set state of system.</td>
+</tr>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-reset">Reset</a></strong>()<br>Reset system variables.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Protected Functions inherited from <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/">lds::System</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>void</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-initvars">InitVars</a></strong>(<a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a> p0 =kDefaultP0, <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a> q0 =kDefaultQ0)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Public Attributes inherited from <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/">lds::System</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bool</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-do-adapt-m">do_adapt_m</a></strong> <br>whether to adaptively estimate disturbance m</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Protected Attributes inherited from <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/">lds::System</a></strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::size_t</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-n-x-">n_x_</a></strong> <br>number of states</td>
+</tr>
+<tr>
+<td>std::size_t</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-n-u-">n_u_</a></strong> <br>number of inputs</td>
+</tr>
+<tr>
+<td>std::size_t</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-n-y-">n_y_</a></strong> <br>number of outputs</td>
+</tr>
+<tr>
+<td><a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a></td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-dt-">dt_</a></strong> <br>sample period</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-x-">x_</a></strong> <br>state</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-p-">P_</a></strong> <br>covariance of state estimate</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-m-">m_</a></strong> <br>process disturbance</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-p-m-">P_m_</a></strong> <br>covariance of disturbance estimate</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-cx-">cx_</a></strong> <br>C*x.</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-y-">y_</a></strong> <br>output</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-z-">z_</a></strong> <br>measurement</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-x0-">x0_</a></strong> <br>initial state</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-p0-">P0_</a></strong> <br>covariance of initial state estimate</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-m0-">m0_</a></strong> <br>initial process disturbance</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-p0-m-">P0_m_</a></strong> <br>covariance of initial disturbance est.</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-a-">A_</a></strong> <br>state matrix</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-b-">B_</a></strong> <br>input matrix</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-g-">g_</a></strong> <br>input gain</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-q-">Q_</a></strong> <br>covariance of process noise</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-q-m-">Q_m_</a></strong> <br>covariance of disturbance random walk</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-c-">C_</a></strong> <br>output matrix</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-d-">d_</a></strong> <br>output bias</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-ke-">Ke_</a></strong> <br>estimator gain</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#variable-ke-m-">Ke_m_</a></strong> <br>estimator gain for process disturbance</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<hr>
+<h2 id="public-function-details">
+  Public Function Details
+  <a class="anchor" href="#public-function-details">#</a>
+</h2>
+<h3 id="system">
+  <strong>System</strong>
+  <a class="anchor" href="#system">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">System() <span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>
+</code></pre></div><hr>
+<h3 id="system-1">
+  <strong>System</strong>
+  <a class="anchor" href="#system-1">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">System(
+    std<span style="color:#f92672">::</span>size_t n_u,
+    std<span style="color:#f92672">::</span>size_t n_x,
+    std<span style="color:#f92672">::</span>size_t n_y,
+    data_t dt,
+    data_t p0 <span style="color:#f92672">=</span>kDefaultP0,
+    data_t q0 <span style="color:#f92672">=</span>kDefaultQ0,
+    data_t r0 <span style="color:#f92672">=</span>kDefaultR0
+)
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>n_u</strong> number of inputs (u)</li>
+<li><strong>n_x</strong> number of states (x)</li>
+<li><strong>n_y</strong> number of outputs (y)</li>
+<li><strong>dt</strong> sample period</li>
+<li><strong>p0</strong> [optional] initial diagonal elements of state estimate covariance (P)</li>
+<li><strong>q0</strong> [optional] initial diagonal elements of process noise covariance (Q)</li>
+<li><strong>r0</strong> [optional] initial diagonal elements of output noise covariance (R)</li>
+</ul>
+<hr>
+<h3 id="simulate">
+  <strong>Simulate</strong>
+  <a class="anchor" href="#simulate">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> Simulate(
+    <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> u_tm1
+) <span style="color:#66d9ef">override</span>
+</code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>u_tm1</strong> input at t-1</li>
+</ul>
+<p><strong>Return</strong>: z measurement</p>
+<p><strong>Reimplements</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-simulate">lds::System::Simulate</a></p>
+<p>Simulate system and produce measurement</p>
+<hr>
+<h3 id="r">
+  <strong>R</strong>
+  <a class="anchor" href="#r">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> R() <span style="color:#66d9ef">const</span>
+</code></pre></div><hr>
+<h3 id="set_q">
+  <strong>set_Q</strong>
+  <a class="anchor" href="#set_q">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_Q(
+    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> Q
+)
+</code></pre></div><hr>
+<h3 id="set_r">
+  <strong>set_R</strong>
+  <a class="anchor" href="#set_r">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_R(
+    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> R
+)
+</code></pre></div><hr>
+<h3 id="set_ke">
+  <strong>set_Ke</strong>
+  <a class="anchor" href="#set_ke">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_Ke(
+    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> Ke
+)
+</code></pre></div><hr>
+<h3 id="set_ke_m">
+  <strong>set_Ke_m</strong>
+  <a class="anchor" href="#set_ke_m">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_Ke_m(
+    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> Ke_m
+)
+</code></pre></div><hr>
+<h3 id="print">
+  <strong>Print</strong>
+  <a class="anchor" href="#print">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">void</span> Print()
+</code></pre></div><hr>
+<h2 id="protected-function-details">
+  Protected Function Details
+  <a class="anchor" href="#protected-function-details">#</a>
+</h2>
+<h3 id="h">
+  <strong>h</strong>
+  <a class="anchor" href="#h">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> h() <span style="color:#66d9ef">override</span>
+</code></pre></div><p><strong>Reimplements</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-h">lds::System::h</a></p>
+<hr>
+<h3 id="recurseke">
+  <strong>RecurseKe</strong>
+  <a class="anchor" href="#recurseke">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> RecurseKe() <span style="color:#66d9ef">override</span>
+</code></pre></div><p><strong>Reimplements</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1system/#function-recurseke">lds::System::RecurseKe</a></p>
+<hr>
+<h2 id="protected-attribute-details">
+  Protected Attribute Details
+  <a class="anchor" href="#protected-attribute-details">#</a>
+</h2>
+<h3 id="r_">
+  **R_**
+  <a class="anchor" href="#r_">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">Matrix R_;
+</code></pre></div><hr>
+<h3 id="do_recurse_ke_">
+  **do_recurse_Ke_**
+  <a class="anchor" href="#do_recurse_ke_">#</a>
+</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">bool</span> do_recurse_Ke_ {};
+</code></pre></div><hr>
+<hr>
+<p>Updated on  4 May 2022 at 15:48:58 Eastern Daylight Time</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsgaussiansystem">lds::gaussian::System</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#protected-functions">Protected Functions</a></li>
+        <li><a href="#protected-attributes">Protected Attributes</a></li>
+        <li><a href="#additional-inherited-members">Additional inherited members</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#system"><strong>System</strong></a></li>
+            <li><a href="#system-1"><strong>System</strong></a></li>
+            <li><a href="#simulate"><strong>Simulate</strong></a></li>
+            <li><a href="#r"><strong>R</strong></a></li>
+            <li><a href="#set_q"><strong>set_Q</strong></a></li>
+            <li><a href="#set_r"><strong>set_R</strong></a></li>
+            <li><a href="#set_ke"><strong>set_Ke</strong></a></li>
+            <li><a href="#set_ke_m"><strong>set_Ke_m</strong></a></li>
+            <li><a href="#print"><strong>Print</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-function-details">Protected Function Details</a>
+          <ul>
+            <li><a href="#h"><strong>h</strong></a></li>
+            <li><a href="#recurseke"><strong>RecurseKe</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-attribute-details">Protected Attribute Details</a>
+          <ul>
+            <li><a href="#r_">**R_**</a></li>
+            <li><a href="#do_recurse_ke_">**do_recurse_Ke_**</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -20,13 +20,13 @@ LDS base type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)** <br>Linear Dynamical [System]() Type.  |
+| class | **[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1system/)** <br>Linear Dynamical [System]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the base type for linear dynamical systems (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)`). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. 
+This file declares and partially defines the base type for linear dynamical systems (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1system/)`). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. 
 
 
 
@@ -68,6 +68,8 @@ class System {
   System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0 = kDefaultP0,
          data_t q0 = kDefaultQ0);
 
+  virtual ~System() {}
+
   void Filter(const Vector& u_tm1, const Vector& z);
 
   virtual const Vector& Simulate(const Vector& u_tm1) = 0;
@@ -103,6 +105,11 @@ class System {
   const Vector& d() const { return d_; };
   const Matrix& Ke() const { return Ke_; };
   const Matrix& Ke_m() const { return Ke_m_; };
+  const Matrix& Q() { return Q_; };
+  const Matrix& Q_m() { return Q_m_; };
+  const Matrix& P0() { return P0_; };
+  const Matrix& P0_m() { return P0_m_; };
+
   void set_A(const Matrix& A) { Reassign(A_, A); };
   void set_B(const Matrix& B) { Reassign(B_, B); };
   void set_m(const Vector& m, bool do_force_assign=false) {
@@ -174,4 +181,4 @@ class System {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on  4 May 2022 at 15:48:59 Eastern Daylight Time

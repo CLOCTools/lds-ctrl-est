@@ -21,13 +21,13 @@ GLDS base type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/)** <br>Gaussian LDS Type.  |
+| class | **[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/)** <br>Gaussian LDS Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for state estimation (filtering) as well as simulation of Gaussian-output linear dynamical systems (`[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)`). 
+This file declares and partially defines the type for state estimation (filtering) as well as simulation of Gaussian-output linear dynamical systems (`[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1system/)`). 
 
 
 
@@ -123,4 +123,4 @@ class System : public lds::System {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on  4 May 2022 at 15:48:59 Eastern Daylight Time

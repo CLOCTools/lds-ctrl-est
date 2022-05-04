@@ -21,13 +21,13 @@ GLDS Controller.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/)** <br>Gaussian-observation [Controller]() Type.  |
+| class | **[lds::gaussian::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1controller/)** <br>Gaussian-observation [Controller]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for control of a gaussian-observation linear dynamical system ([lds::gaussian::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/)). It inherits functionality from the underlying GLDS model type ([lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/)), including state estimation. 
+This file declares and partially defines the type for control of a gaussian-observation linear dynamical system ([lds::gaussian::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1controller/)). It inherits functionality from the underlying GLDS model type ([lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/)), including state estimation. 
 
 
 
@@ -113,4 +113,4 @@ class Controller : public lds::Controller<System> {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on  4 May 2022 at 15:48:58 Eastern Daylight Time
