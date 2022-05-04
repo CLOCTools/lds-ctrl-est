@@ -18,27 +18,6 @@ git clone --recurse-submodules https://github.</description>
     </item>
     
     <item>
-      <title></title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/linux-macos/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/linux-macos/</guid>
-      <description>Downloading the Library #  The source code for this library can be downloaded from stanley-rozell/ldsCtrlEst either by downloading a snapshot or cloning the repository via git.
-git clone https://github.com/stanley-rozell/ldsCtrlEst.git By default, this would check out the master branch. In most cases, we suggest downloading or checking out the latest release instead.
-cd /path/to/ldsCtrlEst git checkout 0.6 Dependencies #  Note that the primary dependencies of this project listed below must be installed along with their header files and with CMake config files or pkg-config files.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/</guid>
-      <description>Dependencies #  To configure and compile the library, you will need Microsoft Visual Studio. After Visual Studio, install the &amp;ldquo;Desktop Development with C++&amp;rdquo; extension under Tools-&amp;gt;Get Tools and Features, ensuring that the &amp;ldquo;C++ Clang Tools for Windows&amp;rdquo; and &amp;ldquo;CMake C++ Tools for Windows&amp;rdquo; options are checked.
-In addition to the dependencies mentioned in Linux/MacOS, on Windows, this library opts to use Intel&amp;rsquo;s Math Kernel Library (MKL) for linear algebra, rather than OpenBLAS/gfotran.</description>
-    </item>
-    
-    <item>
       <title>C&amp;E</title>
       <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/terminology/control-estimation/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

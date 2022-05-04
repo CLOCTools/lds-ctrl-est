@@ -87,3 +87,19 @@ You will likely need to get compiler tools through the Visual Studio installer. 
 ```
 Clang 12.0.0 (GNU CLI) for MSVC 16.11.31702.278 (Visual Studio Community 2019 Release - amd64)
 ```
+
+## Common issues
+
+1. "I have built the library and installed it in a non-default location. In building my own project linking against `ldsCtrlEst`, `cmake` or `pkg-config` cannot find the library or its configuration information."
+
+  If `cmake` and/or `pkg-config` cannot find the required configuration files for your project to link against ldsCtrlEst, make sure that these utilities know to look for them in the non-default location where you installed the library. For `cmake` this means adding your chosen install prefix to the environment variable `CMAKE_PREFIX_PATH`. Similarly, for `pkg-config` you need to add `your/install/prefix/lib/pkgconfig` to its search path, `PKG_CONFIG_PATH`. Assuming a Unix shell whose login startup file is `~/.profile` and ldsCtrlEst was installed using prefix `your/install/prefix`, add the following to `.profile`.
+  ```shell
+  export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:/your/install/prefix
+  export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/your/install/prefix
+  ```
+
+  On Windows, you will likely need to add the build or install folder to your `PATH` environment variable, which you can do using the settings GUI (search for "Edit the system environment variables").
+
+2. On Windows, "Generate CMake Cache" step errs because creating symbolic links is not permitted.
+
+  Certain source files are sym-linked to the build/install directories during configuration with cmake. As such, your user in Windows must be permitted to do so. Make sure that your user is listed next to *Control Panel -> Administrative Tools -> Local Policies -> User Rights Assignment -> Create Symbolic Links*.
