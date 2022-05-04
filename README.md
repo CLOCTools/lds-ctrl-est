@@ -58,7 +58,7 @@ If you see an error on Linux about needing `gfortran` in your path, install with
 If the `vcpkg install` command fails, you may want to upgrade your system (e.g., `apt update`, `apt upgrade`) and try again.
 
 ## Python bindings
-With the `LDSCTRLEST_BUILD_PYTHON` setting (on by default) and the `pybind11` submodule initialized, you can build Python bindings. You will probably want to specify the installation of Python to use by adding a `-DPython_ROOT_DIR=[path/to/install/dir]` argument to the CMake cache generation command (the first one). 
+With the `LDSCTRLEST_BUILD_PYTHON` setting (off by default) and the `pybind11` submodule initialized, you can build Python bindings. You will probably want to specify the installation of Python to use by adding a `-DPython_ROOT_DIR=[path/to/install/dir]` argument to the CMake cache generation command (the first one). 
 
 The bindings need to be generated just once per Python version. Once the build is complete, navigate to the `[build location]/python` folder and run `pip install .` to make it importable anywhere for your current environment. *The file structure only works correctly for this if you use a single-config generator like Ninja, though.* You can verify the installation was successful by running `pytest` from the `build/python` directory.
 
