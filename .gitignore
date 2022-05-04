@@ -97,6 +97,7 @@ Thumbs.db
 ############################
 build/
 out/
+**/Testing/**
 cpp.sublime-workspace
 .vs/
 .vscode/
@@ -104,6 +105,9 @@ cpp.sublime-workspace
 
 # whitelist documentation
 !docs/**
-!misc/docs-hugo/**
+!misc/docs-hugo/archetypes/**
+!misc/docs-hugo/content/**
+!misc/docs-hugo/resources/**
+!misc/docs-hugo/static/**
 # but not second built site--that's already in docs
 misc/docs-hugo/public/*
