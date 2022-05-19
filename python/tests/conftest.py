@@ -4,3 +4,6 @@ def pytest_exception_interact(node, call, report):
     if 'example' in node.funcargs:
         excinfo.traceback.cut(path=node.funcargs['example'])
     report.longrepr = node.repr_failure(excinfo)
+
+import matplotlib
+matplotlib.use('Agg')

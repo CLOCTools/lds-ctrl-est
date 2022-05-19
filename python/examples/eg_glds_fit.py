@@ -96,7 +96,7 @@ l2 = axs[1].plot(t_imp, y_imp_hat[0].T, "-", c=[0.5, 0.5, 0.5], linewidth=2)
 axs[1].legend([l1[0], l2[0]], ["ground truth", "estimated"])
 axs[1].set(ylabel="Impulse Response (a.u.)", xlabel="Time (s)")
 fig.tight_layout()
-fig.show()
+fig
 
 # %%
 # SSID plot var explained
@@ -129,7 +129,7 @@ axs[2].plot(t, u[eg_trial].T, "k")
 axs[2].set(ylabel="Input (a.u.)", xlabel="Time (s)")
 
 fig.tight_layout()
-fig.show()
+fig
 
 # %%
 # exit before EM for the sake of a fast test suite
@@ -175,7 +175,7 @@ axs[1].plot(t, u[eg_trial].T, "k")
 axs[1].set(ylabel="Input (a.u.)", xlabel="Time (s)")
 
 fig.tight_layout()
-fig.show()
+fig
 
 # %%
 # Plot EM-refit impulse response
@@ -186,7 +186,7 @@ l2 = axs[1].plot(t_imp, y_imp_hat_em[0].T, "-", c="gray", linewidth=2)
 axs[1].legend([l1[0], l2[0]], ["ground truth", "EM re-estimated"])
 axs[1].set(ylabel="Impulse Response (a.u.)", xlabel="Time (s)")
 fig.tight_layout()
-fig.show()
+fig
 
 # %%
 # Plot E-M var explained
@@ -217,4 +217,4 @@ axs[2].plot(t, u[eg_trial].T, "k")
 axs[2].set(ylabel="Input (a.u.)", xlabel="Time (s)")
 
 fig.tight_layout()
-fig.show()
+fig
