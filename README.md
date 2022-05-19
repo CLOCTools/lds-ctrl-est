@@ -30,42 +30,9 @@ Among other things, this project also does not provide methods for trajectory op
 
 
 # Installation
-`ldsCtrlEst` requires [Armadillo](http://arma.sourceforge.net/) for linear algebra as well as [HDF5](https://www.hdfgroup.org/downloads/hdf5/) for saving output. [`vcpkg`](https://vcpkg.io/) is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
-
-First, clone the repository along with submodules:
-```
-git clone --recurse-submodules https://github.com/stanley-rozell/lds-ctrl-est.git 
-cd lds-ctrl-est
-# use git submodule update --init if you clone the repo without --recurse-submodules
-```
-
-Now generate the cache and build using your IDE or from the command line as follows.
-```
-mkdir build
-cmake -B build -S .
-cmake --build build
-```
-
-The first time, `vcpkg` will automatically install dependencies into `[build directory]/vcpkg_installed/`, which will likely take about 10-20 minutes.
-
-If you want to use `vcpkg` set up somewhere besides this repo's submodule, add `-DCMAKE_TOOLCHAIN_FILE=[path to vcpkg]/scripts/buildsystems/vcpkg.cmake` to the `cmake` command directly or [through your IDE's settings](https://github.com/microsoft/vcpkg#using-vcpkg-with-cmake).
-
-You can verify the installation is working by running `ctest` from the command line, which runs all the example scripts.
-
-## Troubleshooting
-If you see an error on Linux about needing `gfortran` in your path, install with `apt install gfortran`.
-
-If the `vcpkg install` command fails, you may want to upgrade your system (e.g., `apt update`, `apt upgrade`) and try again.
-
-## Python bindings
-With the `LDSCTRLEST_BUILD_PYTHON` setting (off by default) and the `pybind11` submodule initialized, you can build Python bindings. You will probably want to specify the installation of Python to use by adding a `-DPython_ROOT_DIR=[path/to/install/dir]` argument to the CMake cache generation command (the first one). 
-
-The bindings need to be generated just once per Python version. Once the build is complete, navigate to the `[build location]/python` folder and run `pip install .` to make it importable anywhere for your current environment. *The file structure only works correctly for this if you use a single-config generator like Ninja, though.* You can verify the installation was successful by running `pytest` from the `build/python` directory.
-
-Also, beware that a single build might not work for both the standalone library and the Python package, since the conversion between NumPy and Armadillo alters the way Armadillo allocates memory. In this case you may want to build once with `-DLDSCTRLEST_BUILD_PYTHON=ON`, install the package, then again with  `-DLDSCTRLEST_BUILD_PYTHON=OFF` for the pure C++ build to work correctly.
-
+See the [documentation](https://cloctools.github.io/docs/getting-started).
 # Reporting Issues
-If you encounter bugs when using this library or have specific feature requests that you believe fall within the stated scope of this project, please [open an issue on GitHub](https://github.com/stanley-rozell/lds-ctrl-est/issues) and use an appropriate issue template where possible. You may also fork the repository and submit pull-requests with your suggested changes.
+If you encounter bugs when using this library or have specific feature requests that you believe fall within the stated scope of this project, please [open an issue on GitHub](https://github.com/cloctools/lds-ctrl-est/issues) and use an appropriate issue template where possible. You may also fork the repository and submit pull-requests with your suggested changes.
 
 # Contributing
 We welcome any community contributions to this project. Please fork the repository and if possible use `clang-format` and `clang-tidy` to conform to the coding format/style of this repository.
