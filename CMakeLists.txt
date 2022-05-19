@@ -17,7 +17,7 @@ include(CTest)
 set(CMAKE_PROJECT_NAME_CAP LDSCTRLEST)#all caps
 
 # TODO(mfbolus): Update
-set(PROJECT_URL https://github.com/stanley-rozell/ldsCtrlEst)
+set(PROJECT_URL https://github.com/cloctools/ldsCtrlEst)
 
 # WINDOWS WARNING
 if (WIN32)

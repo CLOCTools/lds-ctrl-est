@@ -4,13 +4,46 @@ This library uses the cross-platform tool CMake to orchestrate the building and 
 
 `ldsCtrlEst` requires [Armadillo](http://arma.sourceforge.net/) for linear algebra as well as [HDF5](https://www.hdfgroup.org/downloads/hdf5/) for saving output. [`vcpkg`](https://vcpkg.io/) is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
 
+## N.B.
+Building C++ libraries with complex dependencies can be tricky business&mdash;in our experience builds have inexplicably worked in one environment and failed in another. To save you time, sweat, and tears, we suggest you simply use one of the following setups we know work fairly reliably, using the `RelWithDebInfo` config:
+- Ubuntu 18.04 with GCC 7.5 compiler
+- macOS 11 (Big Sur) with Apple Clang 12 compiler
+- Windows 10 with Visual Studio 16.11 (2019 release) and Clang 12 compiler
+
+## Mac pre-requisities
+
+Xcode Command Line Tools will get you clang, gcc, make, and git:
+```shell
+xcode-select --install
+```
+
+Homebrew is "The Missing Package Manager for macOS" which will make installing lots of things easy. Install like this:
+```shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+You can then use it to install CMake and gfortran:
+```shell
+brew install cmake gfortran
+```
+
+## Linux pre-requisites
+
+You'll need Git, CMake, GCC, gfortran, etc.
+```shell
+sudo apt install git cmake pkg-config gfortran curl zip unzip tar build-essential
+```
+
+## Windows installation
+Look [here]({{< relref "windows">}}) for Windows-specific instructions.
+
 ## Downloading the Library
 
 First, clone the repository along with submodules:
 ```
-git clone --recurse-submodules https://github.com/stanley-rozell/lds-ctrl-est.git 
+git clone https://github.com/cloctools/lds-ctrl-est.git 
 cd lds-ctrl-est
-# use git submodule update --init if you clone the repo without --recurse-submodules
+git submodule update --init
 ```
 
 ## Compilation + Installation
@@ -71,22 +104,17 @@ Below are example usages of `cmake` to configure/build the library.
 On Windows, you may need to add the build location to the PATH environment variable for the library to be used elsewhere.
 
 ## Python bindings package `ldsctrlest`
-With the `LDSCTRLEST_BUILD_PYTHON` setting (off by default) and the `pybind11` submodule initialized, you can build Python bindings. You will probably want to specify the installation of Python to use by adding a `-DPython_ROOT_DIR=[path/to/install/dir]` argument to the CMake cache generation command (the first one) so CMake doesn't use an undesired version. That environment needs to have NumPy installed.
+With the `LDSCTRLEST_BUILD_PYTHON` setting (off by default) and the `pybind11` submodule initialized, you can build Python bindings. You will probably want to specify the installation of Python to use by adding a `-DPython3_ROOT_DIR=[path/to/install/dir]` argument to the CMake cache generation command (the first one) so CMake doesn't use an undesired version. That environment needs to have NumPy installed.
 
-The bindings need to be generated just once per Python version. Once the build is complete, navigate to the `[build location]/python` folder and run `pip install .` to make it importable anywhere for your current environment. *The file structure only works correctly for this if you use a single-config generator like Ninja or Make, though.* You can verify the installation was successful by running `pytest` from the `build/python` directory.
+```shell
+cmake --build . --target python_modules
+```
+
+The bindings need to be generated just once per Python version. Once the build is complete, navigate to the `[build location]/python` folder and run `pip install .` to make it importable anywhere for your current environment. *The file structure only works correctly for this if you use a single-config generator like Ninja or Make, though.* You can verify the installation was successful by running `pytest` from the `build/python` directory (`pip install pytest matplotlib` first if you need to).
 
 See `python/ldsctrlest/README.md` for usage details.
 
-Also, beware that a single build might not work for both the standalone library and the Python package (especially on Windows), since the conversion between NumPy and Armadillo alters the way Armadillo allocates memory. In this case you may want to build once with `-DLDSCTRLEST_BUILD_PYTHON=ON`, install the package, then again with  `-DLDSCTRLEST_BUILD_PYTHON=OFF` for the pure C++ build to work correctly.
-
-## Considerations for Windows
-First of all, development on Windows has been more prone to bugs, so if you encounter many problems, consider using a Unix-based system&mdash;[WSL (Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl/install) is a good option for Windows users who don't want to work on a different machine.
-
-You will likely need to get compiler tools through the Visual Studio installer. Compilation was tested in VS Code using the following kit:
-
-```
-Clang 12.0.0 (GNU CLI) for MSVC 16.11.31702.278 (Visual Studio Community 2019 Release - amd64)
-```
+Also, beware that a single build will probably not work for both the standalone library and the Python package, since the conversion between NumPy and Armadillo alters the way Armadillo allocates memory. In this case you may want to build once with `-DLDSCTRLEST_BUILD_PYTHON=ON`, install the package, then again with  `-DLDSCTRLEST_BUILD_PYTHON=OFF` for the pure C++ build to work correctly.
 
 ## Common issues
 
@@ -98,8 +126,10 @@ Clang 12.0.0 (GNU CLI) for MSVC 16.11.31702.278 (Visual Studio Community 2019 Re
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/your/install/prefix
   ```
 
-  On Windows, you will likely need to add the build or install folder to your `PATH` environment variable, which you can do using the settings GUI (search for "Edit the system environment variables").
+2. vcpkg fails on configuration
 
-2. On Windows, "Generate CMake Cache" step errs because creating symbolic links is not permitted.
+  Try running `./bootstrap-vcpkg` from the `vcpkg` folder and try again. If that doesn't work, try updating vcpkg to a newer version (in the source control tab, click on the commit hash by the vcpkg repo then select from the dropdown) and running `boostsrap-vcpkg` again.
 
-  Certain source files are sym-linked to the build/install directories during configuration with cmake. As such, your user in Windows must be permitted to do so. Make sure that your user is listed next to *Control Panel -> Administrative Tools -> Local Policies -> User Rights Assignment -> Create Symbolic Links*.
+3. `Could not find Python3 (missing: Python3_NumPy_INCLUDE_DIRS NumPy)`
+   
+   Make sure NumPy is installed in the Python environment you specified. If CMake still can't find it, you may need to tell CMake exactly where to find it by adding an argument to the configure command: `-DPython3_NumPy_INCLUDE_DIR=...`. You can find that location like this: `python -c 'import numpy; print(numpy.get_include())'`
