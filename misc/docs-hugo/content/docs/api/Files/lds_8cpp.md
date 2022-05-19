@@ -67,9 +67,8 @@ void ForceSymPD(Matrix& X) {
   Vector d;
   Matrix u;
 
-  // for iterative correction
-  // inspired by Higham 2002 but not trying to make a corr matrix
-  // (i.e., not nec unit diag)
+  // see first method (which may not be ideal):
+  // https://nhigham.com/2021/02/16/diagonally-perturbing-a-symmetric-matrix-to-make-it-positive-definite/
   size_t k(1);
   bool is_sympd = X.is_sympd();
   Matrix id = Matrix(X.n_rows, X.n_cols, fill::eye);
@@ -78,7 +77,8 @@ void ForceSymPD(Matrix& X) {
     if (k > 100) {
       did_succeed = arma::eig_sym(d, u, X, "std");
       data_t min_eig = arma::min(d);
-      std::cerr << "After multiple iterations, min eigen val = " << min_eig << ".\n";
+      std::cerr << "After multiple iterations, min eigen val = " << min_eig
+                << ".\n";
       throw std::runtime_error(
           "Failed to make matrix symmetric positive definite.");
       return;
@@ -95,9 +95,6 @@ void ForceSymPD(Matrix& X) {
 
     data_t min_eig = arma::min(d);
     X += id * abs(min_eig) + arma::datum::eps;
-
-    // TODO(mfbolus): should possibly compensate for the resulting change in
-    // sum of eigenvalues by adding to or rescaling diagonal of new "X"...
 
     // make sure symm:
     X = (X + X.t()) / 2;
@@ -162,4 +159,4 @@ Matrix calcCov(const Matrix& A, const Matrix& B) {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time

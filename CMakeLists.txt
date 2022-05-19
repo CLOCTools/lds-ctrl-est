@@ -1,12 +1,23 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
+################################################################################
+############ VCPKG OPTIONS
+################################################################################
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake
+  CACHE STRING "Vcpkg toolchain file")
+# can supposedly be overridden by passing this argument in on the command line
+
+################################################################################
+############ PROJECT SPECIFICATIONS
+################################################################################
 # set project name and version (MAJOR.minor.patch)
-project(ldsCtrlEst VERSION 0.6.2 LANGUAGES CXX C)
+project(ldsCtrlEst VERSION 0.8.0 LANGUAGES CXX C)
+include(CTest)
 # some name variants I will be using:
 set(CMAKE_PROJECT_NAME_CAP LDSCTRLEST)#all caps
 
 # TODO(mfbolus): Update
-set(PROJECT_URL https://github.com/stanley-rozell/ldsCtrlEst)
+set(PROJECT_URL https://github.com/cloctools/ldsCtrlEst)
 
 # WINDOWS WARNING
 if (WIN32)
@@ -58,6 +69,7 @@ option(LDSCTRLEST_BUILD_STATIC
   and build a static version of the library." ON)
 # n.b., if both LDSCTRLEST_BUILD_FIT & LDSCTRLEST_BUILD_STATIC are enabled,
 # Matlab/Octave mex files will be built.
+option(LDSCTRLEST_BUILD_PYTHON "Build a Python wrapper package using pybind11." OFF)
 
 if (WIN32) 
   # needed to build static library
@@ -70,6 +82,7 @@ message(STATUS "CMAKE_CXX_COMPILER_VERSION = ${CMAKE_CXX_COMPILER_VERSION}")
 message(STATUS "LDSCTRLEST_BUILD_FIT       = ${LDSCTRLEST_BUILD_FIT}" )
 message(STATUS "LDSCTRLEST_BUILD_STATIC    = ${LDSCTRLEST_BUILD_STATIC}" )
 message(STATUS "LDSCTRLEST_BUILD_EXAMPLES  = ${LDSCTRLEST_BUILD_EXAMPLES}" )
+message(STATUS "LDSCTRLEST_BUILD_PYTHON    = ${LDSCTRLEST_BUILD_PYTHON}" )
 message(STATUS "")
 message(STATUS "*** Looking for external libraries")
 
@@ -106,22 +119,9 @@ find_package(PkgConfig)
 find_package(Doxygen COMPONENTS dot
              OPTIONAL_COMPONENTS mscgen dia)
 
-# Use MKL on windows
-if (WIN32)
-  include(MKL)
-endif()
-
-if(LDSCTRLEST_BUILD_STATIC AND NOT APPLE AND NOT WIN32)
-  #statically-linking against openblas in this case
-  # OpenBLAS
-  include(OpenBLAS)
-endif()
-
-# ARMADILLO
-include(Armadillo)
-
-# HDF5
+message(STATUS "CMAKE_PREFIX_PATH = ${CMAKE_PREFIX_PATH}")
 include(HDF5)
+include(Armadillo)
 
 if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   # for mex compat.
@@ -130,6 +130,15 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
 
   # provides function for adding oct/mex file target
   include(Octave)
+
+endif()
+
+if (LDSCTRLEST_BUILD_PYTHON)
+# for pybind11 wrappers target
+  include(pybind11)
+  if (NOT (LDSCTRLEST_BUILD_PYTHON AND pybind11_FOUND AND Python_FOUND))
+    set(LDSCTRLEST_BUILD_PYTHON OFF)
+  endif()
 endif()
 
 # save the CXX flags configured for later use by dependency.
@@ -262,7 +271,24 @@ if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   else()
     message(STATUS "Octave was not found. Not building Octave oct/mex files.")
   endif()#end Octave_FOUND
+
 endif()
+
+# python
+if (LDSCTRLEST_BUILD_PYTHON)
+  file(
+    COPY ${PROJECT_SOURCE_DIR}/python/
+    DESTINATION ${PROJECT_BINARY_DIR}/python/
+    PATTERN "*.cpp" EXCLUDE
+    PATTERN "*.txt" EXCLUDE
+    PATTERN "pybind11/*" EXCLUDE
+    PATTERN "carma/*" EXCLUDE
+    )
+  add_subdirectory(python)
+else()
+  message(STATUS "pybind11 and/or Python was not found. Not building Python modules.")
+endif()
+
 
 # build doxygen documention
 # build documentation
@@ -286,173 +312,187 @@ endif()
 ################################################################################
 ############ Install Configuration
 ################################################################################
-message(STATUS ""                                                      )
-message(STATUS "CMAKE_INSTALL_PREFIX     = ${CMAKE_INSTALL_PREFIX}"    )
-message(STATUS "CMAKE_INSTALL_LIBDIR     = ${CMAKE_INSTALL_LIBDIR}"    )
-message(STATUS "CMAKE_INSTALL_INCLUDEDIR = ${CMAKE_INSTALL_INCLUDEDIR}")
-message(STATUS "CMAKE_INSTALL_DATADIR    = ${CMAKE_INSTALL_DATADIR}"   )
-message(STATUS "CMAKE_INSTALL_BINDIR     = ${CMAKE_INSTALL_BINDIR}"    )
+if(NOT LDSCTRLEST_BUILD_PYTHON)  # because Python build requires carma install
+  message(STATUS ""                                                      )
+  message(STATUS "CMAKE_INSTALL_PREFIX     = ${CMAKE_INSTALL_PREFIX}"    )
+  message(STATUS "CMAKE_INSTALL_LIBDIR     = ${CMAKE_INSTALL_LIBDIR}"    )
+  message(STATUS "CMAKE_INSTALL_INCLUDEDIR = ${CMAKE_INSTALL_INCLUDEDIR}")
+  message(STATUS "CMAKE_INSTALL_DATADIR    = ${CMAKE_INSTALL_DATADIR}"   )
+  message(STATUS "CMAKE_INSTALL_BINDIR     = ${CMAKE_INSTALL_BINDIR}"    )
 
-# add installation includedir
-list(APPEND PROJECT_REQUIRED_INCLUDE_DIRS
-  ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR})
-list(REMOVE_DUPLICATES PROJECT_REQUIRED_INCLUDE_DIRS)
+  # add installation includedir
+  list(APPEND PROJECT_REQUIRED_INCLUDE_DIRS
+    ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR})
+  list(REMOVE_DUPLICATES PROJECT_REQUIRED_INCLUDE_DIRS)
 
-# Install headers
-install(
-  FILES "${PROJECT_BINARY_DIR}/include/${CMAKE_PROJECT_NAME}"
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-# Note that sym-linked the rest of the headers, so need to copy them from the
-# source location.
-install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${CMAKE_PROJECT_NAME}_h"
-  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-  PATTERN ".svn" EXCLUDE
-  PATTERN "*.cmake" EXCLUDE
-  PATTERN "*~" EXCLUDE
-  PATTERN "*orig" EXCLUDE
-)
-
-set(install_targets ${CMAKE_PROJECT_NAME})
-if(LDSCTRLEST_BUILD_STATIC)
-list(APPEND install_targets ${CMAKE_PROJECT_NAME}Static)
-endif()
-
-install(
-  TARGETS ${install_targets}
-  EXPORT ${CMAKE_PROJECT_NAME}#-> file <export-name>.cmake by default
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  # Install headers
+  install(
+    FILES "${PROJECT_BINARY_DIR}/include/${CMAKE_PROJECT_NAME}"
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+  )
+  # Note that sym-linked the rest of the headers, so need to copy them from the
+  # source location.
+  install(DIRECTORY "${PROJECT_SOURCE_DIR}/include/${CMAKE_PROJECT_NAME}_h"
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    PATTERN ".svn" EXCLUDE
+    PATTERN "*.cmake" EXCLUDE
+    PATTERN "*~" EXCLUDE
+    PATTERN "*orig" EXCLUDE
   )
 
-# Export the package for use from outside the build-tree
-export(PACKAGE ${CMAKE_PROJECT_NAME})
+  set(install_targets ${CMAKE_PROJECT_NAME})
+  if(LDSCTRLEST_BUILD_STATIC)
+  list(APPEND install_targets ${CMAKE_PROJECT_NAME}Static)
+  endif()
 
-# provides `configure_package_config_file`,
-# `write_basic_package_version_file`
-include(CMakePackageConfigHelpers)
-
-# Create {Project}Config.cmake file
-message(STATUS "Generating
-  '${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake'")
-configure_package_config_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/cmake/InstallFiles/Config.cmake.in
-  "${CMAKE_CURRENT_BINARY_DIR}/InstallFiles/${CMAKE_PROJECT_NAME}Config.cmake"
-  INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/CMake"
-)
-
-# generate the version file for the config file
-message(STATUS "Generating '${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}ConfigVersion.cmake'")
-write_basic_package_version_file(
-  "${CMAKE_CURRENT_BINARY_DIR}/InstallFiles/${CMAKE_PROJECT_NAME}ConfigVersion.cmake"
-  VERSION "${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR}.${CMAKE_PROJECT_VERSION_PATCH}"
-  COMPATIBILITY AnyNewerVersion)
-
-# Install the export set for use with the install-tree
-install(EXPORT ${CMAKE_PROJECT_NAME}
-  DESTINATION "${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/CMake")
-  # COMPONENT dev)
-
-# Install files to be found by cmake users with find_package()
-install(FILES
-  "${PROJECT_BINARY_DIR}/InstallFiles/${CMAKE_PROJECT_NAME}Config.cmake"
-  "${PROJECT_BINARY_DIR}/InstallFiles/${CMAKE_PROJECT_NAME}ConfigVersion.cmake"
-  DESTINATION "${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/CMake")
-   # COMPONENT dev)
-
-# pkgconfig related
-# add the target dynamic library
-get_target_property(LIBVERSION ${CMAKE_PROJECT_NAME} VERSION)
-list(APPEND PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME
-  ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/lib${CMAKE_PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
-set(PROJECT_REQUIRED_LIBRARIES ${PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME})
-list(APPEND PROJECT_REQUIRED_LIBRARIES ${PROJECT_REQUIRED_LIBRARIES_SHORT_NAME})
-
-# string(REPLACE <match-string> <replace-string> <out-var> <input>...)
-string(REPLACE ";" " -I"
-  PROJECT_PKGCONFIG_INCLUDE_DIRS "${PROJECT_REQUIRED_INCLUDE_DIRS}")
-string(REPLACE ";" " -L"
-  PROJECT_PKGCONFIG_LIBRARY_DIRS "${PROJECT_REQUIRED_LIBRARY_DIRS}")
-string(REPLACE ";" " "
-  PROJECT_PKGCONFIG_LIBRARIES_ABSOLUTE_NAME
-  "${PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME}")
-string(REPLACE ";" " -l"
-  PROJECT_PKGCONFIG_LIBRARIES_SHORT_NAME
-  "${PROJECT_REQUIRED_LIBRARIES_SHORT_NAME}")
-
-# Prune any dangling initial flags.
-# string(LENGTH <string> <out-var>)
-string(LENGTH "${PROJECT_REQUIRED_INCLUDE_DIRS}" STRLEN)
-if (STRLEN LESS 4)
-  set(PROJECT_REQUIRED_INCLUDE_DIRS "")
-endif()
-
-string(LENGTH "${PROJECT_REQUIRED_LIBRARY_DIRS}" STRLEN)
-if (STRLEN LESS 4)
-  set(PROJECT_REQUIRED_LIBRARY_DIRS "")
-endif()
-
-string(LENGTH "${PROJECT_PKGCONFIG_LIBRARIES_SHORT_NAME}" STRLEN)
-if (STRLEN LESS 4)
-  set(PROJECT_PKGCONFIG_LIBRARIES_SHORT_NAME "")
-endif()
-
-message(STATUS "PKGCONFIG INCLUDE DIRS    = ${PROJECT_PKGCONFIG_INCLUDE_DIRS}")
-message(STATUS "PKGCONFIG LIBRARY DIRS    = ${PROJECT_PKGCONFIG_LIBRARY_DIRS}")
-message(STATUS "PKGCONFIG LIBRARIES (ABS) = ${PROJECT_PKGCONFIG_LIBRARIES_ABSOLUTE_NAME}")
-message(STATUS "PKGCONFIG LIBRARIES (REL) = ${PROJECT_PKGCONFIG_LIBRARIES_SHORT_NAME}")
-
-message(STATUS "Generating
-  '${PROJECT_BINARY_DIR}/misc/${CMAKE_PROJECT_NAME}.pc'")
-configure_file(${PROJECT_SOURCE_DIR}/misc/config.pc.in
-  "${PROJECT_BINARY_DIR}/misc/${CMAKE_PROJECT_NAME}.pc" @ONLY)
-install(FILES "${PROJECT_BINARY_DIR}/misc/${CMAKE_PROJECT_NAME}.pc"
-  DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
-
-#Install examples
-if(LDSCTRLEST_BUILD_EXAMPLES)
   install(
-        DIRECTORY ${PROJECT_BINARY_DIR}/examples/
-        DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/examples
+    TARGETS ${install_targets}
+    EXPORT ${CMAKE_PROJECT_NAME}#-> file <export-name>.cmake by default
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+
+  # Export the package for use from outside the build-tree
+  export(PACKAGE ${CMAKE_PROJECT_NAME})
+
+  # provides `configure_package_config_file`,
+  # `write_basic_package_version_file`
+  include(CMakePackageConfigHelpers)
+
+  # Create {Project}Config.cmake file
+  message(STATUS "Generating
+    '${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake'")
+  configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/InstallFiles/Config.cmake.in
+    "${CMAKE_CURRENT_BINARY_DIR}/InstallFiles/${CMAKE_PROJECT_NAME}Config.cmake"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/CMake"
+  )
+
+  # generate the version file for the config file
+  message(STATUS "Generating '${PROJECT_BINARY_DIR}/${CMAKE_PROJECT_NAME}ConfigVersion.cmake'")
+  write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/InstallFiles/${CMAKE_PROJECT_NAME}ConfigVersion.cmake"
+    VERSION "${CMAKE_PROJECT_VERSION_MAJOR}.${CMAKE_PROJECT_VERSION_MINOR}.${CMAKE_PROJECT_VERSION_PATCH}"
+    COMPATIBILITY AnyNewerVersion)
+
+  # Install the export set for use with the install-tree
+  install(EXPORT ${CMAKE_PROJECT_NAME}
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/CMake")
+    # COMPONENT dev)
+
+  # Install files to be found by cmake users with find_package()
+  install(FILES
+    "${PROJECT_BINARY_DIR}/InstallFiles/${CMAKE_PROJECT_NAME}Config.cmake"
+    "${PROJECT_BINARY_DIR}/InstallFiles/${CMAKE_PROJECT_NAME}ConfigVersion.cmake"
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/CMake")
+    # COMPONENT dev)
+
+  # pkgconfig related
+  # add the target dynamic library
+  get_target_property(LIBVERSION ${CMAKE_PROJECT_NAME} VERSION)
+  list(APPEND PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME
+    ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/lib${CMAKE_PROJECT_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX})
+  set(PROJECT_REQUIRED_LIBRARIES ${PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME})
+  list(APPEND PROJECT_REQUIRED_LIBRARIES ${PROJECT_REQUIRED_LIBRARIES_SHORT_NAME})
+
+  # string(REPLACE <match-string> <replace-string> <out-var> <input>...)
+  string(REPLACE ";" " -I"
+    PROJECT_PKGCONFIG_INCLUDE_DIRS "${PROJECT_REQUIRED_INCLUDE_DIRS}")
+  string(REPLACE ";" " -L"
+    PROJECT_PKGCONFIG_LIBRARY_DIRS "${PROJECT_REQUIRED_LIBRARY_DIRS}")
+  string(REPLACE ";" " "
+    PROJECT_PKGCONFIG_LIBRARIES_ABSOLUTE_NAME
+    "${PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME}")
+  string(REPLACE ";" " -l"
+    PROJECT_PKGCONFIG_LIBRARIES_SHORT_NAME
+    "${PROJECT_REQUIRED_LIBRARIES_SHORT_NAME}")
+
+  # Prune any dangling initial flags.
+  # string(LENGTH <string> <out-var>)
+  string(LENGTH "${PROJECT_REQUIRED_INCLUDE_DIRS}" STRLEN)
+  if (STRLEN LESS 4)
+    set(PROJECT_REQUIRED_INCLUDE_DIRS "")
+  endif()
+
+  string(LENGTH "${PROJECT_REQUIRED_LIBRARY_DIRS}" STRLEN)
+  if (STRLEN LESS 4)
+    set(PROJECT_REQUIRED_LIBRARY_DIRS "")
+  endif()
+
+  string(LENGTH "${PROJECT_PKGCONFIG_LIBRARIES_SHORT_NAME}" STRLEN)
+  if (STRLEN LESS 4)
+    set(PROJECT_PKGCONFIG_LIBRARIES_SHORT_NAME "")
+  endif()
+
+  message(STATUS "PKGCONFIG INCLUDE DIRS    = ${PROJECT_PKGCONFIG_INCLUDE_DIRS}")
+  message(STATUS "PKGCONFIG LIBRARY DIRS    = ${PROJECT_PKGCONFIG_LIBRARY_DIRS}")
+  message(STATUS "PKGCONFIG LIBRARIES (ABS) = ${PROJECT_PKGCONFIG_LIBRARIES_ABSOLUTE_NAME}")
+  message(STATUS "PKGCONFIG LIBRARIES (REL) = ${PROJECT_PKGCONFIG_LIBRARIES_SHORT_NAME}")
+
+  message(STATUS "Generating
+    '${PROJECT_BINARY_DIR}/misc/${CMAKE_PROJECT_NAME}.pc'")
+  configure_file(${PROJECT_SOURCE_DIR}/misc/config.pc.in
+    "${PROJECT_BINARY_DIR}/misc/${CMAKE_PROJECT_NAME}.pc" @ONLY)
+  install(FILES "${PROJECT_BINARY_DIR}/misc/${CMAKE_PROJECT_NAME}.pc"
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+
+  #Install examples
+  if(LDSCTRLEST_BUILD_EXAMPLES)
+    install(
+          DIRECTORY ${PROJECT_BINARY_DIR}/examples/
+          DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/examples
+          USE_SOURCE_PERMISSIONS
+          PATTERN "*.cmake" EXCLUDE
+          PATTERN ".*" EXCLUDE
+          PATTERN "Makefile" EXCLUDE
+          PATTERN "CMakeFiles" EXCLUDE
+          PATTERN "*.mat" EXCLUDE
+          PATTERN "*.h5" EXCLUDE
+        )
+  endif()
+
+  #Matlab/Octave mex functions, Python package:
+  if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
+    # matlab
+    if (Matlab_FOUND)
+      install(
+        DIRECTORY ${PROJECT_BINARY_DIR}/Matlab/
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/Matlab
         USE_SOURCE_PERMISSIONS
         PATTERN "*.cmake" EXCLUDE
         PATTERN ".*" EXCLUDE
         PATTERN "Makefile" EXCLUDE
         PATTERN "CMakeFiles" EXCLUDE
-        PATTERN "*.mat" EXCLUDE
-        PATTERN "*.h5" EXCLUDE
       )
-endif()
+    endif()
 
-#Matlab/Octave mex functions:
-if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
-  # matlab
-  if (Matlab_FOUND)
-    install(
-      DIRECTORY ${PROJECT_BINARY_DIR}/Matlab/
-      DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/Matlab
-      USE_SOURCE_PERMISSIONS
-      PATTERN "*.cmake" EXCLUDE
-      PATTERN ".*" EXCLUDE
-      PATTERN "Makefile" EXCLUDE
-      PATTERN "CMakeFiles" EXCLUDE
-    )
-  endif()
+    #octave
+    if(Octave_FOUND)
+      install(
+        DIRECTORY ${PROJECT_BINARY_DIR}/octave/
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/Octave
+        USE_SOURCE_PERMISSIONS
+        PATTERN "*.cmake" EXCLUDE
+        PATTERN ".*" EXCLUDE
+        PATTERN "Makefile" EXCLUDE
+        PATTERN "CMakeFiles" EXCLUDE
+      )
+    endif()
 
-  #octave
-  if(Octave_FOUND)
-    install(
-      DIRECTORY ${PROJECT_BINARY_DIR}/octave/
-      DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/Octave
-      USE_SOURCE_PERMISSIONS
-      PATTERN "*.cmake" EXCLUDE
-      PATTERN ".*" EXCLUDE
-      PATTERN "Makefile" EXCLUDE
-      PATTERN "CMakeFiles" EXCLUDE
-    )
-  endif()
+    #python - useless for now since Python build incompatible with install
+    if(LDSCTRLEST_BUILD_PYTHON)
+      install(
+        DIRECTORY ${PROJECT_BINARY_DIR}/python/
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/${CMAKE_PROJECT_NAME}/Python
+        USE_SOURCE_PERMISSIONS
+        PATTERN "*.cmake" EXCLUDE
+        PATTERN ".*" EXCLUDE
+        PATTERN "Makefile" EXCLUDE
+        PATTERN "CMakeFiles" EXCLUDE
+      )
+    endif()
 
-endif() #(LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
-
+  endif() #(LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
+endif() #(NOT LDSCTRLEST_BUILD_PYTHON)
 # TODO(mfbolus): TESTING! eg cmake/Help/guide/tutorial/Complete/CMakesLists.txt

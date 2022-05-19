@@ -20,20 +20,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/getting-started/</guid>
-      <description>Getting Started #  This library uses the cross-platform tool CMake to run on Linux, MacOS, and Windows. For general information on the dependencies and configuration, see the instructions for Linux/MacOS. Additional Windows-specific instructions can be found here.
-Linux/MacOS
-Windows</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/linux-macos/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/linux-macos/</guid>
-      <description>Downloading the Library #  The source code for this library can be downloaded from stanley-rozell/ldsCtrlEst either by downloading a snapshot or cloning the repository via git.
-git clone https://github.com/stanley-rozell/ldsCtrlEst.git By default, this would check out the master branch. In most cases, we suggest downloading or checking out the latest release instead.
-cd /path/to/ldsCtrlEst git checkout 0.6 Dependencies #  Note that the primary dependencies of this project listed below must be installed along with their header files and with CMake config files or pkg-config files.</description>
+      <description>Getting Started #  This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
+ldsCtrlEst requires Armadillo for linear algebra as well as HDF5 for saving output. vcpkg is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
+Tested Configurations #  Building C++ libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another.</description>
     </item>
     
     <item>
@@ -42,8 +31,10 @@ cd /path/to/ldsCtrlEst git checkout 0.6 Dependencies #  Note that the primary de
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/</guid>
-      <description>Dependencies #  To configure and compile the library, you will need Microsoft Visual Studio. After Visual Studio, install the &amp;ldquo;Desktop Development with C++&amp;rdquo; extension under Tools-&amp;gt;Get Tools and Features, ensuring that the &amp;ldquo;C++ Clang Tools for Windows&amp;rdquo; and &amp;ldquo;CMake C++ Tools for Windows&amp;rdquo; options are checked.
-In addition to the dependencies mentioned in Linux/MacOS, on Windows, this library opts to use Intel&amp;rsquo;s Math Kernel Library (MKL) for linear algebra, rather than OpenBLAS/gfotran.</description>
+      <description>Windows Installation #  Windows Pre-requisites #  Scoop is a very handy tool for easily installing all sorts of command-line applications. Install like this:
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time iwr get.scoop.sh | Invoke-Expression Install Git and CMake if you don&amp;rsquo;t already have them:
+scoop install git cmake If that didn&amp;rsquo;t work, follow more detailed instructions here.
+The easiest way to compile C++ project on Windows is with Visual Studio&amp;rsquo;s build tools, which you can download here (or here for the 2019 release which we tested—make sure you get the most recent one, e.</description>
     </item>
     
     <item>
@@ -100,7 +91,7 @@ Contributing #  We welcome any community contributions to this project. Please f
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__defaults/</guid>
       <description>Defaults #  
 More&amp;hellip; Attributes #      Name     const data_t kDefaultP0 default state estimate covar   const data_t kDefaultQ0 default process noise covar   const data_t kDefaultR0 default output noise covar    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances)
-Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 22 June 2021 at 23:08:17 CDT</description>
+Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 19 May 2022 at 17:16:04 Eastern Daylight Time</description>
     </item>
     
     <item>
@@ -109,7 +100,8 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_ctrl_8cpp-example/</guid>
-      <description>Example GLDS Control.</description>
+      <description>eg_glds_ctrl.cpp #  Example GLDS Control
+//===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.apache.org/licenses/LICENSE-2.0 // // Unless required by applicable law or agreed to in writing, software // distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS, // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</description>
     </item>
     
     <item>
@@ -118,7 +110,8 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_glds_du_plds_ctrl_8cpp-example/</guid>
-      <description>Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u).</description>
+      <description>eg_glds_du_plds_ctrl.cpp #  Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u).
+//===-- eg_glds_du_plds_ctrl.cpp - Example GLDS Delta u Control of PLDS ---===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.</description>
     </item>
     
     <item>
@@ -127,7 +120,8 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_ctrl_8cpp-example/</guid>
-      <description>Example PLDS Control.</description>
+      <description>eg_plds_ctrl.cpp #  Example PLDS Control
+//===-- eg_plds_ctrl.cpp - Example PLDS Control ---------------------===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.apache.org/licenses/LICENSE-2.0 // // Unless required by applicable law or agreed to in writing, software // distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS, // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</description>
     </item>
     
     <item>
@@ -136,7 +130,8 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_est_8cpp-example/</guid>
-      <description>Example PLDS Estimation.</description>
+      <description>eg_plds_est.cpp #  Example PLDS Estimation
+//===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.apache.org/licenses/LICENSE-2.0 // // Unless required by applicable law or agreed to in writing, software // distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS, // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</description>
     </item>
     
     <item>
@@ -145,7 +140,8 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_switched_ctrl_8cpp-example/</guid>
-      <description>Example Switched PLDS Control.</description>
+      <description>eg_plds_switched_ctrl.cpp #  Example Switched PLDS Control
+//===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &amp;#34;License&amp;#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.apache.org/licenses/LICENSE-2.0 // // Unless required by applicable law or agreed to in writing, software // distributed under the License is distributed on an &amp;#34;AS IS&amp;#34; BASIS, // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</description>
     </item>
     
     <item>
@@ -154,7 +150,7 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d28a4824dc47e487b107a5db32ef43c4/</guid>
-      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_glds_du_plds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 22 June 2021 at 23:08:17 CDT</description>
+      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_glds_du_plds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 19 May 2022 at 17:16:04 Eastern Daylight Time</description>
     </item>
     
     <item>
@@ -220,7 +216,7 @@ Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control -----------------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d44c64559bbebec7f509842c48db8b23/</guid>
-      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 22 June 2021 at 23:08:17 CDT</description>
+      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time</description>
     </item>
     
     <item>
@@ -234,12 +230,12 @@ Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control -----------------
     
     <item>
       <title>lds::Controller</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1controller/</guid>
       <description>lds::Controller #  More&amp;hellip;
-Inherited by lds::SwitchedController&amp;lt; System &amp;gt;, lds::gaussian::Controller, lds::poisson::Controller
+Inherited by lds::gaussian::Controller, lds::poisson::Controller, lds::SwitchedController&amp;lt; System &amp;gt;
 Public Functions #      Name      Controller() =default
 Constructs a new Controller.    Controller(const System &amp;amp; sys, data_t u_lb, data_t u_ub, size_t control_type =0)
 Constructs a new Controller.    Controller(System &amp;amp;&amp;amp; sys, data_t u_lb, data_t u_ub, size_t control_type =0)
@@ -248,10 +244,10 @@ Constructs a new Controller by moving the system object.</description>
     
     <item>
       <title>lds::EM</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1em/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1em/</guid>
       <description>lds::EM #  More&amp;hellip;
 Inherited by lds::gaussian::FitEM, lds::poisson::FitEM
 Public Functions #      Name      EM() =default
@@ -262,10 +258,10 @@ Constructs a new EMFit type.</description>
     
     <item>
       <title>lds::Fit</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1fit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1fit/</guid>
       <description>LDS Fit Type.</description>
     </item>
     
@@ -280,55 +276,55 @@ Constructs a new EMFit type.</description>
     
     <item>
       <title>lds::gaussian::Controller</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1controller/</guid>
       <description>Gaussian-observation Controller Type.</description>
     </item>
     
     <item>
       <title>lds::gaussian::Fit</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fit/</guid>
       <description>GLDS Fit Type.</description>
     </item>
     
     <item>
       <title>lds::gaussian::FitEM</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fitem/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fitem/</guid>
       <description>GLDS E-M Fit Type.</description>
     </item>
     
     <item>
       <title>lds::gaussian::FitSSID</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fitssid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fitssid/</guid>
       <description>Subspace Identification (SSID) for GLDS.</description>
     </item>
     
     <item>
       <title>lds::gaussian::SwitchedController</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1switchedcontroller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_switched_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1switchedcontroller/</guid>
       <description>Gaussian-observation SwitchedController Type.</description>
     </item>
     
     <item>
       <title>lds::gaussian::System</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/</guid>
       <description>Gaussian LDS Type.</description>
     </item>
     
@@ -343,64 +339,64 @@ Constructs a new EMFit type.</description>
     
     <item>
       <title>lds::poisson::Controller</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1controller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1controller/</guid>
       <description>PLDS Controller Type.</description>
     </item>
     
     <item>
       <title>lds::poisson::Fit</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fit/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fit/</guid>
       <description>PLDS Fit Type.</description>
     </item>
     
     <item>
       <title>lds::poisson::FitEM</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitem/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitem/</guid>
       <description>PLDS E-M Fit Type.</description>
     </item>
     
     <item>
       <title>lds::poisson::FitSSID</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitssid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitssid/</guid>
       <description>Subspace Identification (SSID) for PLDS.</description>
     </item>
     
     <item>
       <title>lds::poisson::SwitchedController</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1switchedcontroller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1switchedcontroller/</guid>
       <description>Poisson-observation SwitchedController Type.</description>
     </item>
     
     <item>
       <title>lds::poisson::System</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1system/</guid>
       <description>Poisson System type.</description>
     </item>
     
     <item>
       <title>lds::SSID</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/</guid>
       <description>lds::SSID #  More&amp;hellip;
 Inherited by lds::gaussian::FitSSID, lds::poisson::FitSSID
 Public Functions #      Name      SSID() =default
@@ -411,28 +407,28 @@ Runs fitting by subspace identification (SSID)   std::tuple&amp;lt; UniformMatri
     
     <item>
       <title>lds::SwitchedController</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_switched_controller/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1switchedcontroller/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_switched_controller/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1switchedcontroller/</guid>
       <description>SwitchedController Type.</description>
     </item>
     
     <item>
       <title>lds::System</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_system/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1system/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_system/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1system/</guid>
       <description>Linear Dynamical System Type.</description>
     </item>
     
     <item>
       <title>lds::UniformMatrixList</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformmatrixlist/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformmatrixlist/</guid>
       <description>lds::UniformMatrixList #  More&amp;hellip;
 Inherits from std::vector&amp;lt; Matrix &amp;gt;
 Public Functions #      Name      UniformMatrixList() =default
@@ -442,10 +438,10 @@ Constructs a new UniformMatrixList by copying existing vector of Matrix if dimen
     
     <item>
       <title>lds::UniformSystemList</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformsystemlist/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformsystemlist/</guid>
       <description>lds::UniformSystemList #  More&amp;hellip;
 Inherits from std::vector&amp;lt; System &amp;gt;
 Public Functions #      Name      UniformSystemList() =default
@@ -455,10 +451,10 @@ Constructs a new UniformSystemList by copying existing vector of System if dimen
     
     <item>
       <title>lds::UniformVectorList</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_vector_list/</link>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformvectorlist/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_vector_list/</guid>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1uniformvectorlist/</guid>
       <description>lds::UniformVectorList #  Inherits from std::vector&amp;lt; Vector &amp;gt;
 Public Functions #      Name      UniformVectorList() =default
 Constructs a new UniformVectorList.    UniformVectorList(const std::vector&amp;lt; Vector &amp;gt; &amp;amp; vecs, size_t dim =0)
@@ -715,7 +711,7 @@ Constructs a new UniformVectorList by moving existing vector of Vector if dimens
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/terminology/model/</guid>
-      <description>Model Definitions #  This library provides methods for control and estimation of linear dynamical systems (LDS) of the following form:   \[\mathbf{x}_{t&amp;#43;1} = f\left( \mathbf{x}_{t}, \mathbf{v}_{t} \right) = \mathbf{A} \mathbf{x}_{t} &amp;#43; \mathbf{B} \mathbf{v}_{t} &amp;#43; \mathbf{m}_{t} &amp;#43; \mathbf{w}_{t}\]   \[\mathbf{y}_{t} = h\left( \mathbf{x}_{t} \right)\]  t : time index x : system state v = g%u : input (e.g., in physical units used for model fit) u : control signal sent to actuator (e.</description>
+      <description>Model Definitions #  This library provides methods for control and estimation of linear dynamical systems (LDS) of the following form:   \[\mathbf{x}_{t&amp;#43;1} = f\left( \mathbf{x}_{t}, \mathbf{v}_{t} \right) = \mathbf{A} \mathbf{x}_{t} &amp;#43; \mathbf{B} \mathbf{v}_{t} &amp;#43; \mathbf{m}_{t} &amp;#43; \mathbf{w}_{t}\]   \[\mathbf{y}_{t} = h\left( \mathbf{x}_{t} \right)\]  t : time indexx : system statev = g%u : input (e.g., in physical units used for model fit)u : control signal sent to actuator (e.</description>
     </item>
     
     <item>
@@ -744,7 +740,7 @@ In the example that follows, another PLDS model (lds::poisson::System) is used i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_68267d1309a1af8e8297ef4c3efbcdba/</guid>
-      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 22 June 2021 at 23:08:17 CDT</description>
+      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time</description>
     </item>
     
     <item>
@@ -790,15 +786,6 @@ In the example that follows, another PLDS model (lds::poisson::System) is used i
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__uniform__vecs_8cpp/</guid>
       <description>Uniformly sized vectors.</description>
-    </item>
-    
-    <item>
-      <title>std</title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacestd/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacestd/</guid>
-      <description>std #   Updated on 22 June 2021 at 23:08:17 CDT</description>
     </item>
     
   </channel>

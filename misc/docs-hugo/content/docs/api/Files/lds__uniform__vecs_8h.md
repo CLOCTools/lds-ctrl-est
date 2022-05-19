@@ -20,7 +20,7 @@ List of uniformly sized vectors.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::UniformVectorList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_vector_list/)**  |
+| class | **[lds::UniformVectorList](/lds-ctrl-est/docs/api/classes/classlds_1_1uniformvectorlist/)**  |
 
 ## Detailed Description
 
@@ -156,23 +156,24 @@ inline UniformVectorList& UniformVectorList::operator=(
 
 inline UniformVectorList& UniformVectorList::operator=(
     UniformVectorList&& that) noexcept {
-  // check dimensions
-  if (!this->empty()) {
-    if (this->size() != that.size()) {
-      std::cerr << "Cannot reassign " << this->size() << " vectors with "
-                << that.size() << " vectors. Skipping.\n";
-      return (*this);
-    }
-
-    if (dim_) {
-      size_t other_dim(that.dim());
-      if (dim_ != other_dim) {
-        std::cerr << "Cannot reassign vectors of size " << dim_
-                  << " with matrices of size " << other_dim << ". Skipping.\n";
-        return (*this);
-      }
-    }
-  }
+  // // check dimensions
+  // if (!this->empty()) {
+  //   if (this->size() != that.size()) {
+  //     std::cerr << "Cannot reassign " << this->size() << " vectors with "
+  //               << that.size() << " vectors. Skipping.\n";
+  //     return (*this);
+  //   }
+  //
+  //   if (dim_) {
+  //     size_t other_dim(that.dim());
+  //     if (dim_ != other_dim) {
+  //       std::cerr << "Cannot reassign vectors of size " << dim_
+  //                 << " with matrices of size " << other_dim << ".
+  //                 Skipping.\n";
+  //       return (*this);
+  //     }
+  //   }
+  // }
 
   dim_ = that.dim_;
   std::vector<Vector>::operator=(std::move(that));
@@ -188,4 +189,4 @@ inline UniformVectorList& UniformVectorList::operator=(
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time

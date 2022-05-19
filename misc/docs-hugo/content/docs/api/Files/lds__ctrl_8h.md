@@ -20,13 +20,13 @@ Controller.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/)**  |
+| class | **[lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1controller/)**  |
 
 ## Detailed Description
 
 
 
-This file declares the type for control of a linear dynamical system ([lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/)). 
+This file declares the type for control of a linear dynamical system ([lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1controller/)). 
 
 
 
@@ -100,6 +100,9 @@ class Controller {
   const Vector& x_ref() const { return x_ref_; };
   const Vector& y_ref() const { return y_ref_; };
   size_t control_type() const { return control_type_; };
+  data_t tau_awu() const { return tau_awu_; };
+  data_t u_lb() const { return u_lb_; };
+  data_t u_ub() const { return u_ub_; };
 
   // set methods
   void set_sys(const System& sys) {
@@ -224,7 +227,7 @@ class Controller {
 
   void AntiWindup();
 
-  void InitVars();
+  void InitVars(size_t control_type);
 };
 
 // Implement the above:
@@ -235,9 +238,8 @@ inline Controller<System>::Controller(const System& sys, data_t u_lb,
     : sys_(sys),
       u_lb_(u_lb),
       u_ub_(u_ub),
-      control_type_(control_type),
       tau_awu_(lds::kInf) {
-  InitVars();
+  InitVars(control_type);
 }
 
 template <typename System>
@@ -246,9 +248,8 @@ inline Controller<System>::Controller(System&& sys, data_t u_lb, data_t u_ub,
     : sys_(std::move(sys)),
       u_lb_(u_lb),
       u_ub_(u_ub),
-      control_type_(control_type),
       tau_awu_(lds::kInf) {
-  InitVars();
+  InitVars(control_type);
 }
 
 template <typename System>
@@ -509,7 +510,7 @@ void Controller<System>::AntiWindup() {
 }
 
 template <typename System>
-void Controller<System>::InitVars() {
+void Controller<System>::InitVars(size_t control_type) {
   // initialize to default values
   u_ref_ = Vector(sys_.n_u(), fill::zeros);
   u_ref_prev_ = Vector(sys_.n_u(), fill::zeros);
@@ -536,7 +537,7 @@ void Controller<System>::InitVars() {
   int_e_ = Vector(0, fill::zeros);
   int_e_awu_adjust_ = Vector(0, fill::zeros);
 
-  set_control_type(control_type_);
+  set_control_type(control_type);
 }
 
 }  // namespace lds
@@ -547,4 +548,4 @@ void Controller<System>::InitVars() {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time

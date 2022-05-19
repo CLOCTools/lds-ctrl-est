@@ -29,6 +29,8 @@
 #define LDSCTRLEST_LDS_SCTRL_H
 
 #include "lds_ctrl.h"
+#include "lds_uniform_mats.h"
+#include "lds_uniform_vecs.h"
 
 namespace lds {
 /// SwitchedController Type

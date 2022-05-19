@@ -3,20 +3,26 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Dependencies #  To configure and compile the library, you will need Microsoft Visual Studio. After Visual Studio, install the &ldquo;Desktop Development with C&#43;&#43;&rdquo; extension under Tools-&gt;Get Tools and Features, ensuring that the &ldquo;C&#43;&#43; Clang Tools for Windows&rdquo; and &ldquo;CMake C&#43;&#43; Tools for Windows&rdquo; options are checked.
-In addition to the dependencies mentioned in Linux/MacOS, on Windows, this library opts to use Intel&rsquo;s Math Kernel Library (MKL) for linear algebra, rather than OpenBLAS/gfotran.">
+<meta name="description" content="Windows Installation #  Windows Pre-requisites #  Scoop is a very handy tool for easily installing all sorts of command-line applications. Install like this:
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time iwr get.scoop.sh | Invoke-Expression Install Git and CMake if you don&rsquo;t already have them:
+scoop install git cmake If that didn&rsquo;t work, follow more detailed instructions here.
+The easiest way to compile C&#43;&#43; project on Windows is with Visual Studio&rsquo;s build tools, which you can download here (or here for the 2019 release which we tested—make sure you get the most recent one, e.">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="" />
-<meta property="og:description" content="Dependencies #  To configure and compile the library, you will need Microsoft Visual Studio. After Visual Studio, install the &ldquo;Desktop Development with C&#43;&#43;&rdquo; extension under Tools-&gt;Get Tools and Features, ensuring that the &ldquo;C&#43;&#43; Clang Tools for Windows&rdquo; and &ldquo;CMake C&#43;&#43; Tools for Windows&rdquo; options are checked.
-In addition to the dependencies mentioned in Linux/MacOS, on Windows, this library opts to use Intel&rsquo;s Math Kernel Library (MKL) for linear algebra, rather than OpenBLAS/gfotran." />
+<meta property="og:description" content="Windows Installation #  Windows Pre-requisites #  Scoop is a very handy tool for easily installing all sorts of command-line applications. Install like this:
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time iwr get.scoop.sh | Invoke-Expression Install Git and CMake if you don&rsquo;t already have them:
+scoop install git cmake If that didn&rsquo;t work, follow more detailed instructions here.
+The easiest way to compile C&#43;&#43; project on Windows is with Visual Studio&rsquo;s build tools, which you can download here (or here for the 2019 release which we tested—make sure you get the most recent one, e." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/" />
+<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/" /><meta property="article:section" content="docs" />
+
+
 
 <title>Windows | LDS C&amp;E</title>
 <link rel="manifest" href="/lds-ctrl-est/manifest.json">
 <link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/lds-ctrl-est/book.min.1f18e1770470f1550b743441539a68f3687608045f0f23eebeb7810c1ac57077.css" integrity="sha256-HxjhdwRw8VULdDRBU5po82h2CARfDyPuvreBDBrFcHc=" crossorigin="anonymous">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
   <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
-  <script defer src="/lds-ctrl-est/en.search.min.80cd14d7c8667f450e8f403ef9a5edfd9496696a1fb6e75c14942a43f310854e.js" integrity="sha256-gM0U18hmf0UOj0A&#43;&#43;aXt/ZSWaWoftudcFJQqQ/MQhU4=" crossorigin="anonymous"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.93b2d0e7fa872893809358a01a9e6e0c0ce7a384100570924726e75a52c21d85.js" integrity="sha256-k7LQ5/qHKJOAk1igGp5uDAzno4QQBXCSRybnWlLCHYU=" crossorigin="anonymous"></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -65,8 +71,7 @@ https://github.com/alex-shpak/hugo-book
 <ul>
 <li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
 <ul>
-<li><a href="/lds-ctrl-est/docs/getting-started/linux-macos/">Linux/MacOS</a></li>
-<li><a href="/lds-ctrl-est/docs/getting-started/windows/"class=active>Windows</a></li>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"class=active><strong>Windows</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -128,7 +133,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){var menu=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(event){localStorage.setItem("menu.scrollTop",menu.scrollTop);});menu.scrollTop=localStorage.getItem("menu.scrollTop");})();</script>
+  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
 
 
  
@@ -159,9 +164,15 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#dependencies">Dependencies</a></li>
-    <li><a href="#compilation">Compilation</a></li>
-    <li><a href="#common-issues">Common issues</a></li>
+    <li><a href="#windows-installation">Windows Installation</a>
+      <ul>
+        <li><a href="#windows-pre-requisites">Windows Pre-requisites</a></li>
+        <li><a href="#downloading-the-library">Downloading the Library</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#considerations">Considerations</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -174,24 +185,55 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown"><h1 id="dependencies">
-  Dependencies
-  <a class="anchor" href="#dependencies">#</a>
+  <article class="markdown"><h1 id="windows-installation">
+  Windows Installation
+  <a class="anchor" href="#windows-installation">#</a>
 </h1>
-<p>To configure and compile the library, you will need <a href="https://visualstudio.microsoft.com/downloads/">Microsoft Visual Studio</a>. After Visual Studio, install the &ldquo;Desktop Development with C++&rdquo; extension under <em>Tools-&gt;Get Tools and Features</em>, ensuring that the &ldquo;C++ Clang Tools for Windows&rdquo; and &ldquo;CMake C++ Tools for Windows&rdquo; options are checked.</p>
-<p>In addition to the dependencies mentioned in <a href="/lds-ctrl-est/docs/getting-started/linux-macos/"><em>Linux/MacOS</em></a>, on Windows, this library opts to use <a href="https://software.intel.com/content/www/us/en/develop/tools/oneapi/base-toolkit/download.html">Intel&rsquo;s Math Kernel Library (MKL)</a> for linear algebra, rather than OpenBLAS/gfotran. MKL is part of the OneAPI suite. When using the installation wizard, users may either install the entire base toolkit or just the MKL portion. After installing MKL as well as HDF5, add these libraries to the user&rsquo;s <code>PATH</code> environment variable (<em>System Properties-&gt;Advanced-&gt;Environment Variables</em>). Your installation location may vary, but for example, add the following lines to <code>PATH</code>: <code>C:\Program Files (x86)\Intel\oneAPI\mkl\latest\redist\intel64</code>, <code>C:\Program Files\HDF_Group\HDF5\1.12.0\lib</code> .</p>
-<p>Once HDF5, MKL, and Visual Studio have been installed, download <a href="https://gitlab.com/conradsnicta/armadillo-code">armadillo</a> as detailed previously for <a href="/lds-ctrl-est/docs/getting-started/linux-macos/"><em>Linux/MacOS</em></a>. Open the source code in Visual Studio, configure the build (<em>Project -&gt; Generate CMake Cache</em>), and install (<em>Build -&gt; Install</em>). Take note of the install location and add this to an environment variable called <code>CMAKE_PREFIX_PATH</code>; create this variable if it does not already exist.</p>
-<h1 id="compilation">
-  Compilation
-  <a class="anchor" href="#compilation">#</a>
-</h1>
-<p>After installing the dependencies above and downloading the <code>ldsCtrlEst</code> library source code (see <a href="/lds-ctrl-est/docs/getting-started/linux-macos/"><em>Linux/MacOS</em></a>), open this directory in Visual Studio. Configure the build (<em>Project -&gt; Generate CMake Cache</em>) and build/install the targets (<em>Build -&gt; Install</em>). Finally, take note of the install location and add this to the environment variable <code>PATH</code>.</p>
-<h1 id="common-issues">
-  Common issues
-  <a class="anchor" href="#common-issues">#</a>
-</h1>
+<h2 id="windows-pre-requisites">
+  Windows Pre-requisites
+  <a class="anchor" href="#windows-pre-requisites">#</a>
+</h2>
+<p>Scoop is a very handy tool for easily installing all sorts of command-line applications. Install like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">Set-ExecutionPolicy RemoteSigned -Scope CurrentUser <span style="color:#75715e"># Optional: Needed to run a remote script the first time</span>
+iwr get.scoop.sh | Invoke-Expression
+</code></pre></div><p>Install Git and CMake if you don&rsquo;t already have them:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">scoop install git cmake
+</code></pre></div><p>If that didn&rsquo;t work, follow more detailed instructions <a href="https://github.com/ScoopInstaller/Install#readme">here</a>.</p>
+<p>The easiest way to compile C++ project on Windows is with Visual Studio&rsquo;s build tools, which you can download <a href="https://visualstudio.microsoft.com/downloads/">here</a> (or <a href="https://visualstudio.microsoft.com/vs/older-downloads/">here</a> for the 2019 release which we tested—make sure you get the most recent one, e.g., 16.11 at time of writing). In the installer, click on &ldquo;Desktop development with C++.&rdquo; If you want to build Python bindings, you will need to use the Clang compiler, which you can add on the &ldquo;Installation details&rdquo; sidebar under optional features.</p>
+<p>And the easiest way to use Visual Studio&rsquo;s build tools is with <a href="https://code.visualstudio.com/">VS Code</a>, along with the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools">CMake Tools extension</a>. Install them and you should be ready to go.</p>
+<h2 id="downloading-the-library">
+  Downloading the Library
+  <a class="anchor" href="#downloading-the-library">#</a>
+</h2>
+<p>First, clone the repository, either from VS Code or the command line:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git clone https://github.com/cloctools/lds-ctrl-est.git 
+cd lds-ctrl-est
+</code></pre></div><p>You&rsquo;ll need to initialize the submodules from the command line after the repo is cloned:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git submodule update --init
+</code></pre></div><h2 id="installation">
+  Installation
+  <a class="anchor" href="#installation">#</a>
+</h2>
+<p>When you open the folder in VS Code, you will like be prompted by the CMake Tools extension to configure the project. Make sure you select the kit (you&rsquo;ll be prompted when you configure&ndash;else there&rsquo;s an icon in the bar on the bottom of the window or type <code>Ctrl+Shift+P</code>, then &ldquo;cmake select kit&rdquo;). Choose <code>Clang [latest version] with GNU CLI ... amd64</code> assuming you are running a 64-bit OS. (MSVC may work okay too if you don&rsquo;t need to build Python bindings.)</p>
+<p>Follow along with the &ldquo;Getting Started&rdquo; instructions, but where you see config options specified as <code>-DLDSCTREST_BUILD_STATIC=OFF</code> or <code>-DPython3_ROOT_DIR=...</code>, you will enter those in settings: open with <code>Ctrl+,</code>, click &ldquo;workspace&rdquo;, then search for &ldquo;CMake: Configure Args&rdquo; and enter each of your desired arguments as a separate item.</p>
+<p>To configure, use <code>Ctrl+Shift+P</code> and search for the &ldquo;CMake: Configure&rdquo; command. To build, click the &ldquo;Build&rdquo; button on the bottom bar. Then click the &ldquo;CTest&rdquo; button to run the example scripts.</p>
+<h2 id="considerations">
+  Considerations
+  <a class="anchor" href="#considerations">#</a>
+</h2>
+<p>Development on Windows has been more prone to bugs than on Unix systems, so if you encounter many problems, consider switching—<a href="https://docs.microsoft.com/en-us/windows/wsl/install">WSL (Windows Subsystem for Linux)</a> is a good option for Windows users who don&rsquo;t want to work on a different machine.</p>
+<p>Compilation has been successfully tested in VS Code using the following kit, <strong>using the &ldquo;RelWithDebInfo&rdquo; config</strong>:</p>
+<pre><code>Clang 12.0.0 (GNU CLI) for MSVC 16.11.31702.278 (Visual Studio Community 2019 Release - amd64)
+</code></pre><h2 id="troubleshooting">
+  Troubleshooting
+  <a class="anchor" href="#troubleshooting">#</a>
+</h2>
 <ol>
-<li>&ldquo;Generate CMake Cache&rdquo; step errs because creating symbolic links is not permitted.</li>
+<li>The build appears to work, but tests fail with code <code>0xc0000135</code> OR &ldquo;I have built the library and installed it in a non-default location. In building my own project linking against <code>ldsCtrlEst</code>, <code>cmake</code> or <code>pkg-config</code> cannot find the library or its configuration information.&rdquo;</li>
+</ol>
+<p>Have you installed the library? In VS Code, use Shift+F7 to build a specific target, in this case <code>INSTALL</code>. If that doesn&rsquo;t solve your problem, you will likely need to add the build or install folder to your <code>PATH</code> environment variable, which you can do using the settings GUI (search for &ldquo;Edit the system environment variables&rdquo;).</p>
+<ol start="2">
+<li>On Windows, &ldquo;Generate CMake Cache&rdquo; step errs because creating symbolic links is not permitted.</li>
 </ol>
 <p>Certain source files are sym-linked to the build/install directories during configuration with cmake. As such, your user in Windows must be permitted to do so. Make sure that your user is listed next to <em>Control Panel -&gt; Administrative Tools -&gt; Local Policies -&gt; User Rights Assignment -&gt; Create Symbolic Links</em>.</p>
 </article>
@@ -210,8 +252,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){function select(element){const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(element);selection.removeAllRanges();selection.addRange(range);}
-document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("click",function(event){select(code.parentElement);if(navigator.clipboard){navigator.clipboard.writeText(code.parentElement.textContent);}});});})();</script>
+  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
 
 
  
@@ -232,9 +273,15 @@ document.querySelectorAll("pre code").forEach(code=>{code.addEventListener("clic
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#dependencies">Dependencies</a></li>
-    <li><a href="#compilation">Compilation</a></li>
-    <li><a href="#common-issues">Common issues</a></li>
+    <li><a href="#windows-installation">Windows Installation</a>
+      <ul>
+        <li><a href="#windows-pre-requisites">Windows Pre-requisites</a></li>
+        <li><a href="#downloading-the-library">Downloading the Library</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#considerations">Considerations</a></li>
+        <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 

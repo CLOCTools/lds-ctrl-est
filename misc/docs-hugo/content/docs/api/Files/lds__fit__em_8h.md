@@ -20,13 +20,13 @@ subspace identification  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/)**  |
+| class | **[lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1em/)**  |
 
 ## Detailed Description
 
 
 
-This file declares the type for fitting a linear dynamical system by expectation-maximization ([lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/)). 
+This file declares the type for fitting a linear dynamical system by expectation-maximization ([lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1em/)). 
 
 
 
@@ -75,6 +75,8 @@ class EM {
 
   EM(const Fit& fit0, UniformMatrixList<kMatFreeDim2>&& u_train,
      UniformMatrixList<kMatFreeDim2>&& z_train);
+
+  virtual ~EM() = default;
 
   const Fit& Run(bool calc_dynamics = true, bool calc_Q = true,
                  bool calc_init = true, bool calc_output = true,
@@ -629,4 +631,4 @@ Vector EM<Fit>::UpdateTheta() {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time

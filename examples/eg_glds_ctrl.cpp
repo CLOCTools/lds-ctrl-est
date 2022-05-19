@@ -63,7 +63,7 @@ auto main() -> int {
   data_t pr_hi2lo = pr_lo2hi;
 
   // initially let m be low
-  Vector m0_true = Vector(n_y).fill(m_low);
+  Vector m0_true = Vector(n_x).fill(m_low);
 
   // Assign params.
   controlled_system.set_A(a_true);
@@ -97,7 +97,6 @@ auto main() -> int {
     controller_system.set_m(m_controller);
     controller_system.set_R(r_controller);
     controller_system.Reset();  // reset to new m
-    controller_system.Print();
 
     // going to adaptively re-estimate the disturbance
     controller_system.do_adapt_m = true;
@@ -162,7 +161,7 @@ auto main() -> int {
   cout << ".....................................\n";
 
   // set up variables for simulation
-  // create Matrixrix to save outputs in...
+  // create Matrix to save outputs in...
   Matrix y_ref = Matrix(n_y, n_t, arma::fill::ones) * y_ref0[0];
 
   // Simulated measurements
@@ -175,14 +174,14 @@ auto main() -> int {
   // *_hat indicates online estimates
   Matrix y_hat(n_y, n_t, arma::fill::zeros);
   Matrix x_hat(n_x, n_t, arma::fill::zeros);
-  Matrix m_hat(n_y, n_t, arma::fill::zeros);
+  Matrix m_hat(n_x, n_t, arma::fill::zeros);
 
   // *_true indicates ground truth (system being controlled)
   Matrix y_true(n_y, n_t, arma::fill::zeros);
   Matrix x_true(n_x, n_t, arma::fill::zeros);
-  Matrix m_true(n_y, n_t, arma::fill::zeros);
+  Matrix m_true(n_x, n_t, arma::fill::zeros);
 
-  // get initial val
+  // set initial val
   y_hat.submat(0, 0, n_y - 1, 0) = controller.sys().y();
   y_true.submat(0, 0, n_y - 1, 0) = controlled_system.y();
 
@@ -200,12 +199,12 @@ auto main() -> int {
     if (which_m == 0)  // low disturbance
     {
       if (chance[0] < pr_lo2hi) {  // switches low -> high disturbance
-        m0_true = std::vector<data_t>(n_y, m_high);
+        m0_true = std::vector<data_t>(n_x, m_high);
         which_m = 1;
       }
     } else {                       // high disturbance
       if (chance[0] < pr_hi2lo) {  // swithces high -> low disturbance
-        m0_true = std::vector<data_t>(n_y, m_low);
+        m0_true = std::vector<data_t>(n_x, m_low);
         which_m = 0;
       }
     }

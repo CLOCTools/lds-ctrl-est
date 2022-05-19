@@ -108,7 +108,7 @@ int main() {
   Matrix m_hat(n_x, n_t, arma::fill::zeros);
 
   Matrix x_true(n_x, n_t, arma::fill::zeros);
-  Matrix m_true(n_y, n_t, arma::fill::zeros);
+  Matrix m_true(n_x, n_t, arma::fill::zeros);
 
   // initial conditions
   y_hat.col(0) = system_estimator.y();

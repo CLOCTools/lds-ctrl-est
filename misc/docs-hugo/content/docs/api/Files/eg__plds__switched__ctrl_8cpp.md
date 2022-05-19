@@ -173,7 +173,7 @@ auto main() -> int {
   // Will later contain control.
   Matrix u(n_u, n_t, arma::fill::zeros);
 
-  // create Matrixrix to save outputs in...
+  // create Matrix to save outputs in...
   Matrix y_hat(n_y, n_t, arma::fill::zeros);
   Matrix y_true(n_y, n_t, arma::fill::zeros);
   Matrix y_ref = Matrix(n_y, n_t).fill(y_ref0[0]);
@@ -256,4 +256,4 @@ auto main() -> int {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time

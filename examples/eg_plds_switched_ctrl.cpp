@@ -144,7 +144,7 @@ auto main() -> int {
   // Will later contain control.
   Matrix u(n_u, n_t, arma::fill::zeros);
 
-  // create Matrixrix to save outputs in...
+  // create Matrix to save outputs in...
   Matrix y_hat(n_y, n_t, arma::fill::zeros);
   Matrix y_true(n_y, n_t, arma::fill::zeros);
   Matrix y_ref = Matrix(n_y, n_t).fill(y_ref0[0]);

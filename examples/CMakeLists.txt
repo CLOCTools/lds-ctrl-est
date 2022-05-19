@@ -1,15 +1,22 @@
 # add executables
-add_executable(eg_glds_ctrl eg_glds_ctrl.cpp)
-target_link_libraries(eg_glds_ctrl PUBLIC ${CMAKE_PROJECT_NAME} ${PROJECT_LIBS})
 
-add_executable(eg_glds_du_plds_ctrl eg_glds_du_plds_ctrl.cpp)
-target_link_libraries(eg_glds_du_plds_ctrl PUBLIC ${CMAKE_PROJECT_NAME} ${PROJECT_LIBS})
 
-add_executable(eg_plds_est eg_plds_est.cpp)
-target_link_libraries(eg_plds_est PUBLIC ${CMAKE_PROJECT_NAME} ${PROJECT_LIBS})
+set(CTEST_BINARY_DIRECTORY ${PROJECT_BINARY_DIR}/tests)
 
-add_executable(eg_plds_ctrl eg_plds_ctrl.cpp)
-target_link_libraries(eg_plds_ctrl PUBLIC ${CMAKE_PROJECT_NAME} ${PROJECT_LIBS})
+file(GLOB files "eg_*.cpp")
 
-add_executable(eg_plds_switched_ctrl eg_plds_switched_ctrl.cpp)
-target_link_libraries(eg_plds_switched_ctrl PUBLIC ${CMAKE_PROJECT_NAME} ${PROJECT_LIBS})
+foreach(file ${files})
+	string(REGEX REPLACE "(^.*/|\\.[^.]*$)" "" file_without_ext ${file})
+	add_executable(${file_without_ext} ${file})
+	target_link_libraries(${file_without_ext} PUBLIC ${CMAKE_PROJECT_NAME} ${PROJECT_REQUIRED_LIBRARIES})
+	add_test(${file_without_ext} ${file_without_ext})
+	# set_tests_properties(${file_without_ext}
+	# 	PROPERTIES
+	# 	PASS_REGULAR_EXPRESSION "Saving simulation data")
+	# set_tests_properties(${file_without_ext}
+	# 	PROPERTIES
+	# 	FAIL_REGULAR_EXPRESSION "(Exception|Test failed)")
+	set_tests_properties(${file_without_ext}
+		PROPERTIES
+		TIMEOUT 20)
+endforeach()

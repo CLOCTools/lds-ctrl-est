@@ -63,10 +63,12 @@ class EM {
   EM(const Fit& fit0, UniformMatrixList<kMatFreeDim2>&& u_train,
      UniformMatrixList<kMatFreeDim2>&& z_train);
 
+  virtual ~EM() = default;
+
   /**
    * @brief      Runs fitting by Expectation(E)-Maximization(M)
    *
-   * @param      calc_dynamics     [optional] whether to caclulate dynamics (A,
+   * @param      calc_dynamics     [optional] whether to calculate dynamics (A,
    *                               B)
    * @param      calc_Q            [optional] whether to calculate process noise
    *                               covariance

@@ -30,6 +30,7 @@
 #define LDSCTRLEST_LDS_POISSON_SWITCHED_CTRL_H
 
 #include "lds_poisson_ctrl.h"
+#include "lds_sctrl.h"
 
 namespace lds {
 namespace poisson {

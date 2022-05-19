@@ -57,4 +57,4 @@ static const data_t kDefaultR0 = 1e-2;
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on 19 May 2022 at 17:16:04 Eastern Daylight Time

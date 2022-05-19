@@ -11,20 +11,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/getting-started/</guid>
-      <description>Getting Started #  This library uses the cross-platform tool CMake to run on Linux, MacOS, and Windows. For general information on the dependencies and configuration, see the instructions for Linux/MacOS. Additional Windows-specific instructions can be found here.
-Linux/MacOS
-Windows</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/linux-macos/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/linux-macos/</guid>
-      <description>Downloading the Library #  The source code for this library can be downloaded from stanley-rozell/ldsCtrlEst either by downloading a snapshot or cloning the repository via git.
-git clone https://github.com/stanley-rozell/ldsCtrlEst.git By default, this would check out the master branch. In most cases, we suggest downloading or checking out the latest release instead.
-cd /path/to/ldsCtrlEst git checkout 0.6 Dependencies #  Note that the primary dependencies of this project listed below must be installed along with their header files and with CMake config files or pkg-config files.</description>
+      <description>Getting Started #  This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
+ldsCtrlEst requires Armadillo for linear algebra as well as HDF5 for saving output. vcpkg is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
+Tested Configurations #  Building C++ libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another.</description>
     </item>
     
     <item>
@@ -33,8 +22,10 @@ cd /path/to/ldsCtrlEst git checkout 0.6 Dependencies #  Note that the primary de
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/</guid>
-      <description>Dependencies #  To configure and compile the library, you will need Microsoft Visual Studio. After Visual Studio, install the &amp;ldquo;Desktop Development with C++&amp;rdquo; extension under Tools-&amp;gt;Get Tools and Features, ensuring that the &amp;ldquo;C++ Clang Tools for Windows&amp;rdquo; and &amp;ldquo;CMake C++ Tools for Windows&amp;rdquo; options are checked.
-In addition to the dependencies mentioned in Linux/MacOS, on Windows, this library opts to use Intel&amp;rsquo;s Math Kernel Library (MKL) for linear algebra, rather than OpenBLAS/gfotran.</description>
+      <description>Windows Installation #  Windows Pre-requisites #  Scoop is a very handy tool for easily installing all sorts of command-line applications. Install like this:
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time iwr get.scoop.sh | Invoke-Expression Install Git and CMake if you don&amp;rsquo;t already have them:
+scoop install git cmake If that didn&amp;rsquo;t work, follow more detailed instructions here.
+The easiest way to compile C++ project on Windows is with Visual Studio&amp;rsquo;s build tools, which you can download here (or here for the 2019 release which we tested—make sure you get the most recent one, e.</description>
     </item>
     
     <item>
@@ -52,7 +43,7 @@ In addition to the dependencies mentioned in Linux/MacOS, on Windows, this libra
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/terminology/model/</guid>
-      <description>Model Definitions #  This library provides methods for control and estimation of linear dynamical systems (LDS) of the following form:   \[\mathbf{x}_{t&amp;#43;1} = f\left( \mathbf{x}_{t}, \mathbf{v}_{t} \right) = \mathbf{A} \mathbf{x}_{t} &amp;#43; \mathbf{B} \mathbf{v}_{t} &amp;#43; \mathbf{m}_{t} &amp;#43; \mathbf{w}_{t}\]   \[\mathbf{y}_{t} = h\left( \mathbf{x}_{t} \right)\]  t : time index x : system state v = g%u : input (e.g., in physical units used for model fit) u : control signal sent to actuator (e.</description>
+      <description>Model Definitions #  This library provides methods for control and estimation of linear dynamical systems (LDS) of the following form:   \[\mathbf{x}_{t&amp;#43;1} = f\left( \mathbf{x}_{t}, \mathbf{v}_{t} \right) = \mathbf{A} \mathbf{x}_{t} &amp;#43; \mathbf{B} \mathbf{v}_{t} &amp;#43; \mathbf{m}_{t} &amp;#43; \mathbf{w}_{t}\]   \[\mathbf{y}_{t} = h\left( \mathbf{x}_{t} \right)\]  t : time indexx : system statev = g%u : input (e.g., in physical units used for model fit)u : control signal sent to actuator (e.</description>
     </item>
     
   </channel>

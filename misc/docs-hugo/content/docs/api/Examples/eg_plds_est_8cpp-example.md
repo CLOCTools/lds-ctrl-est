@@ -1,6 +1,5 @@
 ---
 title: eg_plds_est.cpp
-summary: Example PLDS Estimation. 
 
 ---
 
@@ -118,7 +117,7 @@ int main() {
   Matrix m_hat(n_x, n_t, arma::fill::zeros);
 
   Matrix x_true(n_x, n_t, arma::fill::zeros);
-  Matrix m_true(n_y, n_t, arma::fill::zeros);
+  Matrix m_true(n_x, n_t, arma::fill::zeros);
 
   // initial conditions
   y_hat.col(0) = system_estimator.y();
@@ -189,8 +188,6 @@ Matrix random_walk(size_t n_t, const Matrix& Q, const Vector& x0) {
 }
 ```
 
-_Filename: eg_plds_est.cpp_
-
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time

@@ -19,15 +19,15 @@ Linear Dynamical Systems (LDS) namespace. <br>
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/)**  |
-| class | **[lds::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/)** <br>LDS [Fit]() Type.  |
-| class | **[lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/)**  |
-| class | **[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)**  |
-| class | **[lds::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1_switched_controller/)** <br>[SwitchedController]() Type.  |
-| class | **[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)** <br>Linear Dynamical [System]() Type.  |
-| class | **[lds::UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)**  |
-| class | **[lds::UniformSystemList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/)**  |
-| class | **[lds::UniformVectorList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_vector_list/)**  |
+| class | **[lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1controller/)**  |
+| class | **[lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1em/)**  |
+| class | **[lds::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1fit/)** <br>LDS [Fit]() Type.  |
+| class | **[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/)**  |
+| class | **[lds::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1switchedcontroller/)** <br>[SwitchedController]() Type.  |
+| class | **[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1system/)** <br>Linear Dynamical [System]() Type.  |
+| class | **[lds::UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1uniformmatrixlist/)**  |
+| class | **[lds::UniformSystemList](/lds-ctrl-est/docs/api/classes/classlds_1_1uniformsystemlist/)**  |
+| class | **[lds::UniformVectorList](/lds-ctrl-est/docs/api/classes/classlds_1_1uniformvectorlist/)**  |
 
 ## Types
 
@@ -35,23 +35,23 @@ Linear Dynamical Systems (LDS) namespace. <br>
 | -------------- | -------------- |
 | enum| **[SSIDWt](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enum-ssidwt)** { kSSIDNone, kSSIDMOESP, kSSIDCVA}<br>weighting options for [SSID]() |
 | enum| **[MatrixListFreeDim](/lds-ctrl-est/docs/api/namespaces/namespacelds/#enum-matrixlistfreedim)** { kMatFreeDimNone, kMatFreeDim1, kMatFreeDim2} |
-| using double | **[data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t)**  |
-| using arma::Col< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) > | **[Vector](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-vector)**  |
-| using arma::Mat< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) > | **[Matrix](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-matrix)**  |
-| using arma::Cube< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) > | **[Cube](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-cube)**  |
-| using arma::subview< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) > | **[View](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-view)**  |
+| using double | **[data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t)**  |
+| using arma::Col< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) > | **[Vector](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-vector)**  |
+| using arma::Mat< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) > | **[Matrix](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-matrix)**  |
+| using arma::Cube< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) > | **[Cube](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-cube)**  |
+| using arma::subview< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) > | **[View](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-view)**  |
 
 ## Functions
 
 |                | Name           |
 | -------------- | -------------- |
-| void | **[Limit](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-limit)**(std::vector< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) > & x, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) lb, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) ub) |
-| void | **[Limit](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-limit)**(Vector & x, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) lb, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) ub) |
-| void | **[Limit](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-limit)**(Matrix & x, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) lb, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) ub) |
+| void | **[Limit](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-limit)**(std::vector< [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) > & x, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) lb, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) ub) |
+| void | **[Limit](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-limit)**(Vector & x, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) lb, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) ub) |
+| void | **[Limit](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-limit)**(Matrix & x, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) lb, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) ub) |
 | void | **[Reassign](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-reassign)**(Vector & some, const Vector & other, const std::string & parenthetical ="Reassign")<br>reassigns contents of some Vector in place  |
 | void | **[Reassign](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-reassign)**(Matrix & some, const Matrix & other, const std::string & parenthetical ="Reassign")<br>reassigns contents of some Matrix in place  |
 | void | **[ForceSymPD](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-forcesympd)**(Matrix & X)<br>forces matrix to be symmetric positive-definite  |
-| void | **[ForceSymMinEig](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-forcesymmineig)**(Matrix & X, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) eig_min =0)<br>forces matrix to be symmetric and have a minimum eigenvalue  |
+| void | **[ForceSymMinEig](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-forcesymmineig)**(Matrix & X, [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) eig_min =0)<br>forces matrix to be symmetric and have a minimum eigenvalue  |
 | void | **[lq](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-lq)**(Matrix & L, Matrix & Qt, const Matrix & X)<br>LQ decomposition.  |
 | Matrix | **[calcCov](/lds-ctrl-est/docs/api/namespaces/namespacelds/#function-calccov)**(const Matrix & A, const Matrix & B)<br>Calculate covariance matrix.  |
 
@@ -62,11 +62,11 @@ Linear Dynamical Systems (LDS) namespace. <br>
 | const std::size_t | **[kControlTypeDeltaU](/lds-ctrl-est/docs/api/modules/group__control__masks/#variable-kcontroltypedeltau)** <br>control designed to penalize change in input  |
 | const std::size_t | **[kControlTypeIntY](/lds-ctrl-est/docs/api/modules/group__control__masks/#variable-kcontroltypeinty)** <br>control using integral action  |
 | const std::size_t | **[kControlTypeAdaptM](/lds-ctrl-est/docs/api/modules/group__control__masks/#variable-kcontroltypeadaptm)** <br>adapt control setpoint with re-estimated disturbance `m` |
-| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) | **[kInf](/lds-ctrl-est/docs/api/namespaces/namespacelds/#variable-kinf)** <br>Some useful numbers.  |
-| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) | **[kPi](/lds-ctrl-est/docs/api/namespaces/namespacelds/#variable-kpi)**  |
-| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) | **[kDefaultP0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultp0)** <br>default state estimate covar  |
-| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) | **[kDefaultQ0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultq0)** <br>default process noise covar  |
-| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t) | **[kDefaultR0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultr0)** <br>default output noise covar  |
+| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kInf](/lds-ctrl-est/docs/api/namespaces/namespacelds/#variable-kinf)** <br>Some useful numbers.  |
+| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kPi](/lds-ctrl-est/docs/api/namespaces/namespacelds/#variable-kpi)**  |
+| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kDefaultP0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultp0)** <br>default state estimate covar  |
+| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kDefaultQ0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultq0)** <br>default process noise covar  |
+| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kDefaultR0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultr0)** <br>default output noise covar  |
 
 ## Type Details
 
@@ -82,7 +82,7 @@ Linear Dynamical Systems (LDS) namespace. <br>
 
 
 
-Weighting options for singular value decomposition performed during subspace identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/))
+Weighting options for singular value decomposition performed during subspace identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/))
 
 Reference:
 
@@ -330,7 +330,7 @@ Adapt control setpoint adapted with re-estimated process disturbance `m`.
 ### kInf
 
 ```cpp
-static const data_t kInf = std::numeric_limits<[data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data_t)>::infinity();
+static const data_t kInf = std::numeric_limits<data_t>::infinity();
 ```
 
 
@@ -373,4 +373,4 @@ static const data_t kDefaultR0 = 1e-2;
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on 19 May 2022 at 17:16:03 Eastern Daylight Time

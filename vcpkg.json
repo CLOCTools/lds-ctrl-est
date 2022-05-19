@@ -1,0 +1,8 @@
+{
+    "name": "lds-ctrl-est",
+    "version-string": "0.8.0",
+    "dependencies": [
+        "armadillo",
+        "hdf5"
+    ]
+}

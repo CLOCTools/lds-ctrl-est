@@ -156,6 +156,12 @@ class Controller {
   const Vector& y_ref() const { return y_ref_; };
   /// Get controller type
   size_t control_type() const { return control_type_; };
+  /// Get time constant of anti-integral-windup
+  data_t tau_awu() const { return tau_awu_; };
+  /// Get control lower bound
+  data_t u_lb() const { return u_lb_; };
+  /// Get control upper bound
+  data_t u_ub() const { return u_ub_; };
 
   // set methods
   /// Set system
@@ -348,7 +354,7 @@ class Controller {
   void AntiWindup();
 
   /// Initialize variables (common amongst user-defined constructors)
-  void InitVars();
+  void InitVars(size_t control_type);
 };
 
 // Implement the above:
@@ -359,9 +365,8 @@ inline Controller<System>::Controller(const System& sys, data_t u_lb,
     : sys_(sys),
       u_lb_(u_lb),
       u_ub_(u_ub),
-      control_type_(control_type),
       tau_awu_(lds::kInf) {
-  InitVars();
+  InitVars(control_type);
 }
 
 template <typename System>
@@ -370,9 +375,8 @@ inline Controller<System>::Controller(System&& sys, data_t u_lb, data_t u_ub,
     : sys_(std::move(sys)),
       u_lb_(u_lb),
       u_ub_(u_ub),
-      control_type_(control_type),
       tau_awu_(lds::kInf) {
-  InitVars();
+  InitVars(control_type);
 }
 
 template <typename System>
@@ -633,7 +637,7 @@ void Controller<System>::AntiWindup() {
 }
 
 template <typename System>
-void Controller<System>::InitVars() {
+void Controller<System>::InitVars(size_t control_type) {
   // initialize to default values
   u_ref_ = Vector(sys_.n_u(), fill::zeros);
   u_ref_prev_ = Vector(sys_.n_u(), fill::zeros);
@@ -660,7 +664,7 @@ void Controller<System>::InitVars() {
   int_e_ = Vector(0, fill::zeros);
   int_e_awu_adjust_ = Vector(0, fill::zeros);
 
-  set_control_type(control_type_);
+  set_control_type(control_type);
 }
 
 }  // namespace lds

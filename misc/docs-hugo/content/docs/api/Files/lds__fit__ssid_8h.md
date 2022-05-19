@@ -20,13 +20,13 @@ subspace identification  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)**  |
+| class | **[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/)**  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines a template type by which LDS models are fit by a subspace identification (SSID) algorithm (`[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)<Fit>`).
+This file declares and partially defines a template type by which LDS models are fit by a subspace identification (SSID) algorithm (`[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/)<Fit>`).
 
 References: [1] van Overschee P, de Moore B. (1996) Subspace Identification for Linear Systems. Boston: Springer. 
 
@@ -578,4 +578,4 @@ void SSID<Fit>::RecomputeExtObs() {
 
 -------------------------------
 
-Updated on 22 June 2021 at 23:08:17 CDT
+Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
