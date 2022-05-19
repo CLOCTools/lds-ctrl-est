@@ -10,6 +10,10 @@ Building C++ libraries with complex dependencies can be tricky business&mdash;in
 - macOS 11 (Big Sur) with Apple Clang 12 compiler
 - Windows 10 with Visual Studio 16.11 (2019 release) and Clang 12 compiler
 
+That being said, if you want to debug a build for a single platform, here are some things you can try:
+- Use different compilers (or even different versions of a single compiler)
+- Use different versions of vcpkg (which you can control by checking out a different commit in the vcpkg submodule)
+
 ## Mac pre-requisities
 
 Xcode Command Line Tools will get you clang, gcc, make, and git:
@@ -128,7 +132,7 @@ Also, beware that a single build will probably not work for both the standalone 
 
 2. vcpkg fails on configuration
 
-  Try running `./bootstrap-vcpkg` from the `vcpkg` folder and try again. If that doesn't work, try updating vcpkg to a newer version (in the source control tab, click on the commit hash by the vcpkg repo then select from the dropdown) and running `boostsrap-vcpkg` again.
+  Try running `./bootstrap-vcpkg` from the `vcpkg` folder and try again. If that doesn't work, try updating vcpkg to a newer version (in the source control tab, click on the commit hash by the vcpkg repo then select from the dropdown) and running `boostsrap-vcpkg` again. You can also try upgrading your system (e.g., `apt update`, `apt upgrade`).
 
 3. `Could not find Python3 (missing: Python3_NumPy_INCLUDE_DIRS NumPy)`
    
