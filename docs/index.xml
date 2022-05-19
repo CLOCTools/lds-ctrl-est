@@ -22,8 +22,19 @@
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/getting-started/</guid>
       <description>Getting Started #  This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
 ldsCtrlEst requires Armadillo for linear algebra as well as HDF5 for saving output. vcpkg is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
-Downloading the Library #  First, clone the repository along with submodules:
-git clone --recurse-submodules https://github.</description>
+Tested Configurations #  Building C++ libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/</guid>
+      <description>Windows Installation #  Windows Pre-requisites #  Scoop is a very handy tool for easily installing all sorts of command-line applications. Install like this:
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time iwr get.scoop.sh | Invoke-Expression Install Git and CMake if you don&amp;rsquo;t already have them:
+scoop install git cmake If that didn&amp;rsquo;t work, follow more detailed instructions here.
+The easiest way to compile C++ project on Windows is with Visual Studio&amp;rsquo;s build tools, which you can download here (or here for the 2019 release which we tested—make sure you get the most recent one, e.</description>
     </item>
     
     <item>
@@ -80,7 +91,7 @@ Contributing #  We welcome any community contributions to this project. Please f
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/modules/group__defaults/</guid>
       <description>Defaults #  
 More&amp;hellip; Attributes #      Name     const data_t kDefaultP0 default state estimate covar   const data_t kDefaultQ0 default process noise covar   const data_t kDefaultR0 default output noise covar    Detailed Description #  Default values for common variables (e.g., default diagonal elements of covariances)
-Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 4 May 2022 at 16:59:51 Eastern Daylight Time</description>
+Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefaultQ0 #  static const data_t kDefaultQ0 = 1e-6; kDefaultR0 #  static const data_t kDefaultR0 = 1e-2;  Updated on 19 May 2022 at 17:16:04 Eastern Daylight Time</description>
     </item>
     
     <item>
@@ -139,7 +150,7 @@ Attribute Details #  kDefaultP0 #  static const data_t kDefaultP0 = 1e-6; kDefau
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d28a4824dc47e487b107a5db32ef43c4/</guid>
-      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_glds_du_plds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 4 May 2022 at 16:59:51 Eastern Daylight Time</description>
+      <description>examples #  Files #     Name     examples/eg_glds_ctrl.cpp   examples/eg_glds_du_plds_ctrl.cpp   examples/eg_plds_ctrl.cpp   examples/eg_plds_est.cpp   examples/eg_plds_switched_ctrl.cpp     Updated on 19 May 2022 at 17:16:04 Eastern Daylight Time</description>
     </item>
     
     <item>
@@ -205,7 +216,7 @@ Source code #  //===-- eg_plds_ctrl.cpp - Example PLDS Control -----------------
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_d44c64559bbebec7f509842c48db8b23/</guid>
-      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 4 May 2022 at 16:59:51 Eastern Daylight Time</description>
+      <description>include #  Directories #     Name     ldsCtrlEst_h     Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time</description>
     </item>
     
     <item>
@@ -729,7 +740,7 @@ In the example that follows, another PLDS model (lds::poisson::System) is used i
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/dir_68267d1309a1af8e8297ef4c3efbcdba/</guid>
-      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 4 May 2022 at 16:59:51 Eastern Daylight Time</description>
+      <description>src #  Files #     Name     src/lds.cpp misc lds namespace functions   src/lds_gaussian_sys.cpp GLDS base type.   src/lds_poisson_sys.cpp PLDS base type.   src/lds_sys.cpp LDS base type.   src/lds_uniform_vecs.cpp Uniformly sized vectors.     Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time</description>
     </item>
     
     <item>

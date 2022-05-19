@@ -13,8 +13,19 @@
       <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/getting-started/</guid>
       <description>Getting Started #  This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
 ldsCtrlEst requires Armadillo for linear algebra as well as HDF5 for saving output. vcpkg is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
-Downloading the Library #  First, clone the repository along with submodules:
-git clone --recurse-submodules https://github.</description>
+Tested Configurations #  Building C++ libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/windows/</guid>
+      <description>Windows Installation #  Windows Pre-requisites #  Scoop is a very handy tool for easily installing all sorts of command-line applications. Install like this:
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser # Optional: Needed to run a remote script the first time iwr get.scoop.sh | Invoke-Expression Install Git and CMake if you don&amp;rsquo;t already have them:
+scoop install git cmake If that didn&amp;rsquo;t work, follow more detailed instructions here.
+The easiest way to compile C++ project on Windows is with Visual Studio&amp;rsquo;s build tools, which you can download here (or here for the 2019 release which we tested—make sure you get the most recent one, e.</description>
     </item>
     
     <item>

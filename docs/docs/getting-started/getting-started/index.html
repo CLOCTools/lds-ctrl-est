@@ -5,13 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Getting Started #  This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
 ldsCtrlEst requires Armadillo for linear algebra as well as HDF5 for saving output. vcpkg is a cross-platform C&#43;&#43; package manager which allows us to easily install and use the dependencies in isolation.
-Downloading the Library #  First, clone the repository along with submodules:
-git clone --recurse-submodules https://github.">
+Tested Configurations #  Building C&#43;&#43; libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another.">
 <meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="" />
 <meta property="og:description" content="Getting Started #  This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
 ldsCtrlEst requires Armadillo for linear algebra as well as HDF5 for saving output. vcpkg is a cross-platform C&#43;&#43; package manager which allows us to easily install and use the dependencies in isolation.
-Downloading the Library #  First, clone the repository along with submodules:
-git clone --recurse-submodules https://github." />
+Tested Configurations #  Building C&#43;&#43; libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/getting-started/" /><meta property="article:section" content="docs" />
 
@@ -22,7 +20,7 @@ git clone --recurse-submodules https://github." />
 <link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
   <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
-  <script defer src="/lds-ctrl-est/en.search.min.557bfc2f9fdca6a8b972ddb85402ebca9cbcdf5bb90e37c4cb24206214b0414e.js" integrity="sha256-VXv8L5/cpqi5ct24VALrypy831u5DjfEyyQgYhSwQU4=" crossorigin="anonymous"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.93b2d0e7fa872893809358a01a9e6e0c0ce7a384100570924726e75a52c21d85.js" integrity="sha256-k7LQ5/qHKJOAk1igGp5uDAzno4QQBXCSRybnWlLCHYU=" crossorigin="anonymous"></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -69,7 +67,11 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 <p><br /></p>
 <ul>
-<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"class=active><strong>Getting Started</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"class=active><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
 </ul>
 <p><br /></p>
 <ul>
@@ -162,11 +164,14 @@ https://github.com/alex-shpak/hugo-book
   <ul>
     <li><a href="#getting-started">Getting Started</a>
       <ul>
+        <li><a href="#tested-configurations">Tested Configurations</a></li>
+        <li><a href="#mac-pre-requisities">Mac Pre-requisities</a></li>
+        <li><a href="#linux-pre-requisites">Linux Pre-requisites</a></li>
+        <li><a href="#windows-installation">Windows Installation</a></li>
         <li><a href="#downloading-the-library">Downloading the Library</a></li>
         <li><a href="#compilation--installation">Compilation + Installation</a></li>
         <li><a href="#options">Options</a></li>
         <li><a href="#python-bindings-package-ldsctrlest">Python bindings package <code>ldsctrlest</code></a></li>
-        <li><a href="#considerations-for-windows">Considerations for Windows</a></li>
         <li><a href="#common-issues">Common issues</a></li>
       </ul>
     </li>
@@ -188,14 +193,50 @@ https://github.com/alex-shpak/hugo-book
 </h1>
 <p>This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.</p>
 <p><code>ldsCtrlEst</code> requires <a href="http://arma.sourceforge.net/">Armadillo</a> for linear algebra as well as <a href="https://www.hdfgroup.org/downloads/hdf5/">HDF5</a> for saving output. <a href="https://vcpkg.io/"><code>vcpkg</code></a> is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.</p>
+<h2 id="tested-configurations">
+  Tested Configurations
+  <a class="anchor" href="#tested-configurations">#</a>
+</h2>
+<p>Building C++ libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another. To save you time, sweat, and tears, we suggest you simply use one of the following setups we know work fairly reliably, using the <code>RelWithDebInfo</code> build type in the CMake configure command (<code>-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo</code>):</p>
+<ul>
+<li>Ubuntu 18.04 with GCC 7.5 compiler</li>
+<li>macOS 11 (Big Sur) with Apple Clang 12 compiler</li>
+<li>Windows 10 with Visual Studio 16.11 (2019 release) and Clang 12 compiler</li>
+</ul>
+<p>That being said, if you want to debug a build for a single platform, here are some things you can try:</p>
+<ul>
+<li>Use different compilers (or even different versions of a single compiler)</li>
+<li>Use different versions of vcpkg (which you can control by checking out a different commit in the vcpkg submodule)</li>
+</ul>
+<h2 id="mac-pre-requisities">
+  Mac Pre-requisities
+  <a class="anchor" href="#mac-pre-requisities">#</a>
+</h2>
+<p>Xcode Command Line Tools will get you clang, gcc, make, and git:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">xcode-select --install
+</code></pre></div><p>Homebrew is &ldquo;The Missing Package Manager for macOS&rdquo; which will make installing lots of things easy. Install like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/bin/bash -c <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</code></pre></div><p>You can then use it to install CMake and gfortran:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">brew install cmake gfortran
+</code></pre></div><h2 id="linux-pre-requisites">
+  Linux Pre-requisites
+  <a class="anchor" href="#linux-pre-requisites">#</a>
+</h2>
+<p>You&rsquo;ll need Git, CMake, GCC, gfortran, etc.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt install git cmake pkg-config gfortran curl zip unzip tar build-essential
+</code></pre></div><h2 id="windows-installation">
+  Windows Installation
+  <a class="anchor" href="#windows-installation">#</a>
+</h2>
+<p>Look <a href="/lds-ctrl-est/docs/getting-started/windows/">here</a> for Windows-specific instructions.</p>
 <h2 id="downloading-the-library">
   Downloading the Library
   <a class="anchor" href="#downloading-the-library">#</a>
 </h2>
 <p>First, clone the repository along with submodules:</p>
-<pre><code>git clone --recurse-submodules https://github.com/stanley-rozell/lds-ctrl-est.git 
+<pre><code>git clone https://github.com/cloctools/lds-ctrl-est.git 
 cd lds-ctrl-est
-# use git submodule update --init if you clone the repo without --recurse-submodules
+git submodule update --init
 </code></pre><h2 id="compilation--installation">
   Compilation + Installation
   <a class="anchor" href="#compilation--installation">#</a>
@@ -254,18 +295,12 @@ make <span style="color:#75715e">#build the project</span>
   Python bindings package <code>ldsctrlest</code>
   <a class="anchor" href="#python-bindings-package-ldsctrlest">#</a>
 </h2>
-<p>With the <code>LDSCTRLEST_BUILD_PYTHON</code> setting (off by default) and the <code>pybind11</code> submodule initialized, you can build Python bindings. You will probably want to specify the installation of Python to use by adding a <code>-DPython_ROOT_DIR=[path/to/install/dir]</code> argument to the CMake cache generation command (the first one) so CMake doesn&rsquo;t use an undesired version. That environment needs to have NumPy installed.</p>
-<p>The bindings need to be generated just once per Python version. Once the build is complete, navigate to the <code>[build location]/python</code> folder and run <code>pip install .</code> to make it importable anywhere for your current environment. <em>The file structure only works correctly for this if you use a single-config generator like Ninja or Make, though.</em> You can verify the installation was successful by running <code>pytest</code> from the <code>build/python</code> directory.</p>
+<p>With the <code>LDSCTRLEST_BUILD_PYTHON</code> setting (off by default) and the <code>pybind11</code> submodule initialized, you can build Python bindings. You will probably want to specify the installation of Python to use by adding a <code>-DPython3_ROOT_DIR=[path/to/install/dir]</code> argument to the CMake cache generation command (the first one) so CMake doesn&rsquo;t use an undesired version. That environment needs to have NumPy installed.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cmake --build . --target python_modules
+</code></pre></div><p>The bindings need to be generated just once per Python version. Once the build is complete, navigate to the <code>[build location]/python</code> folder and run <code>pip install .</code> to make it importable anywhere for your current environment. <em>The file structure only works correctly for this if you use a single-config generator like Ninja or Make, though.</em> You can verify the installation was successful by running <code>pytest</code> from the <code>build/python</code> directory (<code>pip install pytest matplotlib</code> first if you need to).</p>
 <p>See <code>python/ldsctrlest/README.md</code> for usage details.</p>
-<p>Also, beware that a single build might not work for both the standalone library and the Python package (especially on Windows), since the conversion between NumPy and Armadillo alters the way Armadillo allocates memory. In this case you may want to build once with <code>-DLDSCTRLEST_BUILD_PYTHON=ON</code>, install the package, then again with  <code>-DLDSCTRLEST_BUILD_PYTHON=OFF</code> for the pure C++ build to work correctly.</p>
-<h2 id="considerations-for-windows">
-  Considerations for Windows
-  <a class="anchor" href="#considerations-for-windows">#</a>
-</h2>
-<p>First of all, development on Windows has been more prone to bugs, so if you encounter many problems, consider using a Unix-based system—<a href="https://docs.microsoft.com/en-us/windows/wsl/install">WSL (Windows Subsystem for Linux)</a> is a good option for Windows users who don&rsquo;t want to work on a different machine.</p>
-<p>You will likely need to get compiler tools through the Visual Studio installer. Compilation was tested in VS Code using the following kit:</p>
-<pre><code>Clang 12.0.0 (GNU CLI) for MSVC 16.11.31702.278 (Visual Studio Community 2019 Release - amd64)
-</code></pre><h2 id="common-issues">
+<p>Also, beware that a single build will probably not work for both the standalone library and the Python package, since the conversion between NumPy and Armadillo alters the way Armadillo allocates memory. In this case you may want to build once with <code>-DLDSCTRLEST_BUILD_PYTHON=ON</code>, install the package, then again with  <code>-DLDSCTRLEST_BUILD_PYTHON=OFF</code> for the pure C++ build to work correctly.</p>
+<h2 id="common-issues">
   Common issues
   <a class="anchor" href="#common-issues">#</a>
 </h2>
@@ -275,11 +310,16 @@ make <span style="color:#75715e">#build the project</span>
 <p>If <code>cmake</code> and/or <code>pkg-config</code> cannot find the required configuration files for your project to link against ldsCtrlEst, make sure that these utilities know to look for them in the non-default location where you installed the library. For <code>cmake</code> this means adding your chosen install prefix to the environment variable <code>CMAKE_PREFIX_PATH</code>. Similarly, for <code>pkg-config</code> you need to add <code>your/install/prefix/lib/pkgconfig</code> to its search path, <code>PKG_CONFIG_PATH</code>. Assuming a Unix shell whose login startup file is <code>~/.profile</code> and ldsCtrlEst was installed using prefix <code>your/install/prefix</code>, add the following to <code>.profile</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">export CMAKE_PREFIX_PATH<span style="color:#f92672">=</span>$CMAKE_PREFIX_PATH:/your/install/prefix
 export PKG_CONFIG_PATH<span style="color:#f92672">=</span>$PKG_CONFIG_PATH:/your/install/prefix
-</code></pre></div><p>On Windows, you will likely need to add the build or install folder to your <code>PATH</code> environment variable, which you can do using the settings GUI (search for &ldquo;Edit the system environment variables&rdquo;).</p>
-<ol start="2">
-<li>On Windows, &ldquo;Generate CMake Cache&rdquo; step errs because creating symbolic links is not permitted.</li>
+</code></pre></div><ol start="2">
+<li>vcpkg fails on configuration</li>
 </ol>
-<p>Certain source files are sym-linked to the build/install directories during configuration with cmake. As such, your user in Windows must be permitted to do so. Make sure that your user is listed next to <em>Control Panel -&gt; Administrative Tools -&gt; Local Policies -&gt; User Rights Assignment -&gt; Create Symbolic Links</em>.</p>
+<p>Try running <code>./bootstrap-vcpkg</code> from the <code>vcpkg</code> folder and try again. If that doesn&rsquo;t work, try updating vcpkg to a newer version (in the source control tab, click on the commit hash by the vcpkg repo then select from the dropdown) and running <code>boostsrap-vcpkg</code> again. You can also try upgrading your system (e.g., <code>apt update</code>, <code>apt upgrade</code>).</p>
+<ol start="3">
+<li>
+<p><code>Could not find Python3 (missing: Python3_NumPy_INCLUDE_DIRS NumPy)</code></p>
+<p>Make sure NumPy is installed in the Python environment you specified. If CMake still can&rsquo;t find it, you may need to tell CMake exactly where to find it by adding an argument to the configure command: <code>-DPython3_NumPy_INCLUDE_DIR=...</code>. You can find that location like this: <code>python -c 'import numpy; print(numpy.get_include())'</code></p>
+</li>
+</ol>
 </article>
  
       
@@ -319,11 +359,14 @@ export PKG_CONFIG_PATH<span style="color:#f92672">=</span>$PKG_CONFIG_PATH:/your
   <ul>
     <li><a href="#getting-started">Getting Started</a>
       <ul>
+        <li><a href="#tested-configurations">Tested Configurations</a></li>
+        <li><a href="#mac-pre-requisities">Mac Pre-requisities</a></li>
+        <li><a href="#linux-pre-requisites">Linux Pre-requisites</a></li>
+        <li><a href="#windows-installation">Windows Installation</a></li>
         <li><a href="#downloading-the-library">Downloading the Library</a></li>
         <li><a href="#compilation--installation">Compilation + Installation</a></li>
         <li><a href="#options">Options</a></li>
         <li><a href="#python-bindings-package-ldsctrlest">Python bindings package <code>ldsctrlest</code></a></li>
-        <li><a href="#considerations-for-windows">Considerations for Windows</a></li>
         <li><a href="#common-issues">Common issues</a></li>
       </ul>
     </li>
