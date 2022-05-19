@@ -9,6 +9,7 @@ headless: true
 <br />
 
 - [**Getting Started**]({{< relref "docs/getting-started/getting-started">}})
+  - [**Windows**]({{< relref "docs/getting-started/windows">}})
 
 <br />
 

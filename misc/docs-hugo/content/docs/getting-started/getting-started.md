@@ -4,8 +4,8 @@ This library uses the cross-platform tool CMake to orchestrate the building and 
 
 `ldsCtrlEst` requires [Armadillo](http://arma.sourceforge.net/) for linear algebra as well as [HDF5](https://www.hdfgroup.org/downloads/hdf5/) for saving output. [`vcpkg`](https://vcpkg.io/) is a cross-platform C++ package manager which allows us to easily install and use the dependencies in isolation.
 
-## N.B.
-Building C++ libraries with complex dependencies can be tricky business&mdash;in our experience builds have inexplicably worked in one environment and failed in another. To save you time, sweat, and tears, we suggest you simply use one of the following setups we know work fairly reliably, using the `RelWithDebInfo` config:
+## Tested Configurations
+Building C++ libraries with complex dependencies can be tricky business&mdash;in our experience builds have inexplicably worked in one environment and failed in another. To save you time, sweat, and tears, we suggest you simply use one of the following setups we know work fairly reliably, using the `RelWithDebInfo` build type in the CMake configure command (`-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo`):
 - Ubuntu 18.04 with GCC 7.5 compiler
 - macOS 11 (Big Sur) with Apple Clang 12 compiler
 - Windows 10 with Visual Studio 16.11 (2019 release) and Clang 12 compiler
@@ -14,7 +14,7 @@ That being said, if you want to debug a build for a single platform, here are so
 - Use different compilers (or even different versions of a single compiler)
 - Use different versions of vcpkg (which you can control by checking out a different commit in the vcpkg submodule)
 
-## Mac pre-requisities
+## Mac Pre-requisities
 
 Xcode Command Line Tools will get you clang, gcc, make, and git:
 ```shell
@@ -31,14 +31,14 @@ You can then use it to install CMake and gfortran:
 brew install cmake gfortran
 ```
 
-## Linux pre-requisites
+## Linux Pre-requisites
 
 You'll need Git, CMake, GCC, gfortran, etc.
 ```shell
 sudo apt install git cmake pkg-config gfortran curl zip unzip tar build-essential
 ```
 
-## Windows installation
+## Windows Installation
 Look [here]({{< relref "windows">}}) for Windows-specific instructions.
 
 ## Downloading the Library

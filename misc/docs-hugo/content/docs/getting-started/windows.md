@@ -1,6 +1,6 @@
-# Windows installation
+# Windows Installation
 
-## Windows pre-requisites
+## Windows Pre-requisites
 Scoop is a very handy tool for easily installing all sorts of command-line applications. Install like this: 
 
 ```shell
