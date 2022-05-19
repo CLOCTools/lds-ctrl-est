@@ -7,8 +7,7 @@
 	url = https://github.com/microsoft/vcpkg.git
 [submodule "python/pybind11"]
 	path = python/pybind11
-	url = ../../pybind/pybind11
-	branch = stable
+	url = https://github.com/pybind/pybind11.git
 [submodule "python/carma"]
 	path = python/carma
 	url = https://github.com/RUrlus/carma.git
