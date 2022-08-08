@@ -74,7 +74,7 @@ py::class_<Sys> define_System(py::module &m) {
       }, "simulates for multiple trials/timesteps. u is list of n_u X n_t arrays")
       // see matlab/[GLDS|PLDS]/simulate_imp.m
       .def("simulate_imp", [](Sys& sys, size_t n_t) {
-        vector<Matrix> cx_imp(sys.n_u(), Matrix(sys.n_x(), n_t, fill::zeros));
+        vector<Matrix> cx_imp(sys.n_u(), Matrix(sys.n_y(), n_t, fill::zeros));
         Vector u_imp(n_t, fill::zeros);
         u_imp[0] = 1;
         for (size_t which_u = 0; which_u < sys.n_u(); which_u++) {
