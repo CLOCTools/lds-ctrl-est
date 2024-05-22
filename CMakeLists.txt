@@ -122,6 +122,7 @@ find_package(Doxygen COMPONENTS dot
 message(STATUS "CMAKE_PREFIX_PATH = ${CMAKE_PREFIX_PATH}")
 include(HDF5)
 include(Armadillo)
+include(OSQP)
 
 if (LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
   # for mex compat.

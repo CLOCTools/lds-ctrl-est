@@ -1,0 +1,2 @@
+find_package(osqp REQUIRED)
+list(APPEND PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME osqp::osqp)
