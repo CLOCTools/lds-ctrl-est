@@ -80,7 +80,7 @@ auto main() -> int {
   // Initialize the controller
   lds::gaussian::MpcController controller;  // TODO: Implement MpcController
   {
-    Matrix Q = C.t() % C * 1e5;
+    Matrix Q = C.t() * C * 1e5;
     Matrix R = Matrix(n_u, n_u, arma::fill::eye) * 1e-1;  // using dense instead of sparse matrix
     Matrix S = Matrix(n_u, n_u, arma::fill::zeros);       // using dense instead of sparse matrix
 
@@ -120,8 +120,8 @@ auto main() -> int {
   }
 
   Matrix I = Matrix(n_x, n_x, arma::fill::eye);
-  Matrix ur = arma::pinv(C % arma::inv(I - A) % B) % yr;
-  Matrix xr = arma::inv(I - A) % B % ur;
+  Matrix ur = arma::pinv(C * arma::inv(I - A) * B) * yr;
+  Matrix xr = arma::inv(I - A) * B * ur;
 
   // Simulate the system
   cout << "Starting " << n_t * t_sim << " sec simulation ... \n";
