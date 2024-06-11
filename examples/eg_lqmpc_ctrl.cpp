@@ -65,11 +65,13 @@ auto main() -> int {
     C = arma::join_cols(C, 2 * C, 3 * C);
   }
 
+
   // Initialize the system that is being controlled
   lds::gaussian::System controlled_system(n_u, n_x, n_y, dt);
   controlled_system.set_A(A);
   controlled_system.set_B(B);
   controlled_system.set_C(C);
+  controlled_system.Reset();
 
   cout << ".....................................\n";
   cout << "controlled_system:\n";
@@ -78,7 +80,8 @@ auto main() -> int {
   cout << ".....................................\n";
 
   // Initialize the controller
-  lds::gaussian::MpcController controller;  // TODO: Implement MpcController
+  lds::gaussian::MpcController controller;
+  const size_t N = 25;  // Prediction horizon
   {
     Matrix Q = C.t() * C * 1e5;
     Matrix R = Matrix(n_u, n_u, arma::fill::eye) * 1e-1;  // using dense instead of sparse matrix
@@ -94,9 +97,17 @@ auto main() -> int {
       umax = {5, 5, 5};
     }
 
-    controller = std::move(lds::gaussian::MpcController(std::move(controlled_system)));
-    controller.set_control(Q, R, S, 25, 20);
-    controller.set_constraints(umin, umax);
+    Vector xmin(B.n_rows);
+    xmin.fill(-arma::datum::inf);
+    Vector xmax(B.n_rows);
+    xmax.fill(arma::datum::inf);
+
+
+    lds::gaussian::System controller_system(controlled_system);
+
+    controller = std::move(lds::gaussian::MpcController(std::move(controller_system), umin, umax));
+    controller.set_control(Q, R, S, N, 20);
+    controller.set_constraint(xmin, xmax, umin, umax);
   }
 
   cout << ".....................................\n";
@@ -109,10 +120,11 @@ auto main() -> int {
   Vector u0 = Vector(n_u, arma::fill::zeros);
   Vector x0 = Vector(n_x, arma::fill::zeros);
 
+
   const size_t n_t = 120;     // Number of time steps
   const data_t t_sim = 0.25;  // Simulation time step
   Matrix zr = 0.05 * arma::sin(arma::linspace<Matrix>(0, 2 * arma::datum::pi, (n_t + 25) * 250) * 12) + 0.1;
-  Matrix yr = z_to_y(zr);
+  Matrix yr = z_to_y(zr.t());
   if (n_y == 2) {
     yr = arma::join_cols(yr, 2 * yr);
   } else if (n_y == 3) {
@@ -131,14 +143,12 @@ auto main() -> int {
   for (size_t t = 0; t < n_t; ++t) {
     // Calculate the slice indices
     size_t start_idx = t * n_sim;
-    size_t end_idx = (t + 1) * n_sim - 1;
+    size_t end_idx = (t + N) * n_sim - 1;
 
-    if (t == 0) {
-      controller.step(t_sim, x0, u0, xr.cols(start_idx, end_idx), false);
-    } else {
-      // TODO: Implement step function and check controller.xi and controller.ui
-      controller.step(t_sim, controller.xi, controller.ui, xr.cols(start_idx, end_idx), false);
-    }
+    u0 = controller.Control(t_sim, x0, u0, xr.cols(start_idx, end_idx));
+
+    controlled_system.Simulate(u0);
+    x0 = controlled_system.x();
   }
 
   auto t2 = std::chrono::high_resolution_clock::now();
