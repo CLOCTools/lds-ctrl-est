@@ -105,7 +105,7 @@ class MpcController {
     uineq_ = join_horiz(arma::kron(Vector(N_, arma::fill::ones), xmax).t(),
                         arma::kron(Vector(M_, arma::fill::ones), umax).t());
     size_t Aineq_dim = N_ * n_ + M_ * m_;
-    Aineq_ = arma::eye<arma::SpMat<data_t>>(Aineq_dim, Aineq_dim);
+    Aineq_ = arma::eye<Sparse(Aineq_dim, Aineq_dim);
   }
 
   void Print() {
@@ -127,7 +127,7 @@ class MpcController {
 
   Matrix lineq_;               ///< lower inequality bound
   Matrix uineq_;               ///< upper inequality bound
-  arma::SpMat<data_t> Aineq_;  ///< inequality condition matrix
+  Sparse Aineq_;  ///< inequality condition matrix
 
   Matrix Acon_;  ///< update condition matrix
   Vector lb_;    ///< lower bound
@@ -150,7 +150,7 @@ class MpcController {
    *
    * @param     A The sparse matrix to convert
    */
-  OSQPCscMatrix* from_sparse(const arma::SpMat<data_t>& A);
+  OSQPCscMatrix* from_sparse(const Sparse& A);
 
   /**
    * @brief     Set the vector for the OSQP solver from an Armadillo vector
@@ -195,8 +195,8 @@ class MpcController {
    * 
    * @return    The identity matrix with an offset axis
    */
-  arma::SpMat<data_t> eye_offset(size_t n, int k = -1) {
-    arma::SpMat<data_t> mat(n, n);
+  Sparse eye_offset(size_t n, int k = -1) {
+    Sparse mat(n, n);
     int start = (k < 0) ? -k : 0;
     for (int i = start; i < n && i + k < n; i++) {
       mat(i, i + k) = 1;
@@ -366,9 +366,9 @@ OSQPSolution* MpcController<System>::slow_update(const Vector& x0,
   }
 
   // Ax + Bu = 0
-  Matrix Ax(arma::kron(arma::speye<arma::SpMat<data_t>>(N_, N_),
-                      -arma::speye<arma::SpMat<data_t>>(n_, n_)) +
-            arma::kron(eye_offset(N_), arma::SpMat<data_t>(Axs)));
+  Matrix Ax(arma::kron(arma::speye<Sparse>(N_, N_),
+                      -arma::speye<Sparse>(n_, n_)) +
+            arma::kron(eye_offset(N_), Sparse(Axs)));
   Matrix B0(1, M_);
   Matrix Bstep(M_, M_, arma::fill::eye);
   Matrix Bend = arma::join_horiz(Matrix(N_ - M_ - 1, M_ - 1),
@@ -481,7 +481,7 @@ OSQPCscMatrix* MpcController<System>::from_matrix(const Matrix& A) {
 
 template <typename System>
 OSQPCscMatrix* MpcController<System>::from_sparse(
-    const arma::SpMat<data_t>& A) {
+    const Sparse& A) {
   OSQPCscMatrix* mat = (OSQPCscMatrix*)malloc(sizeof(OSQPCscMatrix));
 
   mat->m = A.n_rows;

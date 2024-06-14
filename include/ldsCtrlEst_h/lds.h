@@ -43,6 +43,7 @@ namespace lds {
 using data_t = double;  // may change to float (but breaks mex functions)
 using Vector = arma::Col<data_t>;
 using Matrix = arma::Mat<data_t>;
+using Sparse = arma::SpMat<data_t>;
 using Cube = arma::Cube<data_t>;
 using View = arma::subview<data_t>;
 
