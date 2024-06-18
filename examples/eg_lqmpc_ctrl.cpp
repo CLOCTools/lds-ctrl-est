@@ -1,4 +1,5 @@
-//===-- eg_lqmpc_ctrl.cpp - Example LQMPC Control ---------------------------===//
+//===-- eg_lqmpc_ctrl.cpp - Example LQMPC Control
+//---------------------------===//
 //
 // Copyright 2024 Chia-Chien Hung and Kyle Johnsen
 // Copyright 2024 Georgia Institute of Technology
@@ -65,7 +66,6 @@ auto main() -> int {
     C = arma::join_cols(C, 2 * C, 3 * C);
   }
 
-
   // Initialize the system that is being controlled
   lds::gaussian::System controlled_system(n_u, n_x, n_y, dt);
   controlled_system.set_A(A);
@@ -84,8 +84,10 @@ auto main() -> int {
   const size_t N = 25;  // Prediction horizon
   {
     Matrix Q = C.t() * C * 1e5;
-    Matrix R = Matrix(n_u, n_u, arma::fill::eye) * 1e-1;  // using dense instead of sparse matrix
-    Matrix S = Matrix(n_u, n_u, arma::fill::zeros);       // using dense instead of sparse matrix
+    Matrix R = Matrix(n_u, n_u, arma::fill::eye) *
+               1e-1;  // using dense instead of sparse matrix
+    Matrix S = Matrix(
+        n_u, n_u, arma::fill::zeros);  // using dense instead of sparse matrix
 
     Vector umin = {0};
     Vector umax = {5};
@@ -102,10 +104,10 @@ auto main() -> int {
     Vector xmax(B.n_rows);
     xmax.fill(arma::datum::inf);
 
-
     lds::gaussian::System controller_system(controlled_system);
 
-    controller = std::move(lds::gaussian::MpcController(std::move(controller_system), umin, umax));
+    controller = std::move(
+        lds::gaussian::MpcController(std::move(controller_system), umin, umax));
     controller.set_control(Q, R, S, N, 20);
     controller.set_constraint(xmin, xmax, umin, umax);
   }
@@ -119,7 +121,6 @@ auto main() -> int {
   // Set up variables for simulation
   Vector u0 = Vector(n_u, arma::fill::zeros);
   Vector x0 = Vector(n_x, arma::fill::zeros);
-
 
   const size_t n_t = 120;     // Number of time steps
   const data_t t_sim = 0.25;  // Simulation time step
@@ -138,7 +139,7 @@ auto main() -> int {
   // Simulate the system
   cout << "Starting " << n_t * t_sim << " sec simulation ... \n";
   auto t1 = std::chrono::high_resolution_clock::now();
-  const size_t n_sim = int(t_sim / dt);
+  const size_t n_sim = static_cast<int>(t_sim / dt);
 
   for (size_t t = 0; t < n_t; ++t) {
     // Calculate the slice indices
@@ -149,6 +150,9 @@ auto main() -> int {
 
     controlled_system.Simulate(u0);
     x0 = controlled_system.x();
+
+    u0.brief_print("u0");
+    x0.brief_print("x0");
   }
 
   auto t2 = std::chrono::high_resolution_clock::now();
