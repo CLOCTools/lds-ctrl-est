@@ -102,6 +102,7 @@ cpp.sublime-workspace
 .vs/
 .vscode/
 .cache/
+.idea/
 
 # whitelist documentation
 !docs/**
