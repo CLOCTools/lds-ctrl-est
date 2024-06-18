@@ -79,6 +79,7 @@ class MpcController {
                  const Matrix& xr);
 
   // getters
+  const System& sys() const { return sys_; }
 
   // setters
   void set_control(Matrix Q, Matrix R, Matrix S, size_t N, size_t M) {
@@ -98,7 +99,6 @@ class MpcController {
     Matrix Pu = Pu1 + Pu2 + Pu3;
     P_ = Sparse(arma::trimatu(
         2 * block_diag(Px, Pu)));  // Taking only the upper triangular part
-    P_.brief_print("P_:");
   }
 
   void set_constraint(Vector xmin, Vector xmax, Vector umin, Vector umax) {
@@ -202,17 +202,6 @@ class MpcController {
     return bd;
   }
 
-  // void print_osqp_csc_matrix(const OSQPCscMatrix* matrix) {
-  //   std::cout << "[" << matrix->m << ", " << matrix->n << "]:\n";
-
-  //   for (int j = 0, k = 0; j < (matrix->p[matrix->n]); j++) {
-  //     while (k <= matrix->n && matrix->p[k + 1] <= j) k++;
-  //     std::cout << "(" << matrix->i[j]  << ", " << k << ") " << matrix->x[j]
-  //     << "\n";
-  //   }
-  //   std::cout << std::endl;
-  // }
-
   void Init() {
     A_ = sys_.A();
     B_ = sys_.B();
@@ -315,9 +304,6 @@ osqp_arma::Solution* MpcController<System>::slow_update(const Vector& x0,
     Aus += arma::powmat(A_, i);
   }
 
-  Axs.brief_print("Axs:");
-  Aus.brief_print("Aus:");
-
   // Ax + Bu = 0
   Matrix Ax(
       arma::kron(arma::speye<Sparse>(N_, N_), -arma::speye<Sparse>(n_, n_)) +
@@ -333,10 +319,6 @@ osqp_arma::Solution* MpcController<System>::slow_update(const Vector& x0,
   lb_ = join_horiz(leq, lineq_).t();       // Lower bound
   ub_ = join_horiz(ueq, uineq_).t();       // Upper bound
 
-  Acon_.print("Acon:");
-  lb_.brief_print("lb:");
-  ub_.brief_print("ub:");
-
   // Convert state penalty from reference to OSQP format
   Vector q;
   {
@@ -350,8 +332,6 @@ osqp_arma::Solution* MpcController<System>::slow_update(const Vector& x0,
     Vector qx = Qxr.rows(0, N_ * n_ - 1);
     q = join_vert(qx, qu);
   }
-
-  q.brief_print("q:");
 
   osqp_arma::OSQP* OSQP = new osqp_arma::OSQP();
 

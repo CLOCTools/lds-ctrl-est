@@ -136,6 +136,23 @@ auto main() -> int {
   Matrix ur = arma::pinv(C * arma::inv(I - A) * B) * yr;
   Matrix xr = arma::inv(I - A) * B * ur;
 
+  // create Matrix to save outputs in...
+  Matrix y_ref = Matrix(n_y, n_t, arma::fill::zeros);
+
+  // simulated control signal
+  Matrix u(n_u, n_t, arma::fill::zeros);
+
+  // outputs, states and gain/disturbance params
+  // *_hat indicates online estimates
+  Matrix y_hat(n_y, n_t, arma::fill::zeros);
+  Matrix x_hat(n_x, n_t, arma::fill::zeros);
+  Matrix m_hat(n_x, n_t, arma::fill::zeros);
+
+  // *_true indicates ground truth (system being controlled)
+  Matrix y_true(n_y, n_t, arma::fill::zeros);
+  Matrix x_true(n_x, n_t, arma::fill::zeros);
+  Matrix m_true(n_x, n_t, arma::fill::zeros);
+
   // Simulate the system
   cout << "Starting " << n_t * t_sim << " sec simulation ... \n";
   auto t1 = std::chrono::high_resolution_clock::now();
@@ -151,8 +168,17 @@ auto main() -> int {
     controlled_system.Simulate(u0);
     x0 = controlled_system.x();
 
-    u0.brief_print("u0");
-    x0.brief_print("x0");
+    // save the signals
+    u.col(t) = u0;
+    y_ref.col(t) = xr.col(start_idx); // FIXME: only using first state as reference output
+
+    y_hat.col(t) = controller.sys().y();
+    x_hat.col(t) = controller.sys().x();
+    m_hat.col(t) = controller.sys().m();
+
+    y_true.col(t) = controlled_system.y();
+    x_true.col(t) = controlled_system.x();
+    m_true.col(t) = controlled_system.m();
   }
 
   auto t2 = std::chrono::high_resolution_clock::now();
@@ -162,7 +188,19 @@ auto main() -> int {
 
   cout << "Saving simulation data to disk.\n";
 
-  // TODO: Implement saving simulation data to disk
+  // saving with hdf5 via armadillo
+  arma::hdf5_opts::opts replace = arma::hdf5_opts::replace;
+
+  auto dt_vec = Vector(1).fill(dt);
+  dt_vec.save(arma::hdf5_name("eg_glds_ctrl.h5", "dt"));
+  y_ref.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_ref", replace));
+  u.save(arma::hdf5_name("eg_glds_ctrl.h5", "u", replace));
+  x_true.save(arma::hdf5_name("eg_glds_ctrl.h5", "x_true", replace));
+  m_true.save(arma::hdf5_name("eg_glds_ctrl.h5", "m_true", replace));
+  y_true.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_true", replace));
+  x_hat.save(arma::hdf5_name("eg_glds_ctrl.h5", "x_hat", replace));
+  m_hat.save(arma::hdf5_name("eg_glds_ctrl.h5", "m_hat", replace));
+  y_hat.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_hat", replace));
 
   cout << "fin.\n";
   return 0;
