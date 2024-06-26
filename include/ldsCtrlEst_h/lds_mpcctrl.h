@@ -75,7 +75,15 @@ class MpcController {
   MpcController(System&& sys, Vector u_lb, Vector u_ub);
 
   /**
+   * @brief     Perform one control step.
    *
+   * @param     t_sim   Simulation time step
+   * @param     x0      Initial state (n)
+   * @param     u0      Initial input (m)
+   * @param     xr      Reference/Target state (n x N*n_sim)
+   * @param     J       Pointer to variable storing cost
+   *
+   * @return    A vector of the optimal control
    */
   Vector Control(data_t t_sim, const Vector& x0, const Vector& u0,
                  const Matrix& xr, data_t* J = NULL);
