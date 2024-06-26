@@ -28,6 +28,7 @@
 using lds::data_t;
 using lds::Matrix;
 using lds::Vector;
+using lds::Sparse;
 using std::cout;
 
 auto main() -> int {
@@ -124,7 +125,10 @@ auto main() -> int {
 
   const size_t n_t = 120;     // Number of time steps
   const data_t t_sim = 0.25;  // Simulation time step
-  Matrix zr = 0.05 * arma::sin(arma::linspace<Matrix>(0, 2 * arma::datum::pi, (n_t + 25) * 250) * 12) + 0.1;
+  Matrix zr = 0.05 * arma::sin(arma::linspace<Matrix>(0, 2 * arma::datum::pi,
+                                                      (n_t + 25) * 250) *
+                               12) +
+              0.1;
   Matrix yr = z_to_y(zr.t());
   if (n_y == 2) {
     yr = arma::join_cols(yr, 2 * yr);
@@ -138,20 +142,8 @@ auto main() -> int {
 
   // create Matrix to save outputs in...
   Matrix y_ref = Matrix(n_y, n_t, arma::fill::zeros);
-
-  // simulated control signal
-  Matrix u(n_u, n_t, arma::fill::zeros);
-
-  // outputs, states and gain/disturbance params
-  // *_hat indicates online estimates
-  Matrix y_hat(n_y, n_t, arma::fill::zeros);
-  Matrix x_hat(n_x, n_t, arma::fill::zeros);
-  Matrix m_hat(n_x, n_t, arma::fill::zeros);
-
-  // *_true indicates ground truth (system being controlled)
   Matrix y_true(n_y, n_t, arma::fill::zeros);
-  Matrix x_true(n_x, n_t, arma::fill::zeros);
-  Matrix m_true(n_x, n_t, arma::fill::zeros);
+  Matrix u(n_u, n_t, arma::fill::zeros);
 
   // Simulate the system
   cout << "Starting " << n_t * t_sim << " sec simulation ... \n";
@@ -165,20 +157,16 @@ auto main() -> int {
 
     u0 = controller.Control(t_sim, x0, u0, xr.cols(start_idx, end_idx));
 
-    controlled_system.Simulate(u0);
+    for (size_t i = 0; i < n_sim; i++) {
+      controlled_system.Simulate(u0);
+    }
+
     x0 = controlled_system.x();
 
     // save the signals
-    u.col(t) = u0;
-    y_ref.col(t) = xr.col(start_idx); // FIXME: only using first state as reference output
-
-    y_hat.col(t) = controller.sys().y();
-    x_hat.col(t) = controller.sys().x();
-    m_hat.col(t) = controller.sys().m();
-
+    y_ref.col(t) = yr.col(end_idx);
     y_true.col(t) = controlled_system.y();
-    x_true.col(t) = controlled_system.x();
-    m_true.col(t) = controlled_system.m();
+    u.col(t) = u0;
   }
 
   auto t2 = std::chrono::high_resolution_clock::now();
@@ -192,15 +180,10 @@ auto main() -> int {
   arma::hdf5_opts::opts replace = arma::hdf5_opts::replace;
 
   auto dt_vec = Vector(1).fill(dt);
-  dt_vec.save(arma::hdf5_name("eg_glds_ctrl.h5", "dt"));
-  y_ref.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_ref", replace));
-  u.save(arma::hdf5_name("eg_glds_ctrl.h5", "u", replace));
-  x_true.save(arma::hdf5_name("eg_glds_ctrl.h5", "x_true", replace));
-  m_true.save(arma::hdf5_name("eg_glds_ctrl.h5", "m_true", replace));
-  y_true.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_true", replace));
-  x_hat.save(arma::hdf5_name("eg_glds_ctrl.h5", "x_hat", replace));
-  m_hat.save(arma::hdf5_name("eg_glds_ctrl.h5", "m_hat", replace));
-  y_hat.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_hat", replace));
+  dt_vec.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "dt"));
+  y_ref.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_ref", replace));
+  y_true.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_true", replace));
+  u.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "u", replace));
 
   cout << "fin.\n";
   return 0;
