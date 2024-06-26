@@ -144,6 +144,7 @@ auto main() -> int {
   Matrix y_ref = Matrix(n_y, n_t, arma::fill::zeros);
   Matrix y_true(n_y, n_t, arma::fill::zeros);
   Matrix u(n_u, n_t, arma::fill::zeros);
+  Matrix J(1, n_t, arma::fill::zeros);
 
   // Simulate the system
   cout << "Starting " << n_t * t_sim << " sec simulation ... \n";
@@ -155,7 +156,9 @@ auto main() -> int {
     size_t start_idx = t * n_sim;
     size_t end_idx = (t + N) * n_sim - 1;
 
-    u0 = controller.Control(t_sim, x0, u0, xr.cols(start_idx, end_idx));
+    auto* j = new data_t; // cost
+
+    u0 = controller.Control(t_sim, x0, u0, xr.cols(start_idx, end_idx), j);
 
     for (size_t i = 0; i < n_sim; i++) {
       controlled_system.Simulate(u0);
@@ -167,6 +170,7 @@ auto main() -> int {
     y_ref.col(t) = yr.col(end_idx);
     y_true.col(t) = controlled_system.y();
     u.col(t) = u0;
+    J.col(t).fill(*j);
   }
 
   auto t2 = std::chrono::high_resolution_clock::now();
@@ -184,6 +188,7 @@ auto main() -> int {
   y_ref.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_ref", replace));
   y_true.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_true", replace));
   u.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "u", replace));
+  J.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "j", replace));
 
   cout << "fin.\n";
   return 0;

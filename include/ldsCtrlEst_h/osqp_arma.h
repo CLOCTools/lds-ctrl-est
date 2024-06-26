@@ -186,11 +186,12 @@ OSQPFloat* from_vector(arma::vec armaVector) {
 
 class Solution {
  public:
-  Solution(OSQPSolution* sol, int n, int m) {
+  Solution(OSQPSolution* sol, OSQPInfo* info, int n, int m) {
     x_ = to_vector(sol->x, n);
     y_ = to_vector(sol->y, m);
     prim_inf_cert_ = to_vector(sol->prim_inf_cert, n);
     dual_inf_cert_ = to_vector(sol->dual_inf_cert, n);
+    obj_val_ = info->obj_val;
   }
 
   /**
@@ -225,11 +226,14 @@ class Solution {
    */
   arma::vec* dual_inf_cert() { return &dual_inf_cert_; }
 
+  double obj_val() { return obj_val_; }
+
  protected:
   arma::vec x_;
   arma::vec y_;
   arma::vec prim_inf_cert_;
   arma::vec dual_inf_cert_;
+  double obj_val_;
 };  // class Solution
 
 class OSQP {
@@ -286,7 +290,7 @@ class OSQP {
                                std::to_string(exitflag));
     }
 
-    return new Solution(solver->solution, n_, m_);
+    return new Solution(solver->solution, solver->info, n_, m_);
   }
 
   /**

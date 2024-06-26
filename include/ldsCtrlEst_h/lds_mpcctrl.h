@@ -76,7 +76,7 @@ class MpcController {
    *
    */
   Vector Control(data_t t_sim, const Vector& x0, const Vector& u0,
-                 const Matrix& xr);
+                 const Matrix& xr, data_t* J = NULL);
 
   // getters
   const System& sys() const { return sys_; }
@@ -229,7 +229,8 @@ MpcController<System>::MpcController(System&& sys, Vector u_lb, Vector u_ub)
 
 template <typename System>
 Vector MpcController<System>::Control(data_t t_sim, const Vector& x0,
-                                      const Vector& u0, const Matrix& xr) {
+                                      const Vector& u0, const Matrix& xr,
+                                      data_t* J) {
   size_t n_sim = t_sim / sys_.dt();  // Number of points per simulation step
 
   osqp_arma::Solution* sol;
@@ -244,6 +245,7 @@ Vector MpcController<System>::Control(data_t t_sim, const Vector& x0,
   for (int i = 0; i < m_; i++) {
     ui(i) = sol->x(N_ * n_ + i);
   }
+  if (J != NULL) *J = sol->obj_val();
 
   if (sol) free(sol);
 
