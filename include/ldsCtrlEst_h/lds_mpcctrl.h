@@ -35,6 +35,8 @@
 #include "lds_sys.h"
 
 // osqp
+#include <iostream>
+
 #include "osqp_arma.h"
 
 namespace lds {
@@ -99,6 +101,8 @@ class MpcController {
     Matrix Pu = Pu1 + Pu2 + Pu3;
     P_ = Sparse(arma::trimatu(
         2 * block_diag(Px, Pu)));  // Taking only the upper triangular part
+
+    upd_ctrl_ = true;
   }
 
   void set_constraint(Vector xmin, Vector xmax, Vector umin, Vector umax) {
@@ -108,6 +112,8 @@ class MpcController {
                         arma::kron(Vector(M_, arma::fill::ones), umax).t());
     size_t Aineq_dim = N_ * n_ + M_ * m_;
     Aineq_ = arma::eye<Sparse>(Aineq_dim, Aineq_dim);
+
+    upd_cons_ = true;
   }
 
   void Print() {
@@ -137,6 +143,9 @@ class MpcController {
 
   Vector xi_;     ///< previous step end state
   size_t t_sim_;  ///< previous step simulation time step
+
+  bool upd_ctrl_;  ///< control was updated since last step
+  bool upd_cons_;  ///< constraint was updated since last step
 
  private:
   /**
@@ -245,6 +254,7 @@ Vector MpcController<System>::Control(data_t t_sim, const Vector& x0,
   for (int i = 0; i < m_; i++) {
     ui(i) = sol->x(N_ * n_ + i);
   }
+  xi_ = A_ * x0 + B_ * ui;
   if (J != NULL) *J = sol->obj_val();
 
   if (sol) free(sol);
@@ -261,18 +271,17 @@ osqp_arma::Solution* MpcController<System>::fast_update(const Vector& x0,
   ub_.rows(0, n_ - 1) = -x0.t();
 
   // Convert state penalty from reference to OSQP format
-  arma::Row<data_t> q;
+  Vector q;
   {
     arma::uvec indices = arma::regspace<arma::uvec>(0, n_sim, N_ * n_sim - 1);
     Matrix sliced_xr = xr.cols(indices);
     Matrix Qxr_full = -2 * Q_ * sliced_xr;
-    arma::Row<data_t> Qxr =
-        Qxr_full.as_col().t();  // Qxr for every simulation time step
+    Vector Qxr = Qxr_full.as_col();  // Qxr for every simulation time step
 
-    arma::Row<data_t> qu =
-        join_horiz(-2 * S_ * u0, arma::zeros<Vector>((M_ - 1) * m_));
-    arma::Row<data_t> qx = Qxr.cols(0, N_ * n_ - 1);
-    q = join_horiz(qx, qu);
+    Vector qu =
+        join_vert((-2 * S_ * u0), Vector((M_ - 1) * m_, arma::fill::zeros));
+    Vector qx = Qxr.rows(0, N_ * n_ - 1);
+    q = join_vert(qx, qu);
   }
 
   osqp_arma::OSQP* OSQP = new osqp_arma::OSQP();
@@ -297,29 +306,34 @@ osqp_arma::Solution* MpcController<System>::slow_update(const Vector& x0,
   Matrix leq = join_horiz(
       -x0.t(), arma::zeros((N_ - 1) * n_).t());  // Lower equality bound
   Matrix ueq = leq;                              // Upper equality bound
+  lb_ = join_horiz(leq, lineq_).t();             // Lower bound
+  ub_ = join_horiz(ueq, uineq_).t();             // Upper bound
 
-  // Update x over n_sim many steps
-  Matrix Axs = arma::real(
-      arma::powmat(A_, static_cast<double>(n_sim)));  // State multiplier
-  Matrix Aus = arma::zeros(n_, n_);                   // Input multiplier
-  for (int i = 0; i < n_sim; i++) {
-    Aus += arma::powmat(A_, i);
+  if (upd_ctrl_ || upd_cons_) {
+    // Update x over n_sim many steps
+    Matrix Axs = arma::real(
+        arma::powmat(A_, static_cast<double>(n_sim)));  // State multiplier
+    Matrix Aus = arma::zeros(n_, n_);                   // Input multiplier
+    for (int i = 0; i < n_sim; i++) {
+      Aus += arma::powmat(A_, i);
+    }
+
+    // Ax + Bu = 0
+    Matrix Ax(
+        arma::kron(arma::speye<Sparse>(N_, N_), -arma::speye<Sparse>(n_, n_)) +
+        arma::kron(eye_offset(N_), Sparse(Axs)));
+    Matrix B0(1, M_);
+    Matrix Bstep(M_, M_, arma::fill::eye);
+    Matrix Bend = arma::join_horiz(Matrix(N_ - M_ - 1, M_ - 1),
+                                   Matrix(N_ - M_ - 1, 1, arma::fill::ones));
+    Matrix Bu = kron(join_vert(B0, Matrix(Bstep), Bend), Aus * B_);
+    Matrix Aeq = join_horiz(Ax, Bu);  // Equality condition
+
+    Acon_ = join_vert(Aeq, Matrix(Aineq_));  // Update condition
+
+    upd_ctrl_ = false;
+    upd_cons_ = false;
   }
-
-  // Ax + Bu = 0
-  Matrix Ax(
-      arma::kron(arma::speye<Sparse>(N_, N_), -arma::speye<Sparse>(n_, n_)) +
-      arma::kron(eye_offset(N_), Sparse(Axs)));
-  Matrix B0(1, M_);
-  Matrix Bstep(M_, M_, arma::fill::eye);
-  Matrix Bend = arma::join_horiz(Matrix(N_ - M_ - 1, M_ - 1),
-                                 Matrix(N_ - M_ - 1, 1, arma::fill::ones));
-  Matrix Bu = kron(join_vert(B0, Matrix(Bstep), Bend), Aus * B_);
-  Matrix Aeq = join_horiz(Ax, Bu);  // Equality condition
-
-  Acon_ = join_vert(Aeq, Matrix(Aineq_));  // Update condition
-  lb_ = join_horiz(leq, lineq_).t();       // Lower bound
-  ub_ = join_horiz(ueq, uineq_).t();       // Upper bound
 
   // Convert state penalty from reference to OSQP format
   Vector q;
