@@ -282,6 +282,14 @@ class OSQP {
       }
       updated_problem_ = false;
       updated_settings_ = false;
+      updated_data_ = false;
+    } else if (updated_data_) {
+      OSQPInt exitflag = osqp_update_data_vec(solver, q_, NULL, NULL);
+      if (exitflag != 0) {
+        throw std::runtime_error(
+            "osqp_update_data_vec failed with exit flag: " +
+            std::to_string(exitflag));
+      }
     }
 
     OSQPInt exitflag = osqp_solve(solver);
@@ -318,11 +326,13 @@ class OSQP {
 
   void set_q(arma::vec q) {
     q_ = from_vector(q);
-    updated_problem_ = true;
+    updated_data_ = true;
   }
 
   void set_A(arma::mat A) {
     A_ = from_matrix(A);
+    n_ = A_->n;
+    m_ = A_->m;
     updated_problem_ = true;
   }
 
@@ -507,6 +517,7 @@ class OSQP {
   OSQPInt m_;         // Problem data (number of constraints)
   OSQPInt n_;         // Problem data (number of variables)
   bool updated_problem_ = true;  // whether the problem has been updated
+  bool updated_data_ = true;     // whether the data has been updated
 
   OSQPSettings* settings;
   bool updated_settings_ = true;  // whether any settings have been updated

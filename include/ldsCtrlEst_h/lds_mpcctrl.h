@@ -35,8 +35,6 @@
 #include "lds_sys.h"
 
 // osqp
-#include <iostream>
-
 #include "osqp_arma.h"
 
 namespace lds {
@@ -110,6 +108,8 @@ class MpcController {
     P_ = Sparse(arma::trimatu(
         2 * block_diag(Px, Pu)));  // Taking only the upper triangular part
 
+    OSQP->set_P(P_);
+
     upd_ctrl_ = true;
   }
 
@@ -130,6 +130,8 @@ class MpcController {
   }
 
  protected:
+  osqp_arma::OSQP* OSQP;
+
   System sys_;  ///< system being controlled
   size_t n_;    ///< number of states
   size_t m_;    ///< number of output states
@@ -226,6 +228,10 @@ class MpcController {
     m_ = B_.n_cols;
     xi_ = arma::zeros<Vector>(n_);
     t_sim_ = 0;
+
+    OSQP = new osqp_arma::OSQP();
+    OSQP->set_default_settings();
+    OSQP->set_verbose(false);
   }
 };
 
@@ -292,14 +298,8 @@ osqp_arma::Solution* MpcController<System>::fast_update(const Vector& x0,
     q = join_vert(qx, qu);
   }
 
-  osqp_arma::OSQP* OSQP = new osqp_arma::OSQP();
-
-  // set settings
-  OSQP->set_default_settings();
-  OSQP->set_verbose(false);
-
   // set problem
-  OSQP->setup(P_, q, Acon_, lb_, ub_);
+  OSQP->set_q(q);
 
   osqp_arma::Solution* sol = OSQP->solve();
 
@@ -316,6 +316,8 @@ osqp_arma::Solution* MpcController<System>::slow_update(const Vector& x0,
   Matrix ueq = leq;                              // Upper equality bound
   lb_ = join_horiz(leq, lineq_).t();             // Lower bound
   ub_ = join_horiz(ueq, uineq_).t();             // Upper bound
+  OSQP->set_l(lb_);
+  OSQP->set_u(ub_);
 
   if (upd_ctrl_ || upd_cons_) {
     // Update x over n_sim many steps
@@ -339,6 +341,8 @@ osqp_arma::Solution* MpcController<System>::slow_update(const Vector& x0,
 
     Acon_ = join_vert(Aeq, Matrix(Aineq_));  // Update condition
 
+    OSQP->set_A(Acon_);
+
     upd_ctrl_ = false;
     upd_cons_ = false;
   }
@@ -357,14 +361,8 @@ osqp_arma::Solution* MpcController<System>::slow_update(const Vector& x0,
     q = join_vert(qx, qu);
   }
 
-  osqp_arma::OSQP* OSQP = new osqp_arma::OSQP();
-
-  // set settings
-  OSQP->set_default_settings();
-  OSQP->set_verbose(false);
-
   // set problem
-  OSQP->setup(P_, q, Acon_, lb_, ub_);
+  OSQP->set_q(q);
 
   osqp_arma::Solution* sol = OSQP->solve();
 
