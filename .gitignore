@@ -103,6 +103,8 @@ cpp.sublime-workspace
 .vscode/
 .cache/
 .idea/
+**/CMakeCache.txt
+CMakeFiles/**
 
 # whitelist documentation
 !docs/**
