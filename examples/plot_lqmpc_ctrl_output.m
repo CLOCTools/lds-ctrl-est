@@ -41,4 +41,4 @@ stairs(t, j', 'LineWidth', 2, 'color', c_cost);
 ylabel({'Cost'})
 
 % Save the figure
-printfig('eg_glds_ctrl_output', 'png', gcf, [8 8]);
+printfig('eg_lqmpc_ctrl_output', 'png', gcf, [8 8]);
