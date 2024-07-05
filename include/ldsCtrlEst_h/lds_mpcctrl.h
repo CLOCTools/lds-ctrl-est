@@ -159,21 +159,6 @@ class MpcController {
 
  private:
   /**
-   * @brief     Calculate the trajectory for the simulation step,
-   *            used when the simulation time step is the same as
-   *            the prior step
-   *
-   * @param     x0  The initial state
-   * @param     u0  The initial control input
-   * @param     xr  The reference trajectory
-   * @param     out Print out step information
-   *
-   * @return    The trajectory for the simulation step
-   */
-  osqp_arma::Solution* fast_update(const Vector& x0, const Vector& u0,
-                                   const Matrix& xr, size_t n_sim);
-
-  /**
    * @brief     Calculate the trajectory for the simulation step
    *
    * @param     x0  The initial state
@@ -183,8 +168,8 @@ class MpcController {
    *
    * @return    The trajectory for the simulation step
    */
-  osqp_arma::Solution* slow_update(const Vector& x0, const Vector& u0,
-                                   const Matrix& xr, size_t n_sim);
+  osqp_arma::Solution* calc_trajectory(const Vector& x0, const Vector& u0,
+                                       const Matrix& xr, size_t n_sim);
 
   /**
    * @brief     Create an identity matrix with an offset axis
@@ -256,12 +241,7 @@ Vector MpcController<System>::Control(data_t t_sim, const Vector& x0,
                                       data_t* J) {
   size_t n_sim = t_sim / sys_.dt();  // Number of points per simulation step
 
-  osqp_arma::Solution* sol;
-  if (arma::all(xi_ == x0) && (t_sim_ == t_sim)) {
-    sol = fast_update(x0, u0, xr, n_sim);
-  } else {
-    sol = slow_update(x0, u0, xr, n_sim);
-  }
+  osqp_arma::Solution* sol = calc_trajectory(x0, u0, xr, n_sim);
   t_sim_ = t_sim;
 
   Vector ui(m_);
@@ -277,40 +257,10 @@ Vector MpcController<System>::Control(data_t t_sim, const Vector& x0,
 }
 
 template <typename System>
-osqp_arma::Solution* MpcController<System>::fast_update(const Vector& x0,
-                                                        const Vector& u0,
-                                                        const Matrix& xr,
-                                                        size_t n_sim) {
-  lb_.rows(0, n_ - 1) = -x0.t();
-  ub_.rows(0, n_ - 1) = -x0.t();
-
-  // Convert state penalty from reference to OSQP format
-  Vector q;
-  {
-    arma::uvec indices = arma::regspace<arma::uvec>(0, n_sim, N_ * n_sim - 1);
-    Matrix sliced_xr = xr.cols(indices);
-    Matrix Qxr_full = -2 * Q_ * sliced_xr;
-    Vector Qxr = Qxr_full.as_col();  // Qxr for every simulation time step
-
-    Vector qu =
-        join_vert((-2 * S_ * u0), Vector((M_ - 1) * m_, arma::fill::zeros));
-    Vector qx = Qxr.rows(0, N_ * n_ - 1);
-    q = join_vert(qx, qu);
-  }
-
-  // set problem
-  OSQP->set_q(q);
-
-  osqp_arma::Solution* sol = OSQP->solve();
-
-  return sol;
-}
-
-template <typename System>
-osqp_arma::Solution* MpcController<System>::slow_update(const Vector& x0,
-                                                        const Vector& u0,
-                                                        const Matrix& xr,
-                                                        size_t n_sim) {
+osqp_arma::Solution* MpcController<System>::calc_trajectory(const Vector& x0,
+                                                            const Vector& u0,
+                                                            const Matrix& xr,
+                                                            size_t n_sim) {
   Matrix leq = join_horiz(
       -x0.t(), arma::zeros((N_ - 1) * n_).t());  // Lower equality bound
   Matrix ueq = leq;                              // Upper equality bound
