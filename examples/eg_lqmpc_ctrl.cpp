@@ -1,5 +1,4 @@
-//===-- eg_lqmpc_ctrl.cpp - Example LQMPC Control
-//---------------------------===//
+//===-- eg_lqmpc_ctrl.cpp - Example LQMPC Control ---------------------------===//
 //
 // Copyright 2024 Chia-Chien Hung and Kyle Johnsen
 // Copyright 2024 Georgia Institute of Technology
@@ -86,6 +85,7 @@ auto main() -> int {
   // Initialize the controller
   lds::gaussian::MpcController controller;
   const size_t N = 25;  // Prediction horizon
+  const size_t M = 20;  // Control horizon
   {
     Matrix Q = C.t() * C * 1e5;
     Matrix R = Matrix(n_u, n_u, arma::fill::eye) *
@@ -112,7 +112,7 @@ auto main() -> int {
 
     controller = std::move(
         lds::gaussian::MpcController(std::move(controller_system), umin, umax));
-    controller.set_control(Q, R, S, N, 20);
+    controller.set_control(Q, R, S, N, M);
     controller.set_constraint(xmin, xmax, umin, umax);
   }
 
@@ -147,8 +147,6 @@ auto main() -> int {
   Matrix y_ref(n_y, n_t, arma::fill::zeros);
   Matrix y_true(n_y, n_t, arma::fill::zeros);
   Matrix y_hat(n_y, n_t, arma::fill::zeros);
-  Matrix x_true(n_x, n_t, arma::fill::zeros);
-  Matrix x_pred(n_x, n_t, arma::fill::zeros);
   Matrix u(n_u, n_t, arma::fill::zeros);
   Matrix J(1, n_t, arma::fill::zeros);
 
@@ -165,10 +163,7 @@ auto main() -> int {
 
     auto* j = new data_t;  // cost
 
-    controlled_system.x().brief_print("True State");
-
     u0 = controller.Control(t_sim, z, xr.cols(start_idx, end_idx), true, j);
-    x_true.col(t) = controlled_system.x();
 
     for (size_t i = 0; i < n_sim; i++) {
       z = controlled_system.Simulate(u0);
@@ -180,7 +175,6 @@ auto main() -> int {
     y_ref.col(t) = yr.col(end_idx);
     y_true.col(t) = controlled_system.y();
     y_hat.col(t) = controller.sys().y();
-    x_pred.col(t) = controller.x_pred();
     u.col(t) = u0;
     J.col(t).fill(*j);
   }
@@ -200,8 +194,6 @@ auto main() -> int {
   y_ref.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_ref", replace));
   y_true.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_true", replace));
   y_hat.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_hat", replace));
-  x_true.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "x_true", replace));
-  x_pred.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "x_pred", replace));
   u.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "u", replace));
   J.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "j", replace));
 

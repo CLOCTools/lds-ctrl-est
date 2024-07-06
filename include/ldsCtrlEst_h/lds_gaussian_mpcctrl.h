@@ -45,12 +45,17 @@ class MpcController : public lds::MpcController<System> {
   // make sure base class template methods available
   using lds::MpcController<System>::MpcController;
   using lds::MpcController<System>::Control;
+  using lds::MpcController<System>::ControlOutputReference;
 
   // getters
+  using lds::MpcController<System>::sys;
 
   // setters
   using lds::MpcController<System>::set_control;
+  using lds::MpcController<System>::set_control_output;
   using lds::MpcController<System>::set_constraint;
+
+  using lds::MpcController<System>::Print;
 };
 } // namespace gaussian
 } // namespace lds

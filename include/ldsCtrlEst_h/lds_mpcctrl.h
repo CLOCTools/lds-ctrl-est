@@ -87,11 +87,28 @@ class MpcController {
   Vector Control(data_t t_sim, const Vector& z, const Matrix& xr,
                  bool do_control = true, data_t* J = NULL);
 
+  /**
+   * @brief     Perform one control step.
+   *
+   * @param     t_sim       Simulation time step
+   * @param     z           Measurement
+   * @param     yr          Reference/Target output (n x N*n_sim)
+   * @param     do_control  [optional] whether to update control (true) or
+   * simply feed through u_ref (false)
+   * @param     J           [optional] Pointer to variable storing cost
+   *
+   * @return    A vector of the optimal control
+   */
+  Vector ControlOutputReference(data_t t_sim, const Vector& z, const Matrix& yr,
+                                bool do_control = true, data_t* J = NULL);
+
   // getters
   const System& sys() const { return sys_; }
 
   // setters
   void set_control(Matrix Q, Matrix R, Matrix S, size_t N, size_t M) {
+    // TODO: Variable checks
+
     Q_ = Q;
     // R_ = R; // Isn't used
     S_ = S;
@@ -114,7 +131,36 @@ class MpcController {
     upd_ctrl_ = true;
   }
 
+  void set_control_output(Matrix Q_y, Matrix R, Matrix S, size_t N, size_t M) {
+    // TODO: Variable checks
+
+    Q_y_ = Q_y;
+    // R_ = R; // Isn't used
+    S_ = S;
+    N_ = N;
+    M_ = M;
+
+    Matrix Q = C_.t() * Q_y_ * C_;
+
+    // Set up P matrix
+    Matrix Px = arma::kron(Matrix(N_, N_, arma::fill::eye), Q);
+    Matrix Pu1 = arma::kron(Matrix(M_, M_, arma::fill::eye), 2 * S_ + R);
+    Matrix Pu2 =
+        arma::kron(Matrix(eye_offset(M)) + Matrix(eye_offset(M, 1)), -S_);
+    Matrix Pu3 = block_diag(
+        Matrix((M_ - 1) * m_, (M_ - 1) * m_, arma::fill::zeros), -S_);
+    Matrix Pu = Pu1 + Pu2 + Pu3;
+    P_y_ = Sparse(arma::trimatu(
+        2 * block_diag(Px, Pu)));  // Taking only the upper triangular part
+
+    OSQP_y->set_P(P_y_);
+
+    upd_ctrl_out_ = true;
+  }
+
   void set_constraint(Vector xmin, Vector xmax, Vector umin, Vector umax) {
+    // TODO: Check constraints
+
     lineq_ = join_horiz(arma::kron(Vector(N_, arma::fill::ones), xmin).t(),
                         arma::kron(Vector(M_, arma::fill::ones), umin).t());
     uineq_ = join_horiz(arma::kron(Vector(N_, arma::fill::ones), xmax).t(),
@@ -130,8 +176,6 @@ class MpcController {
     // TODO: Implement print
   }
 
-  Vector x_pred() { return x_pred_; }
-
  protected:
   System sys_;  ///< system being controlled
   size_t n_;    ///< number of states
@@ -140,14 +184,15 @@ class MpcController {
   size_t M_;    ///< number of inputs
   Matrix A_;    ///< state transition matrix
   Matrix B_;    ///< input matrix
-  Sparse P_;    ///< penalty matrix
-  Matrix Q_;
-  Matrix S_;
   Matrix C_;    ///< output matrix
 
   osqp_arma::OSQP* OSQP;
   Sparse P_;  ///< penalty matrix
   Matrix Q_;  ///< cost matrix
+
+  osqp_arma::OSQP* OSQP_y;
+  Sparse P_y_;  ///< output penalty matrix
+  Matrix Q_y_;  ///< output cost matrix
 
   Matrix S_;  ///< input cost matrix
 
@@ -166,8 +211,6 @@ class MpcController {
   bool upd_ctrl_out_;  ///< output control was updated since last step
   bool upd_cons_;      ///< constraint was updated since last step
 
-  Vector x_pred_;
-
  private:
   /**
    * @brief     Calculate the trajectory for the simulation step
@@ -181,6 +224,32 @@ class MpcController {
    */
   osqp_arma::Solution* calc_trajectory(const Vector& x0, const Vector& u0,
                                        const Matrix& xr, size_t n_sim);
+
+  /**
+   * @brief     Calculate the trajectory based on output for the simulation
+   * step
+   *
+   * @param     x0  The initial state
+   * @param     u0  The initial control input
+   * @param     yr  The reference output trajectory
+   * @param     out Print out step information
+   *
+   * @return    The trajectory for the simulation step
+   */
+  osqp_arma::Solution* calc_output_trajectory(const Vector& x0,
+                                              const Vector& u0,
+                                              const Matrix& yr, size_t n_sim);
+
+  /**
+   *
+   * @param x0
+   */
+  void update_bounds(const Vector& x0);
+
+  /**
+   *
+   */
+  void update_constraints(size_t n_sim);
 
   /**
    * @brief     Create an identity matrix with an offset axis
@@ -229,6 +298,10 @@ class MpcController {
     OSQP = new osqp_arma::OSQP();
     OSQP->set_default_settings();
     OSQP->set_verbose(false);
+
+    OSQP_y = new osqp_arma::OSQP();
+    OSQP_y->set_default_settings();
+    OSQP_y->set_verbose(false);
   }
 };
 
@@ -254,8 +327,6 @@ Vector MpcController<System>::Control(data_t t_sim, const Vector& z,
   // TODO: Variable checks
 
   sys_.Filter(u_, z);
-  x_pred_ = sys_.x();
-  x_pred_.brief_print("Predicted State");
 
   size_t n_sim = t_sim / sys_.dt();  // Number of points to simulate
   t_sim_ = t_sim;
@@ -279,45 +350,49 @@ Vector MpcController<System>::Control(data_t t_sim, const Vector& z,
 }
 
 template <typename System>
+Vector MpcController<System>::ControlOutputReference(data_t t_sim,
+                                                     const Vector& z,
+                                                     const Matrix& yr,
+                                                     bool do_control,
+                                                     data_t* J) {
+  // TODO: Variable checks
+
+  sys_.Filter(u_, z);
+
+  size_t n_sim = t_sim / sys_.dt();  // Number of points to simulate
+  t_sim_ = t_sim;
+  if (do_control) {
+    osqp_arma::Solution* sol = calc_output_trajectory(sys_.x(), u_, yr, n_sim);
+
+    for (int i = 0; i < m_; i++) {
+      u_(i) = sol->x(N_ * n_ + i);
+    }
+    if (J != NULL) *J = sol->obj_val();
+
+    if (sol) free(sol);
+  }
+
+  for (int i = 0; i < n_sim; i++) {
+    // simulate for each time step
+    sys_.Simulate(u_);
+  }
+
+  return u_;
+}
+
+template <typename System>
 osqp_arma::Solution* MpcController<System>::calc_trajectory(const Vector& x0,
                                                             const Vector& u0,
                                                             const Matrix& xr,
                                                             size_t n_sim) {
-  Matrix leq = join_horiz(
-      -x0.t(), arma::zeros((N_ - 1) * n_).t());  // Lower equality bound
-  Matrix ueq = leq;                              // Upper equality bound
-  lb_ = join_horiz(leq, lineq_).t();             // Lower bound
-  ub_ = join_horiz(ueq, uineq_).t();             // Upper bound
+  update_bounds(x0);
   OSQP->set_l(lb_);
   OSQP->set_u(ub_);
 
-  if (upd_ctrl_ || upd_cons_) {
-    // Update x over n_sim many steps
-    Matrix Axs = arma::real(
-        arma::powmat(A_, static_cast<double>(n_sim)));  // State multiplier
-    Matrix Aus = arma::zeros(n_, n_);                   // Input multiplier
-    for (int i = 0; i < n_sim; i++) {
-      Aus += arma::powmat(A_, i);
-    }
-
-    // Ax + Bu = 0
-    Matrix Ax(
-        arma::kron(arma::speye<Sparse>(N_, N_), -arma::speye<Sparse>(n_, n_)) +
-        arma::kron(eye_offset(N_), Sparse(Axs)));
-    Matrix B0(1, M_);
-    Matrix Bstep(M_, M_, arma::fill::eye);
-    Matrix Bend = arma::join_horiz(Matrix(N_ - M_ - 1, M_ - 1),
-                                   Matrix(N_ - M_ - 1, 1, arma::fill::ones));
-    Matrix Bu = kron(join_vert(B0, Matrix(Bstep), Bend), Aus * B_);
-    Matrix Aeq = join_horiz(Ax, Bu);  // Equality condition
-
-    Acon_ = join_vert(Aeq, Matrix(Aineq_));  // Update condition
-
-    OSQP->set_A(Acon_);
-
-    upd_ctrl_ = false;
-    upd_cons_ = false;
+  if (upd_ctrl_ || upd_ctrl_out_ || upd_cons_) {
+    update_constraints(n_sim);
   }
+  OSQP->set_A(Acon_);
 
   // Convert state penalty from reference to OSQP format
   Vector q;
@@ -339,6 +414,77 @@ osqp_arma::Solution* MpcController<System>::calc_trajectory(const Vector& x0,
   osqp_arma::Solution* sol = OSQP->solve();
 
   return sol;
+}
+
+template <typename System>
+osqp_arma::Solution* MpcController<System>::calc_output_trajectory(
+    const Vector& x0, const Vector& u0, const Matrix& yr, size_t n_sim) {
+  update_bounds(x0);
+  OSQP_y->set_l(lb_);
+  OSQP_y->set_u(ub_);
+
+  if (upd_ctrl_ || upd_ctrl_out_ || upd_cons_) {
+    update_constraints(n_sim);
+  }
+  OSQP_y->set_A(Acon_);
+
+  // Convert state penalty from reference to OSQP format
+  Vector q;
+  {
+    arma::uvec indices = arma::regspace<arma::uvec>(0, n_sim, N_ * n_sim - 1);
+    Matrix sliced_yr = yr.cols(indices);
+    Matrix Qxr_full = -2 * sliced_yr.t() * Q_y_ * C_;
+    Vector Qxr = Qxr_full.as_row().t();  // Qxr for every simulation time step
+
+    Vector qu =
+        join_vert((-2 * S_ * u0), Vector((M_ - 1) * m_, arma::fill::zeros));
+    Vector qx = Qxr.rows(0, N_ * n_ - 1);
+    q = join_vert(qx, qu);
+  }
+
+  // set problem
+  OSQP_y->set_q(q);
+
+  osqp_arma::Solution* sol = OSQP_y->solve();
+
+  return sol;
+}
+
+template <typename System>
+void MpcController<System>::update_bounds(const Vector& x0) {
+  Matrix leq = join_horiz(
+      -x0.t(), arma::zeros((N_ - 1) * n_).t());  // Lower equality bound
+  Matrix ueq = leq;                              // Upper equality bound
+  lb_ = join_horiz(leq, lineq_).t();             // Lower bound
+  ub_ = join_horiz(ueq, uineq_).t();             // Upper bound
+}
+
+template <typename System>
+void MpcController<System>::update_constraints(size_t n_sim) {
+  // Update x over n_sim many steps
+  Matrix Axs = arma::real(
+      arma::powmat(A_, static_cast<double>(n_sim)));  // State multiplier
+  Matrix Aus = arma::zeros(n_, n_);                   // Input multiplier
+  for (int i = 0; i < n_sim; i++) {
+    Aus += arma::powmat(A_, i);
+  }
+
+  // Ax + Bu = 0
+  Matrix Ax(
+      arma::kron(arma::speye<Sparse>(N_, N_), -arma::speye<Sparse>(n_, n_)) +
+      arma::kron(eye_offset(N_), Sparse(Axs)));
+  Matrix B0(1, M_);
+  Matrix Bstep(M_, M_, arma::fill::eye);
+  Matrix Bend = arma::join_horiz(Matrix(N_ - M_ - 1, M_ - 1),
+                                 Matrix(N_ - M_ - 1, 1, arma::fill::ones));
+  Matrix Bu = kron(join_vert(B0, Matrix(Bstep), Bend), Aus * B_);
+  Matrix Aeq = join_horiz(Ax, Bu);  // Equality condition
+
+  Acon_ = join_vert(Aeq, Matrix(Aineq_));  // Update condition
+
+  upd_ctrl_ = false;
+  upd_ctrl_out_ = false;
+  upd_cons_ = false;
 }
 
 }  // namespace lds
