@@ -27,8 +27,8 @@
 
 using lds::data_t;
 using lds::Matrix;
-using lds::Vector;
 using lds::Sparse;
+using lds::Vector;
 using std::cout;
 
 auto main() -> int {
@@ -67,11 +67,14 @@ auto main() -> int {
     C = arma::join_cols(C, 2 * C, 3 * C);
   }
 
+  Vector g_true = Vector(n_u).fill(1.0);
+
   // Initialize the system that is being controlled
   lds::gaussian::System controlled_system(n_u, n_x, n_y, dt);
   controlled_system.set_A(A);
   controlled_system.set_B(B);
   controlled_system.set_C(C);
+  controlled_system.set_g(g_true);
   controlled_system.Reset();
 
   cout << ".....................................\n";
@@ -141,8 +144,11 @@ auto main() -> int {
   Matrix xr = arma::inv(I - A) * B * ur;
 
   // create Matrix to save outputs in...
-  Matrix y_ref = Matrix(n_y, n_t, arma::fill::zeros);
+  Matrix y_ref(n_y, n_t, arma::fill::zeros);
   Matrix y_true(n_y, n_t, arma::fill::zeros);
+  Matrix y_hat(n_y, n_t, arma::fill::zeros);
+  Matrix x_true(n_x, n_t, arma::fill::zeros);
+  Matrix x_pred(n_x, n_t, arma::fill::zeros);
   Matrix u(n_u, n_t, arma::fill::zeros);
   Matrix J(1, n_t, arma::fill::zeros);
 
@@ -151,24 +157,30 @@ auto main() -> int {
   auto t1 = std::chrono::high_resolution_clock::now();
   const size_t n_sim = static_cast<int>(t_sim / dt);
 
+  Vector z(n_y);  // to get initial measurement
   for (size_t t = 0; t < n_t; ++t) {
     // Calculate the slice indices
     size_t start_idx = t * n_sim;
     size_t end_idx = (t + N) * n_sim - 1;
 
-    auto* j = new data_t; // cost
+    auto* j = new data_t;  // cost
 
-    u0 = controller.Control(t_sim, x0, u0, xr.cols(start_idx, end_idx), j);
+    controlled_system.x().brief_print("True State");
+
+    u0 = controller.Control(t_sim, z, xr.cols(start_idx, end_idx), true, j);
+    x_true.col(t) = controlled_system.x();
 
     for (size_t i = 0; i < n_sim; i++) {
-      controlled_system.Simulate(u0);
+      z = controlled_system.Simulate(u0);
     }
 
-    x0 = controlled_system.x();
+    lds::gaussian::System controller_system_test(controlled_system);
 
     // save the signals
     y_ref.col(t) = yr.col(end_idx);
     y_true.col(t) = controlled_system.y();
+    y_hat.col(t) = controller.sys().y();
+    x_pred.col(t) = controller.x_pred();
     u.col(t) = u0;
     J.col(t).fill(*j);
   }
@@ -187,6 +199,9 @@ auto main() -> int {
   dt_vec.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "dt"));
   y_ref.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_ref", replace));
   y_true.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_true", replace));
+  y_hat.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "y_hat", replace));
+  x_true.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "x_true", replace));
+  x_pred.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "x_pred", replace));
   u.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "u", replace));
   J.save(arma::hdf5_name("eg_lqmpc_ctrl.h5", "j", replace));
 

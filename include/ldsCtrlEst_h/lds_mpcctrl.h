@@ -75,16 +75,17 @@ class MpcController {
   /**
    * @brief     Perform one control step.
    *
-   * @param     t_sim   Simulation time step
-   * @param     x0      Initial state (n)
-   * @param     u0      Initial input (m)
-   * @param     xr      Reference/Target state (n x N*n_sim)
-   * @param     J       Pointer to variable storing cost
+   * @param     t_sim       Simulation time step
+   * @param     z           Measurement
+   * @param     xr          Reference/Target state (n x N*n_sim)
+   * @param     do_control  [optional] whether to update control (true) or
+   * simply feed through u_ref (false)
+   * @param     J           [optional] Pointer to variable storing cost
    *
    * @return    A vector of the optimal control
    */
-  Vector Control(data_t t_sim, const Vector& x0, const Vector& u0,
-                 const Matrix& xr, data_t* J = NULL);
+  Vector Control(data_t t_sim, const Vector& z, const Matrix& xr,
+                 bool do_control = true, data_t* J = NULL);
 
   // getters
   const System& sys() const { return sys_; }
@@ -129,9 +130,9 @@ class MpcController {
     // TODO: Implement print
   }
 
- protected:
-  osqp_arma::OSQP* OSQP;
+  Vector x_pred() { return x_pred_; }
 
+ protected:
   System sys_;  ///< system being controlled
   size_t n_;    ///< number of states
   size_t m_;    ///< number of output states
@@ -142,6 +143,13 @@ class MpcController {
   Sparse P_;    ///< penalty matrix
   Matrix Q_;
   Matrix S_;
+  Matrix C_;    ///< output matrix
+
+  osqp_arma::OSQP* OSQP;
+  Sparse P_;  ///< penalty matrix
+  Matrix Q_;  ///< cost matrix
+
+  Matrix S_;  ///< input cost matrix
 
   Matrix lineq_;  ///< lower inequality bound
   Matrix uineq_;  ///< upper inequality bound
@@ -151,11 +159,14 @@ class MpcController {
   Vector lb_;    ///< lower bound
   Vector ub_;    ///< upper bound
 
-  Vector xi_;     ///< previous step end state
+  Vector u_;      ///< previous step input
   size_t t_sim_;  ///< previous step simulation time step
 
-  bool upd_ctrl_;  ///< control was updated since last step
-  bool upd_cons_;  ///< constraint was updated since last step
+  bool upd_ctrl_;      ///< control was updated since last step
+  bool upd_ctrl_out_;  ///< output control was updated since last step
+  bool upd_cons_;      ///< constraint was updated since last step
+
+  Vector x_pred_;
 
  private:
   /**
@@ -209,9 +220,10 @@ class MpcController {
   void Init() {
     A_ = sys_.A();
     B_ = sys_.B();
+    C_ = sys_.C();
     n_ = B_.n_rows;
     m_ = B_.n_cols;
-    xi_ = arma::zeros<Vector>(n_);
+    u_ = Vector(m_, arma::fill::zeros);
     t_sim_ = 0;
 
     OSQP = new osqp_arma::OSQP();
@@ -236,24 +248,34 @@ MpcController<System>::MpcController(System&& sys, Vector u_lb, Vector u_ub)
 }
 
 template <typename System>
-Vector MpcController<System>::Control(data_t t_sim, const Vector& x0,
-                                      const Vector& u0, const Matrix& xr,
+Vector MpcController<System>::Control(data_t t_sim, const Vector& z,
+                                      const Matrix& xr, bool do_control,
                                       data_t* J) {
-  size_t n_sim = t_sim / sys_.dt();  // Number of points per simulation step
+  // TODO: Variable checks
 
-  osqp_arma::Solution* sol = calc_trajectory(x0, u0, xr, n_sim);
+  sys_.Filter(u_, z);
+  x_pred_ = sys_.x();
+  x_pred_.brief_print("Predicted State");
+
+  size_t n_sim = t_sim / sys_.dt();  // Number of points to simulate
   t_sim_ = t_sim;
+  if (do_control) {
+    osqp_arma::Solution* sol = calc_trajectory(sys_.x(), u_, xr, n_sim);
 
-  Vector ui(m_);
-  for (int i = 0; i < m_; i++) {
-    ui(i) = sol->x(N_ * n_ + i);
+    for (int i = 0; i < m_; i++) {
+      u_(i) = sol->x(N_ * n_ + i);
+    }
+    if (J != NULL) *J = sol->obj_val();
+
+    if (sol) free(sol);
   }
-  xi_ = A_ * x0 + B_ * ui;
-  if (J != NULL) *J = sol->obj_val();
 
-  if (sol) free(sol);
+  for (int i = 0; i < n_sim; i++) {
+    // simulate for each time step
+    sys_.Simulate(u_);
+  }
 
-  return ui;
+  return u_;
 }
 
 template <typename System>
