@@ -1,7 +1,7 @@
-//===-- eg_plds_ctrl.cpp - Example PLDS Control ---------------------===//
+//===-- eg_plds_mpc.cpp - Example PLDS MPC Control ---------------------===//
 //
-// Copyright 2021 Michael Bolus
-// Copyright 2021 Georgia Institute of Technology
+// Copyright 2024 Chia-Chien Hung and Kyle Johnsen
+// Copyright 2024 Georgia Institute of Technology
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,20 +16,21 @@
 // limitations under the License.
 //
 //===----------------------------------------------------------------------===//
-/// \brief Example PLDS Control
+/// \brief Example MPC control
 ///
-/// \example eg_plds_ctrl.cpp
+/// \example eg_plds_mpc.cpp
 //===----------------------------------------------------------------------===//
 
 #include <ldsCtrlEst>
 
+using lds::data_t;
 using lds::Matrix;
 using lds::Vector;
-using lds::data_t;
 using std::cout;
 
 auto main() -> int {
-  cout << " ********** Example Poisson LDS Control ********** \n\n";
+  cout << " ********** Example Poisson MPC Control ********** \n\n";
+  // Same example system as eg_plds_mpc.cpp
 
   // Make SISO system sampled at 1kHz
   data_t dt = 1e-3;
@@ -43,13 +44,6 @@ auto main() -> int {
   // Control variables: _reference/target output, controller gains
   // n.b., Can either use Vector (arma::Col) or std::vector
   Vector y_ref0 = Vector(n_y, arma::fill::ones) * 30.0 * dt;
-  Matrix k_x =
-      Matrix(n_u, n_x, arma::fill::zeros) + 1;  // gains on state error
-  Matrix k_inty = Matrix(n_u, n_y, arma::fill::zeros) +
-                   10;  // gains on integrated output err
-
-  // Set control type bit mask, so controller knows what to do
-  size_t control_type = lds::kControlTypeIntY;  // integral action
 
   // Ground-truth parameters for the controlled system
   // (stand-in for physical system to be controlled)
@@ -85,7 +79,9 @@ auto main() -> int {
   cout << ".....................................\n";
 
   // Create the controller
-  lds::poisson::Controller controller;
+  lds::poisson::MpcController controller;
+  const size_t N = 25;  // Prediction horizon
+  const size_t M = 20;  // Control horizon
   {
     // Create model used for control.
     lds::poisson::System controller_system(controlled_system);
@@ -95,7 +91,7 @@ auto main() -> int {
     Vector x0_controller = arma::log(y_ref0);
     controller_system.set_m(m0_controller);
     controller_system.set_x0(x0_controller);
-    controller_system.Reset(); //reset to new init condition
+    controller_system.Reset();  // reset to new init condition
 
     // adaptively re-estimate process disturbance (m)
     controller_system.do_adapt_m = true;
@@ -105,22 +101,23 @@ auto main() -> int {
     Matrix q_m = Matrix(n_x, n_x, arma::fill::eye) * 1e-5;
     controller_system.set_Q_m(q_m);
 
-    data_t u_lb = 0.0;
-    data_t u_ub = 5.0;
-    controller = std::move(
-        lds::poisson::Controller(std::move(controller_system), u_lb, u_ub));
+    // set control penalties
+    Matrix Q_y = Matrix(n_y, n_y, arma::fill::ones) * 1e5;
+    Matrix R = Matrix(n_u, n_u, arma::fill::zeros) * 1e-1;
+    Matrix S = Matrix(n_u, n_u, arma::fill::zeros);
+
+    Vector xmin = Vector(n_u);
+    xmin.fill(-arma::datum::inf);
+    Vector xmax = Vector(n_u);
+    xmax.fill(arma::datum::inf);
+    Vector umin = Vector(n_u) * 0.0;
+    Vector umax = Vector(n_u, arma::fill::ones) * 5.0;
+
+    controller =
+        std::move(lds::poisson::MpcController(std::move(controller_system)));
+    controller.set_cost_output(Q_y, R, S, N, M);
+    controller.set_constraint(xmin, xmax, umin, umax);
   }
-  // set controller type
-  controller.set_control_type(control_type);
-
-  // set controller gains
-  controller.set_Kc(k_x);
-  controller.set_Kc_inty(k_inty);
-
-  // to protect against integral windup when output is consistently above
-  // target:
-  data_t tau_awu(0.1);
-  controller.set_tau_awu(tau_awu);
 
   cout << ".....................................\n";
   cout << "controller:\n";
@@ -129,7 +126,7 @@ auto main() -> int {
   cout << ".....................................\n";
 
   // create Matrix to save outputs in...
-  Matrix y_ref = Matrix(n_y, n_t, arma::fill::zeros);
+  Matrix y_ref = Matrix(n_y, n_t + N + 1, arma::fill::zeros);
   y_ref.each_col() += y_ref0;
 
   // Simulated measurements
@@ -149,6 +146,8 @@ auto main() -> int {
   Matrix x_true(n_x, n_t, arma::fill::zeros);
   Matrix m_true(n_y, n_t, arma::fill::zeros);
 
+  Matrix J(1, n_t, arma::fill::zeros);
+
   // set initial val
   y_hat.col(0) = controller.sys().y();
   y_true.col(0) = controlled_system.y();
@@ -158,6 +157,15 @@ auto main() -> int {
 
   m_hat.col(0) = controller.sys().m();
   m_true.col(0) = controlled_system.m();
+
+  // calculate the target output
+  for (size_t t = 1; t < n_t + N + 1; t++) {
+    // e.g., use sinusoidal reference
+    data_t f = 0.5;  // freq [=] Hz
+    Vector t_vec = Vector(n_y, arma::fill::ones) * t;
+    y_ref.col(t) +=
+        y_ref0 % arma::sin(f * 2 * lds::kPi * dt * t_vec - lds::kPi / 4);
+  }
 
   // get the disturbance at each time step ahead of time
   // to maintain consistent between examples
@@ -185,23 +193,17 @@ auto main() -> int {
   for (size_t t = 1; t < n_t; t++) {
     controlled_system.set_m(m_true.col(t));
 
-    // e.g., use sinusoidal reference
-    data_t f = 0.5;  // freq [=] Hz
-    Vector t_vec = Vector(n_y, arma::fill::ones) * t;
-    y_ref.col(t) +=
-        y_ref0 % arma::sin(f * 2 * lds::kPi * dt * t_vec - lds::kPi / 4);
-
     // Simulate the true system.
-    z.col(t)=controlled_system.Simulate(u.col(t-1));
+    z.col(t) = controlled_system.Simulate(u.col(t - 1));
 
-    // This method uses a steady-state solution to control problem to calculate
-    // x_ref, u_ref from reference output y_ref. Notably, it does this in the
-    // log-linear space (i.e., log(y)).
-    //
-    // Therefore, it is only applicable to regulation problems or cases where
-    // reference trajectory changes slowly compared to system dynamics.
-    controller.set_y_ref(y_ref.col(t));
-    u.col(t)=controller.ControlOutputReference(z.col(t));
+    // Calculate the slice indices
+    size_t start_idx = t;
+    size_t end_idx = t + N + 1;
+
+    auto* j = new data_t;
+
+    u.col(t) = controller.ControlOutputReference(
+        dt, z.col(t), y_ref.cols(start_idx, end_idx), true, j);
 
     y_true.col(t) = controlled_system.y();
     x_true.col(t) = controlled_system.x();
@@ -209,6 +211,8 @@ auto main() -> int {
     y_hat.col(t) = controller.sys().y();
     x_hat.col(t) = controller.sys().x();
     m_hat.col(t) = controller.sys().m();
+
+    J.col(t) = *j;
   }
 
   auto finish = std::chrono::high_resolution_clock::now();
@@ -220,17 +224,20 @@ auto main() -> int {
   // x_true, m_true saving with hdf5 via armadillo
   arma::hdf5_opts::opts replace = arma::hdf5_opts::replace;
 
+  Matrix y_ref_vis = y_ref.cols(0, n_t - 1);
+
   auto dt_vec = Vector(1).fill(dt);
-  dt_vec.save(arma::hdf5_name("eg_plds_ctrl.h5", "dt"));
-  y_ref.save(arma::hdf5_name("eg_plds_ctrl.h5", "y_ref", replace));
-  u.save(arma::hdf5_name("eg_plds_ctrl.h5", "u", replace));
-  z.save(arma::hdf5_name("eg_plds_ctrl.h5", "z", replace));
-  x_true.save(arma::hdf5_name("eg_plds_ctrl.h5", "x_true", replace));
-  m_true.save(arma::hdf5_name("eg_plds_ctrl.h5", "m_true", replace));
-  y_true.save(arma::hdf5_name("eg_plds_ctrl.h5", "y_true", replace));
-  x_hat.save(arma::hdf5_name("eg_plds_ctrl.h5", "x_hat", replace));
-  m_hat.save(arma::hdf5_name("eg_plds_ctrl.h5", "m_hat", replace));
-  y_hat.save(arma::hdf5_name("eg_plds_ctrl.h5", "y_hat", replace));
+  dt_vec.save(arma::hdf5_name("eg_plds_mpc.h5", "dt"));
+  y_ref_vis.save(arma::hdf5_name("eg_plds_mpc.h5", "y_ref", replace));
+  u.save(arma::hdf5_name("eg_plds_mpc.h5", "u", replace));
+  z.save(arma::hdf5_name("eg_plds_mpc.h5", "z", replace));
+  x_true.save(arma::hdf5_name("eg_plds_mpc.h5", "x_true", replace));
+  m_true.save(arma::hdf5_name("eg_plds_mpc.h5", "m_true", replace));
+  y_true.save(arma::hdf5_name("eg_plds_mpc.h5", "y_true", replace));
+  x_hat.save(arma::hdf5_name("eg_plds_mpc.h5", "x_hat", replace));
+  m_hat.save(arma::hdf5_name("eg_plds_mpc.h5", "m_hat", replace));
+  y_hat.save(arma::hdf5_name("eg_plds_mpc.h5", "y_hat", replace));
+  J.save(arma::hdf5_name("eg_plds_mpc.h5", "J", replace));
 
   return 0;
 }

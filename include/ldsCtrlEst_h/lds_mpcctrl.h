@@ -1,0 +1,545 @@
+//===-- ldsCtrlEst_h/lds_gaussian_mpcctrl.h - MPC Controller ----*- C++ -*-===//
+//
+// Copyright 2024 Chia-Chien Hung and Kyle Johnsen
+// Copyright 2024 Georgia Institute of Technology
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//===----------------------------------------------------------------------===//
+///
+/// \file
+/// This file defines the type for model predictive Model Predictive
+/// Control (MPC) on linear system dynamics by converting the MPC optimization
+/// problem to a quadratic cost problem. The new problem is optimized using the
+/// Operator Splitting Quadratic Program (OSQP).
+///
+/// \brief MPC Controller
+//===----------------------------------------------------------------------===//
+
+#ifndef LDSCTRLEST_LDS_MPCCTRL_H
+#define LDSCTRLEST_LDS_MPCCTRL_H
+
+// namespace
+#include "lds.h"
+// system type
+#include "lds_sys.h"
+
+// osqp
+#include "osqp_arma.h"
+
+namespace lds {
+
+template <typename System>
+class MpcController {
+  static_assert(std::is_base_of<lds::System, System>::value,
+                "System must be derived from lds::System");
+
+ public:
+  /**
+   * @brief     Constructs a new MpcController.
+   */
+  MpcController() = default;
+
+  /**
+   * @brief     Constructs a new MpcController.
+   *
+   * @param     sys   The system being controlled
+   *
+   * @tparam    System  The system type
+   */
+  MpcController(const System& sys);
+
+  /**
+   * @brief     Constructs a new MpcController.
+   *
+   * @param     sys   The system being controlled
+   *
+   * @tparam    System  The system type
+   */
+  MpcController(System&& sys);
+
+  /**
+   * @brief     Perform one control step.
+   *
+   * @param     t_sim       Simulation time step
+   * @param     z           Measurement
+   * @param     xr          Reference/Target state (n x N*n_sim)
+   * @param     do_control  [optional] whether to update control (true) or
+   * simply feed through u_ref (false)
+   * @param     J           [optional] Pointer to variable storing cost
+   *
+   * @return    A vector of the optimal control
+   */
+  Vector Control(data_t t_sim, const Vector& z, const Matrix& xr,
+                 bool do_control = true, data_t* J = NULL);
+
+  /**
+   * @brief     Perform one control step.
+   *
+   * @param     t_sim       Simulation time step
+   * @param     z           Measurement
+   * @param     yr          Reference/Target output (n x N*n_sim)
+   * @param     do_control  [optional] whether to update control (true)
+   * or simply feed through u_ref (false)
+   * @param     J           [optional] Pointer to variable storing cost
+   *
+   * @return    A vector of the optimal control
+   */
+  virtual Vector ControlOutputReference(data_t t_sim, const Vector& z,
+                                        const Matrix& yr,
+                                        bool do_control = true,
+                                        data_t* J = NULL);
+
+  // getters
+  const System& sys() const { return sys_; }
+  const size_t n() const { return n_; }
+  const size_t m() const { return m_; }
+  const size_t N() const { return N_; }
+  const size_t M() const { return M_; }
+  const Matrix A() const { return A_; }
+  const Matrix B() const { return B_; }
+  const Matrix C() const { return C_; }
+  const Matrix S() const { return S_; }
+  const Vector u() const { return u_; }
+
+  // setters
+  /**
+   * @brief     Set the MPC cost matrices
+   *
+   * @param     Q   state cost matrix
+   * @param     R   input cost matrix
+   * @param     S   input change cost matrix
+   * @param     N   state prediction horizon
+   * @param     M   input horizon
+   */
+  void set_cost(Matrix Q, Matrix R, Matrix S, size_t N, size_t M);
+
+  /**
+   * @brief     Set the MPC cost matrices for controlling output
+   *
+   * @param     Q_y output cost matrix
+   * @param     R   input cost matrix
+   * @param     S   input change cost matrix
+   * @param     N   state prediction horizon
+   * @param     M   input horizon
+   */
+  void set_cost_output(Matrix Q_y, Matrix R, Matrix S, size_t N, size_t M);
+
+  /**
+   * @brief     Set the MPC state and input bounds
+   *
+   * @param     xmin    state lower bound
+   * @param     xmax    state upper bound
+   * @param     umin    input lower bound
+   * @param     umax    input upper bound
+   */
+  void set_constraint(Vector xmin, Vector xmax, Vector umin, Vector umax);
+
+  void Print() {
+    sys_.Print();
+    // TODO: Implement print
+  }
+
+ protected:
+  System sys_;  ///< system being controlled
+  size_t n_;    ///< number of states
+  size_t m_;    ///< number of output states
+  size_t N_;    ///< number of steps
+  size_t M_;    ///< number of inputs
+  Matrix A_;    ///< state transition matrix
+  Matrix B_;    ///< input matrix
+  Matrix C_;    ///< output matrix
+
+  osqp_arma::OSQP* OSQP;
+  Sparse P_;  ///< penalty matrix
+  Matrix Q_;  ///< cost matrix
+
+  osqp_arma::OSQP* OSQP_y;
+  Sparse P_y_;  ///< output penalty matrix
+  Matrix Q_y_;  ///< output cost matrix
+
+  Matrix S_;  ///< input cost matrix
+
+  Matrix lineq_;  ///< lower inequality bound
+  Matrix uineq_;  ///< upper inequality bound
+  Sparse Aineq_;  ///< inequality condition matrix
+
+  Matrix Acon_;  ///< update condition matrix
+  Vector lb_;    ///< lower bound
+  Vector ub_;    ///< upper bound
+
+  Vector u_;      ///< previous step input
+  size_t t_sim_;  ///< previous step simulation time step
+
+  bool upd_ctrl_;      ///< control was updated since last step
+  bool upd_ctrl_out_;  ///< output control was updated since last step
+  bool upd_cons_;      ///< constraint was updated since last step
+
+ private:
+  /**
+   * @brief     Calculate the trajectory for the simulation step
+   *
+   * @param     x0  The initial state
+   * @param     u0  The initial control input
+   * @param     xr  The reference trajectory
+   * @param     out Print out step information
+   *
+   * @return    The trajectory for the simulation step
+   */
+  osqp_arma::Solution* calc_trajectory(const Vector& x0, const Vector& u0,
+                                       const Matrix& xr, size_t n_sim);
+
+  /**
+   * @brief     Calculate the trajectory based on output for the simulation
+   * step
+   *
+   * @param     x0  The initial state
+   * @param     u0  The initial control input
+   * @param     yr  The reference output trajectory
+   * @param     out Print out step information
+   *
+   * @return    The trajectory for the simulation step
+   */
+  osqp_arma::Solution* calc_output_trajectory(const Vector& x0,
+                                              const Vector& u0,
+                                              const Matrix& yr, size_t n_sim);
+
+  /**
+   * @brief     Update the OSQP constraint bounds
+   *
+   * @param     x0  Initial state
+   */
+  void update_bounds(const Vector& x0);
+
+  /**
+   * @brief     Update the OSQP constraint matrices
+   *
+   * @param     n_sim   Number of time steps to simulate
+   */
+  void update_constraints(size_t n_sim);
+
+  /**
+   * @brief     Create an identity matrix with an offset axis
+   *
+   * @param     n The size of the matrix
+   * @param     k The offset axis
+   *
+   * @return    The identity matrix with an offset axis
+   */
+  Sparse eye_offset(size_t n, int k = -1) {
+    Sparse mat(n, n);
+    mat.diag(k).ones();
+    return mat;
+  }
+
+  /**
+   * @brief     Create a block diagonal matrix given two input matrices
+   *
+   * @param     m1 The first matrix
+   * @param     m2 The second matrix
+   *
+   * @return    The block diagonal matrix
+   */
+  Matrix block_diag(Matrix m1, Matrix m2) {
+    // Calculate the total rows and columns of the block diagonal matrix
+    size_t rows = m1.n_rows + m2.n_rows;
+    size_t cols = m1.n_cols + m2.n_cols;
+
+    // Create the block diagonal matrix
+    Matrix bd = arma::zeros<Matrix>(rows, cols);
+    bd.submat(0, 0, m1.n_rows - 1, m1.n_cols - 1) = m1;
+    bd.submat(m1.n_rows, m1.n_cols, rows - 1, cols - 1) = m2;
+
+    return bd;
+  }
+
+  void Init() {
+    A_ = sys_.A();
+    B_ = sys_.B();
+    C_ = sys_.C();
+    n_ = B_.n_rows;
+    m_ = B_.n_cols;
+    u_ = Vector(m_, arma::fill::zeros);
+    t_sim_ = 0;
+
+    OSQP = new osqp_arma::OSQP();
+    OSQP->set_default_settings();
+    OSQP->set_verbose(false);
+
+    OSQP_y = new osqp_arma::OSQP();
+    OSQP_y->set_default_settings();
+    OSQP_y->set_verbose(false);
+  }
+};
+
+// Implement methods
+
+template <typename System>
+MpcController<System>::MpcController(const System& sys) : sys_(sys) {
+  Init();
+}
+
+template <typename System>
+MpcController<System>::MpcController(System&& sys) : sys_(std::move(sys)) {
+  Init();
+}
+
+template <typename System>
+Vector MpcController<System>::Control(data_t t_sim, const Vector& z,
+                                      const Matrix& xr, bool do_control,
+                                      data_t* J) {
+  // TODO: Variable checks
+
+  sys_.Filter(u_, z);
+
+  size_t n_sim = t_sim / sys_.dt();  // Number of points to simulate
+  t_sim_ = t_sim;
+  if (do_control) {
+    osqp_arma::Solution* sol = calc_trajectory(sys_.x(), u_, xr, n_sim);
+
+    for (int i = 0; i < m_; i++) {
+      u_(i) = sol->x(N_ * n_ + i);
+    }
+    if (J != NULL) *J = sol->obj_val();
+
+    if (sol) free(sol);
+  }
+
+  for (int i = 0; i < n_sim; i++) {
+    // simulate for each time step
+    sys_.Simulate(u_);
+  }
+
+  return u_;
+}
+
+template <typename System>
+Vector MpcController<System>::ControlOutputReference(data_t t_sim,
+                                                     const Vector& z,
+                                                     const Matrix& yr,
+                                                     bool do_control,
+                                                     data_t* J) {
+  // TODO: Variable checks
+
+  sys_.Filter(u_, z);
+
+  size_t n_sim = t_sim / sys_.dt();  // Number of points to simulate
+  t_sim_ = t_sim;
+  if (do_control) {
+    osqp_arma::Solution* sol = calc_output_trajectory(sys_.x(), u_, yr, n_sim);
+
+    for (int i = 0; i < m_; i++) {
+      u_(i) = sol->x(N_ * n_ + i);
+    }
+    if (J != nullptr) {
+      *J = sol->obj_val();
+    }
+
+    if (sol) {
+      free(sol);
+    }
+  }
+
+  for (int i = 0; i < n_sim; i++) {
+    // simulate for each time step
+    sys_.Simulate(u_);
+  }
+
+  return u_;
+}
+
+template <typename System>
+void MpcController<System>::set_cost(Matrix Q, Matrix R, Matrix S, size_t N,
+                                     size_t M) {
+  // TODO: Variable checks
+
+  Q_ = Q;
+  // R_ = R; // Isn't used
+  S_ = S;
+  N_ = N;
+  M_ = M;
+
+  // Set up P matrix
+  Matrix Px = arma::kron(Matrix(N_, N_, arma::fill::eye), Q_);
+  Matrix Pu1 = arma::kron(Matrix(M_, M_, arma::fill::eye), 2 * S_ + R);
+  Matrix Pu2 =
+      arma::kron(Matrix(eye_offset(M)) + Matrix(eye_offset(M, 1)), -S_);
+  Matrix Pu3 =
+      block_diag(Matrix((M_ - 1) * m_, (M_ - 1) * m_, arma::fill::zeros), -S_);
+  Matrix Pu = Pu1 + Pu2 + Pu3;
+  P_ = Sparse(arma::trimatu(
+      2 * block_diag(Px, Pu)));  // Taking only the upper triangular part
+
+  OSQP->set_P(P_);
+
+  upd_ctrl_ = true;
+}
+
+template <typename System>
+void MpcController<System>::set_cost_output(Matrix Q_y, Matrix R, Matrix S,
+                                            size_t N, size_t M) {
+  // TODO: Variable checks
+
+  Q_y_ = Q_y;
+  // R_ = R; // Isn't used
+  S_ = S;
+  N_ = N;
+  M_ = M;
+
+  Matrix Q = C_.t() * Q_y_ * C_;
+
+  // Set up P matrix
+  Matrix Px = arma::kron(Matrix(N_, N_, arma::fill::eye), Q);
+  Matrix Pu1 = arma::kron(Matrix(M_, M_, arma::fill::eye), 2 * S_ + R);
+  Matrix Pu2 =
+      arma::kron(Matrix(eye_offset(M)) + Matrix(eye_offset(M, 1)), -S_);
+  Matrix Pu3 =
+      block_diag(Matrix((M_ - 1) * m_, (M_ - 1) * m_, arma::fill::zeros), -S_);
+  Matrix Pu = Pu1 + Pu2 + Pu3;
+  P_y_ = Sparse(arma::trimatu(
+      block_diag(Px, Pu)));  // Taking only the upper triangular part
+
+  OSQP_y->set_P(P_y_);
+
+  upd_ctrl_out_ = true;
+}
+
+template <typename System>
+void MpcController<System>::set_constraint(Vector xmin, Vector xmax,
+                                           Vector umin, Vector umax) {
+  // TODO: Check constraints
+
+  lineq_ = join_horiz(arma::kron(Vector(N_, arma::fill::ones), xmin).t(),
+                      arma::kron(Vector(M_, arma::fill::ones), umin).t());
+  uineq_ = join_horiz(arma::kron(Vector(N_, arma::fill::ones), xmax).t(),
+                      arma::kron(Vector(M_, arma::fill::ones), umax).t());
+  std::cout << "N_: " << N_ << "\n";
+  std::cout << "n_: " << n_ << "\n";
+  std::cout << "M_: " << M_ << "\n";
+  std::cout << "m_: " << m_ << "\n";
+  size_t Aineq_dim = N_ * n_ + M_ * m_;
+  Aineq_ = arma::eye<Sparse>(Aineq_dim, Aineq_dim);
+
+  upd_cons_ = true;
+}
+
+template <typename System>
+osqp_arma::Solution* MpcController<System>::calc_trajectory(const Vector& x0,
+                                                            const Vector& u0,
+                                                            const Matrix& xr,
+                                                            size_t n_sim) {
+  update_bounds(x0);
+  OSQP->set_l(lb_);
+  OSQP->set_u(ub_);
+
+  if (upd_ctrl_ || upd_ctrl_out_ || upd_cons_) {
+    update_constraints(n_sim);
+  }
+  OSQP->set_A(Acon_);
+
+  // Convert state penalty from reference to OSQP format
+  Vector q;
+  {
+    arma::uvec indices = arma::regspace<arma::uvec>(0, n_sim, N_ * n_sim - 1);
+    Matrix sliced_xr = xr.cols(indices);
+    Matrix Qxr_full = -2 * Q_ * sliced_xr;
+    Vector Qxr = Qxr_full.as_col();  // Qxr for every simulation time step
+
+    Vector qu =
+        join_vert((-2 * S_ * u0), Vector((M_ - 1) * m_, arma::fill::zeros));
+    Vector qx = Qxr.rows(0, N_ * n_ - 1);
+    q = join_vert(qx, qu);
+  }
+
+  // set problem
+  OSQP->set_q(q);
+
+  osqp_arma::Solution* sol = OSQP->solve();
+
+  return sol;
+}
+
+template <typename System>
+osqp_arma::Solution* MpcController<System>::calc_output_trajectory(
+    const Vector& x0, const Vector& u0, const Matrix& yr, size_t n_sim) {
+  update_bounds(x0);
+  OSQP_y->set_l(lb_);
+  OSQP_y->set_u(ub_);
+
+  if (upd_ctrl_ || upd_ctrl_out_ || upd_cons_) {
+    update_constraints(n_sim);
+  }
+  OSQP_y->set_A(Acon_);
+
+  // Convert state penalty from reference to OSQP format
+  Vector q;
+  {
+    arma::uvec indices = arma::regspace<arma::uvec>(0, n_sim, N_ * n_sim - 1);
+    Matrix sliced_yr = yr.cols(indices);
+    Matrix Qxr_full = -2 * sliced_yr.t() * Q_y_ * C_;
+    Vector Qxr = Qxr_full.as_row().t();  // Qxr for every simulation time step
+
+    Vector qu =
+        join_vert((-2 * S_ * u0), Vector((M_ - 1) * m_, arma::fill::zeros));
+    Vector qx = Qxr.rows(0, N_ * n_ - 1);
+    q = join_vert(qx, qu);
+  }
+
+  // set problem
+  OSQP_y->set_q(q);
+
+  osqp_arma::Solution* sol = OSQP_y->solve();
+
+  return sol;
+}
+
+template <typename System>
+void MpcController<System>::update_bounds(const Vector& x0) {
+  Matrix leq = join_horiz(
+      -x0.t(), arma::zeros((N_ - 1) * n_).t());  // Lower equality bound
+  Matrix ueq = leq;                              // Upper equality bound
+  lb_ = join_horiz(leq, lineq_).t();             // Lower bound
+  ub_ = join_horiz(ueq, uineq_).t();             // Upper bound
+}
+
+template <typename System>
+void MpcController<System>::update_constraints(size_t n_sim) {
+  // Update x over n_sim many steps
+  Matrix Axs = arma::real(
+      arma::powmat(A_, static_cast<double>(n_sim)));  // State multiplier
+  Matrix Aus = arma::zeros(n_, n_);                   // Input multiplier
+  for (int i = 0; i < n_sim; i++) {
+    Aus += arma::powmat(A_, i);
+  }
+
+  // Ax + Bu = 0
+  Matrix Ax(
+      arma::kron(arma::speye<Sparse>(N_, N_), -arma::speye<Sparse>(n_, n_)) +
+      arma::kron(eye_offset(N_), Sparse(Axs)));
+  Matrix B0(1, M_);
+  Matrix Bstep(M_, M_, arma::fill::eye);
+  Matrix Bend = arma::join_horiz(Matrix(N_ - M_ - 1, M_ - 1),
+                                 Matrix(N_ - M_ - 1, 1, arma::fill::ones));
+  Matrix Bu = kron(join_vert(B0, Matrix(Bstep), Bend), Aus * B_);
+  Matrix Aeq = join_horiz(Ax, Bu);  // Equality condition
+
+  Acon_ = join_vert(Aeq, Matrix(Aineq_));  // Update condition
+
+  upd_ctrl_ = false;
+  upd_ctrl_out_ = false;
+  upd_cons_ = false;
+}
+
+}  // namespace lds
+
+#endif
