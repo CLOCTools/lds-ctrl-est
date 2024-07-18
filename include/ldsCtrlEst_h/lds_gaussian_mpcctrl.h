@@ -49,10 +49,19 @@ class MpcController : public lds::MpcController<System> {
 
   // getters
   using lds::MpcController<System>::sys;
+  using lds::MpcController<System>::n;
+  using lds::MpcController<System>::m;
+  using lds::MpcController<System>::N;
+  using lds::MpcController<System>::M;
+  using lds::MpcController<System>::A;
+  using lds::MpcController<System>::B;
+  using lds::MpcController<System>::C;
+  using lds::MpcController<System>::S;
+  using lds::MpcController<System>::u;
 
   // setters
-  using lds::MpcController<System>::set_control;
-  using lds::MpcController<System>::set_control_output;
+  using lds::MpcController<System>::set_cost;
+  using lds::MpcController<System>::set_cost_output;
   using lds::MpcController<System>::set_constraint;
 
   using lds::MpcController<System>::Print;

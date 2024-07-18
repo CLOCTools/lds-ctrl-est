@@ -159,8 +159,9 @@ auto main() -> int {
   m_hat.col(0) = controller.sys().m();
   m_true.col(0) = controlled_system.m();
 
-  cout << "Starting " << n_t * dt << " sec simulation ... \n";
-  auto start = std::chrono::high_resolution_clock::now();
+  // get the disturbance at each time step ahead of time
+  // to maintain consistent between examples
+  arma::arma_rng::set_seed(100);
   for (size_t t = 1; t < n_t; t++) {
     // simulate a stochastically switched disturbance
     Vector chance = arma::randu<Vector>(1);
@@ -171,12 +172,18 @@ auto main() -> int {
         which_m = 1;
       }
     } else {                       // high disturbance
-      if (chance[0] < pr_hi2lo) {  // swithces high -> low disturbance
+      if (chance[0] < pr_hi2lo) {  // switches high -> low disturbance
         m0_true = std::vector<data_t>(n_x, m_low);
         which_m = 0;
       }
     }
-    controlled_system.set_m(m0_true);
+    m_true.col(t) = m0_true;
+  }
+
+  cout << "Starting " << n_t * dt << " sec simulation ... \n";
+  auto start = std::chrono::high_resolution_clock::now();
+  for (size_t t = 1; t < n_t; t++) {
+    controlled_system.set_m(m_true.col(t));
 
     // e.g., use sinusoidal reference
     data_t f = 0.5;  // freq [=] Hz
@@ -198,7 +205,6 @@ auto main() -> int {
 
     y_true.col(t) = controlled_system.y();
     x_true.col(t) = controlled_system.x();
-    m_true.col(t) = controlled_system.m();
 
     y_hat.col(t) = controller.sys().y();
     x_hat.col(t) = controller.sys().x();

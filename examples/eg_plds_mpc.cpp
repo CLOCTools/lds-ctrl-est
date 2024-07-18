@@ -23,9 +23,9 @@
 
 #include <ldsCtrlEst>
 
+using lds::data_t;
 using lds::Matrix;
 using lds::Vector;
-using lds::data_t;
 using std::cout;
 
 auto main() -> int {
@@ -52,7 +52,6 @@ auto main() -> int {
   Matrix b_true(n_x, n_u, arma::fill::zeros);
   b_true[0] = 0.054;
   Vector x0_true = Vector(n_x, arma::fill::ones) * log(1 * dt);
-  Matrix c_true = Matrix(n_y, n_x, arma::fill::eye);
 
   /// Going to simulate a switching disturbance (m) acting on system
   size_t which_m = 0;
@@ -68,7 +67,6 @@ auto main() -> int {
   // Assign params.
   controlled_system.set_A(a_true);
   controlled_system.set_B(b_true);
-  controlled_system.set_C(c_true);
   controlled_system.set_m(m0_true);
   controlled_system.set_x0(x0_true);
   // reset to initial conditions
@@ -93,7 +91,7 @@ auto main() -> int {
     Vector x0_controller = arma::log(y_ref0);
     controller_system.set_m(m0_controller);
     controller_system.set_x0(x0_controller);
-    controller_system.Reset(); //reset to new init condition
+    controller_system.Reset();  // reset to new init condition
 
     // adaptively re-estimate process disturbance (m)
     controller_system.do_adapt_m = true;
@@ -104,14 +102,21 @@ auto main() -> int {
     controller_system.set_Q_m(q_m);
 
     // set control penalties
-    Matrix Q_y = Matrix(n_y, n_y, arma::fill::eye) * 1e5;
-    Matrix R = Matrix(n_u, n_u, arma::fill::eye) * 1e-1;  // using dense instead of sparse matrix
-    Matrix S = Matrix(n_u, n_u, arma::fill::zeros);  // using dense instead of sparse matrix
+    Matrix Q_y = Matrix(n_y, n_y, arma::fill::ones) * 1e5;
+    Matrix R = Matrix(n_u, n_u, arma::fill::zeros) * 1e-1;
+    Matrix S = Matrix(n_u, n_u, arma::fill::zeros);
 
-    Vector u_lb = Vector(n_u) * 0.0;
-    Vector u_ub = Vector(n_u) * 5.0;
-    controller = std::move(lds::poisson::MpcController(std::move(controller_system), u_lb, u_ub));
-    controller.set_control_output(Q_y, R, S, N, M);
+    Vector xmin = Vector(n_u);
+    xmin.fill(-arma::datum::inf);
+    Vector xmax = Vector(n_u);
+    xmax.fill(arma::datum::inf);
+    Vector umin = Vector(n_u) * 0.0;
+    Vector umax = Vector(n_u, arma::fill::ones) * 5.0;
+
+    controller =
+        std::move(lds::poisson::MpcController(std::move(controller_system)));
+    controller.set_cost_output(Q_y, R, S, N, M);
+    controller.set_constraint(xmin, xmax, umin, umax);
   }
 
   cout << ".....................................\n";
@@ -141,6 +146,8 @@ auto main() -> int {
   Matrix x_true(n_x, n_t, arma::fill::zeros);
   Matrix m_true(n_y, n_t, arma::fill::zeros);
 
+  Matrix J(1, n_t, arma::fill::zeros);
+
   // set initial val
   y_hat.col(0) = controller.sys().y();
   y_true.col(0) = controlled_system.y();
@@ -160,8 +167,9 @@ auto main() -> int {
         y_ref0 % arma::sin(f * 2 * lds::kPi * dt * t_vec - lds::kPi / 4);
   }
 
-  cout << "Starting " << n_t * dt << " sec simulation ... \n";
-  auto start = std::chrono::high_resolution_clock::now();
+  // get the disturbance at each time step ahead of time
+  // to maintain consistent between examples
+  arma::arma_rng::set_seed(100);
   for (size_t t = 1; t < n_t; t++) {
     // simulate a stochastically switched disturbance
     Vector chance = arma::randu<Vector>(1);
@@ -172,29 +180,39 @@ auto main() -> int {
         which_m = 1;
       }
     } else {                       // high disturbance
-      if (chance[0] < pr_hi2lo) {  // swithces high -> low disturbance
+      if (chance[0] < pr_hi2lo) {  // switches high -> low disturbance
         m0_true = std::vector<data_t>(n_x, m_low);
         which_m = 0;
       }
     }
-    controlled_system.set_m(m0_true);
+    m_true.col(t) = m0_true;
+  }
+
+  cout << "Starting " << n_t * dt << " sec simulation ... \n";
+  auto start = std::chrono::high_resolution_clock::now();
+  for (size_t t = 1; t < n_t; t++) {
+    controlled_system.set_m(m_true.col(t));
 
     // Simulate the true system.
-    z.col(t) = controlled_system.Simulate(u.col(t-1));
+    z.col(t) = controlled_system.Simulate(u.col(t - 1));
 
     // Calculate the slice indices
     size_t start_idx = t;
     size_t end_idx = t + N + 1;
 
-    u.col(t) = controller.ControlOutputReference(dt, z.col(t), y_ref.cols(start_idx, end_idx), true);
+    auto* j = new data_t;
+
+    u.col(t) = controller.ControlOutputReference(
+        dt, z.col(t), y_ref.cols(start_idx, end_idx), true, j);
 
     y_true.col(t) = controlled_system.y();
     x_true.col(t) = controlled_system.x();
-    m_true.col(t) = controlled_system.m();
 
     y_hat.col(t) = controller.sys().y();
     x_hat.col(t) = controller.sys().x();
     m_hat.col(t) = controller.sys().m();
+
+    J.col(t) = *j;
   }
 
   auto finish = std::chrono::high_resolution_clock::now();
@@ -219,6 +237,7 @@ auto main() -> int {
   x_hat.save(arma::hdf5_name("eg_plds_mpc.h5", "x_hat", replace));
   m_hat.save(arma::hdf5_name("eg_plds_mpc.h5", "m_hat", replace));
   y_hat.save(arma::hdf5_name("eg_plds_mpc.h5", "y_hat", replace));
+  J.save(arma::hdf5_name("eg_plds_mpc.h5", "J", replace));
 
   return 0;
 }

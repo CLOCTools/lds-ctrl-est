@@ -1,4 +1,5 @@
-//===-- eg_lqmpc_ctrl.cpp - Example LQMPC Control ---------------------------===//
+//===-- eg_lqmpc_ctrl.cpp - Example LQMPC Control
+//---------------------------===//
 //
 // Copyright 2024 Chia-Chien Hung and Kyle Johnsen
 // Copyright 2024 Georgia Institute of Technology
@@ -110,9 +111,9 @@ auto main() -> int {
 
     lds::gaussian::System controller_system(controlled_system);
 
-    controller = std::move(
-        lds::gaussian::MpcController(std::move(controller_system), umin, umax));
-    controller.set_control(Q, R, S, N, M);
+    controller =
+        std::move(lds::gaussian::MpcController(std::move(controller_system)));
+    controller.set_cost(Q, R, S, N, M);
     controller.set_constraint(xmin, xmax, umin, umax);
   }
 

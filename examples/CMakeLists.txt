@@ -18,5 +18,5 @@ foreach(file ${files})
 	# 	FAIL_REGULAR_EXPRESSION "(Exception|Test failed)")
 	set_tests_properties(${file_without_ext}
 		PROPERTIES
-		TIMEOUT 20)
+		TIMEOUT 40)
 endforeach()

@@ -54,23 +54,19 @@ class MpcController {
    * @brief     Constructs a new MpcController.
    *
    * @param     sys   The system being controlled
-   * @param     u_lb  The lower bound of the control input
-   * @param     u_ub  The upper bound of the control input
    *
    * @tparam    System  The system type
    */
-  MpcController(const System& sys, Vector u_lb, Vector u_ub);
+  MpcController(const System& sys);
 
   /**
    * @brief     Constructs a new MpcController.
    *
    * @param     sys   The system being controlled
-   * @param     u_lb  The lower bound of the control input
-   * @param     u_ub  The upper bound of the control input
    *
    * @tparam    System  The system type
    */
-  MpcController(System&& sys, Vector u_lb, Vector u_ub);
+  MpcController(System&& sys);
 
   /**
    * @brief     Perform one control step.
@@ -93,83 +89,61 @@ class MpcController {
    * @param     t_sim       Simulation time step
    * @param     z           Measurement
    * @param     yr          Reference/Target output (n x N*n_sim)
-   * @param     do_control  [optional] whether to update control (true) or
-   * simply feed through u_ref (false)
+   * @param     do_control  [optional] whether to update control (true)
+   * or simply feed through u_ref (false)
    * @param     J           [optional] Pointer to variable storing cost
    *
    * @return    A vector of the optimal control
    */
-  Vector ControlOutputReference(data_t t_sim, const Vector& z, const Matrix& yr,
-                                bool do_control = true, data_t* J = NULL);
+  virtual Vector ControlOutputReference(data_t t_sim, const Vector& z,
+                                        const Matrix& yr,
+                                        bool do_control = true,
+                                        data_t* J = NULL);
 
   // getters
   const System& sys() const { return sys_; }
+  const size_t n() const { return n_; }
+  const size_t m() const { return m_; }
+  const size_t N() const { return N_; }
+  const size_t M() const { return M_; }
+  const Matrix A() const { return A_; }
+  const Matrix B() const { return B_; }
+  const Matrix C() const { return C_; }
+  const Matrix S() const { return S_; }
+  const Vector u() const { return u_; }
 
   // setters
-  void set_control(Matrix Q, Matrix R, Matrix S, size_t N, size_t M) {
-    // TODO: Variable checks
+  /**
+   * @brief     Set the MPC cost matrices
+   *
+   * @param     Q   state cost matrix
+   * @param     R   input cost matrix
+   * @param     S   input change cost matrix
+   * @param     N   state prediction horizon
+   * @param     M   input horizon
+   */
+  void set_cost(Matrix Q, Matrix R, Matrix S, size_t N, size_t M);
 
-    Q_ = Q;
-    // R_ = R; // Isn't used
-    S_ = S;
-    N_ = N;
-    M_ = M;
+  /**
+   * @brief     Set the MPC cost matrices for controlling output
+   *
+   * @param     Q_y output cost matrix
+   * @param     R   input cost matrix
+   * @param     S   input change cost matrix
+   * @param     N   state prediction horizon
+   * @param     M   input horizon
+   */
+  void set_cost_output(Matrix Q_y, Matrix R, Matrix S, size_t N, size_t M);
 
-    // Set up P matrix
-    Matrix Px = arma::kron(Matrix(N_, N_, arma::fill::eye), Q_);
-    Matrix Pu1 = arma::kron(Matrix(M_, M_, arma::fill::eye), 2 * S_ + R);
-    Matrix Pu2 =
-        arma::kron(Matrix(eye_offset(M)) + Matrix(eye_offset(M, 1)), -S_);
-    Matrix Pu3 = block_diag(
-        Matrix((M_ - 1) * m_, (M_ - 1) * m_, arma::fill::zeros), -S_);
-    Matrix Pu = Pu1 + Pu2 + Pu3;
-    P_ = Sparse(arma::trimatu(
-        2 * block_diag(Px, Pu)));  // Taking only the upper triangular part
-
-    OSQP->set_P(P_);
-
-    upd_ctrl_ = true;
-  }
-
-  void set_control_output(Matrix Q_y, Matrix R, Matrix S, size_t N, size_t M) {
-    // TODO: Variable checks
-
-    Q_y_ = Q_y;
-    // R_ = R; // Isn't used
-    S_ = S;
-    N_ = N;
-    M_ = M;
-
-    Matrix Q = C_.t() * Q_y_ * C_;
-
-    // Set up P matrix
-    Matrix Px = arma::kron(Matrix(N_, N_, arma::fill::eye), Q);
-    Matrix Pu1 = arma::kron(Matrix(M_, M_, arma::fill::eye), 2 * S_ + R);
-    Matrix Pu2 =
-        arma::kron(Matrix(eye_offset(M)) + Matrix(eye_offset(M, 1)), -S_);
-    Matrix Pu3 = block_diag(
-        Matrix((M_ - 1) * m_, (M_ - 1) * m_, arma::fill::zeros), -S_);
-    Matrix Pu = Pu1 + Pu2 + Pu3;
-    P_y_ = Sparse(arma::trimatu(
-        2 * block_diag(Px, Pu)));  // Taking only the upper triangular part
-
-    OSQP_y->set_P(P_y_);
-
-    upd_ctrl_out_ = true;
-  }
-
-  void set_constraint(Vector xmin, Vector xmax, Vector umin, Vector umax) {
-    // TODO: Check constraints
-
-    lineq_ = join_horiz(arma::kron(Vector(N_, arma::fill::ones), xmin).t(),
-                        arma::kron(Vector(M_, arma::fill::ones), umin).t());
-    uineq_ = join_horiz(arma::kron(Vector(N_, arma::fill::ones), xmax).t(),
-                        arma::kron(Vector(M_, arma::fill::ones), umax).t());
-    size_t Aineq_dim = N_ * n_ + M_ * m_;
-    Aineq_ = arma::eye<Sparse>(Aineq_dim, Aineq_dim);
-
-    upd_cons_ = true;
-  }
+  /**
+   * @brief     Set the MPC state and input bounds
+   *
+   * @param     xmin    state lower bound
+   * @param     xmax    state upper bound
+   * @param     umin    input lower bound
+   * @param     umax    input upper bound
+   */
+  void set_constraint(Vector xmin, Vector xmax, Vector umin, Vector umax);
 
   void Print() {
     sys_.Print();
@@ -241,13 +215,16 @@ class MpcController {
                                               const Matrix& yr, size_t n_sim);
 
   /**
+   * @brief     Update the OSQP constraint bounds
    *
-   * @param x0
+   * @param     x0  Initial state
    */
   void update_bounds(const Vector& x0);
 
   /**
+   * @brief     Update the OSQP constraint matrices
    *
+   * @param     n_sim   Number of time steps to simulate
    */
   void update_constraints(size_t n_sim);
 
@@ -308,15 +285,12 @@ class MpcController {
 // Implement methods
 
 template <typename System>
-MpcController<System>::MpcController(const System& sys, Vector u_lb,
-                                     Vector u_ub)
-    : sys_(sys), lb_(u_lb), ub_(u_ub) {
+MpcController<System>::MpcController(const System& sys) : sys_(sys) {
   Init();
 }
 
 template <typename System>
-MpcController<System>::MpcController(System&& sys, Vector u_lb, Vector u_ub)
-    : sys_(std::move(sys)), lb_(u_lb), ub_(u_ub) {
+MpcController<System>::MpcController(System&& sys) : sys_(std::move(sys)) {
   Init();
 }
 
@@ -367,9 +341,13 @@ Vector MpcController<System>::ControlOutputReference(data_t t_sim,
     for (int i = 0; i < m_; i++) {
       u_(i) = sol->x(N_ * n_ + i);
     }
-    if (J != NULL) *J = sol->obj_val();
+    if (J != nullptr) {
+      *J = sol->obj_val();
+    }
 
-    if (sol) free(sol);
+    if (sol) {
+      free(sol);
+    }
   }
 
   for (int i = 0; i < n_sim; i++) {
@@ -378,6 +356,81 @@ Vector MpcController<System>::ControlOutputReference(data_t t_sim,
   }
 
   return u_;
+}
+
+template <typename System>
+void MpcController<System>::set_cost(Matrix Q, Matrix R, Matrix S, size_t N,
+                                     size_t M) {
+  // TODO: Variable checks
+
+  Q_ = Q;
+  // R_ = R; // Isn't used
+  S_ = S;
+  N_ = N;
+  M_ = M;
+
+  // Set up P matrix
+  Matrix Px = arma::kron(Matrix(N_, N_, arma::fill::eye), Q_);
+  Matrix Pu1 = arma::kron(Matrix(M_, M_, arma::fill::eye), 2 * S_ + R);
+  Matrix Pu2 =
+      arma::kron(Matrix(eye_offset(M)) + Matrix(eye_offset(M, 1)), -S_);
+  Matrix Pu3 =
+      block_diag(Matrix((M_ - 1) * m_, (M_ - 1) * m_, arma::fill::zeros), -S_);
+  Matrix Pu = Pu1 + Pu2 + Pu3;
+  P_ = Sparse(arma::trimatu(
+      2 * block_diag(Px, Pu)));  // Taking only the upper triangular part
+
+  OSQP->set_P(P_);
+
+  upd_ctrl_ = true;
+}
+
+template <typename System>
+void MpcController<System>::set_cost_output(Matrix Q_y, Matrix R, Matrix S,
+                                            size_t N, size_t M) {
+  // TODO: Variable checks
+
+  Q_y_ = Q_y;
+  // R_ = R; // Isn't used
+  S_ = S;
+  N_ = N;
+  M_ = M;
+
+  Matrix Q = C_.t() * Q_y_ * C_;
+
+  // Set up P matrix
+  Matrix Px = arma::kron(Matrix(N_, N_, arma::fill::eye), Q);
+  Matrix Pu1 = arma::kron(Matrix(M_, M_, arma::fill::eye), 2 * S_ + R);
+  Matrix Pu2 =
+      arma::kron(Matrix(eye_offset(M)) + Matrix(eye_offset(M, 1)), -S_);
+  Matrix Pu3 =
+      block_diag(Matrix((M_ - 1) * m_, (M_ - 1) * m_, arma::fill::zeros), -S_);
+  Matrix Pu = Pu1 + Pu2 + Pu3;
+  P_y_ = Sparse(arma::trimatu(
+      block_diag(Px, Pu)));  // Taking only the upper triangular part
+
+  OSQP_y->set_P(P_y_);
+
+  upd_ctrl_out_ = true;
+}
+
+template <typename System>
+void MpcController<System>::set_constraint(Vector xmin, Vector xmax,
+                                           Vector umin, Vector umax) {
+  // TODO: Check constraints
+
+  lineq_ = join_horiz(arma::kron(Vector(N_, arma::fill::ones), xmin).t(),
+                      arma::kron(Vector(M_, arma::fill::ones), umin).t());
+  uineq_ = join_horiz(arma::kron(Vector(N_, arma::fill::ones), xmax).t(),
+                      arma::kron(Vector(M_, arma::fill::ones), umax).t());
+  std::cout << "N_: " << N_ << "\n";
+  std::cout << "n_: " << n_ << "\n";
+  std::cout << "M_: " << M_ << "\n";
+  std::cout << "m_: " << m_ << "\n";
+  size_t Aineq_dim = N_ * n_ + M_ * m_;
+  Aineq_ = arma::eye<Sparse>(Aineq_dim, Aineq_dim);
+
+  upd_cons_ = true;
 }
 
 template <typename System>

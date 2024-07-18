@@ -1,4 +1,5 @@
-//===-- ldsCtrlEst_h/lds_gaussian_mpcctrl.h - PLDS MPC Controller ------*- C++ -*-===//
+//===-- ldsCtrlEst_h/lds_gaussian_mpcctrl.h - PLDS MPC Controller ------*- C++
+//-*-===//
 //
 // Copyright 2024 Chia-Chien Hung and Kyle Johnsen
 // Copyright 2024 Georgia Institute of Technology
@@ -41,23 +42,47 @@ namespace poisson {
 /// Poisson-observation MPC Controller Type
 class MpcController : public lds::MpcController<System> {
  public:
-
   // make sure base class template methods available
   using lds::MpcController<System>::MpcController;
   using lds::MpcController<System>::Control;
-  using lds::MpcController<System>::ControlOutputReference;
+
+  virtual Vector ControlOutputReference(data_t t_sim, const Vector& z,
+                                        const Matrix& yr, bool do_control,
+                                        data_t* J) {
+    Matrix yr_transformed = yr;
+    // clamping the target output to address log10(0) issues
+    yr_transformed.clamp(kYRefLb, arma::datum::inf);
+    // log transforming the output to make it linear
+    yr_transformed = log10(yr_transformed);
+
+    return lds::MpcController<System>::ControlOutputReference(
+        t_sim, z, yr_transformed, do_control, J);
+  }
 
   // getters
   using lds::MpcController<System>::sys;
+  using lds::MpcController<System>::n;
+  using lds::MpcController<System>::m;
+  using lds::MpcController<System>::N;
+  using lds::MpcController<System>::M;
+  using lds::MpcController<System>::A;
+  using lds::MpcController<System>::B;
+  using lds::MpcController<System>::C;
+  using lds::MpcController<System>::S;
+  using lds::MpcController<System>::u;
 
   // setters
-  using lds::MpcController<System>::set_control;
-  using lds::MpcController<System>::set_control_output;
+  using lds::MpcController<System>::set_cost;
+  using lds::MpcController<System>::set_cost_output;
   using lds::MpcController<System>::set_constraint;
 
   using lds::MpcController<System>::Print;
+
+ private:
+  constexpr static const data_t kYRefLb =
+      1e-4;  ///< lower bound on yRef (to avoid numerical log(0) issue)
 };
-} // namespace poisson
-} // namespace lds
+}  // namespace poisson
+}  // namespace lds
 
 #endif  // LDSCTRLEST_LDS_POISSON_MPCCTRL_H
