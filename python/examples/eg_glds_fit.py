@@ -78,7 +78,6 @@ print(f"Finished SSID in {(stop-start)*1000} ms.")
 
 # compare fit to original without state noise
 sys_hat = glds.System(fit)
-sys_hat.Q = np.zeros_like(sys_hat.Q)
 y_hat, x_hat, _ = sys_hat.simulate_block(u)
 y_imp_hat = sys_hat.simulate_imp(n_samp_imp)
 
@@ -96,7 +95,6 @@ l2 = axs[1].plot(t_imp, y_imp_hat[0].T, "-", c=[0.5, 0.5, 0.5], linewidth=2)
 axs[1].legend([l1[0], l2[0]], ["ground truth", "estimated"])
 axs[1].set(ylabel="Impulse Response (a.u.)", xlabel="Time (s)")
 fig.tight_layout()
-fig
 
 # %%
 # SSID plot var explained
