@@ -30,6 +30,7 @@
 #define LDSCTRLEST_LDS_SYS_H
 
 #include "lds.h"
+#include "lds_uniform_mats.h"
 
 namespace lds {
 /// Linear Dynamical System Type
@@ -94,6 +95,13 @@ class System {
    */
   virtual void h() = 0;
 
+  /**
+   * @brief      system output function (stateless)
+   * @param      x_t  state at time t
+   * @return     predicted state at time t + 1
+   */
+  virtual Vector h_(Vector x) = 0;
+
   /// Get number of inputs
   size_t n_u() const { return n_u_; };
   /// Get number of states
@@ -149,7 +157,7 @@ class System {
   /// Set input matrix
   void set_B(const Matrix& B) { Reassign(B_, B); };
   /// Set process disturbance
-  void set_m(const Vector& m, bool do_force_assign=false) {
+  void set_m(const Vector& m, bool do_force_assign = false) {
     Reassign(m0_, m);
     if ((!do_adapt_m) || do_force_assign) {
       Reassign(m_, m);
@@ -179,6 +187,10 @@ class System {
 
   /// Reset system variables
   void Reset();
+
+  std::vector<UniformMatrixList<kMatFreeDim2>> nstep_pred_block(
+      UniformMatrixList<kMatFreeDim2> u, UniformMatrixList<kMatFreeDim2> z,
+      size_t n_pred = 1);
 
   /// Print system variables to stdout
   void Print();
@@ -220,7 +232,7 @@ class System {
 
   Matrix Ke_;    ///< estimator gain
   Matrix Ke_m_;  ///< estimator gain for process disturbance
-};               // System
+};  // System
 
 }  // namespace lds
 

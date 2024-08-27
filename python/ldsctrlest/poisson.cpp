@@ -1,13 +1,13 @@
-#include <carma>  // must come before armadillo
-
-#include <ldsCtrlEst_h/lds_poisson_sys.h>
 #include <ldsCtrlEst_h/lds_poisson_ctrl.h>
-#include <ldsCtrlEst_h/lds_poisson_sctrl.h>
 #include <ldsCtrlEst_h/lds_poisson_fit.h>
 #include <ldsCtrlEst_h/lds_poisson_fit_em.h>
 #include <ldsCtrlEst_h/lds_poisson_fit_ssid.h>
+#include <ldsCtrlEst_h/lds_poisson_sctrl.h>
+#include <ldsCtrlEst_h/lds_poisson_sys.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
+
+#include <carma>  // must come before armadillo
 
 #include "bindutils.h"
 
@@ -86,7 +86,8 @@ PYBIND11_MODULE(poisson, m) {
   /*
   ---------------- Switched Controller class ---------------------
   */
-  bindutils::define_SwitchedController<plds::SwitchedController, plds::System>(m);
+  bindutils::define_SwitchedController<plds::SwitchedController, plds::System>(
+      m);
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);

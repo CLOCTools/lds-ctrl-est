@@ -74,6 +74,7 @@ py::class_<Sys> define_System(py::module &m) {
           },
           "simulates for multiple trials/timesteps. u is list of n_u X n_t "
           "arrays")
+      .def("nstep_pred_block", &Sys::nstep_pred_block)
       // see matlab/[GLDS|PLDS]/simulate_imp.m
       .def(
           "simulate_imp",

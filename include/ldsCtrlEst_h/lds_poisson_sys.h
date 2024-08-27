@@ -83,6 +83,9 @@ class System : public lds::System {
     diag_y_.diag() = y_;
   };
 
+  /// System output function: stateless
+  Vector h_(Vector x) override { return exp(C_ * x + d_); };
+
   /**
    * Recursively recalculate estimator gain (Ke).
    *
@@ -100,10 +103,10 @@ class System : public lds::System {
 
  private:
   // Poisson-output-specific
-  Matrix diag_y_;                 ///< diagonal matrix with elements y
+  Matrix diag_y_;  ///< diagonal matrix with elements y
   std::poisson_distribution<size_t>
       pd_;  ///< poisson distribution for simulating data
-};          // System
+};  // System
 }  // namespace poisson
 }  // namespace lds
 

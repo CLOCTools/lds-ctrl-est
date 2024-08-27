@@ -28,6 +28,8 @@
 
 #include <ldsCtrlEst_h/lds_sys.h>
 
+#include <vector>
+
 lds::System::System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0,
                     data_t q0)
     : n_u_(n_u), n_x_(n_x), n_y_(n_y), dt_(dt) {
@@ -97,6 +99,48 @@ void lds::System::Reset() {
   m_ = m0_;      // process disturbance
   P_m_ = P0_m_;  // cov of disturbance estimate
   h();
+}
+
+std::vector<lds::UniformMatrixList<lds::kMatFreeDim2>>
+lds::System::nstep_pred_block(lds::UniformMatrixList<lds::kMatFreeDim2> u,
+                              lds::UniformMatrixList<lds::kMatFreeDim2> z,
+                              size_t n_pred) {
+  lds::UniformMatrixList<lds::kMatFreeDim2> x_filt;
+  lds::UniformMatrixList<lds::kMatFreeDim2> x_pred;
+  lds::UniformMatrixList<lds::kMatFreeDim2> y_pred;
+
+  for (size_t k = 0; k < u.size(); k++) {
+    Reset();
+    size_t n_t = arma::size(u[k])[1];
+    Matrix x_filt_k(n_x_, n_t, fill::zeros);
+    Matrix x_pred_k(n_x_, n_t - n_pred, fill::zeros);
+    Matrix y_pred_k(n_y_, n_t - n_pred, fill::zeros);
+
+    for (size_t t = 0; t < n_t - n_pred; t++) {
+      Vector x_pred_ahead = x_;
+      for (size_t t_u = t; t_u < t + n_pred; t_u++) {
+        x_pred_ahead = A_ * x_pred_ahead + B_ * u[k].col(t_u);
+      }
+      x_pred_k.col(t) = x_pred_ahead;
+      y_pred_k.col(t) = h_(x_pred_ahead);
+      if (t > 0) {
+        Filter(u[k].col(t - 1), z[k].col(t));
+      }
+      x_filt_k.col(t) = x_;  // given previous measurment
+    }
+
+    for (size_t t = n_t - n_pred; t < n_t; t++) {
+      if (t > 0) {
+        Filter(u[k].col(t - 1), z[k].col(t));
+      }
+      x_filt_k.col(t) = x_;
+    }
+
+    x_filt.append(x_filt_k);
+    x_pred.append(x_pred_k);
+    y_pred.append(y_pred_k);
+  }
+  return {x_filt, x_pred, y_pred};
 }
 
 void lds::System::Print() {
