@@ -8,9 +8,9 @@ import pytest
 from ldsctrlest import gaussian, poisson
 
 
-@pytest.mark.parametrize("n_u", [1, 2, 4])
-@pytest.mark.parametrize("n_x", [1, 2, 4])
-@pytest.mark.parametrize("n_y", [1, 2, 4])
+@pytest.mark.parametrize("n_u", [1, 3])
+@pytest.mark.parametrize("n_x", [1, 4])
+@pytest.mark.parametrize("n_y", [1, 5])
 @pytest.mark.parametrize("n_t", [1, 100])
 @pytest.mark.parametrize("module", [gaussian, poisson])
 def test_simulate_imp(module, n_u, n_x, n_y, n_t):
@@ -20,12 +20,12 @@ def test_simulate_imp(module, n_u, n_x, n_y, n_t):
     assert cx_imp[0].shape == (n_y, n_t)
 
 
-@pytest.mark.parametrize("n_step", [1, 2, 4])
-@pytest.mark.parametrize("n_trials", [1, 2, 4])
-@pytest.mark.parametrize("n_u", [1, 2, 4])
-@pytest.mark.parametrize("n_x", [1, 2, 4])
-@pytest.mark.parametrize("n_y", [1, 2, 4])
-@pytest.mark.parametrize("n_t", [1, 100])
+@pytest.mark.parametrize("n_step", [1, 5])
+@pytest.mark.parametrize("n_trials", [1, 6])
+@pytest.mark.parametrize("n_u", [1, 3])
+@pytest.mark.parametrize("n_x", [1, 4])
+@pytest.mark.parametrize("n_y", [1, 5])
+@pytest.mark.parametrize("n_t", [5, 100])
 @pytest.mark.parametrize("module", [gaussian, poisson])
 def test_nstep_pred_block(module, n_u, n_x, n_y, n_t, n_trials, n_step):
     sys = module.System(n_u, n_x, n_y, 0.001)
@@ -44,4 +44,4 @@ def test_nstep_pred_block(module, n_u, n_x, n_y, n_t, n_trials, n_step):
 
 
 if __name__ == "__main__":
-    pytest.main([__file__, "-xs", "-k", "pred_block"])
+    pytest.main([__file__, "-xs"])

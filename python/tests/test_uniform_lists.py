@@ -3,7 +3,11 @@ import numpy as np
 import pytest
 
 import ldsctrlest
-from ldsctrlest import UniformMatrixList as UML, UniformVectorList as UVL, UniformSystemList as USL
+from ldsctrlest import (
+    UniformMatrixList as UML,
+    UniformVectorList as UVL,
+    UniformSystemList as USL,
+)
 from ldsctrlest.gaussian import System as GLDS
 from ldsctrlest.poisson import System as PLDS
 
@@ -28,7 +32,6 @@ def _test_matlist_funcs(uml, capfd):
     uml.Swap(z2x2, 42)
     warning = capfd.readouterr().err
     assert warning.startswith("Requested UniformMatrixList element out of bounds")
-    
 
 
 def test_uniform_mat_list_free_dim_0(capfd):
@@ -97,6 +100,7 @@ def test_uniform_vec_list(capfd):
     with pytest.raises(TypeError):
         uvl.Swap(np.zeros(4), -1)
 
+
 def _test_USL(usl1, usl2, sys_list_bad_dims, sys_list_mismatched_types, capfd):
     with pytest.raises(RuntimeError):
         USL(sys_list_bad_dims)
@@ -115,20 +119,38 @@ def _test_USL(usl1, usl2, sys_list_bad_dims, sys_list_mismatched_types, capfd):
     usl2.Swap(usl1[1], 1)
     warning = capfd.readouterr().err
     assert warning.startswith("Cannot swap")
-    
-    assert usl1.dim == [1,1,1]
-    assert usl2.dim == [2,2,2]
+
+    assert usl1.dim == [1, 1, 1]
+    assert usl2.dim == [2, 2, 2]
+
 
 def test_gaussian_uniform_sys_list(capfd):
     gs1 = GLDS(1, 1, 1, 0.001)
     gs2 = GLDS(2, 2, 2, 0.001)
     sys_list_bad_dims = [gs1, gs1, gs2]
-    sys_list_mismatched_types = [gs1, PLDS(1, 1, 1, .001)]
-    _test_USL(USL([gs1, gs1, gs1]), USL([gs2, gs2, gs2]), sys_list_bad_dims, sys_list_mismatched_types, capfd)
+    sys_list_mismatched_types = [gs1, PLDS(1, 1, 1, 0.001)]
+    _test_USL(
+        USL([gs1, gs1, gs1]),
+        USL([gs2, gs2, gs2]),
+        sys_list_bad_dims,
+        sys_list_mismatched_types,
+        capfd,
+    )
+
 
 def test_poisson_uniform_sys_list(capfd):
     ps1 = PLDS(1, 1, 1, 0.001)
     ps2 = PLDS(2, 2, 2, 0.001)
     sys_list_bad_dims = [ps1, ps1, ps2]
-    sys_list_mismatched_types = [ps1, GLDS(1, 1, 1, .001)]
-    _test_USL(USL([ps1, ps1, ps1]), USL([ps2, ps2, ps2]), sys_list_bad_dims, sys_list_mismatched_types, capfd)
+    sys_list_mismatched_types = [ps1, GLDS(1, 1, 1, 0.001)]
+    _test_USL(
+        USL([ps1, ps1, ps1]),
+        USL([ps2, ps2, ps2]),
+        sys_list_bad_dims,
+        sys_list_mismatched_types,
+        capfd,
+    )
+
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-xs"])

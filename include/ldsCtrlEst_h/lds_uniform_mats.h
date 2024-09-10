@@ -175,9 +175,11 @@ inline void UniformMatrixList<D>::Swap(Matrix& that, size_t n) {
     return;
   }
   // if checks pass, perform swap
-  Matrix tmp = std::move((*this)[n]);
-  (*this)[n] = std::move(that);
-  that = std::move(tmp);
+  // not moving, since it causes memory issues.
+  // so this method isn't a memory-saver as designed for now
+  Matrix tmp = (*this)[n];
+  (*this)[n] = that;
+  that = tmp;
 
   if (D == kMatFreeDim1) {
     this->dim_[n][0] = (*this)[n].n_rows;
