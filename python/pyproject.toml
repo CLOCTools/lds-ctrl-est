@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ldsctrlest"
-version = "0.8.2"
+version = "0.9.0"
 description = "Python bindings for ldsCtrlEst"
 authors = [{ name = "Kyle Johnsen" }, { name = "Michael Bolus" }]
 license = { text = "Apache-2.0" }
