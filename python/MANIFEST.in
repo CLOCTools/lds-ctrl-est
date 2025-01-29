@@ -1,0 +1,6 @@
+include ldsctrlest/*.so
+include ldsctrlest/*.pyd
+include ldsctrlest/*.lib
+include ldsctrlest/*.pdb
+include ldsctrlest/*.dylib
+include ldsctrlest/*.dll

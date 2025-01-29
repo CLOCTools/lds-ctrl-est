@@ -1,17 +1,16 @@
-#include <carma>  // must be included before armadillo (included in ldsCtrlEst)
+#include <ldsCtrlEst_h/lds_ctrl.h>
 #include <ldsCtrlEst_h/lds_fit_em.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit_em.h>
 #include <ldsCtrlEst_h/lds_poisson_fit_em.h>
-#include <ldsCtrlEst_h/lds_uniform_mats.h>
-#include <ldsCtrlEst_h/lds_uniform_systems.h>
-#include <ldsCtrlEst_h/lds_ctrl.h>
 #include <ldsCtrlEst_h/lds_sctrl.h>
 #include <ldsCtrlEst_h/lds_uniform_mats.h>
+#include <ldsCtrlEst_h/lds_uniform_systems.h>
 #include <ldsCtrlEst_h/lds_uniform_vecs.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 
+#include <carma>  // must be included before armadillo (included in ldsCtrlEst)
 #include <functional>
 #include <iostream>
 #include <string>
@@ -43,50 +42,63 @@ template <typename Sys>
 py::class_<Sys> define_System(py::module &m) {
   return py::class_<Sys, lds::System>(m, "System")
       .def(py::init<>())  // default constructor
-      .def("copy", [](const Sys& self) {
-        return Sys(self);
-      })
+      .def("copy", [](const Sys &self) { return Sys(self); })
       .def("Simulate", &Sys::Simulate)
       .def("Print", &Sys::Print)
-      .def("__str__", [](Sys& system) {
-        return bindutils::capture_output([&system]() { system.Print(); });
-      })
+      .def("__str__",
+           [](Sys &system) {
+             return bindutils::capture_output([&system]() { system.Print(); });
+           })
       // see matlab/[GLDS|PLDS]/simulate.m
-      .def("simulate_block", [](Sys& sys, vector<Matrix> u) -> vector<vector<Matrix>> {
-        vector<Matrix> x;
-        vector<Matrix> y;
-        vector<Matrix> z;
-        for (size_t k = 0; k < u.size(); k++) {
-          size_t n_t = arma::size(u[k])[1];
-          Matrix x_k(sys.n_x(), n_t, fill::zeros);
-          Matrix y_k(sys.n_y(), n_t, fill::zeros);
-          Matrix z_k(sys.n_y(), n_t, fill::zeros);
-          for (size_t t = 1; t < n_t; t++) {
-            z_k.col(t) = sys.Simulate(u[k].col(t - 1));
-            y_k.col(t) = sys.y();
-            x_k.col(t) = sys.x();
-          }
-          x.push_back(x_k);
-          y.push_back(y_k);
-          z.push_back(z_k);
-        } 
-        return {y, x, z};
-      }, "simulates for multiple trials/timesteps. u is list of n_u X n_t arrays")
+      .def(
+          "simulate_block",
+          [](Sys &sys, vector<Matrix> u) -> vector<vector<Matrix>> {
+            vector<Matrix> x;
+            vector<Matrix> y;
+            vector<Matrix> z;
+            for (size_t k = 0; k < u.size(); k++) {
+              size_t n_t = arma::size(u[k])[1];
+              Matrix x_k(sys.n_x(), n_t, fill::zeros);
+              Matrix y_k(sys.n_y(), n_t, fill::zeros);
+              Matrix z_k(sys.n_y(), n_t, fill::zeros);
+              for (size_t t = 1; t < n_t; t++) {
+                z_k.col(t) = sys.Simulate(u[k].col(t - 1));
+                y_k.col(t) = sys.y();
+                x_k.col(t) = sys.x();
+              }
+              x.push_back(x_k);
+              y.push_back(y_k);
+              z.push_back(z_k);
+            }
+            return {y, x, z};
+          },
+          "simulates for multiple trials/timesteps. u is list of n_u X n_t "
+          "arrays")
+      .def("nstep_pred_block", &Sys::nstep_pred_block)
       // see matlab/[GLDS|PLDS]/simulate_imp.m
-      .def("simulate_imp", [](Sys& sys, size_t n_t) {
-        vector<Matrix> cx_imp(sys.n_u(), Matrix(sys.n_y(), n_t, fill::zeros));
-        Vector u_imp(n_t, fill::zeros);
-        u_imp[0] = 1;
-        for (size_t which_u = 0; which_u < sys.n_u(); which_u++) {
-          Vector x(sys.n_x(), fill::zeros);
-          for (size_t t = 1; t < n_t; t++) {
-            x = sys.A()*x + sys.B().col(which_u) * (sys.g()[which_u]) * u_imp[t-1];
-            cx_imp[which_u].col(t) = sys.C()*x;
-          }
-        }
-        return cx_imp;
-      }, "simulates impulse response. returns list of length n_u of n_y X n_t arrays. result is Cx: y for GLDS, logy for PLDS.")
-  ;
+      .def(
+          "simulate_imp",
+          [](Sys &sys, size_t n_t) {
+            Matrix old_Q = sys.Q();
+            // 0 noise to simulate impulse response
+            sys.set_Q(Matrix(sys.n_x(), sys.n_x(), fill::zeros));
+            vector<Matrix> cx_imp(sys.n_u(),
+                                  Matrix(sys.n_y(), n_t, fill::zeros));
+            Vector u_imp(n_t, fill::zeros);
+            u_imp[0] = 1;
+            for (size_t which_u = 0; which_u < sys.n_u(); which_u++) {
+              Vector x(sys.n_x(), fill::zeros);
+              for (size_t t = 1; t < n_t; t++) {
+                x = sys.A() * x +
+                    sys.B().col(which_u) * (sys.g()[which_u]) * u_imp[t - 1];
+                cx_imp[which_u].col(t) = sys.C() * x;
+              }
+            }
+            sys.set_Q(old_Q);
+            return cx_imp;
+          },
+          "simulates impulse response. returns list of length n_u of n_y X n_t "
+          "arrays. result is Cx: y for GLDS, logy for PLDS.");
 }
 
 // The FitEM classes are children of abstract EM<Fit> (either Gaussian or
@@ -106,17 +118,23 @@ py::class_<FitEMType> define_FitEM(py::module &m) {
       .def("Run", &FitEMType::Run, "calc_dynamics"_a = true, "calc_Q"_a = true,
            "calc_init"_a = true, "calc_output"_a = true,
            "calc_measurement"_a = true, "max_iter"_a = 100, "tol"_a = 1e-2)
-      .def("ReturnData", &FitEMType::ReturnData, "Returns the input/output data to caller")
+      .def("ReturnData", &FitEMType::ReturnData,
+           "Returns the input/output data to caller")
 
       // getters
       .def_property_readonly("x", &FitEMType::x, "estimated state (over time)")
       .def_property_readonly("y", &FitEMType::y, "estimated output (over time)")
-      .def_property_readonly("sum_E_x_t_x_t", &FitEMType::sum_E_x_t_x_t, "state-input covariance")
-      .def_property_readonly("sum_E_xu_tm1_xu_tm1", &FitEMType::sum_E_xu_tm1_xu_tm1, "state-input covariance (t-minus-1")
-      .def_property_readonly("sum_E_xu_t_xu_tm1", &FitEMType::sum_E_xu_t_xu_tm1, "single-lag state-input covariance")
-      .def_property_readonly("n_t_tot", &FitEMType::n_t_tot, "total number of time samples")
-      .def_property_readonly("theta", &FitEMType::theta, "parameters updated in M step")
-      ;
+      .def_property_readonly("sum_E_x_t_x_t", &FitEMType::sum_E_x_t_x_t,
+                             "state-input covariance")
+      .def_property_readonly("sum_E_xu_tm1_xu_tm1",
+                             &FitEMType::sum_E_xu_tm1_xu_tm1,
+                             "state-input covariance (t-minus-1")
+      .def_property_readonly("sum_E_xu_t_xu_tm1", &FitEMType::sum_E_xu_t_xu_tm1,
+                             "single-lag state-input covariance")
+      .def_property_readonly("n_t_tot", &FitEMType::n_t_tot,
+                             "total number of time samples")
+      .def_property_readonly("theta", &FitEMType::theta,
+                             "parameters updated in M step");
 }
 
 template <typename FitType, typename FitSSIDType>
@@ -125,13 +143,14 @@ py::class_<FitSSIDType> define_FitSSID(py::module &m) {
       // constructors
       .def(py::init<>())
       .def(py::init<size_t, size_t, data_t, UniformMatrixList<kMatFreeDim2>,
-                    UniformMatrixList<kMatFreeDim2>, const Vector&>(),
-           "n_x"_a, "n_h"_a, "dt"_a, "u_train"_a, "z_train"_a, "d"_a = Vector(1).fill(-kInf))
+                    UniformMatrixList<kMatFreeDim2>, const Vector &>(),
+           "n_x"_a, "n_h"_a, "dt"_a, "u_train"_a, "z_train"_a,
+           "d"_a = Vector(1).fill(-kInf))
 
       // functions
       .def("Run", &FitSSIDType::Run, "ssid_wt"_a)
-      .def("ReturnData", &FitSSIDType::ReturnData, "Returns the input/output data to caller")
-      ;
+      .def("ReturnData", &FitSSIDType::ReturnData,
+           "Returns the input/output data to caller");
 }
 
 void println(string message) { cerr << message << endl; }

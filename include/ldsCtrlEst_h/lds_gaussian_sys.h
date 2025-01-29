@@ -86,19 +86,19 @@ class System : public lds::System {
   }
   /// Set output noise covariance
   void set_R(const Matrix& R) {
-    Reassign(R_,R);
+    Reassign(R_, R);
     do_recurse_Ke_ = true;
   };
 
   /// Set estimator gain
   void set_Ke(const Matrix& Ke) {
-    Reassign(Ke_,Ke);
+    Reassign(Ke_, Ke);
     // if users have set Ke, they must not want to calculate it online.
     do_recurse_Ke_ = false;
   };
   /// Set disturbance estimator gain
   void set_Ke_m(const Matrix& Ke_m) {
-    Reassign(Ke_m_,Ke_m);
+    Reassign(Ke_m_, Ke_m);
     // if users have set Ke, they must not want to calculate it online.
     do_recurse_Ke_ = false;
   };
@@ -113,13 +113,16 @@ class System : public lds::System {
     y_ = cx_ + d_;
   };
 
+  /// System output function: stateless
+  Vector h_(Vector x) override { return C_ * x + d_; };
+
   /// Recursively update estimator gain
   void RecurseKe() override;
 
   // Gaussian-output-specific
-  Matrix R_;           ///< covariance of output noise
+  Matrix R_;              ///< covariance of output noise
   bool do_recurse_Ke_{};  ///< whether to recursively calculate estimator gain
-};                      // System
+};  // System
 }  // namespace gaussian
 }  // namespace lds
 

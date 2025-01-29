@@ -1,12 +1,13 @@
-#include <carma> // must be included before armadillo (included in ldsCtrlEst)
-#include <ldsCtrlEst_h/lds_gaussian_sys.h>
 #include <ldsCtrlEst_h/lds_gaussian_ctrl.h>
-#include <ldsCtrlEst_h/lds_gaussian_sctrl.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit_em.h>
 #include <ldsCtrlEst_h/lds_gaussian_fit_ssid.h>
+#include <ldsCtrlEst_h/lds_gaussian_sctrl.h>
+#include <ldsCtrlEst_h/lds_gaussian_sys.h>
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
+
+#include <carma>  // must be included before armadillo (included in ldsCtrlEst)
 
 #include "bindutils.h"
 
@@ -28,8 +29,7 @@ PYBIND11_MODULE(gaussian, m) {
   ---------------- Gaussian System class ---------------------
   */
   bindutils::define_System<glds::System>(m)
-      .def(py::init<size_t, size_t, size_t, data_t,
-                    data_t, data_t, data_t>(),
+      .def(py::init<size_t, size_t, size_t, data_t, data_t, data_t, data_t>(),
            "n_u"_a, "n_x"_a, "n_y"_a, "dt"_a, "p0"_a = kDefaultP0,
            "q0"_a = kDefaultQ0, "r0"_a = kDefaultR0)
       // construct from fit for convience
@@ -59,8 +59,7 @@ PYBIND11_MODULE(gaussian, m) {
       // constructors
       .def(py::init<>())
       .def(py::init<size_t, size_t, size_t, data_t>(), "n_u"_a, "n_x"_a,
-           "n_y"_a, "dt"_a)
-      ;
+           "n_y"_a, "dt"_a);
 
   /*
   ---------------- UniformSystemList class ---------------------
@@ -91,8 +90,8 @@ PYBIND11_MODULE(gaussian, m) {
   /*
   ---------------- Switched Controller class ---------------------
   */
-  bindutils::define_SwitchedController<glds::SwitchedController,
-                                       glds::System>(m);
+  bindutils::define_SwitchedController<glds::SwitchedController, glds::System>(
+      m);
 
 #ifdef VERSION_INFO
   m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
