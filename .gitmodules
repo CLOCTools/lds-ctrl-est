@@ -11,6 +11,3 @@
 [submodule "python/carma"]
 	path = python/carma
 	url = https://github.com/RUrlus/carma.git
-[submodule "osqp"]
-  path = osqp
-  url = https://github.com/osqp/osqp.git
