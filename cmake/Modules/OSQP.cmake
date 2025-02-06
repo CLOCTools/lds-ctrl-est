@@ -9,5 +9,11 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(osqp)
 message(STATUS "Installed osqp to ${osqp_BINARY_DIR}")
 list(APPEND CMAKE_PREFIX_PATH ${osqp_BINARY_DIR})
-find_package(osqp REQUIRED)
+
+
+if(TARGET osqp AND NOT TARGET osqp::osqp)
+  add_library(osqp::osqp ALIAS osqp)
+endif()
+
+# find_package(osqp REQUIRED)
 list(APPEND PROJECT_REQUIRED_LIBRARIES_ABSOLUTE_NAME osqp::osqp)
