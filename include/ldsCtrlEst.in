@@ -74,6 +74,8 @@
 #include "ldsCtrlEst_h/lds_poisson_ctrl.h"
 // Gaussian SwitchedController type:
 #include "ldsCtrlEst_h/lds_poisson_sctrl.h"
+// Poisson MpcController type:
+#include "ldsCtrlEst_h/lds_poisson_mpcctrl.h"
 
 #ifdef LDSCTRLEST_BUILD_FIT
 // lds fit type:

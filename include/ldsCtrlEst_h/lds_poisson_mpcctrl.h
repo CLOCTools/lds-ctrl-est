@@ -1,4 +1,5 @@
-//===-- ldsCtrlEst_h/lds_gaussian_mpcctrl.h - MPC Controller ------*- C++ -*-===//
+//===-- ldsCtrlEst_h/lds_gaussian_mpcctrl.h - PLDS MPC Controller ------*- C++
+//-*-===//
 //
 // Copyright 2024 Chia-Chien Hung and Kyle Johnsen
 // Copyright 2024 Georgia Institute of Technology
@@ -18,34 +19,45 @@
 //===----------------------------------------------------------------------===//
 ///
 /// \file
-/// This file declares the type for model predictive Model Predictive 
-/// Control (MPC) on linear system dynamics by converting the MPC optimization 
-/// problem to a quadratic cost problem. The new problem is optimized using the 
+/// This file declares the type for model predictive Model Predictive
+/// Control (MPC) on linear system dynamics by converting the MPC optimization
+/// problem to a quadratic cost problem. The new problem is optimized using the
 /// Operator Splitting Quadratic Program (OSQP).
 ///
 /// \brief MPC Controller
 //===----------------------------------------------------------------------===//
 
-#ifndef LDSCTRLEST_LDS_GAUSSIAN_MPCCTRL_H
-#define LDSCTRLEST_LDS_GAUSSIAN_MPCCTRL_H
+#ifndef LDSCTRLEST_LDS_POISSON_MPCCTRL_H
+#define LDSCTRLEST_LDS_POISSON_MPCCTRL_H
 
 // namespace
-#include "lds_gaussian.h"
+#include "lds_poisson.h"
 // system
-#include "lds_gaussian_sys.h"
+#include "lds_poisson_sys.h"
 // controller
 #include "lds_mpcctrl.h"
 
 namespace lds {
-namespace gaussian {
-/// Gaussian-observation MPC Controller Type
+namespace poisson {
+/// Poisson-observation MPC Controller Type
 class MpcController : public lds::MpcController<System> {
-  public:
-
+ public:
   // make sure base class template methods available
   using lds::MpcController<System>::MpcController;
   using lds::MpcController<System>::Control;
-  using lds::MpcController<System>::ControlOutputReference;
+
+  virtual Vector ControlOutputReference(data_t t_sim, const Vector& z,
+                                        const Matrix& yr, bool do_control,
+                                        data_t* J) {
+    Matrix yr_transformed = yr;
+    // clamping the target output to address log10(0) issues
+    yr_transformed.clamp(kYRefLb, arma::datum::inf);
+    // log transforming the output to make it linear
+    yr_transformed = log10(yr_transformed);
+
+    return lds::MpcController<System>::ControlOutputReference(
+        t_sim, z, yr_transformed, do_control, J);
+  }
 
   // getters
   using lds::MpcController<System>::sys;
@@ -65,8 +77,12 @@ class MpcController : public lds::MpcController<System> {
   using lds::MpcController<System>::set_constraint;
 
   using lds::MpcController<System>::Print;
-};
-} // namespace gaussian
-} // namespace lds
 
-#endif
+ private:
+  constexpr static const data_t kYRefLb =
+      1e-4;  ///< lower bound on yRef (to avoid numerical log(0) issue)
+};
+}  // namespace poisson
+}  // namespace lds
+
+#endif  // LDSCTRLEST_LDS_POISSON_MPCCTRL_H
