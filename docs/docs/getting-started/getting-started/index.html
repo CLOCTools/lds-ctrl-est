@@ -216,14 +216,14 @@ https://github.com/alex-shpak/hugo-book
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">xcode-select --install
 </code></pre></div><p>Homebrew is &ldquo;The Missing Package Manager for macOS&rdquo; which will make installing lots of things easy. Install like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/bin/bash -c <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</code></pre></div><p>You can then use it to install CMake and gfortran:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">brew install cmake gfortran
+</code></pre></div><p>You can then use it to install CMake, gfortran, and pkg-config:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">brew install cmake gfortran pkg-config
 </code></pre></div><h2 id="linux-pre-requisites">
   Linux Pre-requisites
   <a class="anchor" href="#linux-pre-requisites">#</a>
 </h2>
 <p>You&rsquo;ll need Git, CMake, GCC, gfortran, etc.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt install git cmake pkg-config gfortran curl zip unzip tar build-essential
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt install git cmake pkg-config gfortran curl zip unzip tar build-essential ninja-build
 </code></pre></div><h2 id="windows-installation">
   Windows Installation
   <a class="anchor" href="#windows-installation">#</a>
