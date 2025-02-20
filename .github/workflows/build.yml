@@ -1,0 +1,106 @@
+name: Build and Test ldsCtrlEst
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Cache vcpkg binaries
+      uses: actions/cache@v3
+      with:
+        path: ${{ runner.os == 'Windows' && 'C:\\Users\\runneradmin\\AppData\\Local\\vcpkg\\' || '~/.cache/vcpkg' }}
+        key: vcpkg-binary-${{ matrix.os }}-${{ hashFiles('vcpkg.json') }}
+        restore-keys: |
+          vcpkg-binary-${{ matrix.os }}-
+    - name: Cache vcpkg directory
+      uses: actions/cache@v3
+      with:
+        path: vcpkg
+        key: vcpkg-${{ matrix.os }}-${{ hashFiles('vcpkg.json') }}
+        restore-keys: |
+          vcpkg-${{ matrix.os }}-
+    - name: Set up vcpkg for Windows
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        if (Test-Path -Path "vcpkg") {
+          Remove-Item -Recurse -Force "vcpkg"
+        }
+        git clone https://github.com/microsoft/vcpkg.git
+        cd vcpkg
+        .\bootstrap-vcpkg.bat
+        .\vcpkg integrate install
+    - name: Set up vcpkg for macOS/Linux
+      if: runner.os != 'Windows'
+      run: |
+        rm -rf vcpkg
+        git clone https://github.com/microsoft/vcpkg.git
+        cd vcpkg
+        ./bootstrap-vcpkg.sh
+        ./vcpkg integrate install
+    - name: Set up dependencies for macOS and Linux
+      if: runner.os != 'Windows'
+      run: |
+        if [ "${{ runner.os }}" == "macOS" ]; then
+          brew install cmake gfortran curl zip unzip gnu-tar
+        elif [ "${{ runner.os }}" == "Linux" ]; then
+          sudo apt-get update
+          sudo apt-get install -y cmake gfortran pkg-config build-essential
+        fi
+    - name: Set up dependencies for Windows
+      if: runner.os == 'Windows'
+      run: |
+        choco install cmake git
+    - name: Cache build directory
+      uses: actions/cache@v3
+      with:
+        path: build
+        key: build-${{ matrix.os }}-${{ hashFiles('CMakeLists.txt') }}
+        restore-keys: |
+          build-${{ matrix.os }}-
+    - name: Configure and build for macOS/Linux
+      if: runner.os != 'Windows'
+      run: |
+        mkdir -p build && cd build
+        cmake .. -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install
+        cmake --build . --config Release --parallel
+    - name: Configure and build for Windows
+      if: runner.os == 'Windows'
+      shell: pwsh
+      run: |
+        if (Test-Path -Path "build") {
+          Remove-Item -Recurse -Force "build"
+        }
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/install
+        cmake --build . --config Release --parallel
+    - name: Install (Windows only)
+      if: runner.os == 'Windows'
+      run: |
+        cd build
+        cmake --install .
+    - name: Add install directory to PATH (Windows only)
+      if: runner.os == 'Windows'
+      run: echo "${{github.workspace}}/install/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+    - name: Run tests
+      run: |
+        cd build
+        ctest -C Release
