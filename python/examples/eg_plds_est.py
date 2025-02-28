@@ -175,7 +175,7 @@ e_x = e_x.flatten()
 fig, axs = plt.subplots(1, 2, figsize=(5, 5))
 
 axs[0].hist(
-    e_y / dt, bins=100, edgecolor="none", facecolor=[0.5, 0.5, 0.5], density=True
+    e_y / dt, bins=100, edgecolor="none", facecolor="gray", density=True
 )
 ymax = axs[0].get_ylim()[1]
 axs[0].vlines(np.mean(e_y), 0, ymax, linestyle="--", linewidth=1, color="black")
@@ -186,7 +186,7 @@ axs[0].set(
     title="Output\nEstimation Error",
 )
 
-axs[1].hist(e_x, bins=100, density=True, facecolor=[.5, .5, .5], edgecolor="none")
+axs[1].hist(e_x, bins=100, density=True, facecolor="gray", edgecolor="none")
 ymax = axs[1].get_ylim()[1]
 axs[1].vlines(np.mean(e_x), 0, ymax, linestyle="--", linewidth=1, color="black")
 axs[1].set(
