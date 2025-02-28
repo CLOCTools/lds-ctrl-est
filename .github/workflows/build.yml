@@ -3,6 +3,7 @@ name: Build and Test ldsCtrlEst
 on:
   push:
     branches:
+      - master
       - main
   pull_request:
   workflow_dispatch:
