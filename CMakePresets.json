@@ -1,0 +1,42 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 18,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "linux-release",
+      "hidden": false,
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install"
+      }
+    },
+    {
+      "name": "windows-release",
+      "hidden": false,
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/install"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "linux-release",
+      "configurePreset": "linux-release",
+      "hidden": false
+    },
+    {
+      "name": "windows-release",
+      "configurePreset": "windows-release",
+      "hidden": false
+    }
+  ]
+}
