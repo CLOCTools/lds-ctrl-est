@@ -12,12 +12,12 @@ Linear Dynamical Systems with Poisson observations. <br>
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1controller/)** <br>PLDS [Controller]() Type.  |
-| class | **[lds::poisson::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fit/)** <br>PLDS [Fit]() Type.  |
-| class | **[lds::poisson::FitEM](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitem/)** <br>PLDS E-M [Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fit/) Type.  |
-| class | **[lds::poisson::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitssid/)** <br>Subspace Identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/)) for PLDS.  |
-| class | **[lds::poisson::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1switchedcontroller/)** <br>Poisson-observation [SwitchedController]() Type.  |
-| class | **[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1system/)** <br>Poisson [System]() type.  |
+| class | **[lds::poisson::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/)** <br>PLDS [Controller]() Type.  |
+| class | **[lds::poisson::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/)** <br>PLDS [Fit]() Type.  |
+| class | **[lds::poisson::FitEM](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/)** <br>PLDS E-M [Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/) Type.  |
+| class | **[lds::poisson::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/)** <br>Subspace Identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)) for PLDS.  |
+| class | **[lds::poisson::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_switched_controller/)** <br>Poisson-observation [SwitchedController]() Type.  |
+| class | **[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/)** <br>Poisson [System]() type.  |
 
 ## Attributes
 
@@ -53,4 +53,4 @@ static std::mt19937 rng = std::mt19937(
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:04 Eastern Daylight Time
+Updated on  5 March 2025 at 21:41:27 EST

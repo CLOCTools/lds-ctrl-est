@@ -37,6 +37,9 @@ If you encounter bugs when using this library or have specific feature requests 
 # Contributing
 We welcome any community contributions to this project. Please fork the repository and if possible use `clang-format` and `clang-tidy` to conform to the coding format/style of this repository.
 
+When editing any documentation/guides, please use the markdown docs in `misc/docs-hugo` instead of directly editing the HTML docs. 
+Updated docs can be built by running `cd scripts` and `./update-docs.sh`.
+
 # Acknowledgements
 
 Development and publication of this library was supported in part by the NIH/NINDS Collaborative Research in Computational Neuroscience (CRCNS)/BRAIN Grant 5R01NS115327-02.

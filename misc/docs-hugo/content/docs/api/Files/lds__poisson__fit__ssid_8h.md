@@ -21,13 +21,13 @@ PLDS SSID fit type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fitssid/)** <br>Subspace Identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/)) for PLDS.  |
+| class | **[lds::poisson::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_s_s_i_d/)** <br>Subspace Identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)) for PLDS.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines a type by which Poisson-output LDS models are fit by a subspace identification (SSID) algorithm (`[lds::gaussian::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1fitssid/)`).
+This file declares and partially defines a type by which Poisson-output LDS models are fit by a subspace identification (SSID) algorithm (`[lds::gaussian::FitSSID](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_s_s_i_d/)`).
 
 References: [1] van Overschee P, de Moore B. (1996) Subspace Identification for Linear Systems. Boston: Springer. [2] Buesing L, Macke JH, Sahani M. (2012) Spectral learning of linear dynamics from generalised-linear observations with application to neural population data. NIPS 25. 
 
@@ -87,4 +87,4 @@ class FitSSID : public SSID<Fit> {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  5 March 2025 at 21:41:27 EST

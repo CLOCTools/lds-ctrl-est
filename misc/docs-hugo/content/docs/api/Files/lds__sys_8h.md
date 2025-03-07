@@ -20,13 +20,13 @@ LDS base type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1system/)** <br>Linear Dynamical [System]() Type.  |
+| class | **[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)** <br>Linear Dynamical [System]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the base type for linear dynamical systems (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1system/)`). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. 
+This file declares and partially defines the base type for linear dynamical systems (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)`). Note that this class defines the underlying linear dynamics, but does not have output functions.Gaussian- and Poisson-output variants will be built upon this class. 
 
 
 
@@ -59,6 +59,7 @@ This file declares and partially defines the base type for linear dynamical syst
 #define LDSCTRLEST_LDS_SYS_H
 
 #include "lds.h"
+#include "lds_uniform_mats.h"
 
 namespace lds {
 class System {
@@ -82,6 +83,8 @@ class System {
   };
 
   virtual void h() = 0;
+
+  virtual Vector h_(Vector x) = 0;
 
   size_t n_u() const { return n_u_; };
   size_t n_x() const { return n_x_; };
@@ -112,7 +115,7 @@ class System {
 
   void set_A(const Matrix& A) { Reassign(A_, A); };
   void set_B(const Matrix& B) { Reassign(B_, B); };
-  void set_m(const Vector& m, bool do_force_assign=false) {
+  void set_m(const Vector& m, bool do_force_assign = false) {
     Reassign(m0_, m);
     if ((!do_adapt_m) || do_force_assign) {
       Reassign(m_, m);
@@ -132,6 +135,10 @@ class System {
   };
 
   void Reset();
+
+  std::vector<UniformMatrixList<kMatFreeDim2>> nstep_pred_block(
+      UniformMatrixList<kMatFreeDim2> u, UniformMatrixList<kMatFreeDim2> z,
+      size_t n_pred = 1);
 
   void Print();
 
@@ -171,7 +178,7 @@ class System {
 
   Matrix Ke_;    
   Matrix Ke_m_;  
-};               // System
+};  // System
 
 }  // namespace lds
 
@@ -181,4 +188,4 @@ class System {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  5 March 2025 at 21:41:27 EST

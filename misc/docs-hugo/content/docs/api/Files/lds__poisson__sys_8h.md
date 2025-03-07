@@ -21,13 +21,13 @@ PLDS base type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1system/)** <br>Poisson [System]() type.  |
+| class | **[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/)** <br>Poisson [System]() type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (`[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1system/)`). 
+This file declares and partially defines the type for state estimation (filtering) as well as simulation of Poisson-output linear dynamical systems (`[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)`). 
 
 
 
@@ -86,14 +86,16 @@ class System : public lds::System {
     diag_y_.diag() = y_;
   };
 
+  Vector h_(Vector x) override { return exp(C_ * x + d_); };
+
   void RecurseKe() override;
 
  private:
   // Poisson-output-specific
-  Matrix diag_y_;                 
+  Matrix diag_y_;  
   std::poisson_distribution<size_t>
       pd_;  
-};          // System
+};  // System
 }  // namespace poisson
 }  // namespace lds
 
@@ -103,4 +105,4 @@ class System : public lds::System {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  5 March 2025 at 21:41:27 EST

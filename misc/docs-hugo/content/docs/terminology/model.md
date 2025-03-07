@@ -63,3 +63,9 @@ z_{t}^i \sim \rm{Poisson} \left(y_{t}^i \right)
 
     c           : i^th row of output matrix (C)
     d           : output bias
+
+
+## Model Predictive Control (MPC)
+Model Predictive Control (MPC) is an advanced control strategy that utilizes a dynamic model of the system to predict and optimize future behavior over a specified time horizon. At each control step, MPC solves an optimization problem to determine the control inputs that minimize a cost function, which typically includes terms for tracking desired reference trajectories and penalizing excessive control efforts. This approach allows MPC to handle multivariable systems with constraints effectively, making it suitable for complex industrial applications.
+
+In the context of linear systems, the optimization problem within MPC can be formulated as a quadratic program. This involves defining a quadratic cost function over the prediction horizon, which balances the trade-off between tracking performance and control effort. The solution to this quadratic program yields the optimal control inputs that drive the system towards the desired state while respecting operational constraints. Tools like the Operator Splitting Quadratic Program (OSQP) solver are often employed to efficiently solve these optimization problems in real-time.

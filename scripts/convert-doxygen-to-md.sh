@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Create directories if they don't exist
+mkdir -p ../misc/docs-hugo/content/docs/api
+
 # remove existing api docs
 rm -rf ../misc/docs-hugo/content/docs/api/*
 
