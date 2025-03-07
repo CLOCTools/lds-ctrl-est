@@ -1,5 +1,6 @@
 ---
 title: eg_plds_switched_ctrl.cpp
+summary: Example Switched PLDS Control. 
 
 ---
 
@@ -7,9 +8,8 @@ title: eg_plds_switched_ctrl.cpp
 
 
 
-Example Switched PLDS Control 
+Example Switched PLDS Control ```cpp
 
-```cpp
 //===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===//
 //
 // Copyright 2021 Michael Bolus
@@ -233,6 +233,8 @@ auto main() -> int {
 }
 ```
 
+_Filename: eg_plds_switched_ctrl.cpp_
+
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  5 March 2025 at 21:41:27 EST

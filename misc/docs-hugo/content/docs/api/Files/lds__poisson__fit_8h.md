@@ -21,7 +21,7 @@ PLDS base fit type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1fit/)** <br>PLDS [Fit]() Type.  |
+| class | **[lds::poisson::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/)** <br>PLDS [Fit]() Type.  |
 
 ## Detailed Description
 
@@ -99,4 +99,4 @@ class Fit : public lds::Fit {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  5 March 2025 at 21:41:27 EST
