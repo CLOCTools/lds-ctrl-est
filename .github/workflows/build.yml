@@ -1,4 +1,4 @@
-name: Build and Test ldsCtrlEst
+name: Build/Test
 
 on:
   push:
@@ -65,6 +65,7 @@ jobs:
         cmakeListsTxtPath: CMakeLists.txt
         configurePreset: 'windows-release'
         buildPreset: 'windows-release'
+        buildPresetAdditionalArgs: "['--config Release']"
         
     - name: Install and Update PATH (Windows only)
       if: runner.os == 'Windows'
