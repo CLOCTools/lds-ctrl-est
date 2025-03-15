@@ -1,5 +1,6 @@
 ---
 title: eg_plds_est.cpp
+summary: Example PLDS Estimation. 
 
 ---
 
@@ -7,9 +8,8 @@ title: eg_plds_est.cpp
 
 
 
-Example PLDS Estimation 
+Example PLDS Estimation ```cpp
 
-```cpp
 //===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===//
 //
 // Copyright 2021 Michael Bolus
@@ -188,6 +188,8 @@ Matrix random_walk(size_t n_t, const Matrix& Q, const Vector& x0) {
 }
 ```
 
+_Filename: eg_plds_est.cpp_
+
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  5 March 2025 at 21:41:27 EST

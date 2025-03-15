@@ -30,12 +30,15 @@ Among other things, this project also does not provide methods for trajectory op
 
 
 # Installation
-See the [documentation](https://cloctools.github.io/docs/getting-started).
+See the [documentation](https://cloctools.github.io/lds-ctrl-est/docs/getting-started/getting-started/).
 # Reporting Issues
 If you encounter bugs when using this library or have specific feature requests that you believe fall within the stated scope of this project, please [open an issue on GitHub](https://github.com/cloctools/lds-ctrl-est/issues) and use an appropriate issue template where possible. You may also fork the repository and submit pull-requests with your suggested changes.
 
 # Contributing
 We welcome any community contributions to this project. Please fork the repository and if possible use `clang-format` and `clang-tidy` to conform to the coding format/style of this repository.
+
+When editing any documentation/guides, please use the markdown docs in `misc/docs-hugo` instead of directly editing the HTML docs. 
+Updated docs can be built by running `cd scripts` and `./update-docs.sh`.
 
 # Acknowledgements
 

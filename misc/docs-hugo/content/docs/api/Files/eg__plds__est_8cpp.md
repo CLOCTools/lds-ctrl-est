@@ -7,12 +7,49 @@ title: examples/eg_plds_est.cpp
 
 
 
+## Types
+
+|                | Name           |
+| -------------- | -------------- |
+| using arma::Mat< data_t > | **[Matrix](/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#using-matrix)**  |
+| using arma::Col< data_t > | **[Vector](/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#using-vector)**  |
+| using double | **[data_t](/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#using-data-t)**  |
+
 ## Functions
 
 |                | Name           |
 | -------------- | -------------- |
 | Matrix | **[random_walk](/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#function-random-walk)**(size_t n_t, const Matrix & Q, const Vector & x0) |
 | int | **[main](/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#function-main)**() |
+
+## Type Details
+
+### Matrix
+
+```cpp
+using lds::Matrix =  arma::Mat<data_t>;
+```
+
+
+
+### Vector
+
+```cpp
+using lds::Vector =  arma::Col<data_t>;
+```
+
+
+
+### data_t
+
+```cpp
+using lds::data_t =  double;
+```
+
+
+
+Type of all data in library. If need 32b, change `double` to `float`. This could be potentially useful for large scale problems where there are memory constraints. 
+
 
 
 ## Function Details
@@ -224,4 +261,4 @@ Matrix random_walk(size_t n_t, const Matrix& Q, const Vector& x0) {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  5 March 2025 at 21:41:27 EST
