@@ -1,3 +1,6 @@
+[![Build/Test](https://github.com/CLOCTools/lds-ctrl-est/actions/workflows/build.yml/badge.svg)](https://github.com/CLOCTools/lds-ctrl-est/actions/workflows/build.yml)
+[![Docs](https://github.com/CLOCTools/lds-ctrl-est/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/CLOCTools/lds-ctrl-est/actions/workflows/pages/pages-build-deployment)
+
 # ldsCtrlEst
 `ldsCtrlEst` is a C++ library for estimation and control of linear dynamical systems (LDS) with Gaussian or Poisson observations. It is meant to provide the functionality necessary to implement feedback control of linear dynamical systems experimentally. This library was originally developed for the task of controlling neuronal activity using spike count data as feedback and optogenetic inputs for control. However, the methods are generally applicable.
 
