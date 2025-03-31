@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  examples/eg_plds_est.cpp
+  #
+
+
+  Types
+  #
+
+
+  
+      
+          
+          Name
+      
+  
+  
+      
+          using arma::Mat&lt; data_t &gt;
+          Matrix
+      
+      
+          using arma::Col&lt; data_t &gt;
+          Vector
+      
+      
+          using double
+          data_t
+      
+  
+
+
+  Functions
+  #
+
+
+  
+      
+          
+          Name
+      
+  
+  
+      
+          Matrix
+          random_walk(size_t n_t, const Matrix &amp; Q, const Vector &amp; x0)
+      
+      
+          int
+          main()
+      
+  
+
+
+  Type Details
+  #
+
+
+  Matrix
+  #
+
+using lds::Matrix =  arma::Mat&lt;data_t&gt;;
+
+  Vector
+  #
+
+using lds::Vector =  arma::Col&lt;data_t&gt;;
+
+  data_t
+  #
+
+using lds::data_t =  double;
+Type of all data in library. If need 32b, change double to float. This could be potentially useful for large scale problems where there are memory constraints.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="examples/eg_plds_est.cpp">
+  <meta property="og:description" content="examples/eg_plds_est.cpp # Types # Name using arma::Mat&lt; data_t &gt; Matrix using arma::Col&lt; data_t &gt; Vector using double data_t Functions # Name Matrix random_walk(size_t n_t, const Matrix &amp; Q, const Vector &amp; x0) int main() Type Details # Matrix # using lds::Matrix = arma::Mat&lt;data_t&gt;; Vector # using lds::Vector = arma::Col&lt;data_t&gt;; data_t # using lds::data_t = double; Type of all data in library. If need 32b, change double to float. This could be potentially useful for large scale problems where there are memory constraints.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>examples/eg_plds_est.cpp | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.724172a3a68d7e9ea978cde0f0cb315293be59d026980ceeb44b2579c1453f87.js" integrity="sha256-ckFyo6aNfp6peM3g8MsxUpO&#43;WdAmmAzutEslecFFP4c=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>examples/eg_plds_est.cpp</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#exampleseg_plds_estcpp">examples/eg_plds_est.cpp</a>
+      <ul>
+        <li><a href="#types">Types</a></li>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#type-details">Type Details</a>
+          <ul>
+            <li><a href="#matrix">Matrix</a></li>
+            <li><a href="#vector">Vector</a></li>
+            <li><a href="#data_t">data_t</a></li>
+          </ul>
+        </li>
+        <li><a href="#function-details">Function Details</a>
+          <ul>
+            <li><a href="#random_walk">random_walk</a></li>
+            <li><a href="#main">main</a></li>
+          </ul>
+        </li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="exampleseg_plds_estcpp">
+  examples/eg_plds_est.cpp
+  <a class="anchor" href="#exampleseg_plds_estcpp">#</a>
+</h1>
+<h2 id="types">
+  Types
+  <a class="anchor" href="#types">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>using arma::Mat&lt; data_t &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#using-matrix">Matrix</a></strong></td>
+      </tr>
+      <tr>
+          <td>using arma::Col&lt; data_t &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#using-vector">Vector</a></strong></td>
+      </tr>
+      <tr>
+          <td>using double</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#using-data-t">data_t</a></strong></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="functions">
+  Functions
+  <a class="anchor" href="#functions">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#function-random-walk">random_walk</a></strong>(size_t n_t, const Matrix &amp; Q, const Vector &amp; x0)</td>
+      </tr>
+      <tr>
+          <td>int</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__est_8cpp/#function-main">main</a></strong>()</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="type-details">
+  Type Details
+  <a class="anchor" href="#type-details">#</a>
+</h2>
+<h3 id="matrix">
+  Matrix
+  <a class="anchor" href="#matrix">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Matrix <span style="color:#f92672">=</span>  arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>;
+</span></span></code></pre></div><h3 id="vector">
+  Vector
+  <a class="anchor" href="#vector">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Vector <span style="color:#f92672">=</span>  arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>;
+</span></span></code></pre></div><h3 id="data_t">
+  data_t
+  <a class="anchor" href="#data_t">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t <span style="color:#f92672">=</span>  <span style="color:#66d9ef">double</span>;
+</span></span></code></pre></div><p>Type of all data in library. If need 32b, change <code>double</code> to <code>float</code>. This could be potentially useful for large scale problems where there are memory constraints.</p>
+<h2 id="function-details">
+  Function Details
+  <a class="anchor" href="#function-details">#</a>
+</h2>
+<h3 id="random_walk">
+  random_walk
+  <a class="anchor" href="#random_walk">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix random_walk(
+</span></span><span style="display:flex;"><span>    size_t n_t,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> Q,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> x0
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><h3 id="main">
+  main
+  <a class="anchor" href="#main">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> main()
+</span></span></code></pre></div><h2 id="source-code">
+  Source code
+  <a class="anchor" href="#source-code">#</a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//===-- eg_plds_est.cpp - Example PLDS Estimation -------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Copyright 2021 Michael Bolus
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// you may not use this file except in compliance with the License.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// You may obtain a copy of the License at
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//     http://www.apache.org/licenses/LICENSE-2.0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Unless required by applicable law or agreed to in writing, software
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// See the License for the specific language governing permissions and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// limitations under the License.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Matrix;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Vector;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>cout;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// for generating random input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Matrix <span style="color:#a6e22e">random_walk</span>(size_t n_t, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> Q, <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> x0);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; ********** Example Poisson LDS Estimation ********** </span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Make SISO system sampled at 1kHz
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t dt <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;
+</span></span><span style="display:flex;"><span>  size_t n_u <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;                           <span style="color:#75715e">// no. inputs
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t n_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;                           <span style="color:#75715e">// no. states
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t n_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;                           <span style="color:#75715e">// no. outputs
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> n_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">30</span> <span style="color:#f92672">/</span> dt);  <span style="color:#75715e">// no time steps for simulation.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// construct ground truth system...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System system_true(n_u, n_x, n_y, dt);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Model parameters
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix a_true(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye);
+</span></span><span style="display:flex;"><span>  a_true[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> exp(<span style="color:#f92672">-</span>dt <span style="color:#f92672">/</span> <span style="color:#ae81ff">0.075</span>);
+</span></span><span style="display:flex;"><span>  Matrix b_true <span style="color:#f92672">=</span> Matrix(n_x, n_u).fill(<span style="color:#ae81ff">1e-2</span>);
+</span></span><span style="display:flex;"><span>  Vector m0_true <span style="color:#f92672">=</span> Vector(n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros).fill(<span style="color:#f92672">-</span><span style="color:#ae81ff">7e-2</span>);  <span style="color:#75715e">// disturbance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector x0_true <span style="color:#f92672">=</span> m0_true <span style="color:#f92672">*</span> arma<span style="color:#f92672">::</span>inv(Matrix(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">-</span>
+</span></span><span style="display:flex;"><span>                                        a_true);  <span style="color:#75715e">// initial state
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Assign params.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  system_true.set_A(a_true);
+</span></span><span style="display:flex;"><span>  system_true.set_B(b_true);
+</span></span><span style="display:flex;"><span>  system_true.set_x0(x0_true);
+</span></span><span style="display:flex;"><span>  system_true.set_m(m0_true);
+</span></span><span style="display:flex;"><span>  system_true.Reset();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Construct system for estimation
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// e.g., will create a model with incorrect disturbance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System system_estimator(n_u, n_x, n_y, dt);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Can copy parameters from another system object
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  system_estimator <span style="color:#f92672">=</span> system_true;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// wrong disturbance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector m0_est <span style="color:#f92672">=</span> m0_true <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>  system_estimator.set_m(m0_est);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// set new initial conditions
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector x0_est <span style="color:#f92672">=</span> m0_est <span style="color:#f92672">*</span> arma<span style="color:#f92672">::</span>inv(Matrix(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">-</span>
+</span></span><span style="display:flex;"><span>                                      a_true);  <span style="color:#75715e">// initial state
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  system_estimator.set_x0(x0_est);
+</span></span><span style="display:flex;"><span>  system_estimator.Reset();  <span style="color:#75715e">// reset to initial condition.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// turn on adaptive disturbance estimation
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  system_estimator.do_adapt_m <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// set adaptation rate by changing covariance of assumed process noise acting
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// on random-walk evolution of m
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix q_m <span style="color:#f92672">=</span> Matrix(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-6</span>;
+</span></span><span style="display:flex;"><span>  system_estimator.set_Q_m(q_m);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;estimator:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  system_estimator.Print();
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Set up simulation :
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// Simulated measurements
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix z(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Stimulus (generate random stimulus)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix q_u <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>      Matrix(n_u, n_u, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-3</span>;  <span style="color:#75715e">// cov of random walk
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix u <span style="color:#f92672">=</span> random_walk(n_t, q_u, Vector(n_u, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// create matrix to save outputs in...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix y_hat(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Matrix y_true(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// states and disturbance params
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix x_hat(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Matrix m_hat(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix x_true(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Matrix m_true(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// initial conditions
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  y_hat.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> system_estimator.y();
+</span></span><span style="display:flex;"><span>  y_true.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> system_true.y();
+</span></span><span style="display:flex;"><span>  x_hat.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> system_estimator.x();
+</span></span><span style="display:flex;"><span>  x_true.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> system_true.x();
+</span></span><span style="display:flex;"><span>  m_hat.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> system_estimator.m();
+</span></span><span style="display:flex;"><span>  m_true.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> system_true.m();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Starting &#34;</span> <span style="color:#f92672">&lt;&lt;</span> n_t <span style="color:#f92672">*</span> dt <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; sec simlation ... </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> start <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">::</span>now();
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (size_t t <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; t <span style="color:#f92672">&lt;</span> n_t; t<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Simlate the true system.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    z.col(t) <span style="color:#f92672">=</span> system_true.Simulate(u.col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Filter (predict -&gt; update)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    system_estimator.Filter(u.col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>), z.col(t));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// save signals
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    y_hat.col(t) <span style="color:#f92672">=</span> system_estimator.y();
+</span></span><span style="display:flex;"><span>    y_true.col(t) <span style="color:#f92672">=</span> system_true.y();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    x_true.col(t) <span style="color:#f92672">=</span> system_true.x();
+</span></span><span style="display:flex;"><span>    m_true.col(t) <span style="color:#f92672">=</span> system_true.m();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    x_hat.col(t) <span style="color:#f92672">=</span> system_estimator.x();
+</span></span><span style="display:flex;"><span>    m_hat.col(t) <span style="color:#f92672">=</span> system_estimator.m();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> finish <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">::</span>now();
+</span></span><span style="display:flex;"><span>  std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>duration<span style="color:#f92672">&lt;</span>data_t, std<span style="color:#f92672">::</span>milli<span style="color:#f92672">&gt;</span> sim_time_ms <span style="color:#f92672">=</span> finish <span style="color:#f92672">-</span> start;
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Finished simlation in &#34;</span> <span style="color:#f92672">&lt;&lt;</span> sim_time_ms.count() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; ms.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;(app. &#34;</span> <span style="color:#f92672">&lt;&lt;</span> (sim_time_ms.count() <span style="color:#f92672">/</span> n_t) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e3</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; us/time-step)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// saved variables: dt, y_hat, x_hat, m_hat, z, u, y_true,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// x_true, m_true saving with hdf5 via armadillo
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  arma<span style="color:#f92672">::</span>hdf5_opts<span style="color:#f92672">::</span>opts replace <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>hdf5_opts<span style="color:#f92672">::</span>replace;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> dt_vec <span style="color:#f92672">=</span> Vector(<span style="color:#ae81ff">1</span>).fill(dt);
+</span></span><span style="display:flex;"><span>  dt_vec.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_est.h5&#34;</span>, <span style="color:#e6db74">&#34;dt&#34;</span>));
+</span></span><span style="display:flex;"><span>  u.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_est.h5&#34;</span>, <span style="color:#e6db74">&#34;u&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  z.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_est.h5&#34;</span>, <span style="color:#e6db74">&#34;z&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  x_true.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_est.h5&#34;</span>, <span style="color:#e6db74">&#34;x_true&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  m_true.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_est.h5&#34;</span>, <span style="color:#e6db74">&#34;m_true&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  y_true.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_est.h5&#34;</span>, <span style="color:#e6db74">&#34;y_true&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  x_hat.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_est.h5&#34;</span>, <span style="color:#e6db74">&#34;x_hat&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  m_hat.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_est.h5&#34;</span>, <span style="color:#e6db74">&#34;m_hat&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  y_hat.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_est.h5&#34;</span>, <span style="color:#e6db74">&#34;y_hat&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// for generating random input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Matrix <span style="color:#a6e22e">random_walk</span>(size_t n_t, <span style="color:#66d9ef">const</span> Matrix<span style="color:#f92672">&amp;</span> Q, <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> x0) {
+</span></span><span style="display:flex;"><span>  size_t n <span style="color:#f92672">=</span> Q.n_rows;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ((n <span style="color:#f92672">!=</span> Q.n_cols) <span style="color:#f92672">||</span> (Q.n_cols <span style="color:#f92672">!=</span> Q.n_rows)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">throw</span> std<span style="color:#f92672">::</span>logic_error(<span style="color:#e6db74">&#34;Q must be `n` x `n`.&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix x(n, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  x.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> x0;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (size_t t <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; t <span style="color:#f92672">&lt;</span> n_t; t<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    x.col(t) <span style="color:#f92672">=</span> x.col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+</span> arma<span style="color:#f92672">::</span>mvnrnd(Vector(n, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros), Q);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> x;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p>Updated on 31 March 2025 at 16:31:00 EDT</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#exampleseg_plds_estcpp">examples/eg_plds_est.cpp</a>
+      <ul>
+        <li><a href="#types">Types</a></li>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#type-details">Type Details</a>
+          <ul>
+            <li><a href="#matrix">Matrix</a></li>
+            <li><a href="#vector">Vector</a></li>
+            <li><a href="#data_t">data_t</a></li>
+          </ul>
+        </li>
+        <li><a href="#function-details">Function Details</a>
+          <ul>
+            <li><a href="#random_walk">random_walk</a></li>
+            <li><a href="#main">main</a></li>
+          </ul>
+        </li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

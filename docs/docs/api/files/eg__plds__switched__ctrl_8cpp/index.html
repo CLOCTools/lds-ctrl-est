@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  examples/eg_plds_switched_ctrl.cpp
+  #
+
+
+  Types
+  #
+
+
+  
+      
+          
+          Name
+      
+  
+  
+      
+          using double
+          data_t
+      
+      
+          using arma::Mat&lt; data_t &gt;
+          Matrix
+      
+      
+          using arma::Col&lt; data_t &gt;
+          Vector
+      
+  
+
+
+  Functions
+  #
+
+
+  
+      
+          
+          Name
+      
+  
+  
+      
+          int
+          main()
+      
+  
+
+
+  Type Details
+  #
+
+
+  data_t
+  #
+
+using lds::data_t =  double;
+Type of all data in library. If need 32b, change double to float. This could be potentially useful for large scale problems where there are memory constraints.
+
+  Matrix
+  #
+
+using lds::Matrix =  arma::Mat&lt;data_t&gt;;
+
+  Vector
+  #
+
+using lds::Vector =  arma::Col&lt;data_t&gt;;
+
+  Function Details
+  #
+
+
+  main
+  #
+
+int main()
+
+  Source code
+  #
+
+//===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===//
+//
+// Copyright 2021 Michael Bolus
+// Copyright 2021 Georgia Institute of Technology
+//
+// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//===----------------------------------------------------------------------===//
+//===----------------------------------------------------------------------===//
+
+#include &lt;ldsCtrlEst&gt;
+
+using lds::data_t;
+using lds::Matrix;
+using lds::Vector;
+using std::cout;
+
+auto main() -&gt; int {
+  cout &lt;&lt; &#34; ********** Example Switched Poisson LDS Control ********** \n\n&#34;;
+
+  // whether to do switched control
+  bool do_switch_ctrl = true;
+
+  // Make SISO system sampled at 1kHz
+  data_t dt = 1e-3;
+  size_t n_u = 1;
+  size_t n_x = 1;
+  size_t n_y = 1;
+
+  // no time steps for simulation.
+  auto n_t = static_cast&lt;size_t&gt;(30.0 / dt);
+
+  // for simulating switching
+  size_t which_mode = 1;
+  data_t pr_21 = 1e-3;   // prob mode 1 -&gt; 2
+  data_t pr_12 = pr_21;  // prob mode 2 -&gt; 1
+
+  // simulated system being controlled
+  lds::poisson::System controlled_system(n_u, n_x, n_y, dt);
+
+  // **Assume the system is not well characterized by one LDS, but is well
+  // characterized by two LDS models with different input matrices.**
+  data_t scale_sys_b = 2;
+
+  Matrix a(n_x, n_x, arma::fill::eye);
+  a[0] = 0.985;
+  Matrix b1 = Matrix(n_x, n_u).fill(0.05);
+  Vector d = Vector(n_y, arma::fill::zeros).fill(log(1 * dt));
+
+  controlled_system.set_A(a);
+  controlled_system.set_B(b1);
+  controlled_system.set_d(d);
+  controlled_system.Reset();  // reset to initial conditions
+
+  // reference
+  Vector y_ref0 = Vector(n_y, arma::fill::zeros).fill(25.0 * dt);
+
+  // Let underlying system 1 be more sensitive than system 2
+  Matrix b2 = Matrix(n_x, n_u).fill(b1[0] / scale_sys_b);
+
+  // create switched controller
+  lds::poisson::SwitchedController switched_controller;
+  lds::UniformMatrixList&lt;&gt; k_x;  // feedback controller gains
+  {
+    // create switched controller sub-systems
+    // system 1
+    lds::poisson::System sys1(controlled_system);
+
+    // set process noise covariance
+    Matrix q_controller = Matrix(n_x, n_x, arma::fill::eye) * 5e-3;
+    sys1.set_Q(q_controller);
+
+    // adaptively estimate process disturbance (m)
+    // n.b. using arbitrary default value for process noise if enabled.
+    sys1.do_adapt_m = true;
+
+    // setting initial mode to target to avoid large error at onset:
+    Vector x0_controller = arma::log(y_ref0) - d;
+    sys1.set_x0(x0_controller);
+    sys1.Reset();  // reset to initial conditions
+
+    cout &lt;&lt; &#34;.....................................\n&#34;;
+    cout &lt;&lt; &#34;sys1:\n&#34;;
+    cout &lt;&lt; &#34;.....................................\n&#34;;
+    sys1.Print();
+    cout &lt;&lt; &#34;.....................................\n&#34;;
+
+    // system 2
+    lds::poisson::System sys2 = sys1;
+
+    // set parameters
+    sys2.set_B(b2);
+
+    cout &lt;&lt; &#34;.....................................\n&#34;;
+    cout &lt;&lt; &#34;sys2:\n&#34;;
+    cout &lt;&lt; &#34;.....................................\n&#34;;
+    sys2.Print();
+    cout &lt;&lt; &#34;.....................................\n&#34;;
+
+    lds::UniformSystemList&lt;lds::poisson::System&gt; systems({sys1, sys2});
+
+    // controller gains for underlying system s:
+    Matrix k_x1(n_u, n_x, arma::fill::ones);
+    Matrix k_x2 = scale_sys_b * k_x1;  // system2 is x-times less sensitive.
+    k_x = lds::UniformMatrixList&lt;&gt;({k_x1, k_x2});
+
+    data_t u_lb = 0.0;
+    data_t u_ub = 5.0;
+    switched_controller = std::move(
+        lds::poisson::SwitchedController(std::move(systems), u_lb, u_ub));
+  }
+  // Control variables
+  size_t control_type = 0;  // no integral action, etc
+  switched_controller.set_control_type(control_type);
+  switched_controller.set_Kc(std::move(k_x));
+
+  switched_controller.set_y_ref(y_ref0);
+
+  std::vector&lt;lds::poisson::System&gt; systems_vec(3, lds::poisson::System());
+  lds::UniformSystemList&lt;lds::poisson::System&gt; systems(std::move(systems_vec));
+
+  cout &lt;&lt; &#34;.....................................\n&#34;;
+  cout &lt;&lt; &#34;switched_controller:\n&#34;;
+  cout &lt;&lt; &#34;.....................................\n&#34;;
+  switched_controller.Print();
+  cout &lt;&lt; &#34;.....................................\n&#34;;
+
+  // Fake measurements
+  Matrix z(n_y, n_t, arma::fill::zeros);
+
+  // Will later contain control.
+  Matrix u(n_u, n_t, arma::fill::zeros);
+
+  // create Matrix to save outputs in...
+  Matrix y_hat(n_y, n_t, arma::fill::zeros);
+  Matrix y_true(n_y, n_t, arma::fill::zeros);
+  Matrix y_ref = Matrix(n_y, n_t).fill(y_ref0[0]);
+
+  // modes and gain/disturbance params
+  Matrix x_hat(n_x, n_t, arma::fill::zeros);
+  Matrix x_true(n_x, n_t, arma::fill::zeros);
+  Matrix mode(1, n_t, arma::fill::ones);
+
+  // set initial val
+  y_hat.col(0) = switched_controller.sys().y();
+  y_true.col(0) = controlled_system.y();
+  x_hat.col(0) = switched_controller.sys().x();
+  x_true.col(0) = controlled_system.x();
+
+  cout &lt;&lt; &#34;Starting &#34; &lt;&lt; n_t * dt &lt;&lt; &#34; sec simulation ... \n&#34;;
+  auto start = std::chrono::high_resolution_clock::now();
+  for (size_t t = 1; t &lt; n_t; t&#43;&#43;) {
+    // Let the controlled system stochastically change gain
+    // Assume another algorithm decodes this mode change and signals the
+    // switched_controller
+    Vector chance(1, arma::fill::randu);
+    if (which_mode == 1)  // mode1
+    {
+      if (chance[0] &lt; pr_21) {
+        which_mode = 2;
+        controlled_system.set_B(b2);
+        if (do_switch_ctrl) {
+          switched_controller.Switch(1);
+        }
+      }
+    } else {  // mode2
+      if (chance[0] &lt; pr_12) {
+        which_mode = 1;
+        controlled_system.set_B(b1);
+        if (do_switch_ctrl) {
+          switched_controller.Switch(0);
+        }
+      }
+    }
+
+    // Simulate the true system.
+    z.col(t) = controlled_system.Simulate(u.col(t - 1));
+
+    // perform control
+    u.col(t) = switched_controller.ControlOutputReference(z.col(t));
+
+    mode.col(t) = which_mode;
+    y_ref.col(t) = y_ref0;
+    y_true.col(t) = controlled_system.y();
+    x_true.col(t) = controlled_system.x();
+    y_hat.col(t) = switched_controller.sys().y();
+    x_hat.col(t) = switched_controller.sys().x();
+  }
+
+  auto finish = std::chrono::high_resolution_clock::now();
+  std::chrono::duration&lt;data_t, std::milli&gt; sim_time_ms = finish - start;
+  cout &lt;&lt; &#34;Finished simulation in &#34; &lt;&lt; sim_time_ms.count() &lt;&lt; &#34; ms.\n&#34;;
+  cout &lt;&lt; &#34;(app. &#34; &lt;&lt; (sim_time_ms.count() / n_t) * 1e3 &lt;&lt; &#34; us/time-step)\n&#34;;
+
+  // saved variables: dt, y_hat, x_hat, m_hat, z, u, y_ref, y_true,
+  // x_true, m_true saving with hdf5 via armadillo
+  arma::hdf5_opts::opts replace = arma::hdf5_opts::replace;
+
+  auto dt_vec = Vector(1).fill(dt);
+  dt_vec.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;dt&#34;));
+  y_ref.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;y_ref&#34;, replace));
+  u.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;u&#34;, replace));
+  z.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;z&#34;, replace));
+  x_true.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;x_true&#34;, replace));
+  y_true.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;y_true&#34;, replace));
+  x_hat.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;x_hat&#34;, replace));
+  y_hat.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;y_hat&#34;, replace));
+  mode.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;mode&#34;, replace));
+
+  return 0;
+}
+
+Updated on 31 March 2025 at 16:31:00 EDT">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="examples/eg_plds_switched_ctrl.cpp">
+  <meta property="og:description" content="examples/eg_plds_switched_ctrl.cpp # Types # Name using double data_t using arma::Mat&lt; data_t &gt; Matrix using arma::Col&lt; data_t &gt; Vector Functions # Name int main() Type Details # data_t # using lds::data_t = double; Type of all data in library. If need 32b, change double to float. This could be potentially useful for large scale problems where there are memory constraints.
+Matrix # using lds::Matrix = arma::Mat&lt;data_t&gt;; Vector # using lds::Vector = arma::Col&lt;data_t&gt;; Function Details # main # int main() Source code # //===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===// // // Copyright 2021 Michael Bolus // Copyright 2021 Georgia Institute of Technology // // Licensed under the Apache License, Version 2.0 (the &#34;License&#34;); // you may not use this file except in compliance with the License. // You may obtain a copy of the License at // // http://www.apache.org/licenses/LICENSE-2.0 // // Unless required by applicable law or agreed to in writing, software // distributed under the License is distributed on an &#34;AS IS&#34; BASIS, // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. // See the License for the specific language governing permissions and // limitations under the License. // //===----------------------------------------------------------------------===// //===----------------------------------------------------------------------===// #include &lt;ldsCtrlEst&gt; using lds::data_t; using lds::Matrix; using lds::Vector; using std::cout; auto main() -&gt; int { cout &lt;&lt; &#34; ********** Example Switched Poisson LDS Control ********** \n\n&#34;; // whether to do switched control bool do_switch_ctrl = true; // Make SISO system sampled at 1kHz data_t dt = 1e-3; size_t n_u = 1; size_t n_x = 1; size_t n_y = 1; // no time steps for simulation. auto n_t = static_cast&lt;size_t&gt;(30.0 / dt); // for simulating switching size_t which_mode = 1; data_t pr_21 = 1e-3; // prob mode 1 -&gt; 2 data_t pr_12 = pr_21; // prob mode 2 -&gt; 1 // simulated system being controlled lds::poisson::System controlled_system(n_u, n_x, n_y, dt); // **Assume the system is not well characterized by one LDS, but is well // characterized by two LDS models with different input matrices.** data_t scale_sys_b = 2; Matrix a(n_x, n_x, arma::fill::eye); a[0] = 0.985; Matrix b1 = Matrix(n_x, n_u).fill(0.05); Vector d = Vector(n_y, arma::fill::zeros).fill(log(1 * dt)); controlled_system.set_A(a); controlled_system.set_B(b1); controlled_system.set_d(d); controlled_system.Reset(); // reset to initial conditions // reference Vector y_ref0 = Vector(n_y, arma::fill::zeros).fill(25.0 * dt); // Let underlying system 1 be more sensitive than system 2 Matrix b2 = Matrix(n_x, n_u).fill(b1[0] / scale_sys_b); // create switched controller lds::poisson::SwitchedController switched_controller; lds::UniformMatrixList&lt;&gt; k_x; // feedback controller gains { // create switched controller sub-systems // system 1 lds::poisson::System sys1(controlled_system); // set process noise covariance Matrix q_controller = Matrix(n_x, n_x, arma::fill::eye) * 5e-3; sys1.set_Q(q_controller); // adaptively estimate process disturbance (m) // n.b. using arbitrary default value for process noise if enabled. sys1.do_adapt_m = true; // setting initial mode to target to avoid large error at onset: Vector x0_controller = arma::log(y_ref0) - d; sys1.set_x0(x0_controller); sys1.Reset(); // reset to initial conditions cout &lt;&lt; &#34;.....................................\n&#34;; cout &lt;&lt; &#34;sys1:\n&#34;; cout &lt;&lt; &#34;.....................................\n&#34;; sys1.Print(); cout &lt;&lt; &#34;.....................................\n&#34;; // system 2 lds::poisson::System sys2 = sys1; // set parameters sys2.set_B(b2); cout &lt;&lt; &#34;.....................................\n&#34;; cout &lt;&lt; &#34;sys2:\n&#34;; cout &lt;&lt; &#34;.....................................\n&#34;; sys2.Print(); cout &lt;&lt; &#34;.....................................\n&#34;; lds::UniformSystemList&lt;lds::poisson::System&gt; systems({sys1, sys2}); // controller gains for underlying system s: Matrix k_x1(n_u, n_x, arma::fill::ones); Matrix k_x2 = scale_sys_b * k_x1; // system2 is x-times less sensitive. k_x = lds::UniformMatrixList&lt;&gt;({k_x1, k_x2}); data_t u_lb = 0.0; data_t u_ub = 5.0; switched_controller = std::move( lds::poisson::SwitchedController(std::move(systems), u_lb, u_ub)); } // Control variables size_t control_type = 0; // no integral action, etc switched_controller.set_control_type(control_type); switched_controller.set_Kc(std::move(k_x)); switched_controller.set_y_ref(y_ref0); std::vector&lt;lds::poisson::System&gt; systems_vec(3, lds::poisson::System()); lds::UniformSystemList&lt;lds::poisson::System&gt; systems(std::move(systems_vec)); cout &lt;&lt; &#34;.....................................\n&#34;; cout &lt;&lt; &#34;switched_controller:\n&#34;; cout &lt;&lt; &#34;.....................................\n&#34;; switched_controller.Print(); cout &lt;&lt; &#34;.....................................\n&#34;; // Fake measurements Matrix z(n_y, n_t, arma::fill::zeros); // Will later contain control. Matrix u(n_u, n_t, arma::fill::zeros); // create Matrix to save outputs in... Matrix y_hat(n_y, n_t, arma::fill::zeros); Matrix y_true(n_y, n_t, arma::fill::zeros); Matrix y_ref = Matrix(n_y, n_t).fill(y_ref0[0]); // modes and gain/disturbance params Matrix x_hat(n_x, n_t, arma::fill::zeros); Matrix x_true(n_x, n_t, arma::fill::zeros); Matrix mode(1, n_t, arma::fill::ones); // set initial val y_hat.col(0) = switched_controller.sys().y(); y_true.col(0) = controlled_system.y(); x_hat.col(0) = switched_controller.sys().x(); x_true.col(0) = controlled_system.x(); cout &lt;&lt; &#34;Starting &#34; &lt;&lt; n_t * dt &lt;&lt; &#34; sec simulation ... \n&#34;; auto start = std::chrono::high_resolution_clock::now(); for (size_t t = 1; t &lt; n_t; t&#43;&#43;) { // Let the controlled system stochastically change gain // Assume another algorithm decodes this mode change and signals the // switched_controller Vector chance(1, arma::fill::randu); if (which_mode == 1) // mode1 { if (chance[0] &lt; pr_21) { which_mode = 2; controlled_system.set_B(b2); if (do_switch_ctrl) { switched_controller.Switch(1); } } } else { // mode2 if (chance[0] &lt; pr_12) { which_mode = 1; controlled_system.set_B(b1); if (do_switch_ctrl) { switched_controller.Switch(0); } } } // Simulate the true system. z.col(t) = controlled_system.Simulate(u.col(t - 1)); // perform control u.col(t) = switched_controller.ControlOutputReference(z.col(t)); mode.col(t) = which_mode; y_ref.col(t) = y_ref0; y_true.col(t) = controlled_system.y(); x_true.col(t) = controlled_system.x(); y_hat.col(t) = switched_controller.sys().y(); x_hat.col(t) = switched_controller.sys().x(); } auto finish = std::chrono::high_resolution_clock::now(); std::chrono::duration&lt;data_t, std::milli&gt; sim_time_ms = finish - start; cout &lt;&lt; &#34;Finished simulation in &#34; &lt;&lt; sim_time_ms.count() &lt;&lt; &#34; ms.\n&#34;; cout &lt;&lt; &#34;(app. &#34; &lt;&lt; (sim_time_ms.count() / n_t) * 1e3 &lt;&lt; &#34; us/time-step)\n&#34;; // saved variables: dt, y_hat, x_hat, m_hat, z, u, y_ref, y_true, // x_true, m_true saving with hdf5 via armadillo arma::hdf5_opts::opts replace = arma::hdf5_opts::replace; auto dt_vec = Vector(1).fill(dt); dt_vec.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;dt&#34;)); y_ref.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;y_ref&#34;, replace)); u.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;u&#34;, replace)); z.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;z&#34;, replace)); x_true.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;x_true&#34;, replace)); y_true.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;y_true&#34;, replace)); x_hat.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;x_hat&#34;, replace)); y_hat.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;y_hat&#34;, replace)); mode.save(arma::hdf5_name(&#34;eg_plds_switched_ctrl.h5&#34;, &#34;mode&#34;, replace)); return 0; } Updated on 31 March 2025 at 16:31:00 EDT">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>examples/eg_plds_switched_ctrl.cpp | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.724172a3a68d7e9ea978cde0f0cb315293be59d026980ceeb44b2579c1453f87.js" integrity="sha256-ckFyo6aNfp6peM3g8MsxUpO&#43;WdAmmAzutEslecFFP4c=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>examples/eg_plds_switched_ctrl.cpp</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#exampleseg_plds_switched_ctrlcpp">examples/eg_plds_switched_ctrl.cpp</a>
+      <ul>
+        <li><a href="#types">Types</a></li>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#type-details">Type Details</a>
+          <ul>
+            <li><a href="#data_t">data_t</a></li>
+            <li><a href="#matrix">Matrix</a></li>
+            <li><a href="#vector">Vector</a></li>
+          </ul>
+        </li>
+        <li><a href="#function-details">Function Details</a>
+          <ul>
+            <li><a href="#main">main</a></li>
+          </ul>
+        </li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="exampleseg_plds_switched_ctrlcpp">
+  examples/eg_plds_switched_ctrl.cpp
+  <a class="anchor" href="#exampleseg_plds_switched_ctrlcpp">#</a>
+</h1>
+<h2 id="types">
+  Types
+  <a class="anchor" href="#types">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>using double</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#using-data-t">data_t</a></strong></td>
+      </tr>
+      <tr>
+          <td>using arma::Mat&lt; data_t &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#using-matrix">Matrix</a></strong></td>
+      </tr>
+      <tr>
+          <td>using arma::Col&lt; data_t &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#using-vector">Vector</a></strong></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="functions">
+  Functions
+  <a class="anchor" href="#functions">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>int</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#function-main">main</a></strong>()</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="type-details">
+  Type Details
+  <a class="anchor" href="#type-details">#</a>
+</h2>
+<h3 id="data_t">
+  data_t
+  <a class="anchor" href="#data_t">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t <span style="color:#f92672">=</span>  <span style="color:#66d9ef">double</span>;
+</span></span></code></pre></div><p>Type of all data in library. If need 32b, change <code>double</code> to <code>float</code>. This could be potentially useful for large scale problems where there are memory constraints.</p>
+<h3 id="matrix">
+  Matrix
+  <a class="anchor" href="#matrix">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Matrix <span style="color:#f92672">=</span>  arma<span style="color:#f92672">::</span>Mat<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>;
+</span></span></code></pre></div><h3 id="vector">
+  Vector
+  <a class="anchor" href="#vector">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Vector <span style="color:#f92672">=</span>  arma<span style="color:#f92672">::</span>Col<span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>;
+</span></span></code></pre></div><h2 id="function-details">
+  Function Details
+  <a class="anchor" href="#function-details">#</a>
+</h2>
+<h3 id="main">
+  main
+  <a class="anchor" href="#main">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> main()
+</span></span></code></pre></div><h2 id="source-code">
+  Source code
+  <a class="anchor" href="#source-code">#</a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//===-- eg_plds_switched_ctrl.cpp - Example Switched PLDS Control ---===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Copyright 2021 Michael Bolus
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// you may not use this file except in compliance with the License.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// You may obtain a copy of the License at
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//     http://www.apache.org/licenses/LICENSE-2.0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Unless required by applicable law or agreed to in writing, software
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// See the License for the specific language governing permissions and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// limitations under the License.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Matrix;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Vector;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>cout;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> <span style="color:#a6e22e">main</span>() <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; ********** Example Switched Poisson LDS Control ********** </span><span style="color:#ae81ff">\n\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// whether to do switched control
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">bool</span> do_switch_ctrl <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Make SISO system sampled at 1kHz
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t dt <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;
+</span></span><span style="display:flex;"><span>  size_t n_u <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  size_t n_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  size_t n_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// no time steps for simulation.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> n_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">30.0</span> <span style="color:#f92672">/</span> dt);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// for simulating switching
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t which_mode <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  data_t pr_21 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;   <span style="color:#75715e">// prob mode 1 -&gt; 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t pr_12 <span style="color:#f92672">=</span> pr_21;  <span style="color:#75715e">// prob mode 2 -&gt; 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// simulated system being controlled
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System controlled_system(n_u, n_x, n_y, dt);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// **Assume the system is not well characterized by one LDS, but is well
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// characterized by two LDS models with different input matrices.**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t scale_sys_b <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix a(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye);
+</span></span><span style="display:flex;"><span>  a[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.985</span>;
+</span></span><span style="display:flex;"><span>  Matrix b1 <span style="color:#f92672">=</span> Matrix(n_x, n_u).fill(<span style="color:#ae81ff">0.05</span>);
+</span></span><span style="display:flex;"><span>  Vector d <span style="color:#f92672">=</span> Vector(n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros).fill(log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> dt));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  controlled_system.set_A(a);
+</span></span><span style="display:flex;"><span>  controlled_system.set_B(b1);
+</span></span><span style="display:flex;"><span>  controlled_system.set_d(d);
+</span></span><span style="display:flex;"><span>  controlled_system.Reset();  <span style="color:#75715e">// reset to initial conditions
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// reference
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector y_ref0 <span style="color:#f92672">=</span> Vector(n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros).fill(<span style="color:#ae81ff">25.0</span> <span style="color:#f92672">*</span> dt);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Let underlying system 1 be more sensitive than system 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix b2 <span style="color:#f92672">=</span> Matrix(n_x, n_u).fill(b1[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">/</span> scale_sys_b);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// create switched controller
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>SwitchedController switched_controller;
+</span></span><span style="display:flex;"><span>  lds<span style="color:#f92672">::</span>UniformMatrixList<span style="color:#f92672">&lt;&gt;</span> k_x;  <span style="color:#75715e">// feedback controller gains
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// create switched controller sub-systems
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// system 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System sys1(controlled_system);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// set process noise covariance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix q_controller <span style="color:#f92672">=</span> Matrix(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">5e-3</span>;
+</span></span><span style="display:flex;"><span>    sys1.set_Q(q_controller);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// adaptively estimate process disturbance (m)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// n.b. using arbitrary default value for process noise if enabled.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    sys1.do_adapt_m <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// setting initial mode to target to avoid large error at onset:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Vector x0_controller <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>log(y_ref0) <span style="color:#f92672">-</span> d;
+</span></span><span style="display:flex;"><span>    sys1.set_x0(x0_controller);
+</span></span><span style="display:flex;"><span>    sys1.Reset();  <span style="color:#75715e">// reset to initial conditions
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;sys1:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    sys1.Print();
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// system 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System sys2 <span style="color:#f92672">=</span> sys1;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// set parameters
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    sys2.set_B(b2);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;sys2:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>    sys2.Print();
+</span></span><span style="display:flex;"><span>    cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    lds<span style="color:#f92672">::</span>UniformSystemList<span style="color:#f92672">&lt;</span>lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System<span style="color:#f92672">&gt;</span> systems({sys1, sys2});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// controller gains for underlying system s:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix k_x1(n_u, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>ones);
+</span></span><span style="display:flex;"><span>    Matrix k_x2 <span style="color:#f92672">=</span> scale_sys_b <span style="color:#f92672">*</span> k_x1;  <span style="color:#75715e">// system2 is x-times less sensitive.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    k_x <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>UniformMatrixList<span style="color:#f92672">&lt;&gt;</span>({k_x1, k_x2});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    data_t u_lb <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    data_t u_ub <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.0</span>;
+</span></span><span style="display:flex;"><span>    switched_controller <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(
+</span></span><span style="display:flex;"><span>        lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>SwitchedController(std<span style="color:#f92672">::</span>move(systems), u_lb, u_ub));
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Control variables
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t control_type <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;  <span style="color:#75715e">// no integral action, etc
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  switched_controller.set_control_type(control_type);
+</span></span><span style="display:flex;"><span>  switched_controller.set_Kc(std<span style="color:#f92672">::</span>move(k_x));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  switched_controller.set_y_ref(y_ref0);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System<span style="color:#f92672">&gt;</span> systems_vec(<span style="color:#ae81ff">3</span>, lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System());
+</span></span><span style="display:flex;"><span>  lds<span style="color:#f92672">::</span>UniformSystemList<span style="color:#f92672">&lt;</span>lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System<span style="color:#f92672">&gt;</span> systems(std<span style="color:#f92672">::</span>move(systems_vec));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;switched_controller:</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  switched_controller.Print();
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.....................................</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Fake measurements
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix z(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Will later contain control.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix u(n_u, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// create Matrix to save outputs in...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix y_hat(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Matrix y_true(n_y, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Matrix y_ref <span style="color:#f92672">=</span> Matrix(n_y, n_t).fill(y_ref0[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// modes and gain/disturbance params
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix x_hat(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Matrix x_true(n_x, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Matrix mode(<span style="color:#ae81ff">1</span>, n_t, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>ones);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// set initial val
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  y_hat.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> switched_controller.sys().y();
+</span></span><span style="display:flex;"><span>  y_true.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.y();
+</span></span><span style="display:flex;"><span>  x_hat.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> switched_controller.sys().x();
+</span></span><span style="display:flex;"><span>  x_true.col(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">=</span> controlled_system.x();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Starting &#34;</span> <span style="color:#f92672">&lt;&lt;</span> n_t <span style="color:#f92672">*</span> dt <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; sec simulation ... </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> start <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">::</span>now();
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (size_t t <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; t <span style="color:#f92672">&lt;</span> n_t; t<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Let the controlled system stochastically change gain
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Assume another algorithm decodes this mode change and signals the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// switched_controller
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Vector chance(<span style="color:#ae81ff">1</span>, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>randu);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (which_mode <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)  <span style="color:#75715e">// mode1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (chance[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> pr_21) {
+</span></span><span style="display:flex;"><span>        which_mode <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>        controlled_system.set_B(b2);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (do_switch_ctrl) {
+</span></span><span style="display:flex;"><span>          switched_controller.Switch(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {  <span style="color:#75715e">// mode2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#66d9ef">if</span> (chance[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> pr_12) {
+</span></span><span style="display:flex;"><span>        which_mode <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>        controlled_system.set_B(b1);
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (do_switch_ctrl) {
+</span></span><span style="display:flex;"><span>          switched_controller.Switch(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Simulate the true system.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    z.col(t) <span style="color:#f92672">=</span> controlled_system.Simulate(u.col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// perform control
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    u.col(t) <span style="color:#f92672">=</span> switched_controller.ControlOutputReference(z.col(t));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    mode.col(t) <span style="color:#f92672">=</span> which_mode;
+</span></span><span style="display:flex;"><span>    y_ref.col(t) <span style="color:#f92672">=</span> y_ref0;
+</span></span><span style="display:flex;"><span>    y_true.col(t) <span style="color:#f92672">=</span> controlled_system.y();
+</span></span><span style="display:flex;"><span>    x_true.col(t) <span style="color:#f92672">=</span> controlled_system.x();
+</span></span><span style="display:flex;"><span>    y_hat.col(t) <span style="color:#f92672">=</span> switched_controller.sys().y();
+</span></span><span style="display:flex;"><span>    x_hat.col(t) <span style="color:#f92672">=</span> switched_controller.sys().x();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> finish <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>high_resolution_clock<span style="color:#f92672">::</span>now();
+</span></span><span style="display:flex;"><span>  std<span style="color:#f92672">::</span>chrono<span style="color:#f92672">::</span>duration<span style="color:#f92672">&lt;</span>data_t, std<span style="color:#f92672">::</span>milli<span style="color:#f92672">&gt;</span> sim_time_ms <span style="color:#f92672">=</span> finish <span style="color:#f92672">-</span> start;
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Finished simulation in &#34;</span> <span style="color:#f92672">&lt;&lt;</span> sim_time_ms.count() <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; ms.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>  cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;(app. &#34;</span> <span style="color:#f92672">&lt;&lt;</span> (sim_time_ms.count() <span style="color:#f92672">/</span> n_t) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e3</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; us/time-step)</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// saved variables: dt, y_hat, x_hat, m_hat, z, u, y_ref, y_true,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// x_true, m_true saving with hdf5 via armadillo
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  arma<span style="color:#f92672">::</span>hdf5_opts<span style="color:#f92672">::</span>opts replace <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>hdf5_opts<span style="color:#f92672">::</span>replace;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> dt_vec <span style="color:#f92672">=</span> Vector(<span style="color:#ae81ff">1</span>).fill(dt);
+</span></span><span style="display:flex;"><span>  dt_vec.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_switched_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;dt&#34;</span>));
+</span></span><span style="display:flex;"><span>  y_ref.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_switched_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;y_ref&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  u.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_switched_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;u&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  z.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_switched_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;z&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  x_true.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_switched_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;x_true&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  y_true.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_switched_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;y_true&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  x_hat.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_switched_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;x_hat&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  y_hat.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_switched_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;y_hat&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>  mode.save(arma<span style="color:#f92672">::</span>hdf5_name(<span style="color:#e6db74">&#34;eg_plds_switched_ctrl.h5&#34;</span>, <span style="color:#e6db74">&#34;mode&#34;</span>, replace));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p>Updated on 31 March 2025 at 16:31:00 EDT</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#exampleseg_plds_switched_ctrlcpp">examples/eg_plds_switched_ctrl.cpp</a>
+      <ul>
+        <li><a href="#types">Types</a></li>
+        <li><a href="#functions">Functions</a></li>
+        <li><a href="#type-details">Type Details</a>
+          <ul>
+            <li><a href="#data_t">data_t</a></li>
+            <li><a href="#matrix">Matrix</a></li>
+            <li><a href="#vector">Vector</a></li>
+          </ul>
+        </li>
+        <li><a href="#function-details">Function Details</a>
+          <ul>
+            <li><a href="#main">main</a></li>
+          </ul>
+        </li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

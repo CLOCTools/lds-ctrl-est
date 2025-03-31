@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  lds::UniformSystemList
+  #
+
+More&hellip;
+Inherits from std::vector&lt; System &gt;
+
+  Public Functions
+  #
+
+
+  
+      
+          
+          Name
+      
+  
+  
+      
+          
+          UniformSystemList() =defaultConstructs a new UniformSystemList.
+      
+      
+          
+          UniformSystemList(const std::vector&lt; System &gt; &amp; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0})Constructs a new UniformSystemList by copying existing vector of System if dimensions consistent.
+      
+      
+          
+          UniformSystemList(std::vector&lt; System &gt; &amp;&amp; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0})Constructs a new UniformSystemList by moving existing vector of System if dimensions consistent.
+      
+      
+          
+          UniformSystemList(std::initializer_list&lt; System &gt; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0})Constructs a new UniformSystemList from initializer_list of System if dimensions consistent.
+      
+      
+          
+          UniformSystemList(const UniformSystemList &amp; that)Constructs a new UniformSystemList (copy).
+      
+      
+          
+          UniformSystemList(UniformSystemList &amp;&amp; that)Constructs a new UniformSystemList (move).
+      
+      
+          
+          ~UniformSystemList() =defaultDestroys the object.
+      
+      
+          const std::array&lt; size_t, 3 &gt; &amp;
+          dim() constgets dimensions of the uniformly sized systems
+      
+      
+          size_t
+          size()size of container
+      
+      
+          const System &amp;
+          at(size_t n)gets reference to n^th element
+      
+      
+          void
+          Swap(System &amp; that, size_t n)swaps input system with n^th system of list
+      
+      
+          UniformSystemList &amp;
+          operator=(const UniformSystemList &amp; that)assigns the contents (copy)
+      
+      
+          UniformSystemList &amp;
+          operator=(UniformSystemList &amp;&amp; that)assigns the contents (move)
+      
+  
+
+
+  Detailed Description
+  #
+
+template &lt;typename System &gt;
+class lds::UniformSystemList;
+
+
+
+  Public Function Details
+  #
+
+
+  UniformSystemList
+  #
+
+UniformSystemList() =default
+
+
+  UniformSystemList
+  #
+
+explicit UniformSystemList(
+    const std::vector&lt; System &gt; &amp; systems,
+    std::array&lt; size_t, 3 &gt; dim ={0, 0, 0}
+)
+Parameters:">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="lds::UniformSystemList">
+  <meta property="og:description" content="lds::UniformSystemList # More…
+Inherits from std::vector&lt; System &gt;
+Public Functions # Name UniformSystemList() =default
+Constructs a new UniformSystemList. UniformSystemList(const std::vector&lt; System &gt; &amp; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0})
+Constructs a new UniformSystemList by copying existing vector of System if dimensions consistent. UniformSystemList(std::vector&lt; System &gt; &amp;&amp; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0})
+Constructs a new UniformSystemList by moving existing vector of System if dimensions consistent. UniformSystemList(std::initializer_list&lt; System &gt; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0})
+Constructs a new UniformSystemList from initializer_list of System if dimensions consistent. UniformSystemList(const UniformSystemList &amp; that)
+Constructs a new UniformSystemList (copy). UniformSystemList(UniformSystemList &amp;&amp; that)
+Constructs a new UniformSystemList (move). ~UniformSystemList() =default
+Destroys the object. const std::array&lt; size_t, 3 &gt; &amp; dim() const
+gets dimensions of the uniformly sized systems size_t size()
+size of container const System &amp; at(size_t n)
+gets reference to n^th element void Swap(System &amp; that, size_t n)
+swaps input system with n^th system of list UniformSystemList &amp; operator=(const UniformSystemList &amp; that)
+assigns the contents (copy) UniformSystemList &amp; operator=(UniformSystemList &amp;&amp; that)
+assigns the contents (move) Detailed Description # template &lt;typename System &gt; class lds::UniformSystemList; Public Function Details # UniformSystemList # UniformSystemList() =default UniformSystemList # explicit UniformSystemList( const std::vector&lt; System &gt; &amp; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0} ) Parameters:">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>lds::UniformSystemList | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.724172a3a68d7e9ea978cde0f0cb315293be59d026980ceeb44b2579c1453f87.js" integrity="sha256-ckFyo6aNfp6peM3g8MsxUpO&#43;WdAmmAzutEslecFFP4c=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::UniformSystemList</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsuniformsystemlist">lds::UniformSystemList</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#uniformsystemlist"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-1"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-2"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-3"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-4"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-5"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#heading"><strong>~UniformSystemList</strong></a></li>
+            <li><a href="#dim"><strong>dim</strong></a></li>
+            <li><a href="#size"><strong>size</strong></a></li>
+            <li><a href="#at"><strong>at</strong></a></li>
+            <li><a href="#swap"><strong>Swap</strong></a></li>
+            <li><a href="#operator"><strong>operator=</strong></a></li>
+            <li><a href="#operator-1"><strong>operator=</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsuniformsystemlist">
+  lds::UniformSystemList
+  <a class="anchor" href="#ldsuniformsystemlist">#</a>
+</h1>
+<p><a href="#detailed-description">More&hellip;</a></p>
+<p>Inherits from std::vector&lt; System &gt;</p>
+<h2 id="public-functions">
+  Public Functions
+  <a class="anchor" href="#public-functions">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-uniformsystemlist">UniformSystemList</a></strong>() =default<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a>.</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-uniformsystemlist">UniformSystemList</a></strong>(const std::vector&lt; <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_system/">System</a> &gt; &amp; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0})<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> by copying existing vector of <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_system/">System</a> if dimensions consistent.</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-uniformsystemlist">UniformSystemList</a></strong>(std::vector&lt; <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_system/">System</a> &gt; &amp;&amp; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0})<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> by moving existing vector of <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_system/">System</a> if dimensions consistent.</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-uniformsystemlist">UniformSystemList</a></strong>(std::initializer_list&lt; <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_system/">System</a> &gt; systems, std::array&lt; size_t, 3 &gt; dim ={0, 0, 0})<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> from initializer_list of <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_system/">System</a> if dimensions consistent.</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-uniformsystemlist">UniformSystemList</a></strong>(const <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> &amp; that)<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> (copy).</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-uniformsystemlist">UniformSystemList</a></strong>(<a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> &amp;&amp; that)<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> (move).</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-~uniformsystemlist">~UniformSystemList</a></strong>() =default<br>Destroys the object.</td>
+      </tr>
+      <tr>
+          <td>const std::array&lt; size_t, 3 &gt; &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-dim">dim</a></strong>() const<br>gets dimensions of the uniformly sized systems</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-size">size</a></strong>()<br>size of container</td>
+      </tr>
+      <tr>
+          <td>const <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_system/">System</a> &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-at">at</a></strong>(size_t n)<br>gets reference to n^th element</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-swap">Swap</a></strong>(<a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_system/">System</a> &amp; that, size_t n)<br>swaps input system with n^th system of list</td>
+      </tr>
+      <tr>
+          <td><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-operator=">operator=</a></strong>(const <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> &amp; that)<br>assigns the contents (copy)</td>
+      </tr>
+      <tr>
+          <td><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/#function-operator=">operator=</a></strong>(<a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a> &amp;&amp; that)<br>assigns the contents (move)</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> System <span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">lds</span><span style="color:#f92672">::</span>UniformSystemList;
+</span></span></code></pre></div><hr>
+<hr>
+<h2 id="public-function-details">
+  Public Function Details
+  <a class="anchor" href="#public-function-details">#</a>
+</h2>
+<h3 id="uniformsystemlist">
+  <strong>UniformSystemList</strong>
+  <a class="anchor" href="#uniformsystemlist">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>UniformSystemList() <span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>
+</span></span></code></pre></div><hr>
+<h3 id="uniformsystemlist-1">
+  <strong>UniformSystemList</strong>
+  <a class="anchor" href="#uniformsystemlist-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">explicit</span> UniformSystemList(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> System <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> systems,
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span> size_t, <span style="color:#ae81ff">3</span> <span style="color:#f92672">&gt;</span> dim <span style="color:#f92672">=</span>{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>}
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>systems</strong> input systems</li>
+<li><strong>dim</strong> dimensions (n_u, n_x, n_y)</li>
+</ul>
+<hr>
+<h3 id="uniformsystemlist-2">
+  <strong>UniformSystemList</strong>
+  <a class="anchor" href="#uniformsystemlist-2">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">explicit</span> UniformSystemList(
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> System <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> systems,
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span> size_t, <span style="color:#ae81ff">3</span> <span style="color:#f92672">&gt;</span> dim <span style="color:#f92672">=</span>{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>}
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>systems</strong> input systems</li>
+<li><strong>dim</strong> dimensions (n_u, n_x, n_y)</li>
+</ul>
+<hr>
+<h3 id="uniformsystemlist-3">
+  <strong>UniformSystemList</strong>
+  <a class="anchor" href="#uniformsystemlist-3">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>UniformSystemList(
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>initializer_list<span style="color:#f92672">&lt;</span> System <span style="color:#f92672">&gt;</span> systems,
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span> size_t, <span style="color:#ae81ff">3</span> <span style="color:#f92672">&gt;</span> dim <span style="color:#f92672">=</span>{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>}
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>systems</strong> input systems</li>
+<li><strong>dim</strong> dimensions (n_u, n_x, n_y)</li>
+</ul>
+<hr>
+<h3 id="uniformsystemlist-4">
+  <strong>UniformSystemList</strong>
+  <a class="anchor" href="#uniformsystemlist-4">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>UniformSystemList(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> UniformSystemList <span style="color:#f92672">&amp;</span> that
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> another <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a></li>
+</ul>
+<hr>
+<h3 id="uniformsystemlist-5">
+  <strong>UniformSystemList</strong>
+  <a class="anchor" href="#uniformsystemlist-5">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>UniformSystemList(
+</span></span><span style="display:flex;"><span>    UniformSystemList <span style="color:#f92672">&amp;&amp;</span> that
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> another <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a></li>
+</ul>
+<hr>
+<h3 id="heading">
+  <strong>~UniformSystemList</strong>
+  <a class="anchor" href="#heading">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#f92672">~</span>UniformSystemList() <span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>
+</span></span></code></pre></div><hr>
+<h3 id="dim">
+  <strong>dim</strong>
+  <a class="anchor" href="#dim">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span> size_t, <span style="color:#ae81ff">3</span> <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> dim() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="size">
+  <strong>size</strong>
+  <a class="anchor" href="#size">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> size_t size()
+</span></span></code></pre></div><hr>
+<h3 id="at">
+  <strong>at</strong>
+  <a class="anchor" href="#at">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> System <span style="color:#f92672">&amp;</span> at(
+</span></span><span style="display:flex;"><span>    size_t n
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="swap">
+  <strong>Swap</strong>
+  <a class="anchor" href="#swap">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> Swap(
+</span></span><span style="display:flex;"><span>    System <span style="color:#f92672">&amp;</span> that,
+</span></span><span style="display:flex;"><span>    size_t n
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> input system</li>
+<li><strong>n</strong> index where the system is moved</li>
+</ul>
+<hr>
+<h3 id="operator">
+  <strong>operator=</strong>
+  <a class="anchor" href="#operator">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> UniformSystemList <span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> UniformSystemList <span style="color:#f92672">&amp;</span> that
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> another <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a></li>
+</ul>
+<p><strong>Return</strong>: reference to object</p>
+<hr>
+<h3 id="operator-1">
+  <strong>operator=</strong>
+  <a class="anchor" href="#operator-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> UniformSystemList <span style="color:#f92672">&amp;</span> <span style="color:#66d9ef">operator</span><span style="color:#f92672">=</span>(
+</span></span><span style="display:flex;"><span>    UniformSystemList <span style="color:#f92672">&amp;&amp;</span> that
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>that</strong> another <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/">UniformSystemList</a></li>
+</ul>
+<p><strong>Return</strong>: reference to object</p>
+<hr>
+<hr>
+<p>Updated on 31 March 2025 at 16:31:00 EDT</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsuniformsystemlist">lds::UniformSystemList</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#uniformsystemlist"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-1"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-2"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-3"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-4"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#uniformsystemlist-5"><strong>UniformSystemList</strong></a></li>
+            <li><a href="#heading"><strong>~UniformSystemList</strong></a></li>
+            <li><a href="#dim"><strong>dim</strong></a></li>
+            <li><a href="#size"><strong>size</strong></a></li>
+            <li><a href="#at"><strong>at</strong></a></li>
+            <li><a href="#swap"><strong>Swap</strong></a></li>
+            <li><a href="#operator"><strong>operator=</strong></a></li>
+            <li><a href="#operator-1"><strong>operator=</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
