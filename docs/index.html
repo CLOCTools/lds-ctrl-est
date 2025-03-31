@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta name="generator" content="Hugo 0.145.0">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  ldsCtrlEst: LDS Control &amp; Estimation
+  #
+
+ldsCtrlEst is a C&#43;&#43; library for estimation and control of linear dynamical systems (LDS) with Gaussian or Poisson observations. It is meant to provide the functionality necessary to implement feedback control of linear dynamical systems experimentally. This library was originally developed for the task of controlling neuronal activity using spike count data as feedback and optogenetic inputs for control. However, the methods are generally applicable.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="LDS Control & Estimation">
+  <meta property="og:description" content="ldsCtrlEst: LDS Control &amp; Estimation # ldsCtrlEst is a C&#43;&#43; library for estimation and control of linear dynamical systems (LDS) with Gaussian or Poisson observations. It is meant to provide the functionality necessary to implement feedback control of linear dynamical systems experimentally. This library was originally developed for the task of controlling neuronal activity using spike count data as feedback and optogenetic inputs for control. However, the methods are generally applicable.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<title>LDS Control &amp; Estimation | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.4f6b617641b714cbf70266302fdeb12a9567eb52ebfb017533f9c9af1b260392.js" integrity="sha256-T2thdkG3FMv3AmYwL96xKpVn61Lr&#43;wF1M/nJrxsmA5I=" crossorigin="anonymous"></script>
+<link rel="alternate" type="application/rss+xml" href="https://stanley-rozell.github.io/lds-ctrl-est/index.xml" title="LDS C&E" />
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>LDS Control &amp; Estimation</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsctrlest-lds-control--estimation"><code>ldsCtrlEst</code>: LDS Control &amp; Estimation</a></li>
+    <li><a href="#project-scope">Project Scope</a></li>
+    <li><a href="#repository-design">Repository Design</a></li>
+    <li><a href="#repository-organization">Repository Organization</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsctrlest-lds-control--estimation">
+  <code>ldsCtrlEst</code>: LDS Control &amp; Estimation
+  <a class="anchor" href="#ldsctrlest-lds-control--estimation">#</a>
+</h1>
+<p><code>ldsCtrlEst</code> is a C++ library for estimation and control of linear dynamical systems (LDS) with Gaussian or Poisson observations. It is meant to provide the functionality necessary to implement feedback control of linear dynamical systems experimentally. This library was originally developed for the task of controlling neuronal activity using spike count data as feedback and optogenetic inputs for control. However, the methods are generally applicable.</p>
+<p>This library currently provides three namespaces.</p>
+<ul>
+<li><code>lds</code> : linear dynamical systems (without output/observations)</li>
+<li><code>lds::gaussian</code>: linear dynamical systems with Gaussian observations</li>
+<li><code>lds::poisson</code>: linear dynamical systems with Poisson observations</li>
+</ul>
+<p><em>Future iterations may include an additional namespace for LDS with Bernoulli observations (<code>lds::bernoulli</code>).</em></p>
+<h1 id="project-scope">
+  Project Scope
+  <a class="anchor" href="#project-scope">#</a>
+</h1>
+<p>The goal of this project is to provide necessary functions to implement feedback control of linear dynamical systems experimentally: <em>i.e.</em>, online estimation of state feedback and calculation of control signal updates. Given its intended use in experiments, the library seeks to be <strong>practical</strong> in all things and thus includes optional features such as adaptive estimation of a process disturbance to improve robustness in state estimation and a mechanism for combatting integrator windup with control signal saturation. For cases where the system to be controlled is not adequately modeled as having linear dynamics but has multiple quasi-linear operating modes, a switched control scheme is also implemented. It switches between multiple controllers designed for each operating mode of the physical system as it changes. It also includes options to toggle on/off feedback control and state estimation independently, which can be practically useful when testing the components of the control system. Moreover, to avoid the need for numerical integration of continuous-time models, all state-space models used here are discrete-time.</p>
+<p>Generally, the <code>ldsCtrlEst</code> library does <strong>not</strong> endeavor to provide functionality for things that can be carried out offline/before experiments. For example, it does not design controller gains. Given a model of the system to be controlled, these parameters may be optimized before experimental application in most cases, and there are numerous options available to scientists/engineers in languages such as Matlab and Python for design. An exception to this guiding principle to project scope is the included code for fitting state-space models to data. Currently, this fitting portion of the library is a configurable option, but in future releases this may migrate to a separate project as it is not intended for online use.</p>
+<p>Among other things, this project also does not provide methods for trajectory optimization, linearization of nonlinear models, or other methods related to nonlinear control, with the exception of the nonlinear state estimator for Poisson-output LDS models.</p>
+<h1 id="repository-design">
+  Repository Design
+  <a class="anchor" href="#repository-design">#</a>
+</h1>
+<p><img src="/lds-ctrl-est/classlds_1_1_system__inherit__graph.png" alt="system class hierarchy" /></p>
+<ul>
+<li>All dynamical systems <em>with observations</em> (<code>lds::gaussian::System</code>, <code>lds::poisson::System</code>) are derived from a prototypical linear dynamical system abstract type (<code>lds::System</code>).</li>
+<li>These Gaussian and Poisson system types include user-accessible functions for one-step filtering for one-step simulation, etc.</li>
+</ul>
+<p><img src="/lds-ctrl-est/classlds_1_1_controller__inherit__graph.png" alt="controller class hierarchy" /></p>
+<ul>
+<li>The controller types for Gaussian- and Poisson-output systems (<code>lds::gaussian::Controller</code>, <code>lds::gaussian::SwitchedController</code>, <code>lds::poisson::Controller</code>, <code>lds::poisson::SwitchedController</code>) are derived from an abstract class template (<code>lds::Controller</code>) that is generic over LDS types derived from <code>lds::System</code> (here, <code>lds::gaussian::System</code> and <code>lds::poisson::System</code>). <code>lds::Controller</code> provides functions for one-step updates of the control signal, based on feedback and a target/reference signal. For the common problem of output reference tracking, the controller uses the underlying system model to estimate the control signal required to track the target, effectively providing model-based open-loop control if the estimator is disabled.</li>
+<li>In order to ensure dimensionalities always match internally, every property of a system/controller class is <code>protected</code> or <code>private</code>. Get methods provide read-only references for most signals/parameters. Where appropriate, set methods are defined so users can change hidden parameters if and only if the new parameter has the correct dimensions.</li>
+</ul>
+<h1 id="repository-organization">
+  Repository Organization
+  <a class="anchor" href="#repository-organization">#</a>
+</h1>
+<ul>
+<li>Header files are located under <code>include/ldsEstCtrl_h</code>.</li>
+<li>Source files are located under <code>src/</code> (main source code) and <code>src-fit/</code> (model fitting-related source code).</li>
+<li>Wrappers for exposing functions to Matlab as executables (mex) are located under <code>matlab/</code>. Currently, only fitting functions of the library are exposed for use in Matlab.</li>
+<li>Complimentary Matlab functions for control and estimation are also located under <code>matlab/</code>. They are provided as methods of <code>GLDS</code> and <code>PLDS</code> class definitions.</li>
+<li>Example programs and visualization scripts are located under <code>examples/</code>.</li>
+<li>Example programs that demonstrate how to use ldsCtrlEst in other projects are provided in <code>misc/</code>. See <code>misc/test-cmake-installation</code> for a project that uses <code>cmake</code> to configure your project build and <code>misc/test-pkgconfig-installation</code> which is the same but uses a hand-written Makefile and calls to pkg-config. As the names suggest, building these programs is a simple way to test your installation of ldsCtrlEst.</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsctrlest-lds-control--estimation"><code>ldsCtrlEst</code>: LDS Control &amp; Estimation</a></li>
+    <li><a href="#project-scope">Project Scope</a></li>
+    <li><a href="#repository-design">Repository Design</a></li>
+    <li><a href="#repository-organization">Repository Organization</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

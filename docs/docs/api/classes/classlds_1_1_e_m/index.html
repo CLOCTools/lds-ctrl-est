@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  lds::EM
+  #
+
+More&hellip;
+Inherited by lds::gaussian::FitEM, lds::poisson::FitEM
+
+  Public Functions
+  #
+
+
+  
+      
+          
+          Name
+      
+  
+  
+      
+          
+          EM() =defaultConstructs a new EMFit type.
+      
+      
+          
+          EM(size_t n_x, data_t dt, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; u_train, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; z_train)Constructs a new EMFit type.
+      
+      
+          
+          EM(const Fit &amp; fit0, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; u_train, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; z_train)Constructs a new EMFit type.
+      
+      
+          virtual
+          ~EM() =default
+      
+      
+          const Fit &amp;
+          Run(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =true, bool calc_output =true, bool calc_measurement =true, size_t max_iter =100, data_t tol =1e-2)Runs fitting by Expectation(E)-Maximization(M)
+      
+      
+          std::tuple&lt; UniformMatrixList&lt; kMatFreeDim2 &gt;, UniformMatrixList&lt; kMatFreeDim2 &gt; &gt;
+          ReturnData()Returns the input/output data to caller.
+      
+      
+          const std::vector&lt; Matrix &gt; &amp;
+          x() constgets estimated state (over time)
+      
+      
+          const std::vector&lt; Matrix &gt; &amp;
+          y() constgets estimated output (over time)
+      
+      
+          const Matrix &amp;
+          sum_E_x_t_x_t() constgets state-input covariance
+      
+      
+          const Matrix &amp;
+          sum_E_xu_tm1_xu_tm1() constgets state-input covariance (t-minus-1)
+      
+      
+          const Matrix &amp;
+          sum_E_xu_t_xu_tm1() constgets single lag state-input covariance
+      
+      
+          size_t
+          n_t_tot()total number of time samples
+      
+      
+          const Vector &amp;
+          theta() constgets parameters updated in M step
+      
+  
+
+
+  Protected Functions
+  #
+
+
+  
+      
+          
+          Name
+      
+  
+  
+      
+          void
+          Expectation(bool force_common_initial =false)Expectation step.
+      
+      
+          void
+          Maximization(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =false, bool calc_output =false, bool calc_measurement =false)Maximization step.
+      
+      
+          void
+          MaximizeDynamics()
+      
+      
+          void
+          MaximizeQ()
+      
+      
+          void
+          MaximizeInitial()
+      
+      
+          virtual void
+          MaximizeOutput() =0
+      
+      
+          virtual void
+          MaximizeMeasurement() =0
+      
+      
+          void
+          Smooth(bool force_common_initial)get smoothed estimates
+      
+      
+          virtual void
+          RecurseKe(Matrix &amp; Ke, Cube &amp; P_pre, Cube &amp; P_post, size_t t) =0recursively update estimator gain Ke
+      
+      
+          void
+          Reset()reset to initial conditions
+      
+      
+          void
+          InitVars()Initializes the variables.
+      
+      
+          Vector
+          UpdateTheta()updates parameter list, theta
+      
+  
+
+
+  Protected Attributes
+  #
+
+
+  
+      
+          
+          Name
+      
+  
+  
+      
+          UniformMatrixList&lt; kMatFreeDim2 &gt;
+          u_ input training data
+      
+      
+          UniformMatrixList&lt; kMatFreeDim2 &gt;
+          z_ measurement training data
+      
+      
+          std::vector&lt; Matrix &gt;
+          x_ state estimate
+      
+      
+          std::vector&lt; Cube &gt;
+          P_ state estimate cov
+      
+      
+          std::vector&lt; Cube &gt;
+          P_t_tm1_ single-lag state covariance
+      
+      
+          std::vector&lt; Matrix &gt;
+          y_ output estimate
+      
+      
+          Matrix
+          diag_y_
+      
+      
+          Matrix
+          sum_E_x_t_x_t_ state covariance (current time)
+      
+      
+          Matrix
+          sum_E_xu_tm1_xu_tm1_ state-input covariance (t-minus-1)
+      
+      
+          Matrix
+          sum_E_xu_t_xu_tm1_ single lag state-input covariance
+      
+      
+          Fit
+          fit_
+      
+      
+          Vector
+          theta_
+      
+      
+          data_t
+          dt_ sample period
+      
+      
+          size_t
+          n_u_ number of inputs
+      
+      
+          size_t
+          n_x_ number of states
+      
+      
+          size_t
+          n_y_ number of outputs
+      
+      
+          size_t
+          n_trials_ number of input/output data sequences
+      
+      
+          std::vector&lt; size_t &gt;
+          n_t_ number of time steps
+      
+      
+          size_t
+          n_t_tot_ total number of time steps across trials
+      
+  
+
+
+  Detailed Description
+  #
+
+template &lt;typename Fit &gt;
+class lds::EM;
+
+
+
+  Public Function Details
+  #
+
+
+  EM
+  #
+
+EM() =default
+
+
+  EM
+  #
+
+EM(
+    size_t n_x,
+    data_t dt,
+    UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; u_train,
+    UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; z_train
+)
+Parameters:">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="lds::EM">
+  <meta property="og:description" content="lds::EM # More…
+Inherited by lds::gaussian::FitEM, lds::poisson::FitEM
+Public Functions # Name EM() =default
+Constructs a new EMFit type. EM(size_t n_x, data_t dt, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; u_train, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; z_train)
+Constructs a new EMFit type. EM(const Fit &amp; fit0, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; u_train, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; z_train)
+Constructs a new EMFit type. virtual ~EM() =default const Fit &amp; Run(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =true, bool calc_output =true, bool calc_measurement =true, size_t max_iter =100, data_t tol =1e-2)
+Runs fitting by Expectation(E)-Maximization(M) std::tuple&lt; UniformMatrixList&lt; kMatFreeDim2 &gt;, UniformMatrixList&lt; kMatFreeDim2 &gt; &gt; ReturnData()
+Returns the input/output data to caller. const std::vector&lt; Matrix &gt; &amp; x() const
+gets estimated state (over time) const std::vector&lt; Matrix &gt; &amp; y() const
+gets estimated output (over time) const Matrix &amp; sum_E_x_t_x_t() const
+gets state-input covariance const Matrix &amp; sum_E_xu_tm1_xu_tm1() const
+gets state-input covariance (t-minus-1) const Matrix &amp; sum_E_xu_t_xu_tm1() const
+gets single lag state-input covariance size_t n_t_tot()
+total number of time samples const Vector &amp; theta() const
+gets parameters updated in M step Protected Functions # Name void Expectation(bool force_common_initial =false)
+Expectation step. void Maximization(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =false, bool calc_output =false, bool calc_measurement =false)
+Maximization step. void MaximizeDynamics() void MaximizeQ() void MaximizeInitial() virtual void MaximizeOutput() =0 virtual void MaximizeMeasurement() =0 void Smooth(bool force_common_initial)
+get smoothed estimates virtual void RecurseKe(Matrix &amp; Ke, Cube &amp; P_pre, Cube &amp; P_post, size_t t) =0
+recursively update estimator gain Ke void Reset()
+reset to initial conditions void InitVars()
+Initializes the variables. Vector UpdateTheta()
+updates parameter list, theta Protected Attributes # Name UniformMatrixList&lt; kMatFreeDim2 &gt; u_ input training data UniformMatrixList&lt; kMatFreeDim2 &gt; z_ measurement training data std::vector&lt; Matrix &gt; x_ state estimate std::vector&lt; Cube &gt; P_ state estimate cov std::vector&lt; Cube &gt; P_t_tm1_ single-lag state covariance std::vector&lt; Matrix &gt; y_ output estimate Matrix diag_y_ Matrix sum_E_x_t_x_t_ state covariance (current time) Matrix sum_E_xu_tm1_xu_tm1_ state-input covariance (t-minus-1) Matrix sum_E_xu_t_xu_tm1_ single lag state-input covariance Fit fit_ Vector theta_ data_t dt_ sample period size_t n_u_ number of inputs size_t n_x_ number of states size_t n_y_ number of outputs size_t n_trials_ number of input/output data sequences std::vector&lt; size_t &gt; n_t_ number of time steps size_t n_t_tot_ total number of time steps across trials Detailed Description # template &lt;typename Fit &gt; class lds::EM; Public Function Details # EM # EM() =default EM # EM( size_t n_x, data_t dt, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; u_train, UniformMatrixList&lt; kMatFreeDim2 &gt; &amp;&amp; z_train ) Parameters:">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>lds::EM | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.4f6b617641b714cbf70266302fdeb12a9567eb52ebfb017533f9c9af1b260392.js" integrity="sha256-T2thdkG3FMv3AmYwL96xKpVn61Lr&#43;wF1M/nJrxsmA5I=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::EM</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsem">lds::EM</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#protected-functions">Protected Functions</a></li>
+        <li><a href="#protected-attributes">Protected Attributes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#em"><strong>EM</strong></a></li>
+            <li><a href="#em-1"><strong>EM</strong></a></li>
+            <li><a href="#em-2"><strong>EM</strong></a></li>
+            <li><a href="#heading"><strong>~EM</strong></a></li>
+            <li><a href="#run"><strong>Run</strong></a></li>
+            <li><a href="#returndata"><strong>ReturnData</strong></a></li>
+            <li><a href="#x"><strong>x</strong></a></li>
+            <li><a href="#y"><strong>y</strong></a></li>
+            <li><a href="#sum_"><strong>sum_E_x_t_x_t</strong></a></li>
+            <li><a href="#sum_-1"><strong>sum_E_xu_tm1_xu_tm1</strong></a></li>
+            <li><a href="#sum_-2"><strong>sum_E_xu_t_xu_tm1</strong></a></li>
+            <li><a href="#n_"><strong>n_t_tot</strong></a></li>
+            <li><a href="#theta"><strong>theta</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-function-details">Protected Function Details</a>
+          <ul>
+            <li><a href="#expectation"><strong>Expectation</strong></a></li>
+            <li><a href="#maximization"><strong>Maximization</strong></a></li>
+            <li><a href="#maximizedynamics"><strong>MaximizeDynamics</strong></a></li>
+            <li><a href="#maximizeq"><strong>MaximizeQ</strong></a></li>
+            <li><a href="#maximizeinitial"><strong>MaximizeInitial</strong></a></li>
+            <li><a href="#maximizeoutput"><strong>MaximizeOutput</strong></a></li>
+            <li><a href="#maximizemeasurement"><strong>MaximizeMeasurement</strong></a></li>
+            <li><a href="#smooth"><strong>Smooth</strong></a></li>
+            <li><a href="#recurseke"><strong>RecurseKe</strong></a></li>
+            <li><a href="#reset"><strong>Reset</strong></a></li>
+            <li><a href="#initvars"><strong>InitVars</strong></a></li>
+            <li><a href="#updatetheta"><strong>UpdateTheta</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-attribute-details">Protected Attribute Details</a>
+          <ul>
+            <li><a href="#u_"><strong>u_</strong></a></li>
+            <li><a href="#z_"><strong>z_</strong></a></li>
+            <li><a href="#x_"><strong>x_</strong></a></li>
+            <li><a href="#p_"><strong>P_</strong></a></li>
+            <li><a href="#p_-1"><strong>P_t_tm1_</strong></a></li>
+            <li><a href="#y_"><strong>y_</strong></a></li>
+            <li><a href="#diag_"><strong>diag_y_</strong></a></li>
+            <li><a href="#sum_-3"><strong>sum_E_x_t_x_t_</strong></a></li>
+            <li><a href="#sum_-4"><strong>sum_E_xu_tm1_xu_tm1_</strong></a></li>
+            <li><a href="#sum_-5"><strong>sum_E_xu_t_xu_tm1_</strong></a></li>
+            <li><a href="#fit_"><strong>fit_</strong></a></li>
+            <li><a href="#theta_"><strong>theta_</strong></a></li>
+            <li><a href="#dt_"><strong>dt_</strong></a></li>
+            <li><a href="#n_-1"><strong>n_u_</strong></a></li>
+            <li><a href="#n_-2"><strong>n_x_</strong></a></li>
+            <li><a href="#n_-3"><strong>n_y_</strong></a></li>
+            <li><a href="#n_-4"><strong>n_trials_</strong></a></li>
+            <li><a href="#n_-5"><strong>n_t_</strong></a></li>
+            <li><a href="#n_-6"><strong>n_t_tot_</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsem">
+  lds::EM
+  <a class="anchor" href="#ldsem">#</a>
+</h1>
+<p><a href="#detailed-description">More&hellip;</a></p>
+<p>Inherited by <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/">lds::gaussian::FitEM</a>, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/">lds::poisson::FitEM</a></p>
+<h2 id="public-functions">
+  Public Functions
+  <a class="anchor" href="#public-functions">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-em">EM</a></strong>() =default<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/">EM</a><a href="">Fit</a> type.</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-em">EM</a></strong>(size_t n_x, <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a> dt, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &amp;&amp; u_train, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &amp;&amp; z_train)<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/">EM</a><a href="">Fit</a> type.</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-em">EM</a></strong>(const <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/">Fit</a> &amp; fit0, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &amp;&amp; u_train, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &amp;&amp; z_train)<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/">EM</a><a href="">Fit</a> type.</td>
+      </tr>
+      <tr>
+          <td>virtual</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-~em">~EM</a></strong>() =default</td>
+      </tr>
+      <tr>
+          <td>const <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/">Fit</a> &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-run">Run</a></strong>(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =true, bool calc_output =true, bool calc_measurement =true, size_t max_iter =100, <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a> tol =1e-2)<br>Runs fitting by Expectation(E)-Maximization(M)</td>
+      </tr>
+      <tr>
+          <td>std::tuple&lt; <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt;, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt; &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-returndata">ReturnData</a></strong>()<br>Returns the input/output data to caller.</td>
+      </tr>
+      <tr>
+          <td>const std::vector&lt; Matrix &gt; &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-x">x</a></strong>() const<br>gets estimated state (over time)</td>
+      </tr>
+      <tr>
+          <td>const std::vector&lt; Matrix &gt; &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-y">y</a></strong>() const<br>gets estimated output (over time)</td>
+      </tr>
+      <tr>
+          <td>const Matrix &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-sum-e-x-t-x-t">sum_E_x_t_x_t</a></strong>() const<br>gets state-input covariance</td>
+      </tr>
+      <tr>
+          <td>const Matrix &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-sum-e-xu-tm1-xu-tm1">sum_E_xu_tm1_xu_tm1</a></strong>() const<br>gets state-input covariance (t-minus-1)</td>
+      </tr>
+      <tr>
+          <td>const Matrix &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-sum-e-xu-t-xu-tm1">sum_E_xu_t_xu_tm1</a></strong>() const<br>gets single lag state-input covariance</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-n-t-tot">n_t_tot</a></strong>()<br>total number of time samples</td>
+      </tr>
+      <tr>
+          <td>const Vector &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-theta">theta</a></strong>() const<br>gets parameters updated in M step</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="protected-functions">
+  Protected Functions
+  <a class="anchor" href="#protected-functions">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-expectation">Expectation</a></strong>(bool force_common_initial =false)<br>Expectation step.</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-maximization">Maximization</a></strong>(bool calc_dynamics =true, bool calc_Q =true, bool calc_init =false, bool calc_output =false, bool calc_measurement =false)<br>Maximization step.</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-maximizedynamics">MaximizeDynamics</a></strong>()</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-maximizeq">MaximizeQ</a></strong>()</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-maximizeinitial">MaximizeInitial</a></strong>()</td>
+      </tr>
+      <tr>
+          <td>virtual void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-maximizeoutput">MaximizeOutput</a></strong>() =0</td>
+      </tr>
+      <tr>
+          <td>virtual void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-maximizemeasurement">MaximizeMeasurement</a></strong>() =0</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-smooth">Smooth</a></strong>(bool force_common_initial)<br>get smoothed estimates</td>
+      </tr>
+      <tr>
+          <td>virtual void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-recurseke">RecurseKe</a></strong>(Matrix &amp; Ke, Cube &amp; P_pre, Cube &amp; P_post, size_t t) =0<br>recursively update estimator gain Ke</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-reset">Reset</a></strong>()<br>reset to initial conditions</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-initvars">InitVars</a></strong>()<br>Initializes the variables.</td>
+      </tr>
+      <tr>
+          <td>Vector</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#function-updatetheta">UpdateTheta</a></strong>()<br>updates parameter list, theta</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="protected-attributes">
+  Protected Attributes
+  <a class="anchor" href="#protected-attributes">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-u-">u_</a></strong> <br>input training data</td>
+      </tr>
+      <tr>
+          <td><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/">UniformMatrixList</a>&lt; <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#enumvalue-kmatfreedim2">kMatFreeDim2</a> &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-z-">z_</a></strong> <br>measurement training data</td>
+      </tr>
+      <tr>
+          <td>std::vector&lt; Matrix &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-x-">x_</a></strong> <br>state estimate</td>
+      </tr>
+      <tr>
+          <td>std::vector&lt; Cube &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-p-">P_</a></strong> <br>state estimate cov</td>
+      </tr>
+      <tr>
+          <td>std::vector&lt; Cube &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-p-t-tm1-">P_t_tm1_</a></strong> <br>single-lag state covariance</td>
+      </tr>
+      <tr>
+          <td>std::vector&lt; Matrix &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-y-">y_</a></strong> <br>output estimate</td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-diag-y-">diag_y_</a></strong></td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-sum-e-x-t-x-t-">sum_E_x_t_x_t_</a></strong> <br>state covariance (current time)</td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-sum-e-xu-tm1-xu-tm1-">sum_E_xu_tm1_xu_tm1_</a></strong> <br>state-input covariance (t-minus-1)</td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-sum-e-xu-t-xu-tm1-">sum_E_xu_t_xu_tm1_</a></strong> <br>single lag state-input covariance</td>
+      </tr>
+      <tr>
+          <td><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/">Fit</a></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-fit-">fit_</a></strong></td>
+      </tr>
+      <tr>
+          <td>Vector</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-theta-">theta_</a></strong></td>
+      </tr>
+      <tr>
+          <td><a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-dt-">dt_</a></strong> <br>sample period</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-n-u-">n_u_</a></strong> <br>number of inputs</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-n-x-">n_x_</a></strong> <br>number of states</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-n-y-">n_y_</a></strong> <br>number of outputs</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-n-trials-">n_trials_</a></strong> <br>number of input/output data sequences</td>
+      </tr>
+      <tr>
+          <td>std::vector&lt; size_t &gt;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-n-t-">n_t_</a></strong> <br>number of time steps</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/#variable-n-t-tot-">n_t_tot_</a></strong> <br>total number of time steps across trials</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit <span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">lds</span><span style="color:#f92672">::</span>EM;
+</span></span></code></pre></div><hr>
+<hr>
+<h2 id="public-function-details">
+  Public Function Details
+  <a class="anchor" href="#public-function-details">#</a>
+</h2>
+<h3 id="em">
+  <strong>EM</strong>
+  <a class="anchor" href="#em">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>EM() <span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>
+</span></span></code></pre></div><hr>
+<h3 id="em-1">
+  <strong>EM</strong>
+  <a class="anchor" href="#em-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>EM(
+</span></span><span style="display:flex;"><span>    size_t n_x,
+</span></span><span style="display:flex;"><span>    data_t dt,
+</span></span><span style="display:flex;"><span>    UniformMatrixList<span style="color:#f92672">&lt;</span> kMatFreeDim2 <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> u_train,
+</span></span><span style="display:flex;"><span>    UniformMatrixList<span style="color:#f92672">&lt;</span> kMatFreeDim2 <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> z_train
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>n_x</strong> number of states</li>
+<li><strong>dt</strong> sample period</li>
+<li><strong>u_train</strong> input training data</li>
+<li><strong>z_train</strong> measurement training data</li>
+</ul>
+<hr>
+<h3 id="em-2">
+  <strong>EM</strong>
+  <a class="anchor" href="#em-2">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>EM(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Fit <span style="color:#f92672">&amp;</span> fit0,
+</span></span><span style="display:flex;"><span>    UniformMatrixList<span style="color:#f92672">&lt;</span> kMatFreeDim2 <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> u_train,
+</span></span><span style="display:flex;"><span>    UniformMatrixList<span style="color:#f92672">&lt;</span> kMatFreeDim2 <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;&amp;</span> z_train
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>fit0</strong> initial fit</li>
+<li><strong>u_train</strong> input training data</li>
+<li><strong>z_train</strong> measurement training data</li>
+</ul>
+<hr>
+<h3 id="heading">
+  <strong>~EM</strong>
+  <a class="anchor" href="#heading">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>EM() <span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>
+</span></span></code></pre></div><hr>
+<h3 id="run">
+  <strong>Run</strong>
+  <a class="anchor" href="#run">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> Fit <span style="color:#f92672">&amp;</span> Run(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_dynamics <span style="color:#f92672">=</span>true,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_Q <span style="color:#f92672">=</span>true,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_init <span style="color:#f92672">=</span>true,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_output <span style="color:#f92672">=</span>true,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_measurement <span style="color:#f92672">=</span>true,
+</span></span><span style="display:flex;"><span>    size_t max_iter <span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>,
+</span></span><span style="display:flex;"><span>    data_t tol <span style="color:#f92672">=</span><span style="color:#ae81ff">1e-2</span>
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>calc_dynamics</strong> [optional] whether to calculate dynamics (A, B)</li>
+<li><strong>calc_Q</strong> [optional] whether to calculate process noise covariance</li>
+<li><strong>calc_init</strong> [optional] whether to calculate initial conditions</li>
+<li><strong>calc_output</strong> [optional] whether to calculate output function</li>
+<li><strong>calc_measurement</strong> [optional] whether to calculate parameters for measurement/observation law</li>
+<li><strong>max_iter</strong> max number of iterations</li>
+<li><strong>tol</strong> convergence tolerance (max fractional abs change)</li>
+</ul>
+<p><strong>Return</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/">Fit</a></p>
+<hr>
+<h3 id="returndata">
+  <strong>ReturnData</strong>
+  <a class="anchor" href="#returndata">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span> UniformMatrixList<span style="color:#f92672">&lt;</span> kMatFreeDim2 <span style="color:#f92672">&gt;</span>, UniformMatrixList<span style="color:#f92672">&lt;</span> kMatFreeDim2 <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&gt;</span> ReturnData()
+</span></span></code></pre></div><p><strong>Return</strong>: tuple(input data, output data)</p>
+<hr>
+<h3 id="x">
+  <strong>x</strong>
+  <a class="anchor" href="#x">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> Matrix <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> x() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="y">
+  <strong>y</strong>
+  <a class="anchor" href="#y">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> Matrix <span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span> y() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="sum_">
+  <strong>sum_E_x_t_x_t</strong>
+  <a class="anchor" href="#sum_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> sum_E_x_t_x_t() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="sum_-1">
+  <strong>sum_E_xu_tm1_xu_tm1</strong>
+  <a class="anchor" href="#sum_-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> sum_E_xu_tm1_xu_tm1() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="sum_-2">
+  <strong>sum_E_xu_t_xu_tm1</strong>
+  <a class="anchor" href="#sum_-2">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> sum_E_xu_t_xu_tm1() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="n_">
+  <strong>n_t_tot</strong>
+  <a class="anchor" href="#n_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> size_t n_t_tot()
+</span></span></code></pre></div><hr>
+<h3 id="theta">
+  <strong>theta</strong>
+  <a class="anchor" href="#theta">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> theta() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h2 id="protected-function-details">
+  Protected Function Details
+  <a class="anchor" href="#protected-function-details">#</a>
+</h2>
+<h3 id="expectation">
+  <strong>Expectation</strong>
+  <a class="anchor" href="#expectation">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Expectation(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> force_common_initial <span style="color:#f92672">=</span>false
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>force_common_initial</strong> whether to force common initial condition for all trials</li>
+</ul>
+<hr>
+<h3 id="maximization">
+  <strong>Maximization</strong>
+  <a class="anchor" href="#maximization">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Maximization(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_dynamics <span style="color:#f92672">=</span>true,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_Q <span style="color:#f92672">=</span>true,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_init <span style="color:#f92672">=</span>false,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_output <span style="color:#f92672">=</span>false,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> calc_measurement <span style="color:#f92672">=</span>false
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>calc_dynamics</strong> [optional] whether to caclulate dynamics (A, B)</li>
+<li><strong>calc_Q</strong> [optional] whether to calculate process noise covariance</li>
+<li><strong>calc_init</strong> [optional] whether to calculate initial conditions</li>
+<li><strong>calc_output</strong> [optional] whether to calculate output function</li>
+<li><strong>calc_measurement</strong> [optional] whether to calculate parameters for measurement/observation law</li>
+</ul>
+<hr>
+<h3 id="maximizedynamics">
+  <strong>MaximizeDynamics</strong>
+  <a class="anchor" href="#maximizedynamics">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> MaximizeDynamics()
+</span></span></code></pre></div><hr>
+<h3 id="maximizeq">
+  <strong>MaximizeQ</strong>
+  <a class="anchor" href="#maximizeq">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> MaximizeQ()
+</span></span></code></pre></div><hr>
+<h3 id="maximizeinitial">
+  <strong>MaximizeInitial</strong>
+  <a class="anchor" href="#maximizeinitial">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> MaximizeInitial()
+</span></span></code></pre></div><hr>
+<h3 id="maximizeoutput">
+  <strong>MaximizeOutput</strong>
+  <a class="anchor" href="#maximizeoutput">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> MaximizeOutput() <span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p><strong>Reimplemented by</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/#function-maximizeoutput">lds::gaussian::FitEM::MaximizeOutput</a>, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/#function-maximizeoutput">lds::poisson::FitEM::MaximizeOutput</a></p>
+<hr>
+<h3 id="maximizemeasurement">
+  <strong>MaximizeMeasurement</strong>
+  <a class="anchor" href="#maximizemeasurement">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> MaximizeMeasurement() <span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p><strong>Reimplemented by</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/#function-maximizemeasurement">lds::gaussian::FitEM::MaximizeMeasurement</a>, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/#function-maximizemeasurement">lds::poisson::FitEM::MaximizeMeasurement</a></p>
+<hr>
+<h3 id="smooth">
+  <strong>Smooth</strong>
+  <a class="anchor" href="#smooth">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Smooth(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">bool</span> force_common_initial
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>force_common_initial</strong> whether to force common initial conditions</li>
+</ul>
+<hr>
+<h3 id="recurseke">
+  <strong>RecurseKe</strong>
+  <a class="anchor" href="#recurseke">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> RecurseKe(
+</span></span><span style="display:flex;"><span>    Matrix <span style="color:#f92672">&amp;</span> Ke,
+</span></span><span style="display:flex;"><span>    Cube <span style="color:#f92672">&amp;</span> P_pre,
+</span></span><span style="display:flex;"><span>    Cube <span style="color:#f92672">&amp;</span> P_post,
+</span></span><span style="display:flex;"><span>    size_t t
+</span></span><span style="display:flex;"><span>) <span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>Ke</strong> estimator gain</li>
+<li><strong>P_pre</strong> cov of predicted state est.</li>
+<li><strong>P_post</strong> cov of postior sate est.</li>
+<li><strong>t</strong> time</li>
+</ul>
+<p><strong>Reimplemented by</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit_e_m/#function-recurseke">lds::gaussian::FitEM::RecurseKe</a>, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit_e_m/#function-recurseke">lds::poisson::FitEM::RecurseKe</a></p>
+<hr>
+<h3 id="reset">
+  <strong>Reset</strong>
+  <a class="anchor" href="#reset">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> Reset()
+</span></span></code></pre></div><hr>
+<h3 id="initvars">
+  <strong>InitVars</strong>
+  <a class="anchor" href="#initvars">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> InitVars()
+</span></span></code></pre></div><hr>
+<h3 id="updatetheta">
+  <strong>UpdateTheta</strong>
+  <a class="anchor" href="#updatetheta">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Vector UpdateTheta()
+</span></span></code></pre></div><p><strong>Return</strong>: parameter list</p>
+<hr>
+<h2 id="protected-attribute-details">
+  Protected Attribute Details
+  <a class="anchor" href="#protected-attribute-details">#</a>
+</h2>
+<h3 id="u_">
+  <strong>u_</strong>
+  <a class="anchor" href="#u_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>UniformMatrixList<span style="color:#f92672">&lt;</span> kMatFreeDim2 <span style="color:#f92672">&gt;</span> u_;
+</span></span></code></pre></div><hr>
+<h3 id="z_">
+  <strong>z_</strong>
+  <a class="anchor" href="#z_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>UniformMatrixList<span style="color:#f92672">&lt;</span> kMatFreeDim2 <span style="color:#f92672">&gt;</span> z_;
+</span></span></code></pre></div><hr>
+<h3 id="x_">
+  <strong>x_</strong>
+  <a class="anchor" href="#x_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> Matrix <span style="color:#f92672">&gt;</span> x_;
+</span></span></code></pre></div><hr>
+<h3 id="p_">
+  <strong>P_</strong>
+  <a class="anchor" href="#p_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> Cube <span style="color:#f92672">&gt;</span> P_;
+</span></span></code></pre></div><hr>
+<h3 id="p_-1">
+  <strong>P_t_tm1_</strong>
+  <a class="anchor" href="#p_-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> Cube <span style="color:#f92672">&gt;</span> P_t_tm1_;
+</span></span></code></pre></div><hr>
+<h3 id="y_">
+  <strong>y_</strong>
+  <a class="anchor" href="#y_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> Matrix <span style="color:#f92672">&gt;</span> y_;
+</span></span></code></pre></div><hr>
+<h3 id="diag_">
+  <strong>diag_y_</strong>
+  <a class="anchor" href="#diag_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix diag_y_;
+</span></span></code></pre></div><hr>
+<h3 id="sum_-3">
+  <strong>sum_E_x_t_x_t_</strong>
+  <a class="anchor" href="#sum_-3">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix sum_E_x_t_x_t_;
+</span></span></code></pre></div><hr>
+<h3 id="sum_-4">
+  <strong>sum_E_xu_tm1_xu_tm1_</strong>
+  <a class="anchor" href="#sum_-4">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix sum_E_xu_tm1_xu_tm1_;
+</span></span></code></pre></div><hr>
+<h3 id="sum_-5">
+  <strong>sum_E_xu_t_xu_tm1_</strong>
+  <a class="anchor" href="#sum_-5">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix sum_E_xu_t_xu_tm1_;
+</span></span></code></pre></div><hr>
+<h3 id="fit_">
+  <strong>fit_</strong>
+  <a class="anchor" href="#fit_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Fit fit_;
+</span></span></code></pre></div><hr>
+<h3 id="theta_">
+  <strong>theta_</strong>
+  <a class="anchor" href="#theta_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Vector theta_;
+</span></span></code></pre></div><hr>
+<h3 id="dt_">
+  <strong>dt_</strong>
+  <a class="anchor" href="#dt_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>data_t dt_ {};
+</span></span></code></pre></div><hr>
+<h3 id="n_-1">
+  <strong>n_u_</strong>
+  <a class="anchor" href="#n_-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>size_t n_u_ {};
+</span></span></code></pre></div><hr>
+<h3 id="n_-2">
+  <strong>n_x_</strong>
+  <a class="anchor" href="#n_-2">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>size_t n_x_ {};
+</span></span></code></pre></div><hr>
+<h3 id="n_-3">
+  <strong>n_y_</strong>
+  <a class="anchor" href="#n_-3">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>size_t n_y_ {};
+</span></span></code></pre></div><hr>
+<h3 id="n_-4">
+  <strong>n_trials_</strong>
+  <a class="anchor" href="#n_-4">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>size_t n_trials_ {};
+</span></span></code></pre></div><hr>
+<h3 id="n_-5">
+  <strong>n_t_</strong>
+  <a class="anchor" href="#n_-5">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span> size_t <span style="color:#f92672">&gt;</span> n_t_;
+</span></span></code></pre></div><hr>
+<h3 id="n_-6">
+  <strong>n_t_tot_</strong>
+  <a class="anchor" href="#n_-6">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>size_t n_t_tot_ {};
+</span></span></code></pre></div><hr>
+<hr>
+<p>Updated on 31 March 2025 at 16:04:30 EDT</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsem">lds::EM</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#protected-functions">Protected Functions</a></li>
+        <li><a href="#protected-attributes">Protected Attributes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#em"><strong>EM</strong></a></li>
+            <li><a href="#em-1"><strong>EM</strong></a></li>
+            <li><a href="#em-2"><strong>EM</strong></a></li>
+            <li><a href="#heading"><strong>~EM</strong></a></li>
+            <li><a href="#run"><strong>Run</strong></a></li>
+            <li><a href="#returndata"><strong>ReturnData</strong></a></li>
+            <li><a href="#x"><strong>x</strong></a></li>
+            <li><a href="#y"><strong>y</strong></a></li>
+            <li><a href="#sum_"><strong>sum_E_x_t_x_t</strong></a></li>
+            <li><a href="#sum_-1"><strong>sum_E_xu_tm1_xu_tm1</strong></a></li>
+            <li><a href="#sum_-2"><strong>sum_E_xu_t_xu_tm1</strong></a></li>
+            <li><a href="#n_"><strong>n_t_tot</strong></a></li>
+            <li><a href="#theta"><strong>theta</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-function-details">Protected Function Details</a>
+          <ul>
+            <li><a href="#expectation"><strong>Expectation</strong></a></li>
+            <li><a href="#maximization"><strong>Maximization</strong></a></li>
+            <li><a href="#maximizedynamics"><strong>MaximizeDynamics</strong></a></li>
+            <li><a href="#maximizeq"><strong>MaximizeQ</strong></a></li>
+            <li><a href="#maximizeinitial"><strong>MaximizeInitial</strong></a></li>
+            <li><a href="#maximizeoutput"><strong>MaximizeOutput</strong></a></li>
+            <li><a href="#maximizemeasurement"><strong>MaximizeMeasurement</strong></a></li>
+            <li><a href="#smooth"><strong>Smooth</strong></a></li>
+            <li><a href="#recurseke"><strong>RecurseKe</strong></a></li>
+            <li><a href="#reset"><strong>Reset</strong></a></li>
+            <li><a href="#initvars"><strong>InitVars</strong></a></li>
+            <li><a href="#updatetheta"><strong>UpdateTheta</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-attribute-details">Protected Attribute Details</a>
+          <ul>
+            <li><a href="#u_"><strong>u_</strong></a></li>
+            <li><a href="#z_"><strong>z_</strong></a></li>
+            <li><a href="#x_"><strong>x_</strong></a></li>
+            <li><a href="#p_"><strong>P_</strong></a></li>
+            <li><a href="#p_-1"><strong>P_t_tm1_</strong></a></li>
+            <li><a href="#y_"><strong>y_</strong></a></li>
+            <li><a href="#diag_"><strong>diag_y_</strong></a></li>
+            <li><a href="#sum_-3"><strong>sum_E_x_t_x_t_</strong></a></li>
+            <li><a href="#sum_-4"><strong>sum_E_xu_tm1_xu_tm1_</strong></a></li>
+            <li><a href="#sum_-5"><strong>sum_E_xu_t_xu_tm1_</strong></a></li>
+            <li><a href="#fit_"><strong>fit_</strong></a></li>
+            <li><a href="#theta_"><strong>theta_</strong></a></li>
+            <li><a href="#dt_"><strong>dt_</strong></a></li>
+            <li><a href="#n_-1"><strong>n_u_</strong></a></li>
+            <li><a href="#n_-2"><strong>n_x_</strong></a></li>
+            <li><a href="#n_-3"><strong>n_y_</strong></a></li>
+            <li><a href="#n_-4"><strong>n_trials_</strong></a></li>
+            <li><a href="#n_-5"><strong>n_t_</strong></a></li>
+            <li><a href="#n_-6"><strong>n_t_tot_</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

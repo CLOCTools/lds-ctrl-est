@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Example PLDS Estimation.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/examples/eg_plds_est_8cpp-example/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="eg_plds_est.cpp">
+  <meta property="og:description" content="Example PLDS Estimation.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>eg_plds_est.cpp | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.4f6b617641b714cbf70266302fdeb12a9567eb52ebfb017533f9c9af1b260392.js" integrity="sha256-T2thdkG3FMv3AmYwL96xKpVn61Lr&#43;wF1M/nJrxsmA5I=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>eg_plds_est.cpp</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#eg_plds_estcpp">eg_plds_est.cpp</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="eg_plds_estcpp">
+  eg_plds_est.cpp
+  <a class="anchor" href="#eg_plds_estcpp">#</a>
+</h1>
+<p>Example PLDS Estimation ```cpp</p>
+<p>//===&ndash; eg_plds_est.cpp - Example PLDS Estimation &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-===//
+//
+// Copyright 2021 Michael Bolus
+// Copyright 2021 Georgia Institute of Technology
+//
+// Licensed under the Apache License, Version 2.0 (the &ldquo;License&rdquo;);
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     <a href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a>
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an &ldquo;AS IS&rdquo; BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+//===&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-===//
+//===&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;-===//</p>
+<p>#include <ldsCtrlEst></p>
+<p>using lds::Matrix;
+using lds::Vector;
+using lds::data_t;
+using std::cout;</p>
+<p>// for generating random input
+Matrix random_walk(size_t n_t, const Matrix&amp; Q, const Vector&amp; x0);</p>
+<p>int main() {
+cout &laquo; &quot; ********** Example Poisson LDS Estimation ********** \n\n&quot;;</p>
+<p>// Make SISO system sampled at 1kHz
+data_t dt = 1e-3;
+size_t n_u = 1;                           // no. inputs
+size_t n_x = 1;                           // no. states
+size_t n_y = 1;                           // no. outputs
+auto n_t = static_cast&lt;size_t&gt;(30 / dt);  // no time steps for simulation.</p>
+<p>// construct ground truth system&hellip;
+lds::poisson::System system_true(n_u, n_x, n_y, dt);</p>
+<p>// Model parameters
+Matrix a_true(n_x, n_x, arma::fill::eye);
+a_true[0] = exp(-dt / 0.075);
+Matrix b_true = Matrix(n_x, n_u).fill(1e-2);
+Vector m0_true = Vector(n_x, arma::fill::zeros).fill(-7e-2);  // disturbance
+Vector x0_true = m0_true * arma::inv(Matrix(n_x, n_x, arma::fill::eye) -
+a_true);  // initial state</p>
+<p>// Assign params.
+system_true.set_A(a_true);
+system_true.set_B(b_true);
+system_true.set_x0(x0_true);
+system_true.set_m(m0_true);
+system_true.Reset();</p>
+<p>// Construct system for estimation
+// e.g., will create a model with incorrect disturbance
+lds::poisson::System system_estimator(n_u, n_x, n_y, dt);</p>
+<p>// Can copy parameters from another system object
+system_estimator = system_true;</p>
+<p>// wrong disturbance
+Vector m0_est = m0_true * 2;
+system_estimator.set_m(m0_est);</p>
+<p>// set new initial conditions
+Vector x0_est = m0_est * arma::inv(Matrix(n_x, n_x, arma::fill::eye) -
+a_true);  // initial state
+system_estimator.set_x0(x0_est);
+system_estimator.Reset();  // reset to initial condition.</p>
+<p>// turn on adaptive disturbance estimation
+system_estimator.do_adapt_m = true;</p>
+<p>// set adaptation rate by changing covariance of assumed process noise acting
+// on random-walk evolution of m
+Matrix q_m = Matrix(n_x, n_x, arma::fill::eye) * 1e-6;
+system_estimator.set_Q_m(q_m);</p>
+<p>cout &laquo; &ldquo;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.\n&rdquo;;
+cout &laquo; &ldquo;estimator:\n&rdquo;;
+cout &laquo; &ldquo;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.\n&rdquo;;
+system_estimator.Print();
+cout &laquo; &ldquo;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;.\n&rdquo;;</p>
+<p>// Set up simulation :
+// Simulated measurements
+Matrix z(n_y, n_t, arma::fill::zeros);</p>
+<p>// Stimulus (generate random stimulus)
+Matrix q_u =
+Matrix(n_u, n_u, arma::fill::eye) * 1e-3;  // cov of random walk
+Matrix u = random_walk(n_t, q_u, Vector(n_u, arma::fill::zeros));</p>
+<p>// create matrix to save outputs in&hellip;
+Matrix y_hat(n_y, n_t, arma::fill::zeros);
+Matrix y_true(n_y, n_t, arma::fill::zeros);</p>
+<p>// states and disturbance params
+Matrix x_hat(n_x, n_t, arma::fill::zeros);
+Matrix m_hat(n_x, n_t, arma::fill::zeros);</p>
+<p>Matrix x_true(n_x, n_t, arma::fill::zeros);
+Matrix m_true(n_x, n_t, arma::fill::zeros);</p>
+<p>// initial conditions
+y_hat.col(0) = system_estimator.y();
+y_true.col(0) = system_true.y();
+x_hat.col(0) = system_estimator.x();
+x_true.col(0) = system_true.x();
+m_hat.col(0) = system_estimator.m();
+m_true.col(0) = system_true.m();</p>
+<p>cout &laquo; &ldquo;Starting &quot; &laquo; n_t * dt &laquo; &quot; sec simlation &hellip; \n&rdquo;;
+auto start = std::chrono::high_resolution_clock::now();
+for (size_t t = 1; t &lt; n_t; t++) {
+// Simlate the true system.
+z.col(t) = system_true.Simulate(u.col(t - 1));</p>
+<pre><code>// Filter (predict -&gt; update)
+system_estimator.Filter(u.col(t - 1), z.col(t));
+
+// save signals
+y_hat.col(t) = system_estimator.y();
+y_true.col(t) = system_true.y();
+
+x_true.col(t) = system_true.x();
+m_true.col(t) = system_true.m();
+
+x_hat.col(t) = system_estimator.x();
+m_hat.col(t) = system_estimator.m();
+</code></pre>
+<p>}</p>
+<p>auto finish = std::chrono::high_resolution_clock::now();
+std::chrono::duration&lt;data_t, std::milli&gt; sim_time_ms = finish - start;
+cout &laquo; &ldquo;Finished simlation in &quot; &laquo; sim_time_ms.count() &laquo; &quot; ms.\n&rdquo;;
+cout &laquo; &ldquo;(app. &quot; &laquo; (sim_time_ms.count() / n_t) * 1e3 &laquo; &quot; us/time-step)\n&rdquo;;</p>
+<p>// saved variables: dt, y_hat, x_hat, m_hat, z, u, y_true,
+// x_true, m_true saving with hdf5 via armadillo
+arma::hdf5_opts::opts replace = arma::hdf5_opts::replace;</p>
+<p>auto dt_vec = Vector(1).fill(dt);
+dt_vec.save(arma::hdf5_name(&ldquo;eg_plds_est.h5&rdquo;, &ldquo;dt&rdquo;));
+u.save(arma::hdf5_name(&ldquo;eg_plds_est.h5&rdquo;, &ldquo;u&rdquo;, replace));
+z.save(arma::hdf5_name(&ldquo;eg_plds_est.h5&rdquo;, &ldquo;z&rdquo;, replace));
+x_true.save(arma::hdf5_name(&ldquo;eg_plds_est.h5&rdquo;, &ldquo;x_true&rdquo;, replace));
+m_true.save(arma::hdf5_name(&ldquo;eg_plds_est.h5&rdquo;, &ldquo;m_true&rdquo;, replace));
+y_true.save(arma::hdf5_name(&ldquo;eg_plds_est.h5&rdquo;, &ldquo;y_true&rdquo;, replace));
+x_hat.save(arma::hdf5_name(&ldquo;eg_plds_est.h5&rdquo;, &ldquo;x_hat&rdquo;, replace));
+m_hat.save(arma::hdf5_name(&ldquo;eg_plds_est.h5&rdquo;, &ldquo;m_hat&rdquo;, replace));
+y_hat.save(arma::hdf5_name(&ldquo;eg_plds_est.h5&rdquo;, &ldquo;y_hat&rdquo;, replace));</p>
+<p>return 0;
+}</p>
+<p>// for generating random input
+Matrix random_walk(size_t n_t, const Matrix&amp; Q, const Vector&amp; x0) {
+size_t n = Q.n_rows;</p>
+<p>if ((n != Q.n_cols) || (Q.n_cols != Q.n_rows)) {
+throw std::logic_error(&ldquo;Q must be <code>n</code> x <code>n</code>.&rdquo;);
+}</p>
+<p>Matrix x(n, n_t, arma::fill::zeros);
+x.col(0) = x0;
+for (size_t t = 1; t &lt; n_t; t++) {
+x.col(t) = x.col(t - 1) + arma::mvnrnd(Vector(n, arma::fill::zeros), Q);
+}</p>
+<p>return x;
+}</p>
+<pre tabindex="0"><code>
+_Filename: eg_plds_est.cpp_
+
+-------------------------------
+
+Updated on 31 March 2025 at 16:04:30 EDT
+</code></pre></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#eg_plds_estcpp">eg_plds_est.cpp</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

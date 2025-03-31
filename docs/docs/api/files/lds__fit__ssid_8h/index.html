@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="subspace identification">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__fit__ssid_8h/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="ldsCtrlEst_h/lds_fit_ssid.h">
+  <meta property="og:description" content="subspace identification">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>ldsCtrlEst_h/lds_fit_ssid.h | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.4f6b617641b714cbf70266302fdeb12a9567eb52ebfb017533f9c9af1b260392.js" integrity="sha256-T2thdkG3FMv3AmYwL96xKpVn61Lr&#43;wF1M/nJrxsmA5I=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>ldsCtrlEst_h/lds_fit_ssid.h</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsctrlest_hlds_fit_ssidh">ldsCtrlEst_h/lds_fit_ssid.h</a>
+      <ul>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsctrlest_hlds_fit_ssidh">
+  ldsCtrlEst_h/lds_fit_ssid.h
+  <a class="anchor" href="#ldsctrlest_hlds_fit_ssidh">#</a>
+</h1>
+<p>subspace identification  <a href="#detailed-description">More&hellip;</a></p>
+<h2 id="namespaces">
+  Namespaces
+  <a class="anchor" href="#namespaces">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong><a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/">lds</a></strong> <br>Linear Dynamical Systems (LDS) namespace.</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="classes">
+  Classes
+  <a class="anchor" href="#classes">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>class</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/">lds::SSID</a></strong></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="detailed-description">
+  Detailed Description
+  <a class="anchor" href="#detailed-description">#</a>
+</h2>
+<p>This file declares and partially defines a template type by which LDS models are fit by a subspace identification (SSID) algorithm (<code>[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)&lt;Fit&gt;</code>).</p>
+<p>References: [1] van Overschee P, de Moore B. (1996) Subspace Identification for Linear Systems. Boston: Springer.</p>
+<h2 id="source-code">
+  Source code
+  <a class="anchor" href="#source-code">#</a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//===-- ldsCtrlEst_h/lds_fit_ssid.h - SSID Fit ------------------*- C++ -*-===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Copyright 2021 Michael Bolus
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// you may not use this file except in compliance with the License.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// You may obtain a copy of the License at
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//     http://www.apache.org/licenses/LICENSE-2.0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Unless required by applicable law or agreed to in writing, software
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// See the License for the specific language governing permissions and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// limitations under the License.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#ifndef LDSCTRLEST_LDS_FIT_SSID_H
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#define LDSCTRLEST_LDS_FIT_SSID_H
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;lds_fit.h&#34;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">namespace</span> lds {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SSID</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">static_assert</span>(std<span style="color:#f92672">::</span>is_base_of<span style="color:#f92672">&lt;</span>lds<span style="color:#f92672">::</span>Fit, Fit<span style="color:#f92672">&gt;::</span>value,
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;Fit must be derived from lds::Fit type.&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>  SSID() <span style="color:#f92672">=</span> <span style="color:#66d9ef">default</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  SSID(size_t n_x, size_t n_h, data_t dt,
+</span></span><span style="display:flex;"><span>       UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> u_train,
+</span></span><span style="display:flex;"><span>       UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train,
+</span></span><span style="display:flex;"><span>       <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> d <span style="color:#f92672">=</span> Vector(<span style="color:#ae81ff">1</span>).fill(<span style="color:#f92672">-</span>kInf));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span>Fit, Vector<span style="color:#f92672">&gt;</span> Run(SSIDWt ssid_wt);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span>UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;</span>, UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&gt;</span>
+</span></span><span style="display:flex;"><span>  ReturnData() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> tuple <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>make_tuple(std<span style="color:#f92672">::</span>move(u_), std<span style="color:#f92672">::</span>move(z_));
+</span></span><span style="display:flex;"><span>    u_ <span style="color:#f92672">=</span> UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;</span>();
+</span></span><span style="display:flex;"><span>    z_ <span style="color:#f92672">=</span> UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> tuple;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">protected</span><span style="color:#f92672">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> CalcD(data_t t_silence <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>, data_t thresh_silence <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">CreateHankelDataMat</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">DecomposeData</span>() <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">CalcSVD</span>(SSIDWt wt);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">Solve</span>(data_t wt_dc);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">RecomputeExtObs</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// input/output training data
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;</span> u_;  
+</span></span><span style="display:flex;"><span>  UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;</span> z_;  
+</span></span><span style="display:flex;"><span>  Matrix D_;                           
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Fit fit_;      
+</span></span><span style="display:flex;"><span>  Matrix g_dc_;  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  data_t dt_{};   
+</span></span><span style="display:flex;"><span>  size_t n_u_{};  
+</span></span><span style="display:flex;"><span>  size_t n_x_{};  
+</span></span><span style="display:flex;"><span>  size_t n_y_{};  
+</span></span><span style="display:flex;"><span>  size_t n_h_{};
+</span></span><span style="display:flex;"><span>  size_t n_trials_{};        
+</span></span><span style="display:flex;"><span>  std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span> n_t_;  
+</span></span><span style="display:flex;"><span>  size_t n_t_tot_{};         
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix L_;          
+</span></span><span style="display:flex;"><span>  Vector s_;          
+</span></span><span style="display:flex;"><span>  Matrix ext_obs_t_;  
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>SSID(size_t n_x, size_t n_h, data_t dt,
+</span></span><span style="display:flex;"><span>                UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> u_train,
+</span></span><span style="display:flex;"><span>                UniformMatrixList<span style="color:#f92672">&lt;</span>kMatFreeDim2<span style="color:#f92672">&gt;&amp;&amp;</span> z_train, <span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> d) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// check input/output data dimensions are consistent
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (z_train.size() <span style="color:#f92672">!=</span> u_train.size()) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">throw</span> std<span style="color:#f92672">::</span>runtime_error(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;I/O training data have different number of trials.&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  n_trials_ <span style="color:#f92672">=</span> u_train.size();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  n_t_tot_ <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  n_t_ <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(n_trials_);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (size_t trial <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; trial <span style="color:#f92672">&lt;</span> n_trials_; trial<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (z_train.at(trial).n_cols <span style="color:#f92672">!=</span> u_train.at(trial).n_cols) {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">throw</span> std<span style="color:#f92672">::</span>runtime_error(
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;I/O training data have different number of time steps.&#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    n_t_[trial] <span style="color:#f92672">=</span> u_train.at(trial).n_cols;
+</span></span><span style="display:flex;"><span>    n_t_tot_ <span style="color:#f92672">+=</span> n_t_[trial];
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  dt_ <span style="color:#f92672">=</span> dt;
+</span></span><span style="display:flex;"><span>  n_x_ <span style="color:#f92672">=</span> n_x;
+</span></span><span style="display:flex;"><span>  n_u_ <span style="color:#f92672">=</span> u_train.at(<span style="color:#ae81ff">0</span>).n_rows;
+</span></span><span style="display:flex;"><span>  n_y_ <span style="color:#f92672">=</span> z_train.at(<span style="color:#ae81ff">0</span>).n_rows;
+</span></span><span style="display:flex;"><span>  n_h_ <span style="color:#f92672">=</span> n_h;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// dimensionality check for eventual block-hankel data matrix
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t len <span style="color:#f92672">=</span> n_t_tot_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (len <span style="color:#f92672">&lt;</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> (n_u_ <span style="color:#f92672">+</span> n_y_))) {
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>ostringstream ss;
+</span></span><span style="display:flex;"><span>    ss <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Dataset problem! More rows than columns in block-hankel data &#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;matrix: 2*(n_u+n_y)*n_h &gt; data-length! Need higher data-length or &#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;lower n_h.&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">throw</span> std<span style="color:#f92672">::</span>runtime_error(ss.str());
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  fit_ <span style="color:#f92672">=</span> Fit(n_u_, n_x_, n_y_, dt_);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  u_ <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(u_train);
+</span></span><span style="display:flex;"><span>  z_ <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(z_train);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>d.is_finite() <span style="color:#f92672">||</span> (d.n_rows <span style="color:#f92672">!=</span> n_y_)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// TODO(mfbolus): implement least-square solution for impulse response with
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// a second input of ones. Data-driven way of accounting for offset *not*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// driven by an input.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// For now, calculate output bias (d) as the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// output wherever the stimulus has not been on for some amount of time.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// convolve u with rectangle and take all samples. This is a reasonable
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// approach, since often when autonomous systems are fit (i.e., systems with
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// no input), they will subtract off the mean of the output. This
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// essentially amounts to setting output bias to the mean of the output when
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// there is no stimulation.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    data_t t_silence <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.1</span>;
+</span></span><span style="display:flex;"><span>    data_t thresh_silence <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.001</span>;
+</span></span><span style="display:flex;"><span>    CalcD(t_silence, thresh_silence);
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    fit_.set_d(d);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>tuple<span style="color:#f92672">&lt;</span>Fit, Vector<span style="color:#f92672">&gt;</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>Run(SSIDWt ssid_wt) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// the weight on minimizing dc I/O gain only works for gaussian,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// and hopefully not necessary with appropriate dataset.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t wt_dc <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// std::cout &lt;&lt; &#34;creating hankel mat\n&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  CreateHankelDataMat();
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// std::cout &lt;&lt; &#34;decomposing data\n&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  DecomposeData();
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// std::cout &lt;&lt; &#34;calculating svd\n&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  CalcSVD(ssid_wt);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// std::cout &lt;&lt; &#34;solving for params\n&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Solve(wt_dc);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// std::cout &lt;&lt; &#34;fin\n&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> std<span style="color:#f92672">::</span>make_tuple(fit_, s_);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>CalcD(data_t t_silence, data_t thresh_silence) {
+</span></span><span style="display:flex;"><span>  Vector <span style="color:#a6e22e">d</span>(z_.at(<span style="color:#ae81ff">0</span>).n_rows, fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Vector <span style="color:#a6e22e">win</span>(<span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(t_silence <span style="color:#f92672">/</span> dt_), fill<span style="color:#f92672">::</span>ones);
+</span></span><span style="display:flex;"><span>  Vector <span style="color:#a6e22e">sum_z_silence</span>(n_y_, fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  size_t <span style="color:#a6e22e">n_silence</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (size_t trial <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; trial <span style="color:#f92672">&lt;</span> u_.size(); trial<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// find silent samples
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// start by convolving with
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Vector sum_u <span style="color:#f92672">=</span> vectorise(sum(abs(u_.at(trial)), <span style="color:#ae81ff">0</span>));
+</span></span><span style="display:flex;"><span>    Vector u_conv <span style="color:#f92672">=</span> conv(sum_u, win, <span style="color:#e6db74">&#34;same&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// get only the samples that are silent...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    arma<span style="color:#f92672">::</span>uvec ubi_silence <span style="color:#f92672">=</span> find(u_conv <span style="color:#f92672">&lt;=</span> thresh_silence);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (ubi_silence.n_elem <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>      sum_z_silence <span style="color:#f92672">+=</span> arma<span style="color:#f92672">::</span>sum(z_.at(trial).cols(ubi_silence), <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>      n_silence <span style="color:#f92672">+=</span> ubi_silence.n_elem;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (n_silence <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>    d <span style="color:#f92672">=</span> sum_z_silence <span style="color:#f92672">/</span> n_silence;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  fit_.set_d(d);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>CreateHankelDataMat() {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// temporary copy of data
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix <span style="color:#a6e22e">z</span>(n_y_, n_t_tot_, fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Matrix <span style="color:#a6e22e">u</span>(n_u_, n_t_tot_, fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  size_t <span style="color:#a6e22e">so_far</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (size_t trial <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; trial <span style="color:#f92672">&lt;</span> z_.size(); trial<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    z.submat(<span style="color:#ae81ff">0</span>, so_far, n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, so_far <span style="color:#f92672">+</span> n_t_.at(trial) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> z_.at(trial);
+</span></span><span style="display:flex;"><span>    u.submat(<span style="color:#ae81ff">0</span>, so_far, n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, so_far <span style="color:#f92672">+</span> n_t_.at(trial) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> u_.at(trial);
+</span></span><span style="display:flex;"><span>    so_far <span style="color:#f92672">+=</span> n_t_.at(trial);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// remove output bias
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  z.each_col() <span style="color:#f92672">-=</span> fit_.d();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// calculate I/O gain @ DC while data in convenient form
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  g_dc_ <span style="color:#f92672">=</span> z <span style="color:#f92672">*</span> pinv(u);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// std::cout &lt;&lt; &#34;G0_data = &#34; &lt;&lt; g_dc_ &lt;&lt; &#34;\n&#34;;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// create hankel data matrix
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t len <span style="color:#f92672">=</span> z.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>;  <span style="color:#75715e">// data length in hankel mat
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// block-hankel data matrix
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  D_ <span style="color:#f92672">=</span> Matrix(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> (n_u_ <span style="color:#f92672">+</span> n_y_), len, fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// past input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> u_p <span style="color:#f92672">=</span> D_.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, len <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// future input
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> u_f <span style="color:#f92672">=</span> D_.submat(n_h_ <span style="color:#f92672">*</span> n_u_, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, len <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// past output
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> y_p <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>      D_.submat(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_, <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, len <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// future output
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> y_f <span style="color:#f92672">=</span> D_.submat(n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_), <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>                       <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> (n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, len <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  size_t idx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> len; k<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    idx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (size_t kk <span style="color:#f92672">=</span> k; kk <span style="color:#f92672">&lt;</span> (n_h_ <span style="color:#f92672">+</span> k); kk<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>      u_p.col(k).subvec(idx, idx <span style="color:#f92672">+</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> u.col(kk);
+</span></span><span style="display:flex;"><span>      idx <span style="color:#f92672">+=</span> n_u_;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    idx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (size_t kk <span style="color:#f92672">=</span> (n_h_ <span style="color:#f92672">+</span> k); kk <span style="color:#f92672">&lt;</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">+</span> k); kk<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>      u_f.col(k).subvec(idx, idx <span style="color:#f92672">+</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> u.col(kk);
+</span></span><span style="display:flex;"><span>      idx <span style="color:#f92672">+=</span> n_u_;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    idx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (size_t kk <span style="color:#f92672">=</span> k; kk <span style="color:#f92672">&lt;</span> (n_h_ <span style="color:#f92672">+</span> k); kk<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>      y_p.col(k).subvec(idx, idx <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> z.col(kk);
+</span></span><span style="display:flex;"><span>      idx <span style="color:#f92672">+=</span> n_y_;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    idx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (size_t kk <span style="color:#f92672">=</span> (n_h_ <span style="color:#f92672">+</span> k); kk <span style="color:#f92672">&lt;</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">+</span> k); kk<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>      y_f.col(k).subvec(idx, idx <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> z.col(kk);
+</span></span><span style="display:flex;"><span>      idx <span style="color:#f92672">+=</span> n_y_;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  D_ <span style="color:#f92672">/=</span> sqrt(<span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>data_t<span style="color:#f92672">&gt;</span>(len));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// template &lt;typename Fit&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// void SSID&lt;Fit&gt;::DecomposeData() {
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   // do LQ decomp instead of calculating covariance expensive way
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   // Note that &#34;R&#34; in van Overschee is lower-triangular (L), not &#34;R&#34; in QR
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   // decomp. Very confusing.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   Matrix q_t;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   lq(L_, q_t, D_);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   // van Overschee zeros out the other elements.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//   L_ = trimatl(L_);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// }
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>CalcSVD(SSIDWt wt) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// submats that will be needed:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> R_14_14 <span style="color:#f92672">=</span> L_.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                           n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_11_14 <span style="color:#f92672">=</span> L_.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_11_13 <span style="color:#f92672">=</span> L_.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_23_13 <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>      L_.submat(n_h_ <span style="color:#f92672">*</span> n_u_, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_44_14 <span style="color:#f92672">=</span> L_.submat(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">*</span> n_h_, <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                           n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_44_13 <span style="color:#f92672">=</span> L_.submat(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">*</span> n_h_, <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                           n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_44 <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>      L_.submat(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">*</span> n_h_, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">*</span> n_h_, n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_56_14 <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>      L_.submat(n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_), <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix Lup_Luf_Lyp <span style="color:#f92672">=</span> R_56_14 <span style="color:#f92672">*</span> pinv(R_14_14);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> Lup <span style="color:#f92672">=</span> Lup_Luf_Lyp.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> Luf <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>      Lup_Luf_Lyp.submat(<span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> n_u_, n_h_ <span style="color:#f92672">*</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> Lyp <span style="color:#f92672">=</span> Lup_Luf_Lyp.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_, n_h_ <span style="color:#f92672">*</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                                n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// aka: R_f
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix R_56_16 <span style="color:#f92672">=</span> L_.submat(n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_), <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>                             <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> (n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, L_.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// from van Overschee subid.m:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// Rf = R((2*m+l)*i+1:2*(m+l)*i,:);   % Future outputs
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  Matrix U;
+</span></span><span style="display:flex;"><span>  Matrix V;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">switch</span> (wt) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> kSSIDNone: {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// No weighting. (what van Overschee calls &#34;N4SID&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      Matrix O_k_sans_Qt <span style="color:#f92672">=</span> Lup <span style="color:#f92672">*</span> R_11_14 <span style="color:#f92672">+</span> Lyp <span style="color:#f92672">*</span> R_44_14;
+</span></span><span style="display:flex;"><span>      arma<span style="color:#f92672">::</span>svd(U, s_, V, O_k_sans_Qt, <span style="color:#e6db74">&#34;std&#34;</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> kSSIDMOESP: {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// MOESP weighting
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// This is what they use in the &#34;robust&#34; algorithm van Overschee, de Moor
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// 1996
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      Matrix Pi <span style="color:#f92672">=</span> Matrix(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_, fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">-</span>
+</span></span><span style="display:flex;"><span>                  R_23_13.t() <span style="color:#f92672">*</span> inv(R_23_13 <span style="color:#f92672">*</span> R_23_13.t()) <span style="color:#f92672">*</span> R_23_13;
+</span></span><span style="display:flex;"><span>      Matrix O_k_ortho_Uf_sans_Qt <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>          join_horiz((Lup <span style="color:#f92672">*</span> R_11_13 <span style="color:#f92672">+</span> Lyp <span style="color:#f92672">*</span> R_44_13) <span style="color:#f92672">*</span> Pi, Lyp <span style="color:#f92672">*</span> R_44);
+</span></span><span style="display:flex;"><span>      svd(U, s_, V, O_k_ortho_Uf_sans_Qt, <span style="color:#e6db74">&#34;std&#34;</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">case</span> kSSIDCVA: {
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">// CVA weighting
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// See van Overschee&#39;s matlab code (subid.m):
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      <span style="color:#75715e">// https://www.mathworks.com/matlabcentral/fileexchange/2290-subspace-identification-for-linear-systems
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      Matrix Pi <span style="color:#f92672">=</span> Matrix(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_, fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">-</span>
+</span></span><span style="display:flex;"><span>                  R_23_13.t() <span style="color:#f92672">*</span> inv(R_23_13 <span style="color:#f92672">*</span> R_23_13.t()) <span style="color:#f92672">*</span> R_23_13;
+</span></span><span style="display:flex;"><span>      Matrix O_k_ortho_Uf_sans_Qt <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>          join_horiz((Lup <span style="color:#f92672">*</span> R_11_13 <span style="color:#f92672">+</span> Lyp <span style="color:#f92672">*</span> R_44_13) <span style="color:#f92672">*</span> Pi, Lyp <span style="color:#f92672">*</span> R_44);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      Matrix inv_w1;
+</span></span><span style="display:flex;"><span>      Matrix qt1;
+</span></span><span style="display:flex;"><span>      lq(inv_w1, qt1, R_56_16);  <span style="color:#75715e">// lq decomp of R_f (future output data)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      inv_w1 <span style="color:#f92672">=</span> trimatl(inv_w1);
+</span></span><span style="display:flex;"><span>      inv_w1 <span style="color:#f92672">=</span> inv_w1.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_y_ <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, n_y_ <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>      Matrix w_o_w <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>solve(
+</span></span><span style="display:flex;"><span>          inv_w1, O_k_ortho_Uf_sans_Qt);  <span style="color:#75715e">// alternatively
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          <span style="color:#75715e">// pinv(inv_W1)*O_k_ortho_Uf_sans_Qt
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>      svd(U, s_, V, w_o_w, <span style="color:#e6db74">&#34;std&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      U <span style="color:#f92672">=</span> inv_w1 <span style="color:#f92672">*</span> U;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Truncate to model order (heart of ssid method)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> s_hat <span style="color:#f92672">=</span> s_.subvec(<span style="color:#ae81ff">0</span>, n_x_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  Matrix diag_sqrt_s <span style="color:#f92672">=</span> diagmat(sqrt(s_hat));
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> u_hat <span style="color:#f92672">=</span> U.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, U.n_rows <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, n_x_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// get extended observability and controllability mats
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  ext_obs_t_ <span style="color:#f92672">=</span> u_hat <span style="color:#f92672">*</span> diag_sqrt_s;  <span style="color:#75715e">// extended observability matrix
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>Solve(data_t wt_dc) {
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// required submats
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> R_56_14 <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>      L_.submat(n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_), <span style="color:#ae81ff">0</span>, n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_23_15 <span style="color:#f92672">=</span> L_.submat(n_h_ <span style="color:#f92672">*</span> n_u_, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                           n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_66_15 <span style="color:#f92672">=</span> L_.submat(n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">+</span> n_y_, <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>                           <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> (n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                           n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_55_15 <span style="color:#f92672">=</span> L_.submat(n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_), <span style="color:#ae81ff">0</span>,
+</span></span><span style="display:flex;"><span>                           n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                           n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">auto</span> R_56_15 <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>      L_.submat(n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_), <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_h_ <span style="color:#f92672">*</span> (n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Solve for params using appropriate algorithm:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// robust deterministic/stochastic algorithm in van Overschee 1996
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// algorithm that the authors say &#34;works&#34; in practice.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> ext_obs_tm1 <span style="color:#f92672">=</span> ext_obs_t_.submat(
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, ext_obs_t_.n_rows <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> n_y_,
+</span></span><span style="display:flex;"><span>      ext_obs_t_.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);  <span style="color:#75715e">// extended observability matrix
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// This is what textbook (1996) says:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// Matrix Tr = join_vert(pinv(ext_obs_t_) * R_56_15, R_23_15);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// HOWEVER, do not know why but have to fill the last place with zeros like
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// authors&#39; matlab implementation (see `subid.m`)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// Otherwise, get ridiculous covariances (although A,C estimates are close to
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// same...)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix Tr <span style="color:#f92672">=</span> join_vert(
+</span></span><span style="display:flex;"><span>      join_horiz(pinv(ext_obs_t_) <span style="color:#f92672">*</span> R_56_14, Matrix(n_x_, n_y_, fill<span style="color:#f92672">::</span>zeros)),
+</span></span><span style="display:flex;"><span>      R_23_15);
+</span></span><span style="display:flex;"><span>  Matrix Tl <span style="color:#f92672">=</span> join_vert(pinv(ext_obs_tm1) <span style="color:#f92672">*</span> R_66_15, R_55_15);
+</span></span><span style="display:flex;"><span>  Matrix S <span style="color:#f92672">=</span> Tl <span style="color:#f92672">*</span> pinv(Tr);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Use alternative in van Overschee 1996, p. 129. Apparently, should ensure
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// stability.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  fit_.set_C(ext_obs_t_.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, ext_obs_t_.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>  Matrix ext_obs_t_p1 <span style="color:#f92672">=</span> join_vert(
+</span></span><span style="display:flex;"><span>      ext_obs_t_.submat(n_y_, <span style="color:#ae81ff">0</span>, ext_obs_t_.n_rows <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, ext_obs_t_.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>),
+</span></span><span style="display:flex;"><span>      Matrix(n_y_, ext_obs_t_.n_cols, fill<span style="color:#f92672">::</span>zeros));
+</span></span><span style="display:flex;"><span>  fit_.set_A(pinv(ext_obs_t_) <span style="color:#f92672">*</span> ext_obs_t_p1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// At this point, van Overschee &amp; de Moor suggest re-calculating ext_obs_t_,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// ext_obs_tm1 from (A, C) because it was just an approximation. This is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  RecomputeExtObs();
+</span></span><span style="display:flex;"><span>  ext_obs_tm1 <span style="color:#f92672">=</span> ext_obs_t_.submat(
+</span></span><span style="display:flex;"><span>      <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, ext_obs_t_.n_rows <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> n_y_,
+</span></span><span style="display:flex;"><span>      ext_obs_t_.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);  <span style="color:#75715e">// extended observability matrix
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Tl <span style="color:#f92672">=</span> join_vert(pinv(ext_obs_tm1) <span style="color:#f92672">*</span> R_66_15, R_55_15);
+</span></span><span style="display:flex;"><span>  Tr <span style="color:#f92672">=</span> join_vert(
+</span></span><span style="display:flex;"><span>      join_horiz(pinv(ext_obs_t_) <span style="color:#f92672">*</span> R_56_14, Matrix(n_x_, n_y_, fill<span style="color:#f92672">::</span>zeros)),
+</span></span><span style="display:flex;"><span>      R_23_15);
+</span></span><span style="display:flex;"><span>  S <span style="color:#f92672">=</span> Tl <span style="color:#f92672">*</span> pinv(Tr);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix Lcurly <span style="color:#f92672">=</span> S.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x_ <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, n_x_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> pinv(ext_obs_t_);
+</span></span><span style="display:flex;"><span>  Matrix Mcurly <span style="color:#f92672">=</span> pinv(ext_obs_tm1);
+</span></span><span style="display:flex;"><span>  Matrix Pcurly <span style="color:#f92672">=</span> Tl <span style="color:#f92672">-</span> Lcurly <span style="color:#f92672">*</span> R_56_15;
+</span></span><span style="display:flex;"><span>  Vector Pvec <span style="color:#f92672">=</span> vectorise(Pcurly);
+</span></span><span style="display:flex;"><span>  Matrix Qcurly <span style="color:#f92672">=</span> R_23_15;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Identify [D; B], assuming D=0 and ensuring DC gain is correct
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix <span style="color:#a6e22e">sum_QcurlyT_kron_Ncurly</span>(
+</span></span><span style="display:flex;"><span>      (n_h_ <span style="color:#f92672">*</span> (<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> n_u_ <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">+</span> n_y_) <span style="color:#f92672">*</span> (n_y_ <span style="color:#f92672">+</span> n_x_), n_u_ <span style="color:#f92672">*</span> (n_y_ <span style="color:#f92672">+</span> n_x_),
+</span></span><span style="display:flex;"><span>      fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix <span style="color:#a6e22e">eye_ext_obs_tm1</span>(n_y_ <span style="color:#f92672">+</span> ext_obs_tm1.n_rows, n_y_ <span style="color:#f92672">+</span> ext_obs_tm1.n_cols,
+</span></span><span style="display:flex;"><span>                         fill<span style="color:#f92672">::</span>eye);
+</span></span><span style="display:flex;"><span>  eye_ext_obs_tm1.submat(n_y_, n_y_, eye_ext_obs_tm1.n_rows <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                         eye_ext_obs_tm1.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> ext_obs_tm1;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// van Overschee (1996) p. 126
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix N1_Tl <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>Lcurly;
+</span></span><span style="display:flex;"><span>  N1_Tl.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, N1_Tl.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+=</span>
+</span></span><span style="display:flex;"><span>      join_horiz(Matrix(n_x_, n_y_, fill<span style="color:#f92672">::</span>zeros), Mcurly);
+</span></span><span style="display:flex;"><span>  N1_Tl.submat(n_x_, <span style="color:#ae81ff">0</span>, n_x_ <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">+=</span>
+</span></span><span style="display:flex;"><span>      Matrix(n_y_, n_y_, fill<span style="color:#f92672">::</span>eye);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix <span style="color:#a6e22e">Nk_Tl</span>(N1_Tl.n_rows, N1_Tl.n_cols, fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>  Matrix N_k;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; k <span style="color:#f92672">&lt;</span> n_h_; k<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">auto</span> Qcurly_k <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>        Qcurly.submat(n_u_ <span style="color:#f92672">*</span> k, <span style="color:#ae81ff">0</span>, n_u_ <span style="color:#f92672">*</span> (k <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, Qcurly.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Nk_Tl.zeros();
+</span></span><span style="display:flex;"><span>    Nk_Tl.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x_ <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, Nk_Tl.n_cols <span style="color:#f92672">-</span> k <span style="color:#f92672">*</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>        N1_Tl.submat(<span style="color:#ae81ff">0</span>, k <span style="color:#f92672">*</span> n_y_, N1_Tl.n_rows <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, N1_Tl.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>    N_k <span style="color:#f92672">=</span> Nk_Tl <span style="color:#f92672">*</span> eye_ext_obs_tm1;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    sum_QcurlyT_kron_Ncurly <span style="color:#f92672">+=</span> kron(Qcurly_k.t(), N_k);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix err_vec;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (wt_dc <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Constraints enforced by weighted least squares
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Reference:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Privara S, ..., Ferkl L_. (2010) Subspace Identification of Poorly
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Excited Industrial Systems. Conference in Decision and Control.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// constraint 1: assume D=0 --&gt; remove the components for Dvec (this is
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// actually a hard constraint in that it ignores D)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix sum_QcurlyT_kron_Ncurly_db <span style="color:#f92672">=</span> sum_QcurlyT_kron_Ncurly;
+</span></span><span style="display:flex;"><span>    sum_QcurlyT_kron_Ncurly <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>        Matrix(sum_QcurlyT_kron_Ncurly_db.n_rows, n_x_ <span style="color:#f92672">*</span> n_u_);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    size_t kkk <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; k <span style="color:#f92672">&lt;</span> (n_u_ <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>); k<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>      size_t start_idx <span style="color:#f92672">=</span> k <span style="color:#f92672">*</span> (n_y_ <span style="color:#f92672">+</span> n_x_) <span style="color:#f92672">-</span> n_x_;
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">for</span> (size_t kk <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; kk <span style="color:#f92672">&lt;</span> n_x_; kk<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>        sum_QcurlyT_kron_Ncurly.col(kkk) <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>            sum_QcurlyT_kron_Ncurly_db.col(start_idx <span style="color:#f92672">+</span> kk);
+</span></span><span style="display:flex;"><span>        kkk<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// constraint 2: Make sure DC I/O gain is correct
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix b_to_g0 <span style="color:#f92672">=</span> fit_.C() <span style="color:#f92672">*</span> inv(Matrix(n_x_, n_x_, fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">-</span> fit_.A());
+</span></span><span style="display:flex;"><span>    Matrix Pvec_Gvec <span style="color:#f92672">=</span> join_vert(Pvec, vectorise(g_dc_));
+</span></span><span style="display:flex;"><span>    Matrix eye_kron_b_to_g0 <span style="color:#f92672">=</span> kron(Matrix(n_u_, n_u_, fill<span style="color:#f92672">::</span>eye), b_to_g0);
+</span></span><span style="display:flex;"><span>    Matrix sum_QcurlyT_kron_Ncurly_b_to_g0 <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>        join_vert(sum_QcurlyT_kron_Ncurly, eye_kron_b_to_g0);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// WEIGHTED LS
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Important in practice because I care a lot about at least getting the DC
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// gain correct. Put x weight on minimizing error at DC, relative to others
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix <span style="color:#a6e22e">w</span>(sum_QcurlyT_kron_Ncurly_b_to_g0.n_rows,
+</span></span><span style="display:flex;"><span>             sum_QcurlyT_kron_Ncurly_b_to_g0.n_rows, fill<span style="color:#f92672">::</span>eye);
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Make weight on minimizing DC error immense so at least that
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// should be nailed.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    size_t start_row <span style="color:#f92672">=</span> sum_QcurlyT_kron_Ncurly.n_rows;
+</span></span><span style="display:flex;"><span>    size_t start_col <span style="color:#f92672">=</span> sum_QcurlyT_kron_Ncurly.n_rows;
+</span></span><span style="display:flex;"><span>    size_t stop_row <span style="color:#f92672">=</span> w.n_rows <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    size_t stop_col <span style="color:#f92672">=</span> w.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// w.submat(start_row, start_col, stop_row, stop_col) *= wt_dc*N;// scale
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// weight with data length?
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    w.submat(start_row, start_col, stop_row, stop_col) <span style="color:#f92672">*=</span> wt_dc;
+</span></span><span style="display:flex;"><span>    Vector b_vec <span style="color:#f92672">=</span> inv(sum_QcurlyT_kron_Ncurly_b_to_g0.t() <span style="color:#f92672">*</span> w <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>                       sum_QcurlyT_kron_Ncurly_b_to_g0) <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>                   sum_QcurlyT_kron_Ncurly_b_to_g0.t() <span style="color:#f92672">*</span> w <span style="color:#f92672">*</span> Pvec_Gvec;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    fit_.set_B(Matrix(b_vec.memptr(), n_x_, n_u_));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Calculate residuals and their cov.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Because I&#39;ve added constraints, I need to re-calculate the right term
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// with b_vec instead of how van Overschee do in final algorithm.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    err_vec <span style="color:#f92672">=</span> Pvec <span style="color:#f92672">-</span> sum_QcurlyT_kron_Ncurly <span style="color:#f92672">*</span> b_vec;
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// default way: *no* constraint on G0 or D=0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Vector db_vec <span style="color:#f92672">=</span> pinv(sum_QcurlyT_kron_Ncurly) <span style="color:#f92672">*</span> Pvec;
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// TODO(mfbolus) n.b., this gets thrown away...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// Matrix D = Matrix(db_vec.memptr(), n_y_, n_u_);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    fit_.set_B(Matrix(db_vec.memptr() <span style="color:#f92672">+</span> (n_u_ <span style="color:#f92672">*</span> n_y_), n_x_, n_u_));
+</span></span><span style="display:flex;"><span>    err_vec <span style="color:#f92672">=</span> Pvec <span style="color:#f92672">-</span> sum_QcurlyT_kron_Ncurly <span style="color:#f92672">*</span> db_vec;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Matrix err = Matrix(err_vec.memptr(), Pcurly.n_rows, Pcurly.n_cols);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// TODO(mfbolus): Something is wrong with the error calculation above.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// Use the way van overschee does it in `subid.m`
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// WARNING: this ignores any above constraints, so Q, R will be approximate...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix err <span style="color:#f92672">=</span> Tl <span style="color:#f92672">-</span> S <span style="color:#f92672">*</span> Tr;
+</span></span><span style="display:flex;"><span>  Matrix cov_err <span style="color:#f92672">=</span> err <span style="color:#f92672">*</span> err.t();
+</span></span><span style="display:flex;"><span>  fit_.set_Q(cov_err.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_x_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, n_x_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>  fit_.set_R(cov_err.submat(n_x_, n_x_, n_x_ <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, n_x_ <span style="color:#f92672">+</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">template</span> <span style="color:#f92672">&lt;</span><span style="color:#66d9ef">typename</span> Fit<span style="color:#f92672">&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> SSID<span style="color:#f92672">&lt;</span>Fit<span style="color:#f92672">&gt;::</span>RecomputeExtObs() {
+</span></span><span style="display:flex;"><span>  ext_obs_t_.submat(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, ext_obs_t_.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span> fit_.C();
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (size_t k <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>; k <span style="color:#f92672">&lt;</span> (n_h_ <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>); k<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>    ext_obs_t_.submat((k <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> n_y_, <span style="color:#ae81ff">0</span>, k <span style="color:#f92672">*</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>, ext_obs_t_.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>        ext_obs_t_.submat((k <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">*</span> n_y_, <span style="color:#ae81ff">0</span>, (k <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> n_y_ <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>                          ext_obs_t_.n_cols <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>        fit_.A();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}  <span style="color:#75715e">// namespace lds
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#endif
+</span></span></span></code></pre></div><hr>
+<p>Updated on 31 March 2025 at 16:04:30 EDT</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsctrlest_hlds_fit_ssidh">ldsCtrlEst_h/lds_fit_ssid.h</a>
+      <ul>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#detailed-description">Detailed Description</a></li>
+        <li><a href="#source-code">Source code</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

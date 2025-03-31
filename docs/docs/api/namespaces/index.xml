@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Namespaces on LDS C&amp;E</title>
+    <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/</link>
+    <description>Recent content in Namespaces on LDS C&amp;E</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>armamexc</title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/</guid>
+      <description>arma/mex interface using Matlab C API</description>
+    </item>
+    <item>
+      <title>armamexcpp</title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacearmamexcpp/</guid>
+      <description>arma/mex interface using Matlab C++ API</description>
+    </item>
+    <item>
+      <title>lds</title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacelds/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacelds/</guid>
+      <description>Linear Dynamical Systems (LDS) namespace.</description>
+    </item>
+    <item>
+      <title>lds::gaussian</title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1gaussian/</guid>
+      <description>Linear Dynamical Systems with Gaussian observations.</description>
+    </item>
+    <item>
+      <title>lds::poisson</title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacelds_1_1poisson/</guid>
+      <description>Linear Dynamical Systems with Poisson observations.</description>
+    </item>
+    <item>
+      <title>std</title>
+      <link>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacestd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://stanley-rozell.github.io/lds-ctrl-est/docs/api/namespaces/namespacestd/</guid>
+      <description>&lt;h1 id=&#34;std&#34;&gt;&#xA;  std&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#std&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h1&gt;&#xA;&lt;br&gt;&#xA;&lt;hr&gt;&#xA;&lt;p&gt;Updated on 31 March 2025 at 16:04:30 EDT&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

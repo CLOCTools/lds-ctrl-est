@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  PLDS Switched Control Tutorial
+  #
+
+This tutorial shows how to use this library to control a system with a switched PLDS controller (lds::poisson::SwitchedController). This type of controller is applicable in scenarios where a physical system is not accurately captured by a single LDS but has multiple discrete operating modes where the dynamics can be well-approximated as linear.
+In the example that follows, another PLDS model (lds::poisson::System) is used in place of a physical system. It receives control inputs and provides measurements for the simulated feedback control loop. This system stochastically flips between two input gains. Here, the controller is assumed to have a perfect model of the switching system being controlled. Note that in practice, users would need to have a decoder that estimates operating mode of the physical system being controlled. This library does not currently include operating mode estimation.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="PLDS Switched Control">
+  <meta property="og:description" content="PLDS Switched Control Tutorial # This tutorial shows how to use this library to control a system with a switched PLDS controller (lds::poisson::SwitchedController). This type of controller is applicable in scenarios where a physical system is not accurately captured by a single LDS but has multiple discrete operating modes where the dynamics can be well-approximated as linear.
+In the example that follows, another PLDS model (lds::poisson::System) is used in place of a physical system. It receives control inputs and provides measurements for the simulated feedback control loop. This system stochastically flips between two input gains. Here, the controller is assumed to have a perfect model of the switching system being controlled. Note that in practice, users would need to have a decoder that estimates operating mode of the physical system being controlled. This library does not currently include operating mode estimation.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>PLDS Switched Control | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.4f6b617641b714cbf70266302fdeb12a9567eb52ebfb017533f9c9af1b260392.js" integrity="sha256-T2thdkG3FMv3AmYwL96xKpVn61Lr&#43;wF1M/nJrxsmA5I=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/"class=active>Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>PLDS Switched Control</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#plds-switched-control-tutorial">PLDS Switched Control Tutorial</a>
+      <ul>
+        <li><a href="#preamble">Preamble</a></li>
+        <li><a href="#creating-the-simulated-system">Creating the simulated system</a></li>
+        <li><a href="#creating-the-controller">Creating the controller</a></li>
+        <li><a href="#simulating-control">Simulating control</a></li>
+        <li><a href="#example-simulation-result">Example simulation result</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="plds-switched-control-tutorial">
+  PLDS Switched Control Tutorial
+  <a class="anchor" href="#plds-switched-control-tutorial">#</a>
+</h1>
+<p>This tutorial shows how to use this library to control a system with a switched PLDS controller (<code>lds::poisson::SwitchedController</code>). This type of controller is applicable in scenarios where a physical system is not accurately captured by a <strong>single</strong> LDS but has <strong>multiple</strong> discrete operating modes where the dynamics can be well-approximated as linear.</p>
+<p>In the example that follows, another PLDS model (<code>lds::poisson::System</code>) is used in place of a physical system. It receives control inputs and provides measurements for the simulated feedback control loop. This system stochastically flips between two input gains. Here, the controller is assumed to have a perfect model of the switching system being controlled. Note that in practice, users would need to have a decoder that estimates operating mode of the physical system being controlled. This library does not currently include operating mode estimation.</p>
+<p>The full code for this can be found <a href="/lds-ctrl-est/docs/api/examples/eg_plds_switched_log_lin_ctrl_8cpp-example/">here</a>.</p>
+<h2 id="preamble">
+  Preamble
+  <a class="anchor" href="#preamble">#</a>
+</h2>
+<p>In addition to including the main <code>ldsCtrlEst</code> header, this tutorial will use some shorthand.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Matrix;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Vector;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>cout;
+</span></span></code></pre></div><p>Note that <code>lds::Matrix</code> and <code>lds::Vector</code> are typedefs for <code>arma::Mat&lt;data_t&gt;</code> and <code>arma::Col&lt;data_t&gt;</code>, where the data type is <code>double</code> by default. May be changed to <code>float</code> in <code>include/ldsCtrlEst_h/lds.h</code> if there are memory constraints (e.g., large-scale MIMO control problems).</p>
+<h2 id="creating-the-simulated-system">
+  Creating the simulated system
+  <a class="anchor" href="#creating-the-simulated-system">#</a>
+</h2>
+<p>A first-order single-input/single-output system will be used for the purposes of this demonstration. The simulation will be run at 1 kHz for 30 seconds.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// whether to do switched control
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">bool</span> do_switch_ctrl <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Make SISO system sampled at 1kHz
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t dt <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;
+</span></span><span style="display:flex;"><span>  size_t n_u <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  size_t n_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  size_t n_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// no time steps for simulation.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> n_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">30.0</span> <span style="color:#f92672">/</span> dt);
+</span></span></code></pre></div><p>The system&rsquo;s input matrix (<code>B</code>) will be switched stochastically from one value (<code>b1</code>) to a less sensitive value (<code>b2</code>) according to the following probabilities.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// for simulating switching
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t which_mode <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  data_t pr_21 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;   <span style="color:#75715e">// prob mode 1 -&gt; 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t pr_12 <span style="color:#f92672">=</span> pr_21;  <span style="color:#75715e">// prob mode 2 -&gt; 1
+</span></span></span></code></pre></div><p>Initially, the system will be in &ldquo;mode&rdquo; 1, where <code>B = b1</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// simulated system being controlled
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System controlled_system(n_u, n_x, n_y, dt);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// **Assume the system is not well characterized by one LDS, but is well
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// characterized by two LDS models with different input matrices.**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t scale_sys_b <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  Matrix <span style="color:#a6e22e">a</span>(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye);
+</span></span><span style="display:flex;"><span>  a[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.985</span>;
+</span></span><span style="display:flex;"><span>  Matrix b1 <span style="color:#f92672">=</span> Matrix(n_x, n_u).fill(<span style="color:#ae81ff">0.05</span>);
+</span></span><span style="display:flex;"><span>  Vector d <span style="color:#f92672">=</span> Vector(n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros).fill(log(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> dt));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  controlled_system.set_A(a);
+</span></span><span style="display:flex;"><span>  controlled_system.set_B(b1);
+</span></span><span style="display:flex;"><span>  controlled_system.set_d(d);
+</span></span><span style="display:flex;"><span>  controlled_system.Reset();  <span style="color:#75715e">// reset to initial conditions
+</span></span></span></code></pre></div><p>See the <a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a> and <a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS State Estimation</a> tutorials for more detail about creating <code>System</code> objects.</p>
+<h2 id="creating-the-controller">
+  Creating the controller
+  <a class="anchor" href="#creating-the-controller">#</a>
+</h2>
+<p>Now, create the controller. A switched-system controller (<code>SwitchedController</code>) essentially toggles between the parameters of its subsystems when the controller is told a switch has occured. The first thing the user needs to do is define these subsystems. In this example, there are two Poisson systems (<code>sys1</code>, <code>sys2</code>), which are the same save for their input gains.</p>
+<p>Similar to a non-switched controller, constructing a <code>SwitchedController</code> requires these system models and upper/lower bounds on control. See the <a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a> tutorial for more details. In the case of a <code>SwitchedController</code>, it needs a <strong>list</strong> of systems, using the <code>std::vector</code> container.</p>
+<p>Moreover, when assigning control-related signals such as the feedback controller gains, it is crucial that the list of gains optimized for each operating mode of the system have the same dimensionality. For this reason, this library provides <code>UniformMatrixList</code> and <code>UniformVectorList</code> containers that should be used when setting <code>Kc</code>, <code>Kc_inty</code>, <code>g_design</code>. These containers are <code>std::vector</code>s whose contents are uniformly sized.</p>
+<p>Putting this information together, here is how to create the controller and the list of controller gains optimized for each system operating mode.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// create switched controller
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>SwitchedController switched_controller;
+</span></span><span style="display:flex;"><span>  lds<span style="color:#f92672">::</span>UniformMatrixList<span style="color:#f92672">&lt;&gt;</span> k_x; <span style="color:#75715e">// feedback controller gains
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// create switched controller sub-systems
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// system 1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System sys1(controlled_system);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// set process noise covariance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix q_controller <span style="color:#f92672">=</span> Matrix(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">5e-3</span>;
+</span></span><span style="display:flex;"><span>    sys1.set_Q(q_controller);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// adaptively estimate process disturbance (m)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// n.b. using arbitrary default value for process noise if enabled.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    sys1.do_adapt_m <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// setting initial mode to target to avoid large error at onset:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Vector x0_controller <span style="color:#f92672">=</span> arma<span style="color:#f92672">::</span>log(y_ref0) <span style="color:#f92672">-</span> d;
+</span></span><span style="display:flex;"><span>    sys1.set_x0(x0_controller);
+</span></span><span style="display:flex;"><span>    sys1.Reset();  <span style="color:#75715e">// reset to initial conditions
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// system 2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System sys2 <span style="color:#f92672">=</span> sys1;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// set parameters
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    sys2.set_B(b2);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    lds<span style="color:#f92672">::</span>UniformSystemList<span style="color:#f92672">&lt;</span>lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>System<span style="color:#f92672">&gt;</span> systems({sys1, sys2});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// controller gains for underlying systems:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix <span style="color:#a6e22e">k_x1</span>(n_u, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>ones);
+</span></span><span style="display:flex;"><span>    Matrix k_x2 <span style="color:#f92672">=</span> scale_sys_b <span style="color:#f92672">*</span> k_x1;  <span style="color:#75715e">// system2 is x-times less sensitive.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    k_x <span style="color:#f92672">=</span> lds<span style="color:#f92672">::</span>UniformMatrixList<span style="color:#f92672">&lt;&gt;</span>({k_x1, k_x2});
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    data_t u_lb <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;
+</span></span><span style="display:flex;"><span>    data_t u_ub <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.0</span>;
+</span></span><span style="display:flex;"><span>    switched_controller <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(
+</span></span><span style="display:flex;"><span>        lds<span style="color:#f92672">::</span>poisson<span style="color:#f92672">::</span>SwitchedController(std<span style="color:#f92672">::</span>move(systems), u_lb, u_ub));
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div><p>Note that the above code block demonstrates how move semantics can be used for assignment/construction. Copy assignment/construction is of course also allowed.</p>
+<p>Now that the <code>SwitchedController</code> is instantiated, assign its parameters.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>    <span style="color:#75715e">// Control variables
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t control_type <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;  <span style="color:#75715e">// no integral action, etc
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  switched_controller.set_control_type(control_type);
+</span></span><span style="display:flex;"><span>  switched_controller.set_Kc(std<span style="color:#f92672">::</span>move(k_x));
+</span></span><span style="display:flex;"><span>  switched_controller.set_y_ref(y_ref0);
+</span></span></code></pre></div><h2 id="simulating-control">
+  Simulating control
+  <a class="anchor" href="#simulating-control">#</a>
+</h2>
+<p>In this demonstration, we will use the <code>ControlOutputReference</code> method which allows users to simply set the reference output event rate (<code>y_ref</code>) and supply the current measurement <code>z</code>. It then calculates the solution for the state/input required to track that output at steady state. In this case, the goal is to regulate the output about a constant reference, so it is appropriate here. This method can also be used for time-varying references as long as this variation is slow compared to the dynamics of the system. Importantly, this method performs control in the linear state space (i.e., taking the logarithm of the reference output).</p>
+<p>The control loop is carried out here in a simple for-loop, controlled system is simulated along with stochastic mode switches, a measurement taken, and the control signal updated.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// Let the controlled system stochastically change gain
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// Assume another algorithm decodes this mode change and signals the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// switched_controller
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector <span style="color:#a6e22e">chance</span>(<span style="color:#ae81ff">1</span>, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>randu);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (which_mode <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)  <span style="color:#75715e">// mode1
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (chance[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> pr_21) {
+</span></span><span style="display:flex;"><span>      which_mode <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>      controlled_system.set_B(b2);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (do_switch_ctrl) {
+</span></span><span style="display:flex;"><span>        switched_controller.Switch(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {  <span style="color:#75715e">// mode2
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (chance[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;</span> pr_12) {
+</span></span><span style="display:flex;"><span>      which_mode <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>      controlled_system.set_B(b1);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (do_switch_ctrl) {
+</span></span><span style="display:flex;"><span>        switched_controller.Switch(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Simulate the true system.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  z.col(t) <span style="color:#f92672">=</span> controlled_system.Simulate(u.col(t <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// perform control
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  u.col(t) <span style="color:#f92672">=</span> switched_controller.ControlOutputReference(z.col(t));
+</span></span></code></pre></div><p>Note that as the gain of the controlled system changes stochastically, the controller is informed of this change. In practice, a user must decode such changes in the system&rsquo;s operating mode and call the <code>Switch</code> method accordingly. Such a decoder is not currently included in this library.</p>
+<h2 id="example-simulation-result">
+  Example simulation result
+  <a class="anchor" href="#example-simulation-result">#</a>
+</h2>
+<p>Below are example results for this simulation, including outputs, latent states, mode switches, and the control signal. The controller&rsquo;s online estimates of the output and state are shown in purple.</p>
+<p><img src="/lds-ctrl-est/eg_plds_switched_ctrl_output.png" alt="example control output" /></p>
+<p>Note that every time the operating mode of the system changes (here, a gain changes), the controller immediately adjusts its inputs. In contrast, a non-switched controller with integral action would also compensate but do so in a comparitively sluggish fashion.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#plds-switched-control-tutorial">PLDS Switched Control Tutorial</a>
+      <ul>
+        <li><a href="#preamble">Preamble</a></li>
+        <li><a href="#creating-the-simulated-system">Creating the simulated system</a></li>
+        <li><a href="#creating-the-controller">Creating the controller</a></li>
+        <li><a href="#simulating-control">Simulating control</a></li>
+        <li><a href="#example-simulation-result">Example simulation result</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

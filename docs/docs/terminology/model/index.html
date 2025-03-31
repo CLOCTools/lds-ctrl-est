@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  Model Definitions
+  #
+
+This library provides methods for control and estimation of linear dynamical systems (LDS) of the following form:
+
+
+
+
+  \[\mathbf{x}_{t&#43;1} = f\left( \mathbf{x}_{t}, \mathbf{v}_{t} \right) = \mathbf{A} \mathbf{x}_{t} &#43; \mathbf{B} \mathbf{v}_{t} &#43; \mathbf{m}_{t} &#43; \mathbf{w}_{t}\]
+
+
+
+  \[\mathbf{y}_{t} = h\left( \mathbf{x}_{t} \right)\]
+
+
+t           : time index
+x           : system state
+v = g%u     : input (e.g., in physical units used for model fit)
+u           : control signal sent to actuator (e.g., in Volts)
+y           : system output
+m           : process disturbance
+w ~ N(0, Q) : process noise/disturbance
+
+A           : state matrix
+B           : input coupling matrix
+g           : input gain (e.g., for converting to control signal actuator voltage)
+              n.b., assumes this conversion is linear
+Q           : process noise covariance
+
+%           : element-wise multiplication
+
+
+  LDS with Gaussian Observations
+  #
+
+For linear dynamical systems whose outputs are assumed to be corrupted by additive Gaussian noise before measurement (Gaussian LDS models), the output function takes the following form.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/terminology/model/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="Models">
+  <meta property="og:description" content="Model Definitions # This library provides methods for control and estimation of linear dynamical systems (LDS) of the following form: \[\mathbf{x}_{t&#43;1} = f\left( \mathbf{x}_{t}, \mathbf{v}_{t} \right) = \mathbf{A} \mathbf{x}_{t} &#43; \mathbf{B} \mathbf{v}_{t} &#43; \mathbf{m}_{t} &#43; \mathbf{w}_{t}\] \[\mathbf{y}_{t} = h\left( \mathbf{x}_{t} \right)\] t : time index x : system state v = g%u : input (e.g., in physical units used for model fit) u : control signal sent to actuator (e.g., in Volts) y : system output m : process disturbance w ~ N(0, Q) : process noise/disturbance A : state matrix B : input coupling matrix g : input gain (e.g., for converting to control signal actuator voltage) n.b., assumes this conversion is linear Q : process noise covariance % : element-wise multiplication LDS with Gaussian Observations # For linear dynamical systems whose outputs are assumed to be corrupted by additive Gaussian noise before measurement (Gaussian LDS models), the output function takes the following form.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Models | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.4f6b617641b714cbf70266302fdeb12a9567eb52ebfb017533f9c9af1b260392.js" integrity="sha256-T2thdkG3FMv3AmYwL96xKpVn61Lr&#43;wF1M/nJrxsmA5I=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"class=active><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>Models</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#model-definitions">Model Definitions</a>
+      <ul>
+        <li><a href="#lds-with-gaussian-observations">LDS with Gaussian Observations</a></li>
+        <li><a href="#lds-with-poisson-observations">LDS with Poisson Observations</a></li>
+        <li><a href="#model-predictive-control-mpc">Model Predictive Control (MPC)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="model-definitions">
+  Model Definitions
+  <a class="anchor" href="#model-definitions">#</a>
+</h1>
+<p>This library provides methods for control and estimation of linear dynamical systems (LDS) of the following form:
+
+<link rel="stylesheet" href="/lds-ctrl-est/katex/katex.min.css" />
+<script defer src="/lds-ctrl-est/katex/katex.min.js"></script>
+<script defer src="/lds-ctrl-est/katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script><span>
+  \[\mathbf{x}_{t&#43;1} = f\left( \mathbf{x}_{t}, \mathbf{v}_{t} \right) = \mathbf{A} \mathbf{x}_{t} &#43; \mathbf{B} \mathbf{v}_{t} &#43; \mathbf{m}_{t} &#43; \mathbf{w}_{t}\]
+</span>
+</p>
+<span>
+  \[\mathbf{y}_{t} = h\left( \mathbf{x}_{t} \right)\]
+</span>
+
+<pre><code>t           : time index
+x           : system state
+v = g%u     : input (e.g., in physical units used for model fit)
+u           : control signal sent to actuator (e.g., in Volts)
+y           : system output
+m           : process disturbance
+w ~ N(0, Q) : process noise/disturbance
+
+A           : state matrix
+B           : input coupling matrix
+g           : input gain (e.g., for converting to control signal actuator voltage)
+              n.b., assumes this conversion is linear
+Q           : process noise covariance
+
+%           : element-wise multiplication
+</code></pre>
+<h2 id="lds-with-gaussian-observations">
+  LDS with Gaussian Observations
+  <a class="anchor" href="#lds-with-gaussian-observations">#</a>
+</h2>
+<p>For linear dynamical systems whose outputs are assumed to be corrupted by additive Gaussian noise before measurement (Gaussian LDS models), the output function takes the following form.</p>
+<span>
+  \[\mathbf{y}_{t} = \mathbf{C} \mathbf{x}_{t} &#43; \mathbf{d}\]
+</span>
+
+<span>
+  \[\mathbf{z}_{t} \sim \mathcal{N}\left(\mathbf{y}_{t} , \mathbf{R} \right)\]
+</span>
+
+<pre><code>z           : measurement
+
+C           : output matrix
+d           : output bias
+R           : measurement noise covariance
+</code></pre>
+<h2 id="lds-with-poisson-observations">
+  LDS with Poisson Observations
+  <a class="anchor" href="#lds-with-poisson-observations">#</a>
+</h2>
+<p>For linear dynamical systems whose outputs are assumed to be rates underlying measured count data derived from a Poisson distribution (Poisson LDS models), the output function takes the following form. Note an element-wise exponentiation is used to rectify the linear dynamics for the rate of the Poisson process.</p>
+<span>
+  \[y_{t}^{i} = \exp \left(\mathbf{c}^i \mathbf{x}_{t} &#43; d^i\right)\]
+</span>
+
+<span>
+  \[z_{t}^i \sim \rm{Poisson} \left(y_{t}^i \right)\]
+</span>
+
+<pre><code>i           : output index
+
+z           : measurement (count data)
+
+c           : i^th row of output matrix (C)
+d           : output bias
+</code></pre>
+<h2 id="model-predictive-control-mpc">
+  Model Predictive Control (MPC)
+  <a class="anchor" href="#model-predictive-control-mpc">#</a>
+</h2>
+<p>Model Predictive Control (MPC) is an advanced control strategy that utilizes a dynamic model of the system to predict and optimize future behavior over a specified time horizon. At each control step, MPC solves an optimization problem to determine the control inputs that minimize a cost function, which typically includes terms for tracking desired reference trajectories and penalizing excessive control efforts. This approach allows MPC to handle multivariable systems with constraints effectively, making it suitable for complex industrial applications.</p>
+<p>In the context of linear systems, the optimization problem within MPC can be formulated as a quadratic program. This involves defining a quadratic cost function over the prediction horizon, which balances the trade-off between tracking performance and control effort. The solution to this quadratic program yields the optimal control inputs that drive the system towards the desired state while respecting operational constraints. Tools like the Operator Splitting Quadratic Program (OSQP) solver are often employed to efficiently solve these optimization problems in real-time.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#model-definitions">Model Definitions</a>
+      <ul>
+        <li><a href="#lds-with-gaussian-observations">LDS with Gaussian Observations</a></li>
+        <li><a href="#lds-with-poisson-observations">LDS with Poisson Observations</a></li>
+        <li><a href="#model-predictive-control-mpc">Model Predictive Control (MPC)</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
