@@ -7,11 +7,48 @@ title: examples/eg_plds_switched_ctrl.cpp
 
 
 
+## Types
+
+|                | Name           |
+| -------------- | -------------- |
+| using double | **[data_t](/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#using-data-t)**  |
+| using arma::Mat< data_t > | **[Matrix](/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#using-matrix)**  |
+| using arma::Col< data_t > | **[Vector](/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#using-vector)**  |
+
 ## Functions
 
 |                | Name           |
 | -------------- | -------------- |
-| auto | **[main](/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#function-main)**() |
+| int | **[main](/lds-ctrl-est/docs/api/files/eg__plds__switched__ctrl_8cpp/#function-main)**() |
+
+## Type Details
+
+### data_t
+
+```cpp
+using lds::data_t =  double;
+```
+
+
+
+Type of all data in library. If need 32b, change `double` to `float`. This could be potentially useful for large scale problems where there are memory constraints. 
+
+
+### Matrix
+
+```cpp
+using lds::Matrix =  arma::Mat<data_t>;
+```
+
+
+
+### Vector
+
+```cpp
+using lds::Vector =  arma::Col<data_t>;
+```
+
+
 
 
 ## Function Details
@@ -19,7 +56,7 @@ title: examples/eg_plds_switched_ctrl.cpp
 ### main
 
 ```cpp
-auto main()
+int main()
 ```
 
 
@@ -256,4 +293,4 @@ auto main() -> int {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  3 April 2025 at 13:48:30 EDT

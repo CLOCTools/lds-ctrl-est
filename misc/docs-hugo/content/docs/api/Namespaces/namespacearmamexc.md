@@ -14,10 +14,10 @@ arma/mex interface using Matlab C API <br> <br>[More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| template <class T \> <br>auto | **[m2T_scalar](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-m2t-scalar)**(const mxArray * matlab_scalar)<br>Convert Matlab mxArray to scalar of type T.  |
-| template <class T \> <br>auto | **[m2a_mat](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-m2a-mat)**(const mxArray * matlab_mat, bool copy_aux_mem =false, bool strict =true)<br>Convert matlab matrix to armadillo.  |
-| template <typename T \> <br>auto | **[a2m_mat](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-a2m-mat)**(arma::Mat< T > const & arma_mat)<br>Convert armadillo to matlab matrix.  |
-| template <typename T \> <br>auto | **[a2m_vec](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-a2m-vec)**(arma::Col< T > const & arma_vec)<br>Convert armadillo to matlab vector.  |
+| template <class T \> <br>T | **[m2T_scalar](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-m2t-scalar)**(const mxArray * matlab_scalar)<br>Convert Matlab mxArray to scalar of type T.  |
+| template <class T \> <br>arma::Mat< T > | **[m2a_mat](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-m2a-mat)**(const mxArray * matlab_mat, bool copy_aux_mem =false, bool strict =true)<br>Convert matlab matrix to armadillo.  |
+| template <typename T \> <br>mxArray * | **[a2m_mat](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-a2m-mat)**(arma::Mat< T > const & arma_mat)<br>Convert armadillo to matlab matrix.  |
+| template <typename T \> <br>mxArray * | **[a2m_vec](/lds-ctrl-est/docs/api/namespaces/namespacearmamexc/#function-a2m-vec)**(arma::Col< T > const & arma_vec)<br>Convert armadillo to matlab vector.  |
 
 ## Detailed Description
 
@@ -32,7 +32,7 @@ Utilities for arma/mex interface _using Matlab C API_
 
 ```cpp
 template <class T >
-inline auto m2T_scalar(
+inline T m2T_scalar(
     const mxArray * matlab_scalar
 )
 ```
@@ -55,7 +55,7 @@ inline auto m2T_scalar(
 
 ```cpp
 template <class T >
-inline auto m2a_mat(
+inline arma::Mat< T > m2a_mat(
     const mxArray * matlab_mat,
     bool copy_aux_mem =false,
     bool strict =true
@@ -82,7 +82,7 @@ inline auto m2a_mat(
 
 ```cpp
 template <typename T >
-inline auto a2m_mat(
+inline mxArray * a2m_mat(
     arma::Mat< T > const & arma_mat
 )
 ```
@@ -100,7 +100,7 @@ inline auto a2m_mat(
 
 ```cpp
 template <typename T >
-inline auto a2m_vec(
+inline mxArray * a2m_vec(
     arma::Col< T > const & arma_vec
 )
 ```
@@ -121,4 +121,4 @@ inline auto a2m_vec(
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:03 Eastern Daylight Time
+Updated on  3 April 2025 at 13:48:29 EDT

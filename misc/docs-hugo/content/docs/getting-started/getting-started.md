@@ -26,16 +26,16 @@ Homebrew is "The Missing Package Manager for macOS" which will make installing l
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-You can then use it to install CMake and gfortran:
+You can then use it to install CMake, gfortran, and pkg-config:
 ```shell
-brew install cmake gfortran
+brew install cmake gfortran pkg-config
 ```
 
 ## Linux Pre-requisites
 
 You'll need Git, CMake, GCC, gfortran, etc.
 ```shell
-sudo apt install git cmake pkg-config gfortran curl zip unzip tar build-essential
+sudo apt install git cmake pkg-config gfortran curl zip unzip tar build-essential ninja-build
 ```
 
 ## Windows Installation

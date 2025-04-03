@@ -1,5 +1,6 @@
 ---
 title: eg_glds_ctrl.cpp
+summary: Example GLDS Control. 
 
 ---
 
@@ -7,9 +8,8 @@ title: eg_glds_ctrl.cpp
 
 
 
-Example GLDS Control 
+Example GLDS Control ```cpp
 
-```cpp
 //===-- eg_glds_ctrl.cpp - Example GLDS Control ---------------------------===//
 //
 // Copyright 2021 Michael Bolus
@@ -268,6 +268,8 @@ auto main() -> int {
 }
 ```
 
+_Filename: eg_glds_ctrl.cpp_
+
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  3 April 2025 at 13:48:30 EDT

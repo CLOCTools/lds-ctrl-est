@@ -20,13 +20,13 @@ Controller.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1controller/)**  |
+| class | **[lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/)**  |
 
 ## Detailed Description
 
 
 
-This file declares the type for control of a linear dynamical system ([lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1controller/)). 
+This file declares the type for control of a linear dynamical system ([lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/)). 
 
 
 
@@ -548,4 +548,4 @@ void Controller<System>::InitVars(size_t control_type) {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  3 April 2025 at 13:48:30 EDT
