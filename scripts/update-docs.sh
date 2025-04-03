@@ -6,6 +6,8 @@
 # generate site
 cd ../misc/docs-hugo && hugo && cd ../../scripts
 
-# remove existing docs/ and add new in its place
-rm -rf ../docs/* && cp -r ../misc/docs-hugo/public/* ../docs/
+# create docs directory if it doesn't exist
+mkdir -p ../docs
 
+# update docs by copying new files, preserving existing ones that haven't changed
+cp -ru ../misc/docs-hugo/public/* ../docs/
