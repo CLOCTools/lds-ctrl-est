@@ -20,7 +20,7 @@ List of uniformly sized matrices.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1uniformmatrixlist/)**  |
+| class | **[lds::UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)**  |
 
 ## Detailed Description
 
@@ -69,13 +69,15 @@ class UniformMatrixList : public std::vector<Matrix> {
  private:
   // TODO(mfbolus): would rather *uncomment* the below for sake of conversion
   // using std::vector<Matrix>::vector;
+  // don't allow push_back to be used since it doesn't check dims
+  using std::vector<Matrix>::push_back;
+
+ public:
   using std::vector<Matrix>::operator=;
   using std::vector<Matrix>::operator[];
   using std::vector<Matrix>::begin;
   using std::vector<Matrix>::end;
   using std::vector<Matrix>::size;
-
- public:
   using std::vector<Matrix>::at;
   UniformMatrixList() = default;
 
@@ -104,6 +106,7 @@ class UniformMatrixList : public std::vector<Matrix> {
 
   UniformMatrixList<D>& operator=(const UniformMatrixList<D>& that);
   UniformMatrixList<D>& operator=(UniformMatrixList<D>&& that) noexcept;
+  void append(const Matrix& mat);
 
  private:
   void CheckDimensions(std::array<size_t, 2> dim);
@@ -132,9 +135,11 @@ inline void UniformMatrixList<D>::Swap(Matrix& that, size_t n) {
     return;
   }
   // if checks pass, perform swap
-  Matrix tmp = std::move((*this)[n]);
-  (*this)[n] = std::move(that);
-  that = std::move(tmp);
+  // not moving, since it causes memory issues.
+  // so this method isn't a memory-saver as designed for now
+  Matrix tmp = (*this)[n];
+  (*this)[n] = that;
+  that = tmp;
 
   if (D == kMatFreeDim1) {
     this->dim_[n][0] = (*this)[n].n_rows;
@@ -142,6 +147,14 @@ inline void UniformMatrixList<D>::Swap(Matrix& that, size_t n) {
   if (D == kMatFreeDim2) {
     this->dim_[n][1] = (*this)[n].n_cols;
   }
+}
+
+template <MatrixListFreeDim D>
+void UniformMatrixList<D>::append(const Matrix& mat) {
+  std::array<size_t, 2> dim({mat.n_rows, mat.n_cols});
+  CheckDimensions(dim);
+  std::vector<Matrix>::push_back(mat);
+  dim_.push_back(dim);
 }
 
 template <MatrixListFreeDim D>
@@ -327,4 +340,4 @@ void UniformMatrixList<D>::CheckDimensions(std::array<size_t, 2> dim) {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  3 April 2025 at 13:48:30 EDT

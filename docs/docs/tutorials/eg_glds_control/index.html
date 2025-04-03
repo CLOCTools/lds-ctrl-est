@@ -3,20 +3,24 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="GLDS Control Tutorial #  This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::Controller). In place of a physical system, a GLDS model (lds::gaussian::System) receives control inputs and simulates measurements for the feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system.">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="GLDS Control" />
-<meta property="og:description" content="GLDS Control Tutorial #  This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::Controller). In place of a physical system, a GLDS model (lds::gaussian::System) receives control inputs and simulates measurements for the feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/tutorials/eg_glds_control/" /><meta property="article:section" content="docs" />
+<meta name="description" content="
+  GLDS Control Tutorial
+  #
 
-
-
+This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::Controller). In place of a physical system, a GLDS model (lds::gaussian::System) receives control inputs and simulates measurements for the feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system. A combination of integral action and adaptive estimation of this process disturbance is used to perform control.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/tutorials/eg_glds_control/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="GLDS Control">
+  <meta property="og:description" content="GLDS Control Tutorial # This tutorial shows how to use this library to control a system with a Gaussian LDS controller (lds::gaussian::Controller). In place of a physical system, a GLDS model (lds::gaussian::System) receives control inputs and simulates measurements for the feedback control loop. The controller is assumed to have an imperfect model of the system being controlled (here, a gain mismatch), and there is a stochastic, unmeasured disturbance acting on the system. A combination of integral action and adaptive estimation of this process disturbance is used to perform control.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
 <title>GLDS Control | LDS C&amp;E</title>
 <link rel="manifest" href="/lds-ctrl-est/manifest.json">
 <link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
   <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
-  <script defer src="/lds-ctrl-est/en.search.min.93b2d0e7fa872893809358a01a9e6e0c0ce7a384100570924726e75a52c21d85.js" integrity="sha256-k7LQ5/qHKJOAk1igGp5uDAzno4QQBXCSRybnWlLCHYU=" crossorigin="anonymous"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.1dd72753aa4cc1d094b380f145ea5e5e5e825d722fba5c6b234d78dac6a8ca11.js" integrity="sha256-HdcnU6pMwdCUs4DxRepeXl6CXXIvulxrI0142saoyhE=" crossorigin="anonymous"></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -61,7 +65,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
 <ul>
@@ -69,7 +73,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><strong>Tutorials</strong>
 <ul>
@@ -79,7 +83,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><strong>API Reference</strong>
 <ul>
@@ -91,15 +95,15 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
 </ul>
-<p><br /></p>
+<br />
 
 
 
@@ -127,7 +131,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
 
 
  
@@ -190,31 +194,31 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#preamble">#</a>
 </h2>
 <p>In addition to including the main <code>ldsCtrlEst</code> header, this tutorial will use some shorthand.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Matrix;
-<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Vector;
-<span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t;
-<span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>cout;
-</code></pre></div><p>Note that <code>lds::Matrix</code> and <code>lds::Vector</code> are typedefs for <code>arma::Mat&lt;data_t&gt;</code> and <code>arma::Col&lt;data_t&gt;</code>, where the data type is <code>double</code> by default. May be changed to <code>float</code> in <code>include/ldsCtrlEst_h/lds.h</code> if there are memory constraints (e.g., large-scale MIMO control problems).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Matrix;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>Vector;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> lds<span style="color:#f92672">::</span>data_t;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">using</span> std<span style="color:#f92672">::</span>cout;
+</span></span></code></pre></div><p>Note that <code>lds::Matrix</code> and <code>lds::Vector</code> are typedefs for <code>arma::Mat&lt;data_t&gt;</code> and <code>arma::Col&lt;data_t&gt;</code>, where the data type is <code>double</code> by default. May be changed to <code>float</code> in <code>include/ldsCtrlEst_h/lds.h</code> if there are memory constraints (e.g., large-scale MIMO control problems).</p>
 <h2 id="creating-a-simulated-system">
   Creating a simulated system
   <a class="anchor" href="#creating-a-simulated-system">#</a>
 </h2>
 <p>A first-order single-input/single-output system will be used for the purposes of this demonstration. The simulation will be run at 1 kHz for 5 seconds.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Make 1st-order SISO system, sampled at 1kHz
-</span><span style="color:#75715e"></span>  data_t dt <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;
-  size_t n_u <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-  size_t n_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-  size_t n_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-
-  <span style="color:#75715e">// no time steps for simulation.
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> n_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">5.0</span> <span style="color:#f92672">/</span> dt);
-</code></pre></div><p>When a system is initialized, rather than requiring all parameters be provided at construction, users may create a default system by setting only the dimensions and sample period.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// construct ground truth system to be controlled...
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// initializes to random walk model with top-most n_y state observed
-</span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System controlled_system(n_u, n_x, n_y, dt);
-</code></pre></div><p>This default system is a random walk, where the state matrix is identity, the input matrix is zeros, and the top <code>min(n_x, n_y)</code> states are observed at the output. i.e., for this example,
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// Make 1st-order SISO system, sampled at 1kHz
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t dt <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;
+</span></span><span style="display:flex;"><span>  size_t n_u <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  size_t n_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>  size_t n_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// no time steps for simulation.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">auto</span> n_t <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span>size_t<span style="color:#f92672">&gt;</span>(<span style="color:#ae81ff">5.0</span> <span style="color:#f92672">/</span> dt);
+</span></span></code></pre></div><p>When a system is initialized, rather than requiring all parameters be provided at construction, users may create a default system by setting only the dimensions and sample period.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// construct ground truth system to be controlled...
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// initializes to random walk model with top-most n_y state observed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System controlled_system(n_u, n_x, n_y, dt);
+</span></span></code></pre></div><p>This default system is a random walk, where the state matrix is identity, the input matrix is zeros, and the top <code>min(n_x, n_y)</code> states are observed at the output. i.e., for this example,
 
 <link rel="stylesheet" href="/lds-ctrl-est/katex/katex.min.css" />
 <script defer src="/lds-ctrl-est/katex/katex.min.js"></script>
@@ -233,130 +237,130 @@ y_{t} = x_t\]
 </span>
 .</p>
 <p>Now, create non-default parameters for this model.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Ground-truth parameters for the controlled system
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// (stand-in for physical system to be controlled)
-</span><span style="color:#75715e"></span>  Matrix <span style="color:#a6e22e">a_true</span>(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye);
-  a_true[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> exp(<span style="color:#f92672">-</span>dt <span style="color:#f92672">/</span> <span style="color:#ae81ff">0.01</span>);
-  Matrix b_true <span style="color:#f92672">=</span> Matrix(n_x, n_u).fill(<span style="color:#ae81ff">2e-4</span>);
-  <span style="color:#75715e">// control signal to model input unit conversion e.g., V -&gt; mW/mm2:
-</span><span style="color:#75715e"></span>  Vector g_true <span style="color:#f92672">=</span> Vector(n_y).fill(<span style="color:#ae81ff">10.0</span>);
-
-  <span style="color:#75715e">// output noise covariance
-</span><span style="color:#75715e"></span>  Matrix r_true <span style="color:#f92672">=</span> Matrix(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-4</span>;
-</code></pre></div><p>As mentioned above, this example will feature a stochastic disturbance. More specifically, a process disturbance will randomly change between two values.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">/// Going to simulate a switching disturbance (m) acting on system
-</span><span style="color:#75715e"></span>  size_t which_m <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;  <span style="color:#75715e">// whether low or high disturbance (0, 1)
-</span><span style="color:#75715e"></span>  data_t m_low <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> dt <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> a_true[<span style="color:#ae81ff">0</span>]);
-  data_t pr_lo2hi <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;  <span style="color:#75715e">// probability of going from low to high disturb.
-</span><span style="color:#75715e"></span>  data_t m_high <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> dt <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> a_true[<span style="color:#ae81ff">0</span>]);
-  data_t pr_hi2lo <span style="color:#f92672">=</span> pr_lo2hi;
-
-  <span style="color:#75715e">// initially let m be low
-</span><span style="color:#75715e"></span>  Vector m0_true <span style="color:#f92672">=</span> Vector(n_y).fill(m_low);
-</code></pre></div><p>Finally, assign the parameters using corresponding set-methods.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"> <span style="color:#75715e">// Assign params.
-</span><span style="color:#75715e"></span>  controlled_system.set_A(a_true);
-  controlled_system.set_B(b_true);
-  controlled_system.set_m(m0_true);
-  controlled_system.set_g(g_true);
-  controlled_system.set_R(r_true);
-</code></pre></div><h2 id="creating-the-controller">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// Ground-truth parameters for the controlled system
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// (stand-in for physical system to be controlled)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix <span style="color:#a6e22e">a_true</span>(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye);
+</span></span><span style="display:flex;"><span>  a_true[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> exp(<span style="color:#f92672">-</span>dt <span style="color:#f92672">/</span> <span style="color:#ae81ff">0.01</span>);
+</span></span><span style="display:flex;"><span>  Matrix b_true <span style="color:#f92672">=</span> Matrix(n_x, n_u).fill(<span style="color:#ae81ff">2e-4</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// control signal to model input unit conversion e.g., V -&gt; mW/mm2:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector g_true <span style="color:#f92672">=</span> Vector(n_y).fill(<span style="color:#ae81ff">10.0</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// output noise covariance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix r_true <span style="color:#f92672">=</span> Matrix(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-4</span>;
+</span></span></code></pre></div><p>As mentioned above, this example will feature a stochastic disturbance. More specifically, a process disturbance will randomly change between two values.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">/// Going to simulate a switching disturbance (m) acting on system
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t which_m <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;  <span style="color:#75715e">// whether low or high disturbance (0, 1)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t m_low <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">*</span> dt <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> a_true[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>  data_t pr_lo2hi <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>;  <span style="color:#75715e">// probability of going from low to high disturb.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  data_t m_high <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span> <span style="color:#f92672">*</span> dt <span style="color:#f92672">*</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> a_true[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>  data_t pr_hi2lo <span style="color:#f92672">=</span> pr_lo2hi;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// initially let m be low
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector m0_true <span style="color:#f92672">=</span> Vector(n_y).fill(m_low);
+</span></span></code></pre></div><p>Finally, assign the parameters using corresponding set-methods.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span> <span style="color:#75715e">// Assign params.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  controlled_system.set_A(a_true);
+</span></span><span style="display:flex;"><span>  controlled_system.set_B(b_true);
+</span></span><span style="display:flex;"><span>  controlled_system.set_m(m0_true);
+</span></span><span style="display:flex;"><span>  controlled_system.set_g(g_true);
+</span></span><span style="display:flex;"><span>  controlled_system.set_R(r_true);
+</span></span></code></pre></div><h2 id="creating-the-controller">
   Creating the controller
   <a class="anchor" href="#creating-the-controller">#</a>
 </h2>
 <p>Now, create the controller. This requires first constructing the system model that the control uses for estimating state feedback and updating the control signal. A controller is then constructed from this <code>lds::gaussian::System</code> object and upper/lower bounds on the control signal (<code>u_lb</code>, <code>u_ub</code> below), past which the control saturates. Here, the control signal is command voltage sent to an analog driver (e.g., for an LED). Its limits are 0 to 5 V. If your actuator does <strong>not</strong> saturate somehow, simply set the lower and upper bounds to <code>-lds::kInf</code> and <code>lds::kInf</code>, respectively. Simple saturation is currently the only actuator model in this library.</p>
 <p>For the sake of this simulation, the system model input matrix is set to an incorrect value. We also assume that the controller feedback gains were designed with an actuator whose conversion factor from volts to physical units (e.g., mW/mm2 optical intensity) differed from the actuator being used in the current experiment.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// make a controller
-</span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>Controller controller;
-  {
-    <span style="color:#75715e">// Create **incorrect** model used for control.
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// (e.g., imperfect model fitting)
-</span><span style="color:#75715e"></span>    Matrix b_controller <span style="color:#f92672">=</span> b_true <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
-
-    <span style="color:#75715e">// let&#39;s assume zero process disturbance initially
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// (will be re-estimating)
-</span><span style="color:#75715e"></span>    Vector m_controller <span style="color:#f92672">=</span> Vector(n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
-
-    <span style="color:#75715e">// for this demo, just use arbitrary default R
-</span><span style="color:#75715e"></span>    Matrix r_controller <span style="color:#f92672">=</span> Matrix(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> lds<span style="color:#f92672">::</span>kDefaultR0;
-
-    lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System controller_system(controlled_system);
-    controller_system.set_B(b_controller);
-    controller_system.set_m(m_controller);
-    controller_system.set_R(r_controller);
-    controller_system.Reset();  <span style="color:#75715e">// reset to new m
-</span><span style="color:#75715e"></span>
-    <span style="color:#75715e">// going to adaptively re-estimate the disturbance
-</span><span style="color:#75715e"></span>    controller_system.do_adapt_m <span style="color:#f92672">=</span> true;
-
-    <span style="color:#75715e">// set adaptation rate by changing covariance of assumed process noise
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// acting on random-walk evolution of m
-</span><span style="color:#75715e"></span>    Matrix q_m <span style="color:#f92672">=</span> Matrix(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-6</span>;
-    controller_system.set_Q_m(q_m);
-
-    <span style="color:#75715e">// create controller
-</span><span style="color:#75715e"></span>    <span style="color:#75715e">// lower and upper bounds on control signal (e.g., in Volts)
-</span><span style="color:#75715e"></span>    data_t u_lb <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;  <span style="color:#75715e">// [=] V
-</span><span style="color:#75715e"></span>    data_t u_ub <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.0</span>;  <span style="color:#75715e">// [=] V
-</span><span style="color:#75715e"></span>    controller <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(
-        lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>Controller(std<span style="color:#f92672">::</span>move(controller_system), u_lb, u_ub));
-  }
-</code></pre></div><p>Note that the above code block demonstrates how move semantics can be used for assignment/construction. Copy assignment/construction is of course also allowed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// make a controller
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>Controller controller;
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Create **incorrect** model used for control.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// (e.g., imperfect model fitting)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix b_controller <span style="color:#f92672">=</span> b_true <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// let&#39;s assume zero process disturbance initially
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// (will be re-estimating)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Vector m_controller <span style="color:#f92672">=</span> Vector(n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>zeros);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// for this demo, just use arbitrary default R
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix r_controller <span style="color:#f92672">=</span> Matrix(n_y, n_y, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> lds<span style="color:#f92672">::</span>kDefaultR0;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System controller_system(controlled_system);
+</span></span><span style="display:flex;"><span>    controller_system.set_B(b_controller);
+</span></span><span style="display:flex;"><span>    controller_system.set_m(m_controller);
+</span></span><span style="display:flex;"><span>    controller_system.set_R(r_controller);
+</span></span><span style="display:flex;"><span>    controller_system.Reset();  <span style="color:#75715e">// reset to new m
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// going to adaptively re-estimate the disturbance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    controller_system.do_adapt_m <span style="color:#f92672">=</span> true;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// set adaptation rate by changing covariance of assumed process noise
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// acting on random-walk evolution of m
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Matrix q_m <span style="color:#f92672">=</span> Matrix(n_x, n_x, arma<span style="color:#f92672">::</span>fill<span style="color:#f92672">::</span>eye) <span style="color:#f92672">*</span> <span style="color:#ae81ff">1e-6</span>;
+</span></span><span style="display:flex;"><span>    controller_system.set_Q_m(q_m);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// create controller
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// lower and upper bounds on control signal (e.g., in Volts)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    data_t u_lb <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.0</span>;  <span style="color:#75715e">// [=] V
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    data_t u_ub <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.0</span>;  <span style="color:#75715e">// [=] V
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    controller <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>move(
+</span></span><span style="display:flex;"><span>        lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>Controller(std<span style="color:#f92672">::</span>move(controller_system), u_lb, u_ub));
+</span></span><span style="display:flex;"><span>  }
+</span></span></code></pre></div><p>Note that the above code block demonstrates how move semantics can be used for assignment/construction. Copy assignment/construction is of course also allowed.</p>
 <p>With the controller constructed, control variables may be set.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Control variables:
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// if following enabled, adapts set point with re-estimated process
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// disturbance n.b., should not need integral action if this is enabled as the
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// adaptive estimator minimizes DC error
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">bool</span> do_adaptive_set_point <span style="color:#f92672">=</span> false;
-
-  <span style="color:#75715e">// Reference/target output, controller gains
-</span><span style="color:#75715e"></span>  Vector y_ref0 <span style="color:#f92672">=</span> Vector(n_y).fill(<span style="color:#ae81ff">20.0</span> <span style="color:#f92672">*</span> dt);
-  Matrix k_x <span style="color:#f92672">=</span> Matrix(n_u, n_x).fill(<span style="color:#ae81ff">100</span>);     <span style="color:#75715e">// gains on state error
-</span><span style="color:#75715e"></span>  Matrix k_inty <span style="color:#f92672">=</span> Matrix(n_u, n_y).fill(<span style="color:#ae81ff">1e3</span>);  <span style="color:#75715e">// gains on integrated err
-</span><span style="color:#75715e"></span>
-  <span style="color:#75715e">// setting initial state to target to avoid error at onset:
-</span><span style="color:#75715e"></span>  Vector x0 <span style="color:#f92672">=</span> Vector(n_x).fill(y_ref0[<span style="color:#ae81ff">0</span>]);
-
-  <span style="color:#75715e">// set up controller type bit mask so controller knows how to proceed
-</span><span style="color:#75715e"></span>  size_t control_type <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-  <span style="color:#66d9ef">if</span> (do_adaptive_set_point) {
-    <span style="color:#75715e">// adapt set point with estimated disturbance
-</span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>kControlTypeAdaptM;
-  } <span style="color:#66d9ef">else</span> {
-    <span style="color:#75715e">// use integral action to minimize DC error
-</span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>kControlTypeIntY;
-  }
-
-  <span style="color:#75715e">// set controller type
-</span><span style="color:#75715e"></span>  controller.set_control_type(control_type);
-
-  <span style="color:#75715e">// Let&#39;s say these controller gains were designed assuming g was 9 V/(mW/mm2):
-</span><span style="color:#75715e"></span>  Vector g_design <span style="color:#f92672">=</span> Vector(n_u).fill(<span style="color:#ae81ff">9</span>);
-
-  <span style="color:#75715e">// Set params.
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// **n.b. using arbitrary defaults for Q, R in this example. Really, these
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// should be set by users, as they tune characteristics of Kalman filter.
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Users can also choose not to recursively calculate the estimator gain and
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// supply it (setKe) instead of covariances.**
-</span><span style="color:#75715e"></span>  controller.set_y_ref(y_ref0);
-  controller.set_Kc(k_x);
-  controller.set_Kc_inty(k_inty);
-  controller.set_g_design(g_design);
-</code></pre></div><h2 id="simulating-control">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// Control variables:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// if following enabled, adapts set point with re-estimated process
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// disturbance n.b., should not need integral action if this is enabled as the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// adaptive estimator minimizes DC error
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">bool</span> do_adaptive_set_point <span style="color:#f92672">=</span> false;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Reference/target output, controller gains
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector y_ref0 <span style="color:#f92672">=</span> Vector(n_y).fill(<span style="color:#ae81ff">20.0</span> <span style="color:#f92672">*</span> dt);
+</span></span><span style="display:flex;"><span>  Matrix k_x <span style="color:#f92672">=</span> Matrix(n_u, n_x).fill(<span style="color:#ae81ff">100</span>);     <span style="color:#75715e">// gains on state error
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Matrix k_inty <span style="color:#f92672">=</span> Matrix(n_u, n_y).fill(<span style="color:#ae81ff">1e3</span>);  <span style="color:#75715e">// gains on integrated err
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// setting initial state to target to avoid error at onset:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector x0 <span style="color:#f92672">=</span> Vector(n_x).fill(y_ref0[<span style="color:#ae81ff">0</span>]);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// set up controller type bit mask so controller knows how to proceed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  size_t control_type <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (do_adaptive_set_point) {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// adapt set point with estimated disturbance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>kControlTypeAdaptM;
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// use integral action to minimize DC error
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    control_type <span style="color:#f92672">=</span> control_type <span style="color:#f92672">|</span> lds<span style="color:#f92672">::</span>kControlTypeIntY;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// set controller type
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  controller.set_control_type(control_type);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Let&#39;s say these controller gains were designed assuming g was 9 V/(mW/mm2):
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Vector g_design <span style="color:#f92672">=</span> Vector(n_u).fill(<span style="color:#ae81ff">9</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// Set params.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// **n.b. using arbitrary defaults for Q, R in this example. Really, these
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// should be set by users, as they tune characteristics of Kalman filter.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// Users can also choose not to recursively calculate the estimator gain and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// supply it (setKe) instead of covariances.**
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  controller.set_y_ref(y_ref0);
+</span></span><span style="display:flex;"><span>  controller.set_Kc(k_x);
+</span></span><span style="display:flex;"><span>  controller.set_Kc_inty(k_inty);
+</span></span><span style="display:flex;"><span>  controller.set_g_design(g_design);
+</span></span></code></pre></div><h2 id="simulating-control">
   Simulating control
   <a class="anchor" href="#simulating-control">#</a>
 </h2>
 <p>In this demonstration, we will use the <code>ControlOutputReference</code> method which allows users to simply set the reference output and supply the current measurement <code>z</code>. It then calculates the solution for the state/input required to track the reference output at steady state. In this case, the goal is to regulate the output about a constant reference, so it is appropriate here. This method can also be used for time-varying references as long as this variation is slow compared to the dynamics of the system.</p>
 <p>The control loop is carried out here in a simple for-loop, where a the controlled system is simulated, a measurement taken, and the control signal updated.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp">  <span style="color:#75715e">// Simulate the true system.
-</span><span style="color:#75715e"></span>  z.col(t) <span style="color:#f92672">=</span> controlled_system.Simulate(u_tm1);
-
-  <span style="color:#75715e">// This method uses a steady-state solution to control problem to calculate
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// x_ref, u_ref from reference output y_ref. Therefore, it is only
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// applicable to regulation problems or cases where reference trajectory
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// changes slowly compared to system dynamics.
-</span><span style="color:#75715e"></span>  u.col(t) <span style="color:#f92672">=</span> controller.ControlOutputReference(z.col(t));
-</code></pre></div><h2 id="example-simulation-result">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  <span style="color:#75715e">// Simulate the true system.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  z.col(t) <span style="color:#f92672">=</span> controlled_system.Simulate(u_tm1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// This method uses a steady-state solution to control problem to calculate
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// x_ref, u_ref from reference output y_ref. Therefore, it is only
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// applicable to regulation problems or cases where reference trajectory
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// changes slowly compared to system dynamics.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  u.col(t) <span style="color:#f92672">=</span> controller.ControlOutputReference(z.col(t));
+</span></span></code></pre></div><h2 id="example-simulation-result">
   Example simulation result
   <a class="anchor" href="#example-simulation-result">#</a>
 </h2>
@@ -378,7 +382,7 @@ y_{t} = x_t\]
 
 
 
-  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
 
 
  

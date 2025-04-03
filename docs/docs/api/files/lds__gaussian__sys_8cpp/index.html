@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="GLDS base type.">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="src/lds_gaussian_sys.cpp" />
-<meta property="og:description" content="GLDS base type." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian__sys_8cpp/" /><meta property="article:section" content="docs" />
-
-
-
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/files/lds__gaussian__sys_8cpp/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="src/lds_gaussian_sys.cpp">
+  <meta property="og:description" content="GLDS base type.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
 <title>src/lds_gaussian_sys.cpp | LDS C&amp;E</title>
 <link rel="manifest" href="/lds-ctrl-est/manifest.json">
 <link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
   <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
-  <script defer src="/lds-ctrl-est/en.search.min.93b2d0e7fa872893809358a01a9e6e0c0ce7a384100570924726e75a52c21d85.js" integrity="sha256-k7LQ5/qHKJOAk1igGp5uDAzno4QQBXCSRybnWlLCHYU=" crossorigin="anonymous"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.1dd72753aa4cc1d094b380f145ea5e5e5e825d722fba5c6b234d78dac6a8ca11.js" integrity="sha256-HdcnU6pMwdCUs4DxRepeXl6CXXIvulxrI0142saoyhE=" crossorigin="anonymous"></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -61,7 +61,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
 <ul>
@@ -69,7 +69,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><strong>Tutorials</strong>
 <ul>
@@ -79,7 +79,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><strong>API Reference</strong>
 <ul>
@@ -91,15 +91,15 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
 </ul>
-<p><br /></p>
+<br />
 
 
 
@@ -127,7 +127,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
 
 
  
@@ -190,75 +190,75 @@ https://github.com/alex-shpak/hugo-book
   Source code
   <a class="anchor" href="#source-code">#</a>
 </h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">//===-- lds_gaussian_sys.cpp - GLDS ---------------------------------------===//
-</span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Copyright 2021 Michael Bolus
-</span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
-</span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
-</span><span style="color:#75715e">// you may not use this file except in compliance with the License.
-</span><span style="color:#75715e">// You may obtain a copy of the License at
-</span><span style="color:#75715e">//
-</span><span style="color:#75715e">//     http://www.apache.org/licenses/LICENSE-2.0
-</span><span style="color:#75715e">//
-</span><span style="color:#75715e">// Unless required by applicable law or agreed to in writing, software
-</span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
-</span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-</span><span style="color:#75715e">// See the License for the specific language governing permissions and
-</span><span style="color:#75715e">// limitations under the License.
-</span><span style="color:#75715e">//
-</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
-</span><span style="color:#75715e">//===----------------------------------------------------------------------===//
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst_h/lds_gaussian_sys.h&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0,
-                   data_t q0, data_t r0)
-    <span style="color:#f92672">:</span> lds<span style="color:#f92672">::</span>System(n_u, n_x, n_y, dt, p0, q0) {
-
-  R_.zeros(n_y, n_y);
-  R_.diag().fill(r0);
-
-  do_recurse_Ke_<span style="color:#f92672">=</span>true;
-};
-
-<span style="color:#75715e">// recursively estimate Ke
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>RecurseKe() {
-  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>do_recurse_Ke_) {
-    <span style="color:#66d9ef">return</span>;
-  }
-
-  <span style="color:#75715e">// predict covariance
-</span><span style="color:#75715e"></span>  P_ <span style="color:#f92672">=</span> A_ <span style="color:#f92672">*</span> P_ <span style="color:#f92672">*</span> A_.t() <span style="color:#f92672">+</span> Q_;
-
-  <span style="color:#75715e">// calc Kalman gain
-</span><span style="color:#75715e"></span>  Ke_ <span style="color:#f92672">=</span> P_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">*</span> inv_sympd(C_ <span style="color:#f92672">*</span> P_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">+</span> R_);
-
-  <span style="color:#75715e">// update covariance
-</span><span style="color:#75715e"></span>  <span style="color:#75715e">// Reference: Ghahramani et Hinton (1996)
-</span><span style="color:#75715e"></span>  P_ <span style="color:#f92672">=</span> P_ <span style="color:#f92672">-</span> Ke_ <span style="color:#f92672">*</span> C_ <span style="color:#f92672">*</span> P_;
-
-  <span style="color:#66d9ef">if</span> (do_adapt_m) {
-    P_m_ <span style="color:#f92672">+=</span> Q_m_;  <span style="color:#75715e">// A_m = I (i.e., random walk)
-</span><span style="color:#75715e"></span>    Ke_m_ <span style="color:#f92672">=</span> P_m_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">*</span> inv_sympd(C_ <span style="color:#f92672">*</span> P_m_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">+</span> R_);
-    P_m_ <span style="color:#f92672">=</span> P_m_ <span style="color:#f92672">-</span> Ke_m_ <span style="color:#f92672">*</span> C_ <span style="color:#f92672">*</span> P_m_;
-  }
-}
-
-<span style="color:#75715e">// Simulate
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> lds<span style="color:#f92672">::</span>Vector<span style="color:#f92672">&amp;</span> lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Simulate(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> u_tm1){
-  f(u_tm1, true);<span style="color:#75715e">//simulate dynamics with noise added
-</span><span style="color:#75715e"></span>  h();<span style="color:#75715e">//output
-</span><span style="color:#75715e"></span>  z_ <span style="color:#f92672">=</span> y_ <span style="color:#f92672">+</span> arma<span style="color:#f92672">::</span>mvnrnd(Vector(n_y_).fill(<span style="color:#ae81ff">0</span>), R_);<span style="color:#75715e">//measure
-</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> z_;
-}
-
-<span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Print() {
-  lds<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Print();
-  std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;R: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> R_ <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
-}
-</code></pre></div><hr>
-<p>Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#75715e">//===-- lds_gaussian_sys.cpp - GLDS ---------------------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Copyright 2021 Michael Bolus
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Copyright 2021 Georgia Institute of Technology
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Licensed under the Apache License, Version 2.0 (the &#34;License&#34;);
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// you may not use this file except in compliance with the License.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// You may obtain a copy of the License at
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//     http://www.apache.org/licenses/LICENSE-2.0
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Unless required by applicable law or agreed to in writing, software
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// distributed under the License is distributed on an &#34;AS IS&#34; BASIS,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// See the License for the specific language governing permissions and
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// limitations under the License.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//===----------------------------------------------------------------------===//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;ldsCtrlEst_h/lds_gaussian_sys.h&gt;</span><span style="color:#75715e">
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>System(size_t n_u, size_t n_x, size_t n_y, data_t dt, data_t p0,
+</span></span><span style="display:flex;"><span>                   data_t q0, data_t r0)
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">:</span> lds<span style="color:#f92672">::</span>System(n_u, n_x, n_y, dt, p0, q0) {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  R_.zeros(n_y, n_y);
+</span></span><span style="display:flex;"><span>  R_.diag().fill(r0);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  do_recurse_Ke_<span style="color:#f92672">=</span>true;
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// recursively estimate Ke
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>RecurseKe() {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>do_recurse_Ke_) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span>;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// predict covariance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  P_ <span style="color:#f92672">=</span> A_ <span style="color:#f92672">*</span> P_ <span style="color:#f92672">*</span> A_.t() <span style="color:#f92672">+</span> Q_;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// calc Kalman gain
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  Ke_ <span style="color:#f92672">=</span> P_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">*</span> inv_sympd(C_ <span style="color:#f92672">*</span> P_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">+</span> R_);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// update covariance
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// Reference: Ghahramani et Hinton (1996)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  P_ <span style="color:#f92672">=</span> P_ <span style="color:#f92672">-</span> Ke_ <span style="color:#f92672">*</span> C_ <span style="color:#f92672">*</span> P_;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (do_adapt_m) {
+</span></span><span style="display:flex;"><span>    P_m_ <span style="color:#f92672">+=</span> Q_m_;  <span style="color:#75715e">// A_m = I (i.e., random walk)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    Ke_m_ <span style="color:#f92672">=</span> P_m_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">*</span> inv_sympd(C_ <span style="color:#f92672">*</span> P_m_ <span style="color:#f92672">*</span> C_.t() <span style="color:#f92672">+</span> R_);
+</span></span><span style="display:flex;"><span>    P_m_ <span style="color:#f92672">=</span> P_m_ <span style="color:#f92672">-</span> Ke_m_ <span style="color:#f92672">*</span> C_ <span style="color:#f92672">*</span> P_m_;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Simulate
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> lds<span style="color:#f92672">::</span>Vector<span style="color:#f92672">&amp;</span> lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Simulate(<span style="color:#66d9ef">const</span> Vector<span style="color:#f92672">&amp;</span> u_tm1){
+</span></span><span style="display:flex;"><span>  f(u_tm1, true);<span style="color:#75715e">//simulate dynamics with noise added
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  h();<span style="color:#75715e">//output
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  z_ <span style="color:#f92672">=</span> y_ <span style="color:#f92672">+</span> arma<span style="color:#f92672">::</span>mvnrnd(Vector(n_y_).fill(<span style="color:#ae81ff">0</span>), R_);<span style="color:#75715e">//measure
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">return</span> z_;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Print() {
+</span></span><span style="display:flex;"><span>  lds<span style="color:#f92672">::</span>System<span style="color:#f92672">::</span>Print();
+</span></span><span style="display:flex;"><span>  std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;R: </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">&lt;&lt;</span> R_ <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p>Updated on  3 April 2025 at 13:48:30 EDT</p>
 </article>
  
       
@@ -275,7 +275,7 @@ lds<span style="color:#f92672">::</span>gaussian<span style="color:#f92672">::</
 
 
 
-  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
 
 
  

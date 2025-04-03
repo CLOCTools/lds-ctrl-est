@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="LDS Fit Type.">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="lds::Fit">
+  <meta property="og:description" content="LDS Fit Type.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>lds::Fit | LDS C&amp;E</title>
+<link rel="manifest" href="/lds-ctrl-est/manifest.json">
+<link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
+  <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.1dd72753aa4cc1d094b380f145ea5e5e5e825d722fba5c6b234d78dac6a8ca11.js" integrity="sha256-HdcnU6pMwdCUs4DxRepeXl6CXXIvulxrI0142saoyhE=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a href="/lds-ctrl-est/"><img src="/lds-ctrl-est/ldsctrlest-logo.png" alt="Logo" /><span>LDS C&amp;E</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li><strong>Library Terminology</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/terminology/model/"><strong>Model Definitions</strong></a></li>
+<li><a href="/lds-ctrl-est/docs/terminology/control-estimation/"><strong>Control &amp; Estimation</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"><strong>Getting Started</strong></a>
+<ul>
+<li><a href="/lds-ctrl-est/docs/getting-started/windows/"><strong>Windows</strong></a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>Tutorials</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_glds_control/">GLDS Control</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_plds_state_estimation/">PLDS Estimation</a></li>
+<li><a href="/lds-ctrl-est/docs/tutorials/eg_switched_plds_control/">Switched PLDS Control</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><strong>API Reference</strong>
+<ul>
+<li><a href="/lds-ctrl-est/docs/api/namespaces/">Namespaces</a></li>
+<li><a href="/lds-ctrl-est/docs/api/classes/">Classes</a></li>
+<li><a href="/lds-ctrl-est/docs/api/modules/">Modules</a></li>
+<li><a href="/lds-ctrl-est/docs/api/files/">Files</a></li>
+<li><a href="/lds-ctrl-est/docs/api/examples/">Examples</a></li>
+</ul>
+</li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
+</ul>
+<br />
+<ul>
+<li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
+</ul>
+<br />
+
+
+
+
+
+
+  
+<ul>
+  
+  <li>
+    <a href="https://github.com/stanley-rozell/lds-ctrl-est" target="_blank" rel="noopener">
+        Github
+      </a>
+  </li>
+  
+</ul>
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/lds-ctrl-est/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>lds::Fit</strong>
+
+  <label for="toc-control">
+    
+    <img src="/lds-ctrl-est/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsfit">lds::Fit</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#protected-attributes">Protected Attributes</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#fit"><strong>Fit</strong></a></li>
+            <li><a href="#fit-1"><strong>Fit</strong></a></li>
+            <li><a href="#heading"><strong>~Fit</strong></a></li>
+            <li><a href="#n_"><strong>n_u</strong></a></li>
+            <li><a href="#n_-1"><strong>n_x</strong></a></li>
+            <li><a href="#n_-2"><strong>n_y</strong></a></li>
+            <li><a href="#dt"><strong>dt</strong></a></li>
+            <li><a href="#a"><strong>A</strong></a></li>
+            <li><a href="#b"><strong>B</strong></a></li>
+            <li><a href="#g"><strong>g</strong></a></li>
+            <li><a href="#m"><strong>m</strong></a></li>
+            <li><a href="#q"><strong>Q</strong></a></li>
+            <li><a href="#x0"><strong>x0</strong></a></li>
+            <li><a href="#p0"><strong>P0</strong></a></li>
+            <li><a href="#c"><strong>C</strong></a></li>
+            <li><a href="#d"><strong>d</strong></a></li>
+            <li><a href="#r"><strong>R</strong></a></li>
+            <li><a href="#set_"><strong>set_A</strong></a></li>
+            <li><a href="#set_-1"><strong>set_B</strong></a></li>
+            <li><a href="#set_-2"><strong>set_g</strong></a></li>
+            <li><a href="#set_-3"><strong>set_m</strong></a></li>
+            <li><a href="#set_-4"><strong>set_Q</strong></a></li>
+            <li><a href="#set_-5"><strong>set_R</strong></a></li>
+            <li><a href="#set_-6"><strong>set_x0</strong></a></li>
+            <li><a href="#set_-7"><strong>set_P0</strong></a></li>
+            <li><a href="#set_-8"><strong>set_C</strong></a></li>
+            <li><a href="#set_-9"><strong>set_d</strong></a></li>
+            <li><a href="#f"><strong>f</strong></a></li>
+            <li><a href="#f-1"><strong>f</strong></a></li>
+            <li><a href="#h"><strong>h</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-attribute-details">Protected Attribute Details</a>
+          <ul>
+            <li><a href="#dt_"><strong>dt_</strong></a></li>
+            <li><a href="#a_"><strong>A_</strong></a></li>
+            <li><a href="#b_"><strong>B_</strong></a></li>
+            <li><a href="#g_"><strong>g_</strong></a></li>
+            <li><a href="#m_"><strong>m_</strong></a></li>
+            <li><a href="#q_"><strong>Q_</strong></a></li>
+            <li><a href="#c_"><strong>C_</strong></a></li>
+            <li><a href="#d_"><strong>d_</strong></a></li>
+            <li><a href="#r_"><strong>R_</strong></a></li>
+            <li><a href="#x0_"><strong>x0_</strong></a></li>
+            <li><a href="#p0_"><strong>P0_</strong></a></li>
+            <li><a href="#n_-3"><strong>n_u_</strong></a></li>
+            <li><a href="#n_-4"><strong>n_x_</strong></a></li>
+            <li><a href="#n_-5"><strong>n_y_</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="ldsfit">
+  lds::Fit
+  <a class="anchor" href="#ldsfit">#</a>
+</h1>
+<p>LDS <a href="">Fit</a> Type.
+<br /> <code>#include &lt;lds_fit.h&gt;</code></p>
+<p>Inherited by <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/">lds::gaussian::Fit</a>, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/">lds::poisson::Fit</a></p>
+<h2 id="public-functions">
+  Public Functions
+  <a class="anchor" href="#public-functions">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-fit">Fit</a></strong>() =default<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/">Fit</a>.</td>
+      </tr>
+      <tr>
+          <td></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-fit">Fit</a></strong>(size_t n_u, size_t n_x, size_t n_y, <a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a> dt)<br>Constructs a new <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/">Fit</a>.</td>
+      </tr>
+      <tr>
+          <td>virtual</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-~fit">~Fit</a></strong>() =default</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-n-u">n_u</a></strong>() const<br>gets number of inputs</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-n-x">n_x</a></strong>() const<br>gets number of states</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-n-y">n_y</a></strong>() const<br>gets number of outputs</td>
+      </tr>
+      <tr>
+          <td><a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-dt">dt</a></strong>() const<br>gets sample period</td>
+      </tr>
+      <tr>
+          <td>const Matrix &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-a">A</a></strong>() const<br>gets state matrix</td>
+      </tr>
+      <tr>
+          <td>const Matrix &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-b">B</a></strong>() const<br>gets input matrix</td>
+      </tr>
+      <tr>
+          <td>const Vector &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-g">g</a></strong>() const<br>gets input gain</td>
+      </tr>
+      <tr>
+          <td>const Vector &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-m">m</a></strong>() const<br>gets process disturbance</td>
+      </tr>
+      <tr>
+          <td>const Matrix &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-q">Q</a></strong>() const<br>gets process noise covariance</td>
+      </tr>
+      <tr>
+          <td>const Vector &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-x0">x0</a></strong>() const<br>gets initial state estimate</td>
+      </tr>
+      <tr>
+          <td>const Matrix &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-p0">P0</a></strong>() const<br>gets covariance of initial state estimate</td>
+      </tr>
+      <tr>
+          <td>const Matrix &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-c">C</a></strong>() const<br>gets output matrix</td>
+      </tr>
+      <tr>
+          <td>const Vector &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-d">d</a></strong>() const<br>gets output bias</td>
+      </tr>
+      <tr>
+          <td>virtual const Matrix &amp;</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-r">R</a></strong>() const =0</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-a">set_A</a></strong>(const Matrix &amp; A)<br>sets state matrix</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-b">set_B</a></strong>(const Matrix &amp; B)<br>sets input matrix</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-g">set_g</a></strong>(const Vector &amp; g)<br>sets input gain/conversion factor</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-m">set_m</a></strong>(const Vector &amp; m)<br>sets process disturbance</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-q">set_Q</a></strong>(const Matrix &amp; Q)<br>sets process noise covariance</td>
+      </tr>
+      <tr>
+          <td>virtual void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-r">set_R</a></strong>(const Matrix &amp; R) =0<br>sets output noise covariance (if any)</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-x0">set_x0</a></strong>(const Vector &amp; x0)<br>sets initial state estimate</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-p0">set_P0</a></strong>(const Matrix &amp; P0)<br>sets initial state estimate covariance</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-c">set_C</a></strong>(const Matrix &amp; C)<br>sets output matrix</td>
+      </tr>
+      <tr>
+          <td>void</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-set-d">set_d</a></strong>(const Vector &amp; d)<br>sets output bias</td>
+      </tr>
+      <tr>
+          <td>View</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-f">f</a></strong>(Matrix &amp; x, const Matrix &amp; u, size_t t)<br>system dynamics function</td>
+      </tr>
+      <tr>
+          <td>View</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-f">f</a></strong>(Matrix &amp; x_pre, const Matrix &amp; x_post, const Matrix &amp; u, size_t t)<br>system dynamics function</td>
+      </tr>
+      <tr>
+          <td>virtual View</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#function-h">h</a></strong>(Matrix &amp; y, const Matrix &amp; x, size_t t) =0<br>output function</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="protected-attributes">
+  Protected Attributes
+  <a class="anchor" href="#protected-attributes">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>Name</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><a href="/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t">data_t</a></td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-dt-">dt_</a></strong> <br>sample period</td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-a-">A_</a></strong> <br>state matrix</td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-b-">B_</a></strong> <br>input matrix</td>
+      </tr>
+      <tr>
+          <td>Vector</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-g-">g_</a></strong> <br>input gain</td>
+      </tr>
+      <tr>
+          <td>Vector</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-m-">m_</a></strong> <br>process noise mean</td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-q-">Q_</a></strong> <br>process noise cov</td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-c-">C_</a></strong> <br>output matrix</td>
+      </tr>
+      <tr>
+          <td>Vector</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-d-">d_</a></strong> <br>output bias</td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-r-">R_</a></strong> <br>measurement noise</td>
+      </tr>
+      <tr>
+          <td>Vector</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-x0-">x0_</a></strong> <br>initial state</td>
+      </tr>
+      <tr>
+          <td>Matrix</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-p0-">P0_</a></strong> <br>initial covar</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-n-u-">n_u_</a></strong> <br>number of inputs</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-n-x-">n_x_</a></strong> <br>number of states</td>
+      </tr>
+      <tr>
+          <td>size_t</td>
+          <td><strong><a href="/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/#variable-n-y-">n_y_</a></strong> <br>number of outputs</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<hr>
+<h2 id="public-function-details">
+  Public Function Details
+  <a class="anchor" href="#public-function-details">#</a>
+</h2>
+<h3 id="fit">
+  <strong>Fit</strong>
+  <a class="anchor" href="#fit">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Fit() <span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>
+</span></span></code></pre></div><hr>
+<h3 id="fit-1">
+  <strong>Fit</strong>
+  <a class="anchor" href="#fit-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Fit(
+</span></span><span style="display:flex;"><span>    size_t n_u,
+</span></span><span style="display:flex;"><span>    size_t n_x,
+</span></span><span style="display:flex;"><span>    size_t n_y,
+</span></span><span style="display:flex;"><span>    data_t dt
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>n_u</strong> number of inputs</li>
+<li><strong>n_x</strong> number of states</li>
+<li><strong>n_y</strong> number of outputs</li>
+<li><strong>dt</strong> sample period</li>
+</ul>
+<hr>
+<h3 id="heading">
+  <strong>~Fit</strong>
+  <a class="anchor" href="#heading">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">virtual</span> <span style="color:#f92672">~</span>Fit() <span style="color:#f92672">=</span><span style="color:#66d9ef">default</span>
+</span></span></code></pre></div><hr>
+<h3 id="n_">
+  <strong>n_u</strong>
+  <a class="anchor" href="#n_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> size_t n_u() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="n_-1">
+  <strong>n_x</strong>
+  <a class="anchor" href="#n_-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> size_t n_x() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="n_-2">
+  <strong>n_y</strong>
+  <a class="anchor" href="#n_-2">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> size_t n_y() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="dt">
+  <strong>dt</strong>
+  <a class="anchor" href="#dt">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> data_t dt() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="a">
+  <strong>A</strong>
+  <a class="anchor" href="#a">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> A() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="b">
+  <strong>B</strong>
+  <a class="anchor" href="#b">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> B() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="g">
+  <strong>g</strong>
+  <a class="anchor" href="#g">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> g() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="m">
+  <strong>m</strong>
+  <a class="anchor" href="#m">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> m() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="q">
+  <strong>Q</strong>
+  <a class="anchor" href="#q">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> Q() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="x0">
+  <strong>x0</strong>
+  <a class="anchor" href="#x0">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> x0() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="p0">
+  <strong>P0</strong>
+  <a class="anchor" href="#p0">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> P0() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="c">
+  <strong>C</strong>
+  <a class="anchor" href="#c">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> C() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="d">
+  <strong>d</strong>
+  <a class="anchor" href="#d">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> d() <span style="color:#66d9ef">const</span>
+</span></span></code></pre></div><hr>
+<h3 id="r">
+  <strong>R</strong>
+  <a class="anchor" href="#r">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> R() <span style="color:#66d9ef">const</span> <span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p><strong>Reimplemented by</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/#function-r">lds::gaussian::Fit::R</a>, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/#function-r">lds::poisson::Fit::R</a></p>
+<hr>
+<h3 id="set_">
+  <strong>set_A</strong>
+  <a class="anchor" href="#set_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_A(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> A
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="set_-1">
+  <strong>set_B</strong>
+  <a class="anchor" href="#set_-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_B(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> B
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="set_-2">
+  <strong>set_g</strong>
+  <a class="anchor" href="#set_-2">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_g(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> g
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="set_-3">
+  <strong>set_m</strong>
+  <a class="anchor" href="#set_-3">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_m(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> m
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="set_-4">
+  <strong>set_Q</strong>
+  <a class="anchor" href="#set_-4">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_Q(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> Q
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="set_-5">
+  <strong>set_R</strong>
+  <a class="anchor" href="#set_-5">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">virtual</span> <span style="color:#66d9ef">void</span> set_R(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> R
+</span></span><span style="display:flex;"><span>) <span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p><strong>Reimplemented by</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/#function-set-r">lds::gaussian::Fit::set_R</a>, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/#function-set-r">lds::poisson::Fit::set_R</a></p>
+<hr>
+<h3 id="set_-6">
+  <strong>set_x0</strong>
+  <a class="anchor" href="#set_-6">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_x0(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> x0
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="set_-7">
+  <strong>set_P0</strong>
+  <a class="anchor" href="#set_-7">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_P0(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> P0
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="set_-8">
+  <strong>set_C</strong>
+  <a class="anchor" href="#set_-8">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_C(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> C
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="set_-9">
+  <strong>set_d</strong>
+  <a class="anchor" href="#set_-9">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">void</span> set_d(
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Vector <span style="color:#f92672">&amp;</span> d
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><hr>
+<h3 id="f">
+  <strong>f</strong>
+  <a class="anchor" href="#f">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> View f(
+</span></span><span style="display:flex;"><span>    Matrix <span style="color:#f92672">&amp;</span> x,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> u,
+</span></span><span style="display:flex;"><span>    size_t t
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>x</strong> state estimate (over time)</li>
+<li><strong>u</strong> input (over time)</li>
+<li><strong>t</strong> time index</li>
+</ul>
+<p><strong>Return</strong>: view of updated state</p>
+<hr>
+<h3 id="f-1">
+  <strong>f</strong>
+  <a class="anchor" href="#f-1">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">inline</span> View f(
+</span></span><span style="display:flex;"><span>    Matrix <span style="color:#f92672">&amp;</span> x_pre,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> x_post,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> u,
+</span></span><span style="display:flex;"><span>    size_t t
+</span></span><span style="display:flex;"><span>)
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>x_pre</strong> predicted state est.</li>
+<li><strong>x_post</strong> posterior state est.</li>
+<li><strong>u</strong> input (over time)</li>
+<li><strong>t</strong> time index</li>
+</ul>
+<p><strong>Return</strong>: view of predicted state</p>
+<hr>
+<h3 id="h">
+  <strong>h</strong>
+  <a class="anchor" href="#h">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">virtual</span> View h(
+</span></span><span style="display:flex;"><span>    Matrix <span style="color:#f92672">&amp;</span> y,
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> Matrix <span style="color:#f92672">&amp;</span> x,
+</span></span><span style="display:flex;"><span>    size_t t
+</span></span><span style="display:flex;"><span>) <span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>y</strong> output estimate (over time)</li>
+<li><strong>x</strong> state estimate (over time)</li>
+<li><strong>t</strong> time index</li>
+</ul>
+<p><strong>Return</strong>: output</p>
+<p><strong>Reimplemented by</strong>: <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_fit/#function-h">lds::gaussian::Fit::h</a>, <a href="/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_fit/#function-h">lds::poisson::Fit::h</a></p>
+<hr>
+<h2 id="protected-attribute-details">
+  Protected Attribute Details
+  <a class="anchor" href="#protected-attribute-details">#</a>
+</h2>
+<h3 id="dt_">
+  <strong>dt_</strong>
+  <a class="anchor" href="#dt_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>data_t dt_ {};
+</span></span></code></pre></div><hr>
+<h3 id="a_">
+  <strong>A_</strong>
+  <a class="anchor" href="#a_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix A_;
+</span></span></code></pre></div><hr>
+<h3 id="b_">
+  <strong>B_</strong>
+  <a class="anchor" href="#b_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix B_;
+</span></span></code></pre></div><hr>
+<h3 id="g_">
+  <strong>g_</strong>
+  <a class="anchor" href="#g_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Vector g_;
+</span></span></code></pre></div><hr>
+<h3 id="m_">
+  <strong>m_</strong>
+  <a class="anchor" href="#m_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Vector m_;
+</span></span></code></pre></div><hr>
+<h3 id="q_">
+  <strong>Q_</strong>
+  <a class="anchor" href="#q_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix Q_;
+</span></span></code></pre></div><hr>
+<h3 id="c_">
+  <strong>C_</strong>
+  <a class="anchor" href="#c_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix C_;
+</span></span></code></pre></div><hr>
+<h3 id="d_">
+  <strong>d_</strong>
+  <a class="anchor" href="#d_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Vector d_;
+</span></span></code></pre></div><hr>
+<h3 id="r_">
+  <strong>R_</strong>
+  <a class="anchor" href="#r_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix R_;
+</span></span></code></pre></div><hr>
+<h3 id="x0_">
+  <strong>x0_</strong>
+  <a class="anchor" href="#x0_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Vector x0_;
+</span></span></code></pre></div><hr>
+<h3 id="p0_">
+  <strong>P0_</strong>
+  <a class="anchor" href="#p0_">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>Matrix P0_;
+</span></span></code></pre></div><hr>
+<h3 id="n_-3">
+  <strong>n_u_</strong>
+  <a class="anchor" href="#n_-3">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>size_t n_u_ {};
+</span></span></code></pre></div><hr>
+<h3 id="n_-4">
+  <strong>n_x_</strong>
+  <a class="anchor" href="#n_-4">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>size_t n_x_ {};
+</span></span></code></pre></div><hr>
+<h3 id="n_-5">
+  <strong>n_y_</strong>
+  <a class="anchor" href="#n_-5">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>size_t n_y_ {};
+</span></span></code></pre></div><hr>
+<hr>
+<p>Updated on  3 April 2025 at 13:48:29 EDT</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#ldsfit">lds::Fit</a>
+      <ul>
+        <li><a href="#public-functions">Public Functions</a></li>
+        <li><a href="#protected-attributes">Protected Attributes</a></li>
+        <li><a href="#public-function-details">Public Function Details</a>
+          <ul>
+            <li><a href="#fit"><strong>Fit</strong></a></li>
+            <li><a href="#fit-1"><strong>Fit</strong></a></li>
+            <li><a href="#heading"><strong>~Fit</strong></a></li>
+            <li><a href="#n_"><strong>n_u</strong></a></li>
+            <li><a href="#n_-1"><strong>n_x</strong></a></li>
+            <li><a href="#n_-2"><strong>n_y</strong></a></li>
+            <li><a href="#dt"><strong>dt</strong></a></li>
+            <li><a href="#a"><strong>A</strong></a></li>
+            <li><a href="#b"><strong>B</strong></a></li>
+            <li><a href="#g"><strong>g</strong></a></li>
+            <li><a href="#m"><strong>m</strong></a></li>
+            <li><a href="#q"><strong>Q</strong></a></li>
+            <li><a href="#x0"><strong>x0</strong></a></li>
+            <li><a href="#p0"><strong>P0</strong></a></li>
+            <li><a href="#c"><strong>C</strong></a></li>
+            <li><a href="#d"><strong>d</strong></a></li>
+            <li><a href="#r"><strong>R</strong></a></li>
+            <li><a href="#set_"><strong>set_A</strong></a></li>
+            <li><a href="#set_-1"><strong>set_B</strong></a></li>
+            <li><a href="#set_-2"><strong>set_g</strong></a></li>
+            <li><a href="#set_-3"><strong>set_m</strong></a></li>
+            <li><a href="#set_-4"><strong>set_Q</strong></a></li>
+            <li><a href="#set_-5"><strong>set_R</strong></a></li>
+            <li><a href="#set_-6"><strong>set_x0</strong></a></li>
+            <li><a href="#set_-7"><strong>set_P0</strong></a></li>
+            <li><a href="#set_-8"><strong>set_C</strong></a></li>
+            <li><a href="#set_-9"><strong>set_d</strong></a></li>
+            <li><a href="#f"><strong>f</strong></a></li>
+            <li><a href="#f-1"><strong>f</strong></a></li>
+            <li><a href="#h"><strong>h</strong></a></li>
+          </ul>
+        </li>
+        <li><a href="#protected-attribute-details">Protected Attribute Details</a>
+          <ul>
+            <li><a href="#dt_"><strong>dt_</strong></a></li>
+            <li><a href="#a_"><strong>A_</strong></a></li>
+            <li><a href="#b_"><strong>B_</strong></a></li>
+            <li><a href="#g_"><strong>g_</strong></a></li>
+            <li><a href="#m_"><strong>m_</strong></a></li>
+            <li><a href="#q_"><strong>Q_</strong></a></li>
+            <li><a href="#c_"><strong>C_</strong></a></li>
+            <li><a href="#d_"><strong>d_</strong></a></li>
+            <li><a href="#r_"><strong>R_</strong></a></li>
+            <li><a href="#x0_"><strong>x0_</strong></a></li>
+            <li><a href="#p0_"><strong>P0_</strong></a></li>
+            <li><a href="#n_-3"><strong>n_u_</strong></a></li>
+            <li><a href="#n_-4"><strong>n_x_</strong></a></li>
+            <li><a href="#n_-5"><strong>n_y_</strong></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

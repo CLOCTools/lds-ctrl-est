@@ -21,13 +21,13 @@ GLDS base type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/)** <br>Gaussian LDS Type.  |
+| class | **[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/)** <br>Gaussian LDS Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for state estimation (filtering) as well as simulation of Gaussian-output linear dynamical systems (`[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1system/)`). 
+This file declares and partially defines the type for state estimation (filtering) as well as simulation of Gaussian-output linear dynamical systems (`[lds::gaussian::System](/lds-ctrl-est/docs/api/classes/classlds_1_1gaussian_1_1_system/)`). It inherits functionality from the underlying linear dynamical system (`[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)`). 
 
 
 
@@ -85,17 +85,17 @@ class System : public lds::System {
     do_recurse_Ke_ = true;
   }
   void set_R(const Matrix& R) {
-    Reassign(R_,R);
+    Reassign(R_, R);
     do_recurse_Ke_ = true;
   };
 
   void set_Ke(const Matrix& Ke) {
-    Reassign(Ke_,Ke);
+    Reassign(Ke_, Ke);
     // if users have set Ke, they must not want to calculate it online.
     do_recurse_Ke_ = false;
   };
   void set_Ke_m(const Matrix& Ke_m) {
-    Reassign(Ke_m_,Ke_m);
+    Reassign(Ke_m_, Ke_m);
     // if users have set Ke, they must not want to calculate it online.
     do_recurse_Ke_ = false;
   };
@@ -108,12 +108,14 @@ class System : public lds::System {
     y_ = cx_ + d_;
   };
 
+  Vector h_(Vector x) override { return C_ * x + d_; };
+
   void RecurseKe() override;
 
   // Gaussian-output-specific
-  Matrix R_;           
+  Matrix R_;              
   bool do_recurse_Ke_{};  
-};                      // System
+};  // System
 }  // namespace gaussian
 }  // namespace lds
 
@@ -123,4 +125,4 @@ class System : public lds::System {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  3 April 2025 at 13:48:30 EDT

@@ -1,5 +1,6 @@
 ---
 title: eg_glds_du_plds_ctrl.cpp
+summary: Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u). 
 
 ---
 
@@ -7,9 +8,8 @@ title: eg_glds_du_plds_ctrl.cpp
 
 
 
-Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u). 
+Example GLDS Control of PLDS where change in control (du) is being updated, rather than amplitude (u). ```cpp
 
-```cpp
 //===-- eg_glds_du_plds_ctrl.cpp - Example GLDS Delta u Control of PLDS ---===//
 //
 // Copyright 2021 Michael Bolus
@@ -269,6 +269,8 @@ auto main() -> int {
 }
 ```
 
+_Filename: eg_glds_du_plds_ctrl.cpp_
+
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  3 April 2025 at 13:48:30 EDT

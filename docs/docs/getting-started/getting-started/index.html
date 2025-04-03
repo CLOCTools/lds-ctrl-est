@@ -3,24 +3,32 @@
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Getting Started #  This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
+<meta name="description" content="
+  Getting Started
+  #
+
+This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
 ldsCtrlEst requires Armadillo for linear algebra as well as HDF5 for saving output. vcpkg is a cross-platform C&#43;&#43; package manager which allows us to easily install and use the dependencies in isolation.
-Tested Configurations #  Building C&#43;&#43; libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another.">
-<meta name="theme-color" content="#FFFFFF"><meta property="og:title" content="" />
-<meta property="og:description" content="Getting Started #  This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
+
+  Tested Configurations
+  #
+
+Building C&#43;&#43; libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another. To save you time, sweat, and tears, we suggest you simply use one of the following setups we know work fairly reliably, using the RelWithDebInfo build type in the CMake configure command (-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo):">
+<meta name="theme-color" content="#FFFFFF"><meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/getting-started/">
+  <meta property="og:site_name" content="LDS C&E">
+  <meta property="og:title" content="LDS C&E">
+  <meta property="og:description" content="Getting Started # This library uses the cross-platform tool CMake to orchestrate the building and testing process on Linux, MacOS, and Windows.
 ldsCtrlEst requires Armadillo for linear algebra as well as HDF5 for saving output. vcpkg is a cross-platform C&#43;&#43; package manager which allows us to easily install and use the dependencies in isolation.
-Tested Configurations #  Building C&#43;&#43; libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://stanley-rozell.github.io/lds-ctrl-est/docs/getting-started/getting-started/" /><meta property="article:section" content="docs" />
-
-
-
+Tested Configurations # Building C&#43;&#43; libraries with complex dependencies can be tricky business—in our experience builds have inexplicably worked in one environment and failed in another. To save you time, sweat, and tears, we suggest you simply use one of the following setups we know work fairly reliably, using the RelWithDebInfo build type in the CMake configure command (-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo):">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
 <title>Getting Started | LDS C&amp;E</title>
 <link rel="manifest" href="/lds-ctrl-est/manifest.json">
 <link rel="icon" href="/lds-ctrl-est/favicon.png" type="image/x-icon">
 <link rel="stylesheet" href="/lds-ctrl-est/book.min.57f7f660871517a5bfcfb5e2de853d806f7e34d94ebd5f3f3bad62e9ddbae209.css" integrity="sha256-V/f2YIcVF6W/z7Xi3oU9gG9&#43;NNlOvV8/O61i6d264gk=" crossorigin="anonymous">
   <script defer src="/lds-ctrl-est/flexsearch.min.js"></script>
-  <script defer src="/lds-ctrl-est/en.search.min.93b2d0e7fa872893809358a01a9e6e0c0ce7a384100570924726e75a52c21d85.js" integrity="sha256-k7LQ5/qHKJOAk1igGp5uDAzno4QQBXCSRybnWlLCHYU=" crossorigin="anonymous"></script>
+  <script defer src="/lds-ctrl-est/en.search.min.1dd72753aa4cc1d094b380f145ea5e5e5e825d722fba5c6b234d78dac6a8ca11.js" integrity="sha256-HdcnU6pMwdCUs4DxRepeXl6CXXIvulxrI0142saoyhE=" crossorigin="anonymous"></script>
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -65,7 +73,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><a href="/lds-ctrl-est/docs/getting-started/getting-started/"class=active><strong>Getting Started</strong></a>
 <ul>
@@ -73,7 +81,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><strong>Tutorials</strong>
 <ul>
@@ -83,7 +91,7 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><strong>API Reference</strong>
 <ul>
@@ -95,15 +103,15 @@ https://github.com/alex-shpak/hugo-book
 </ul>
 </li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><a href="/lds-ctrl-est/issues-contributing/"><strong>Reporting Issues &amp; Contributing</strong></a></li>
 </ul>
-<p><br /></p>
+<br />
 <ul>
 <li><a href="/lds-ctrl-est/acknowledgements/"><strong>Acknowledgements</strong></a></li>
 </ul>
-<p><br /></p>
+<br />
 
 
 
@@ -131,7 +139,7 @@ https://github.com/alex-shpak/hugo-book
 
 
 
-  <script>(function(){var a=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(b){localStorage.setItem("menu.scrollTop",a.scrollTop)}),a.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
 
 
  
@@ -213,18 +221,18 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#mac-pre-requisities">#</a>
 </h2>
 <p>Xcode Command Line Tools will get you clang, gcc, make, and git:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">xcode-select --install
-</code></pre></div><p>Homebrew is &ldquo;The Missing Package Manager for macOS&rdquo; which will make installing lots of things easy. Install like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">/bin/bash -c <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</code></pre></div><p>You can then use it to install CMake, gfortran, and pkg-config:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">brew install cmake gfortran pkg-config
-</code></pre></div><h2 id="linux-pre-requisites">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>xcode-select --install
+</span></span></code></pre></div><p>Homebrew is &ldquo;The Missing Package Manager for macOS&rdquo; which will make installing lots of things easy. Install like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>/bin/bash -c <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+</span></span></code></pre></div><p>You can then use it to install CMake, gfortran, and pkg-config:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>brew install cmake gfortran pkg-config
+</span></span></code></pre></div><h2 id="linux-pre-requisites">
   Linux Pre-requisites
   <a class="anchor" href="#linux-pre-requisites">#</a>
 </h2>
 <p>You&rsquo;ll need Git, CMake, GCC, gfortran, etc.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">sudo apt install git cmake pkg-config gfortran curl zip unzip tar build-essential ninja-build
-</code></pre></div><h2 id="windows-installation">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt install git cmake pkg-config gfortran curl zip unzip tar build-essential ninja-build
+</span></span></code></pre></div><h2 id="windows-installation">
   Windows Installation
   <a class="anchor" href="#windows-installation">#</a>
 </h2>
@@ -234,7 +242,7 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#downloading-the-library">#</a>
 </h2>
 <p>First, clone the repository along with submodules:</p>
-<pre><code>git clone https://github.com/cloctools/lds-ctrl-est.git 
+<pre tabindex="0"><code>git clone https://github.com/cloctools/lds-ctrl-est.git 
 cd lds-ctrl-est
 git submodule update --init
 </code></pre><h2 id="compilation--installation">
@@ -242,7 +250,7 @@ git submodule update --init
   <a class="anchor" href="#compilation--installation">#</a>
 </h2>
 <p>Now generate the cache and build using your IDE or from the command line as follows.</p>
-<pre><code class="language-source" data-lang="source">mkdir build &amp;&amp; cd build
+<pre tabindex="0"><code class="language-source" data-lang="source">mkdir build &amp;&amp; cd build
 cmake ..
 cmake --build .
 </code></pre><p>The first time, <code>vcpkg</code> will automatically install dependencies into <code>[build directory]/vcpkg_installed/</code>, which will likely take about 10-20 minutes.</p>
@@ -263,27 +271,27 @@ cmake --build .
 <ul>
 <li>
 <p>For basic project build &amp; install</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cd /path/to/repository
-mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build
-cmake .. <span style="color:#75715e">#configure build</span>
-cmake --build <span style="color:#75715e">#build the project</span>
-sudo make install <span style="color:#75715e">#[optional] installs to default location (OS-specific)</span>
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd /path/to/repository
+</span></span><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build
+</span></span><span style="display:flex;"><span>cmake .. <span style="color:#75715e">#configure build</span>
+</span></span><span style="display:flex;"><span>cmake --build <span style="color:#75715e">#build the project</span>
+</span></span><span style="display:flex;"><span>sudo make install <span style="color:#75715e">#[optional] installs to default location (OS-specific)</span>
+</span></span></code></pre></div></li>
 <li>
 <p>To set the install prefix</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cd /path/to/repository
-mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build
-cmake -DCMAKE_INSTALL_PREFIX<span style="color:#f92672">=</span>/your/install/prefix .. <span style="color:#75715e">#configure build with chosen install location</span>
-cmake --build <span style="color:#75715e">#build the project</span>
-make install <span style="color:#75715e">#install to /your/install/prefix</span>
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd /path/to/repository
+</span></span><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build
+</span></span><span style="display:flex;"><span>cmake -DCMAKE_INSTALL_PREFIX<span style="color:#f92672">=</span>/your/install/prefix .. <span style="color:#75715e">#configure build with chosen install location</span>
+</span></span><span style="display:flex;"><span>cmake --build <span style="color:#75715e">#build the project</span>
+</span></span><span style="display:flex;"><span>make install <span style="color:#75715e">#install to /your/install/prefix</span>
+</span></span></code></pre></div></li>
 <li>
 <p>To build the <em>bare bones</em> project, excluding fit code and Matlab mex code.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cd /path/to/repository
-mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build
-cmake -DLDSCTRLEST_BUILD_FIT<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> .. <span style="color:#75715e">#configure not to build the fitting portion of library</span>
-make <span style="color:#75715e">#build the project</span>
-</code></pre></div><p><em>n.b.</em>, If you choose not to install the library or install it to the non-default location, ensure you have updated the following environment variables on Unix-based operating systems.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd /path/to/repository
+</span></span><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build
+</span></span><span style="display:flex;"><span>cmake -DLDSCTRLEST_BUILD_FIT<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> .. <span style="color:#75715e">#configure not to build the fitting portion of library</span>
+</span></span><span style="display:flex;"><span>make <span style="color:#75715e">#build the project</span>
+</span></span></code></pre></div><p><em>n.b.</em>, If you choose not to install the library or install it to the non-default location, ensure you have updated the following environment variables on Unix-based operating systems.</p>
 <ol>
 <li><code>LD_LIBRARY_PATH</code>: search path for dynamically loaded libraries</li>
 <li><code>PKG_CONFIG_PATH</code>: search path for <code>pkg-config</code> tool</li>
@@ -296,8 +304,8 @@ make <span style="color:#75715e">#build the project</span>
   <a class="anchor" href="#python-bindings-package-ldsctrlest">#</a>
 </h2>
 <p>With the <code>LDSCTRLEST_BUILD_PYTHON</code> setting (off by default) and the <code>pybind11</code> submodule initialized, you can build Python bindings. You will probably want to specify the installation of Python to use by adding a <code>-DPython3_ROOT_DIR=[path/to/install/dir]</code> argument to the CMake cache generation command (the first one) so CMake doesn&rsquo;t use an undesired version. That environment needs to have NumPy installed.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">cmake --build . --target python_modules
-</code></pre></div><p>The bindings need to be generated just once per Python version. Once the build is complete, navigate to the <code>[build location]/python</code> folder and run <code>pip install .</code> to make it importable anywhere for your current environment. <em>The file structure only works correctly for this if you use a single-config generator like Ninja or Make, though.</em> You can verify the installation was successful by running <code>pytest</code> from the <code>build/python</code> directory (<code>pip install pytest matplotlib</code> first if you need to).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cmake --build . --target python_modules
+</span></span></code></pre></div><p>The bindings need to be generated just once per Python version. Once the build is complete, navigate to the <code>[build location]/python</code> folder and run <code>pip install .</code> to make it importable anywhere for your current environment. <em>The file structure only works correctly for this if you use a single-config generator like Ninja or Make, though.</em> You can verify the installation was successful by running <code>pytest</code> from the <code>build/python</code> directory (<code>pip install pytest matplotlib</code> first if you need to).</p>
 <p>See <code>python/ldsctrlest/README.md</code> for usage details.</p>
 <p>Also, beware that a single build will probably not work for both the standalone library and the Python package, since the conversion between NumPy and Armadillo alters the way Armadillo allocates memory. In this case you may want to build once with <code>-DLDSCTRLEST_BUILD_PYTHON=ON</code>, install the package, then again with  <code>-DLDSCTRLEST_BUILD_PYTHON=OFF</code> for the pure C++ build to work correctly.</p>
 <h2 id="common-issues">
@@ -308,9 +316,9 @@ make <span style="color:#75715e">#build the project</span>
 <li>&ldquo;I have built the library and installed it in a non-default location. In building my own project linking against <code>ldsCtrlEst</code>, <code>cmake</code> or <code>pkg-config</code> cannot find the library or its configuration information.&rdquo;</li>
 </ol>
 <p>If <code>cmake</code> and/or <code>pkg-config</code> cannot find the required configuration files for your project to link against ldsCtrlEst, make sure that these utilities know to look for them in the non-default location where you installed the library. For <code>cmake</code> this means adding your chosen install prefix to the environment variable <code>CMAKE_PREFIX_PATH</code>. Similarly, for <code>pkg-config</code> you need to add <code>your/install/prefix/lib/pkgconfig</code> to its search path, <code>PKG_CONFIG_PATH</code>. Assuming a Unix shell whose login startup file is <code>~/.profile</code> and ldsCtrlEst was installed using prefix <code>your/install/prefix</code>, add the following to <code>.profile</code>.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">export CMAKE_PREFIX_PATH<span style="color:#f92672">=</span>$CMAKE_PREFIX_PATH:/your/install/prefix
-export PKG_CONFIG_PATH<span style="color:#f92672">=</span>$PKG_CONFIG_PATH:/your/install/prefix
-</code></pre></div><ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>export CMAKE_PREFIX_PATH<span style="color:#f92672">=</span>$CMAKE_PREFIX_PATH:/your/install/prefix
+</span></span><span style="display:flex;"><span>export PKG_CONFIG_PATH<span style="color:#f92672">=</span>$PKG_CONFIG_PATH:/your/install/prefix
+</span></span></code></pre></div><ol start="2">
 <li>vcpkg fails on configuration</li>
 </ol>
 <p>Try running <code>./bootstrap-vcpkg</code> from the <code>vcpkg</code> folder and try again. If that doesn&rsquo;t work, try updating vcpkg to a newer version (in the source control tab, click on the commit hash by the vcpkg repo then select from the dropdown) and running <code>boostsrap-vcpkg</code> again. You can also try upgrading your system (e.g., <code>apt update</code>, <code>apt upgrade</code>).</p>
@@ -336,7 +344,7 @@ export PKG_CONFIG_PATH<span style="color:#f92672">=</span>$PKG_CONFIG_PATH:/your
 
 
 
-  <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
 
 
  

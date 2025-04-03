@@ -19,15 +19,15 @@ Linear Dynamical Systems (LDS) namespace. <br>
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1controller/)**  |
-| class | **[lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1em/)**  |
-| class | **[lds::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1fit/)** <br>LDS [Fit]() Type.  |
-| class | **[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/)**  |
-| class | **[lds::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1switchedcontroller/)** <br>[SwitchedController]() Type.  |
-| class | **[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1system/)** <br>Linear Dynamical [System]() Type.  |
-| class | **[lds::UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1uniformmatrixlist/)**  |
-| class | **[lds::UniformSystemList](/lds-ctrl-est/docs/api/classes/classlds_1_1uniformsystemlist/)**  |
-| class | **[lds::UniformVectorList](/lds-ctrl-est/docs/api/classes/classlds_1_1uniformvectorlist/)**  |
+| class | **[lds::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1_controller/)**  |
+| class | **[lds::EM](/lds-ctrl-est/docs/api/classes/classlds_1_1_e_m/)**  |
+| class | **[lds::Fit](/lds-ctrl-est/docs/api/classes/classlds_1_1_fit/)** <br>LDS [Fit]() Type.  |
+| class | **[lds::SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/)**  |
+| class | **[lds::SwitchedController](/lds-ctrl-est/docs/api/classes/classlds_1_1_switched_controller/)** <br>[SwitchedController]() Type.  |
+| class | **[lds::System](/lds-ctrl-est/docs/api/classes/classlds_1_1_system/)** <br>Linear Dynamical [System]() Type.  |
+| class | **[lds::UniformMatrixList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_matrix_list/)**  |
+| class | **[lds::UniformSystemList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_system_list/)**  |
+| class | **[lds::UniformVectorList](/lds-ctrl-est/docs/api/classes/classlds_1_1_uniform_vector_list/)**  |
 
 ## Types
 
@@ -59,14 +59,8 @@ Linear Dynamical Systems (LDS) namespace. <br>
 
 |                | Name           |
 | -------------- | -------------- |
-| const std::size_t | **[kControlTypeDeltaU](/lds-ctrl-est/docs/api/modules/group__control__masks/#variable-kcontroltypedeltau)** <br>control designed to penalize change in input  |
-| const std::size_t | **[kControlTypeIntY](/lds-ctrl-est/docs/api/modules/group__control__masks/#variable-kcontroltypeinty)** <br>control using integral action  |
-| const std::size_t | **[kControlTypeAdaptM](/lds-ctrl-est/docs/api/modules/group__control__masks/#variable-kcontroltypeadaptm)** <br>adapt control setpoint with re-estimated disturbance `m` |
 | const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kInf](/lds-ctrl-est/docs/api/namespaces/namespacelds/#variable-kinf)** <br>Some useful numbers.  |
 | const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kPi](/lds-ctrl-est/docs/api/namespaces/namespacelds/#variable-kpi)**  |
-| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kDefaultP0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultp0)** <br>default state estimate covar  |
-| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kDefaultQ0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultq0)** <br>default process noise covar  |
-| const [data_t](/lds-ctrl-est/docs/api/namespaces/namespacelds/#using-data-t) | **[kDefaultR0](/lds-ctrl-est/docs/api/modules/group__defaults/#variable-kdefaultr0)** <br>default output noise covar  |
 
 ## Type Details
 
@@ -82,7 +76,7 @@ Linear Dynamical Systems (LDS) namespace. <br>
 
 
 
-Weighting options for singular value decomposition performed during subspace identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1ssid/))
+Weighting options for singular value decomposition performed during subspace identification ([SSID](/lds-ctrl-est/docs/api/classes/classlds_1_1_s_s_i_d/))
 
 Reference:
 
@@ -104,7 +98,7 @@ van Overschee, de Moor. 1996. Subspace Identification for Linear Systems.
 ### data_t
 
 ```cpp
-using lds::data_t = typedef double;
+using lds::data_t =  double;
 ```
 
 
@@ -115,7 +109,7 @@ Type of all data in library. If need 32b, change `double` to `float`. This could
 ### Vector
 
 ```cpp
-using lds::Vector = typedef arma::Col<data_t>;
+using lds::Vector =  arma::Col<data_t>;
 ```
 
 
@@ -123,7 +117,7 @@ using lds::Vector = typedef arma::Col<data_t>;
 ### Matrix
 
 ```cpp
-using lds::Matrix = typedef arma::Mat<data_t>;
+using lds::Matrix =  arma::Mat<data_t>;
 ```
 
 
@@ -131,7 +125,7 @@ using lds::Matrix = typedef arma::Mat<data_t>;
 ### Cube
 
 ```cpp
-using lds::Cube = typedef arma::Cube<data_t>;
+using lds::Cube =  arma::Cube<data_t>;
 ```
 
 
@@ -139,7 +133,7 @@ using lds::Cube = typedef arma::Cube<data_t>;
 ### View
 
 ```cpp
-using lds::View = typedef arma::subview<data_t>;
+using lds::View =  arma::subview<data_t>;
 ```
 
 
@@ -294,39 +288,6 @@ Matrix calcCov(
 
 ## Attribute Details
 
-### kControlTypeDeltaU
-
-```cpp
-static const std::size_t kControlTypeDeltaU = 0x1;
-```
-
-
-
-Control was designed to penalize change in input (i.e., the state was augmented with input `u`) 
-
-
-### kControlTypeIntY
-
-```cpp
-static const std::size_t kControlTypeIntY = kControlTypeDeltaU << 1;
-```
-
-
-
-Control using integral action (i.e., the state was augmented with output `y` during design) 
-
-
-### kControlTypeAdaptM
-
-```cpp
-static const std::size_t kControlTypeAdaptM = kControlTypeDeltaU << 2;
-```
-
-
-
-Adapt control setpoint adapted with re-estimated process disturbance `m`. 
-
-
 ### kInf
 
 ```cpp
@@ -343,34 +304,10 @@ static const data_t kPi = arma::datum::pi;
 
 
 
-### kDefaultP0
-
-```cpp
-static const data_t kDefaultP0 = 1e-6;
-```
-
-
-
-### kDefaultQ0
-
-```cpp
-static const data_t kDefaultQ0 = 1e-6;
-```
-
-
-
-### kDefaultR0
-
-```cpp
-static const data_t kDefaultR0 = 1e-2;
-```
-
-
-
 
 
 
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:03 Eastern Daylight Time
+Updated on  3 April 2025 at 13:48:29 EDT

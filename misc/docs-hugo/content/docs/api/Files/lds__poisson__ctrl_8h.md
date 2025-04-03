@@ -21,13 +21,13 @@ PLDS controller type.  [More...](#detailed-description)
 
 |                | Name           |
 | -------------- | -------------- |
-| class | **[lds::poisson::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1controller/)** <br>PLDS [Controller]() Type.  |
+| class | **[lds::poisson::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/)** <br>PLDS [Controller]() Type.  |
 
 ## Detailed Description
 
 
 
-This file declares and partially defines the type for feedback control of a Poisson-output linear dynamical system (`[lds::poisson::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1controller/)`). It inherits functionality from the underlying PLDS model type (`[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1system/)`), including state estimation. 
+This file declares and partially defines the type for feedback control of a Poisson-output linear dynamical system (`[lds::poisson::Controller](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_controller/)`). It inherits functionality from the underlying PLDS model type (`[lds::poisson::System](/lds-ctrl-est/docs/api/classes/classlds_1_1poisson_1_1_system/)`), including state estimation. 
 
 
 
@@ -118,4 +118,4 @@ class Controller : public lds::Controller<System> {
 
 -------------------------------
 
-Updated on 19 May 2022 at 17:16:05 Eastern Daylight Time
+Updated on  3 April 2025 at 13:48:30 EDT
