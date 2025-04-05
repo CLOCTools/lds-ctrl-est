@@ -25,16 +25,11 @@ jobs:
       if: runner.os != 'Windows'
       run: |
         if [ "${{ runner.os }}" == "macOS" ]; then
-          brew install cmake ninja
+          brew install ninja
         elif [ "${{ runner.os }}" == "Linux" ]; then
           sudo apt-get update
-          sudo apt-get install -y cmake build-essential
+          sudo apt-get install -y build-essential
         fi
-
-    - name: Set up dependencies for Windows
-      if: runner.os == 'Windows'
-      run: |
-        choco install cmake
   
     - name: Run vcpkg
       uses: lukka/run-vcpkg@v11
@@ -57,6 +52,7 @@ jobs:
         cmakeListsTxtPath: CMakeLists.txt
         configurePreset: 'linux-release'
         buildPreset: 'linux-release'
+        cmakeVersion: '3.31.6'
 
     - name: Configure and build for Windows
       if: runner.os == 'Windows'
@@ -65,6 +61,8 @@ jobs:
         cmakeListsTxtPath: CMakeLists.txt
         configurePreset: 'windows-release'
         buildPreset: 'windows-release'
+        buildPresetAdditionalArgs: "['--config Release']"
+        cmakeVersion: '3.31.6'
         
     - name: Install and Update PATH (Windows only)
       if: runner.os == 'Windows'
