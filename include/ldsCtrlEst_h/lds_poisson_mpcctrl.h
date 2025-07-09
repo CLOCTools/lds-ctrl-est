@@ -80,7 +80,7 @@ class MpcController : public lds::MpcController<System> {
 
  private:
   constexpr static const data_t kYRefLb =
-      1e-4;  ///< lower bound on yRef (to avoid numerical log(0) issue)
+      1e-12;  ///< lower bound on yRef (to avoid numerical log(0) issue)
 };
 }  // namespace poisson
 }  // namespace lds

@@ -55,9 +55,9 @@ auto main() -> int {
 
   /// Going to simulate a switching disturbance (m) acting on system
   size_t which_m = 0;
-  data_t m_low = log(1 * dt) * (1 - a_true[0]);
+  data_t m_low = log(1 * dt) * (1 - a_true[0]) * 0;
   data_t pr_lo2hi = 1e-3;
-  data_t m_high = log(20 * dt) * (1 - a_true[0]);
+  data_t m_high = log(20 * dt) * (1 - a_true[0]) * 0;
   data_t pr_hi2lo = pr_lo2hi;
 
   Vector m0_true = Vector(n_x, arma::fill::ones) * m_low;
@@ -103,7 +103,7 @@ auto main() -> int {
 
     // set control penalties
     Matrix Q_y = Matrix(n_y, n_y, arma::fill::ones) * 1e5;
-    Matrix R = Matrix(n_u, n_u, arma::fill::zeros) * 1e-1;
+    Matrix R = Matrix(n_u, n_u, arma::fill::eye) * 1e-1;
     Matrix S = Matrix(n_u, n_u, arma::fill::zeros);
 
     Vector xmin = Vector(n_u);

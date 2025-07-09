@@ -265,7 +265,7 @@ class MpcController {
 
   void Init() {
     A_ = sys_.A();
-    B_ = sys_.B();
+    B_ = sys_.B() * arma::diagmat(sys_.g());
     C_ = sys_.C();
     n_ = B_.n_rows;
     m_ = B_.n_cols;
@@ -406,8 +406,7 @@ void MpcController<System>::set_cost_output(Matrix Q_y, Matrix R, Matrix S,
   Matrix Pu3 =
       block_diag(Matrix((M_ - 1) * m_, (M_ - 1) * m_, arma::fill::zeros), -S_);
   Matrix Pu = Pu1 + Pu2 + Pu3;
-  P_y_ = Sparse(arma::trimatu(
-      block_diag(Px, Pu)));  // Taking only the upper triangular part
+  P_y_ = 2 * Sparse(block_diag(Px, Pu));
 
   OSQP_y->set_P(P_y_);
 
@@ -489,6 +488,8 @@ osqp_arma::Solution* MpcController<System>::calc_output_trajectory(
     Matrix Qxr_full = -2 * sliced_yr.t() * Q_y_ * C_;
     Vector Qxr = Qxr_full.as_row().t();  // Qxr for every simulation time step
 
+    sliced_yr.print("y_ref = ");
+
     Vector qu =
         join_vert((-2 * S_ * u0), Vector((M_ - 1) * m_, arma::fill::zeros));
     Vector qx = Qxr.rows(0, N_ * n_ - 1);
@@ -499,6 +500,8 @@ osqp_arma::Solution* MpcController<System>::calc_output_trajectory(
   OSQP_y->set_q(q);
 
   osqp_arma::Solution* sol = OSQP_y->solve();
+
+  sol->x()->t().print("sol = ");
 
   return sol;
 }
