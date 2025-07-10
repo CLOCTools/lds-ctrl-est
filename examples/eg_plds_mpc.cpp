@@ -39,11 +39,11 @@ auto main() -> int {
   size_t n_y = 1;
 
   // no time steps for simulation.
-  auto n_t = static_cast<size_t>(10.0 / dt);
+  auto n_t = static_cast<size_t>(2.0 / dt);
 
   // Control variables: _reference/target output, controller gains
   // n.b., Can either use Vector (arma::Col) or std::vector
-  Vector y_ref0 = Vector(n_y, arma::fill::ones) * 30.0 * dt;
+  Vector y_ref0 = Vector(n_y, arma::fill::ones) * 30 * dt;
 
   // Ground-truth parameters for the controlled system
   // (stand-in for physical system to be controlled)
@@ -55,9 +55,9 @@ auto main() -> int {
 
   /// Going to simulate a switching disturbance (m) acting on system
   size_t which_m = 0;
-  data_t m_low = log(1 * dt) * (1 - a_true[0]) * 0;
+  data_t m_low = log(1 * dt) * (1 - a_true[0]);
   data_t pr_lo2hi = 1e-3;
-  data_t m_high = log(20 * dt) * (1 - a_true[0]) * 0;
+  data_t m_high = log(20 * dt) * (1 - a_true[0]);
   data_t pr_hi2lo = pr_lo2hi;
 
   Vector m0_true = Vector(n_x, arma::fill::ones) * m_low;
@@ -88,7 +88,7 @@ auto main() -> int {
 
     // for this example, assume model correct, except disturbance
     Vector m0_controller = Vector(n_x, arma::fill::ones) * m_low;
-    Vector x0_controller = arma::log(y_ref0);
+    Vector x0_controller = arma::log(Vector(n_y, arma::fill::ones) * 1 * dt);
     controller_system.set_m(m0_controller);
     controller_system.set_x0(x0_controller);
     controller_system.Reset();  // reset to new init condition
@@ -159,6 +159,7 @@ auto main() -> int {
   m_true.col(0) = controlled_system.m();
 
   // calculate the target output
+  y_ref.col(0) = Vector(n_y, arma::fill::ones) * 1 * dt;
   for (size_t t = 1; t < n_t + N + 1; t++) {
     // e.g., use sinusoidal reference
     data_t f = 0.5;  // freq [=] Hz
@@ -198,7 +199,7 @@ auto main() -> int {
 
     // Calculate the slice indices
     size_t start_idx = t;
-    size_t end_idx = t + N + 1;
+    size_t end_idx = t + N;
 
     auto* j = new data_t;
 

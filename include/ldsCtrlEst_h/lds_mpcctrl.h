@@ -488,8 +488,6 @@ osqp_arma::Solution* MpcController<System>::calc_output_trajectory(
     Matrix Qxr_full = -2 * sliced_yr.t() * Q_y_ * C_;
     Vector Qxr = Qxr_full.as_row().t();  // Qxr for every simulation time step
 
-    sliced_yr.print("y_ref = ");
-
     Vector qu =
         join_vert((-2 * S_ * u0), Vector((M_ - 1) * m_, arma::fill::zeros));
     Vector qx = Qxr.rows(0, N_ * n_ - 1);
@@ -500,8 +498,6 @@ osqp_arma::Solution* MpcController<System>::calc_output_trajectory(
   OSQP_y->set_q(q);
 
   osqp_arma::Solution* sol = OSQP_y->solve();
-
-  sol->x()->t().print("sol = ");
 
   return sol;
 }

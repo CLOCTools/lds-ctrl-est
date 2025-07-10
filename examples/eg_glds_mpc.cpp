@@ -57,20 +57,9 @@ auto main() -> int {
   // output noise covariance
   Matrix r_true = Matrix(n_y, n_y, arma::fill::eye) * 1e-4;
 
-  /// Going to simulate a switching disturbance (m) acting on system
-  size_t which_m = 0;  // whether low or high disturbance (0, 1)
-  data_t m_low = 5 * dt * (1 - a_true[0]) * 0;
-  data_t pr_lo2hi = 1e-3;  // probability of going from low to high disturb.
-  data_t m_high = 20 * dt * (1 - a_true[0]) * 0;
-  data_t pr_hi2lo = pr_lo2hi;
-
-  // initially let m be low
-  Vector m0_true = Vector(n_x).fill(m_low);
-
   // Assign params.
   controlled_system.set_A(a_true);
   controlled_system.set_B(b_true);
-  controlled_system.set_m(m0_true);
   controlled_system.set_g(g_true);
   controlled_system.set_R(r_true);
 
@@ -85,30 +74,15 @@ auto main() -> int {
   const size_t N = 25;  // Prediction horizon
   const size_t M = 20;  // Control horizon
   {
-    // Create **incorrect** model used for control.
-    // (e.g., imperfect model fitting)
-    Matrix b_controller = b_true;
-
-    // let's assume zero process disturbance initially
-    // (will be re-estimating)
-    Vector m_controller = Vector(n_x, arma::fill::zeros);
-
     // for this demo, just use arbitrary default R
     Matrix r_controller = Matrix(n_y, n_y, arma::fill::eye) * lds::kDefaultR0;
 
     lds::gaussian::System controller_system(controlled_system);
-    controller_system.set_B(b_controller);
-    controller_system.set_m(m_controller);
     controller_system.set_R(r_controller);
     controller_system.Reset();  // reset to new m
 
     // going to adaptively re-estimate the disturbance
     controller_system.do_adapt_m = true;
-
-    // set adaptation rate by changing covariance of assumed process noise
-    // acting on random-walk evolution of m
-    Matrix q_m = Matrix(n_x, n_x, arma::fill::eye) * 1e-6;
-    controller_system.set_Q_m(q_m);
 
     Matrix C = Matrix(n_y, n_x, arma::fill::eye);
     Matrix Q_y = C.t() * C * 1e5;
@@ -125,9 +99,9 @@ auto main() -> int {
       umax = {5, 5, 5};
     }
 
-    Vector xmin(b_controller.n_rows);
+    Vector xmin(b_true.n_rows);
     xmin.fill(-arma::datum::inf);
-    Vector xmax(b_controller.n_rows);
+    Vector xmax(b_true.n_rows);
     xmax.fill(arma::datum::inf);
 
     controller =
@@ -163,12 +137,13 @@ auto main() -> int {
   // *_hat indicates online estimates
   Matrix y_hat(n_y, n_t, arma::fill::zeros);
   Matrix x_hat(n_x, n_t, arma::fill::zeros);
-  Matrix m_hat(n_x, n_t, arma::fill::zeros);
 
   // *_true indicates ground truth (system being controlled)
   Matrix y_true(n_y, n_t, arma::fill::zeros);
   Matrix x_true(n_x, n_t, arma::fill::zeros);
-  Matrix m_true(n_x, n_t, arma::fill::zeros);
+
+  // MPC cost
+  Matrix J(1, n_t, arma::fill::zeros);
 
   // set initial val
   y_hat.submat(0, 0, n_y - 1, 0) = controller.sys().y();
@@ -176,9 +151,6 @@ auto main() -> int {
 
   x_hat.submat(0, 0, n_x - 1, 0) = controller.sys().x();
   x_true.submat(0, 0, n_x - 1, 0) = controlled_system.x();
-
-  m_hat.submat(0, 0, n_x - 1, 0) = controller.sys().m();
-  m_true.submat(0, 0, n_x - 1, 0) = controlled_system.m();
 
   cout << "Starting " << n_t * dt << " sec simulation ... \n";
   auto start = std::chrono::high_resolution_clock::now();
@@ -193,30 +165,12 @@ auto main() -> int {
     // save the signals
     y_true.col(i) = controlled_system.y();
     x_true.col(i) = controlled_system.x();
-    m_true.col(i) = controlled_system.m();
 
     y_hat.col(i) = controller.sys().y();
     x_hat.col(i) = controller.sys().x();
-    m_hat.col(i) = controller.sys().m();
   }
 
   for (size_t s = 1; s < n_c; s++) {
-    // simulate a stochastically switched disturbance
-    Vector chance = arma::randu<Vector>(1);
-    if (which_m == 0)  // low disturbance
-    {
-      if (chance[0] < pr_lo2hi) {  // switches low -> high disturbance
-        m0_true = std::vector<data_t>(n_x, m_high);
-        which_m = 1;
-      }
-    } else {                       // high disturbance
-      if (chance[0] < pr_hi2lo) {  // switches high -> low disturbance
-        m0_true = std::vector<data_t>(n_x, m_low);
-        which_m = 0;
-      }
-    }
-    controlled_system.set_m(m0_true);
-
     // Calculate the slice indices
     size_t start_idx = s * n_sim;
     size_t end_idx = ((s + N) * n_sim) - 1;
@@ -225,9 +179,11 @@ auto main() -> int {
     // x_ref, u_ref from reference output y_ref. Therefore, it is only
     // applicable to regulation problems or cases where reference trajectory
     // changes slowly compared to system dynamics.
-    auto u_next = controller.ControlOutputReference(t_sim, z.col(start_idx - 1), y_ref.cols(start_idx, end_idx));
+    auto* j = new data_t;
+    auto u_next = controller.ControlOutputReference(t_sim, z.col(start_idx - 1), y_ref.cols(start_idx, end_idx), true, j);
     for (int t = 0; t < n_sim; t++) {
       u.col(start_idx + t) = u_next;
+      J.col(start_idx + t) = *j;
     }
 
     // Simulate the true system.
@@ -242,11 +198,9 @@ auto main() -> int {
       // save the signals
       y_true.col(t) = controlled_system.y();
       x_true.col(t) = controlled_system.x();
-      m_true.col(t) = controlled_system.m();
 
       y_hat.col(t) = controller.sys().y();
       x_hat.col(t) = controller.sys().x();
-      m_hat.col(t) = controller.sys().m();
     }
   }
 
@@ -262,17 +216,16 @@ auto main() -> int {
   arma::hdf5_opts::opts replace = arma::hdf5_opts::replace;
 
   auto dt_vec = Vector(1).fill(dt);
-  dt_vec.save(arma::hdf5_name("eg_glds_ctrl.h5", "dt"));
+  dt_vec.save(arma::hdf5_name("eg_glds_mpc.h5", "dt"));
   Matrix y_ref_clip = y_ref.cols(0, n_t - 1);
-  y_ref_clip.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_ref", replace));
-  u.save(arma::hdf5_name("eg_glds_ctrl.h5", "u", replace));
-  z.save(arma::hdf5_name("eg_glds_ctrl.h5", "z", replace));
-  x_true.save(arma::hdf5_name("eg_glds_ctrl.h5", "x_true", replace));
-  m_true.save(arma::hdf5_name("eg_glds_ctrl.h5", "m_true", replace));
-  y_true.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_true", replace));
-  x_hat.save(arma::hdf5_name("eg_glds_ctrl.h5", "x_hat", replace));
-  m_hat.save(arma::hdf5_name("eg_glds_ctrl.h5", "m_hat", replace));
-  y_hat.save(arma::hdf5_name("eg_glds_ctrl.h5", "y_hat", replace));
+  y_ref_clip.save(arma::hdf5_name("eg_glds_mpc.h5", "y_ref", replace));
+  u.save(arma::hdf5_name("eg_glds_mpc.h5", "u", replace));
+  z.save(arma::hdf5_name("eg_glds_mpc.h5", "z", replace));
+  x_true.save(arma::hdf5_name("eg_glds_mpc.h5", "x_true", replace));
+  y_true.save(arma::hdf5_name("eg_glds_mpc.h5", "y_true", replace));
+  x_hat.save(arma::hdf5_name("eg_glds_mpc.h5", "x_hat", replace));
+  y_hat.save(arma::hdf5_name("eg_glds_mpc.h5", "y_hat", replace));
+  J.save(arma::hdf5_name("eg_glds_mpc.h5", "j", replace));
 
   cout << "fin.\n";
   return 0;

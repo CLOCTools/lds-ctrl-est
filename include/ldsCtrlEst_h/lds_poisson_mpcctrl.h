@@ -53,7 +53,7 @@ class MpcController : public lds::MpcController<System> {
     // clamping the target output to address log10(0) issues
     yr_transformed.clamp(kYRefLb, arma::datum::inf);
     // log transforming the output to make it linear
-    yr_transformed = log10(yr_transformed);
+    yr_transformed = log(yr_transformed);
 
     return lds::MpcController<System>::ControlOutputReference(
         t_sim, z, yr_transformed, do_control, J);
