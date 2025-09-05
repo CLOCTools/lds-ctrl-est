@@ -1,0 +1,62 @@
+name: Build Python Wheels
+
+on:
+  push:
+    branches:
+      - master
+    tags: ["v*"]
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies with vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgDirectory: "${{ github.workspace }}/vcpkg"
+          runVcpkgFormatString: "['install', '--triplet', '$[env.VCPKG_DEFAULT_TRIPLET]']"
+          runVcpkgInstall: true
+          doNotCache: false
+
+      - name: Build wheels (macOS & Linux)
+        uses: pypa/cibuildwheel@v2.16.2
+        with:
+          package-dir: python
+          only: ${{ (matrix.os == 'macos-latest' && 'cp312-macosx_arm64') || 'cp312-manylinux_x86_64' }}
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cibw-wheels-${{ matrix.os }}
+          path: ./wheelhouse/*.whl
+
+  upload_pypi:
+    name: Upload to PyPI
+    needs: build_wheels
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: cibw-wheels-*
+          path: dist
+          merge-multiple: true
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
