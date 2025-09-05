@@ -1,8 +1,23 @@
 {
-    "name": "lds-ctrl-est",
-    "version-string": "0.8.1",
-    "dependencies": [
-        "armadillo",
-        "hdf5"
-    ]
+  "name": "lds-ctrl-est",
+  "version-string": "0.8.1",
+  "dependencies": [
+    "armadillo",
+    {
+      "name": "hdf5",
+      "features": ["zlib"]
+    },
+    {
+      "name": "openblas",
+      "platform": "windows"
+    },
+    {
+      "name": "lapack-reference",
+      "platform": "windows"
+    },
+    {
+      "name": "openblas",
+      "platform": "!windows"
+    }
+  ]
 }
