@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["scikit-build-core", "pybind11>=2.12.0", "pkgconfig", "numpy"]
+build-backend = "scikit_build_core.build"
 
 [project]
 name = "ldsctrlest"
@@ -9,13 +9,27 @@ description = "Python bindings for ldsCtrlEst"
 authors = [{ name = "Kyle Johnsen" }, { name = "Michael Bolus" }]
 license = { text = "Apache-2.0" }
 requires-python = ">=3.6"
-
-[tool.setuptools]
-packages = ["ldsctrlest"]
-include-package-data = true
-
-[tool.setuptools.package-data]
-ldsctrlest = ["*.pyd", "*.lib", "*.pdb", ".so", ".dylib", ".dll"]
+dependencies = ["numpy"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.scikit-build]
+cmake.args = ["-DCMAKE_CXX_STANDARD=17"]
+
+[tool.cibuildwheel]
+skip = "pp* *-musllinux_*"
+test-command = "pytest -v {project}/python/tests"
+test-requires = ["pytest", "matplotlib"]
+
+# == Linux ==
+[tool.cibuildwheel.linux]
+archs = ["x86_64"]
+manylinux-x86_64-image = "manylinux_2_28"
+before-build = "yum install -y --nogpgcheck openblas-devel lapack-devel"
+environment = { CMAKE_PREFIX_PATH="/project/vcpkg_installed/x64-linux", LDSCTRLEST_BUILD_PYTHON="ON", CIBW_LINUX="1", Python3_EXECUTABLE="{python}", Python3_INCLUDE_DIR="{python_include}", Python3_LIBRARY="{python_library}", CC="gcc", CXX="g++"}
+repair-wheel-command = "auditwheel repair -w {dest_dir} {wheel} --exclude libgfortran.so.5 --exclude libquadmath.so.0"
+
+# == macOS ==
+[tool.cibuildwheel.macos]
+environment = { CMAKE_TOOLCHAIN_FILE="$GITHUB_WORKSPACE/vcpkg/scripts/buildsystems/vcpkg.cmake", CMAKE_PREFIX_PATH="$GITHUB_WORKSPACE/vcpkg_installed/arm64-osx", LDSCTRLEST_BUILD_PYTHON="ON" }
