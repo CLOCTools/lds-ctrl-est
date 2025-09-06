@@ -1,4 +1,4 @@
-from sys import platform
+import platform
 import ldsctrlest
 import numpy as np
 from numpy.random import rand
