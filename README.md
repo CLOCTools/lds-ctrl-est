@@ -24,7 +24,7 @@ Among other things, this project also does not provide methods for trajectory op
 - The controller types for Gaussian- and Poisson-output systems (`lds::gaussian::Controller`, `lds::gaussian::SwitchedController`, `lds::poisson::Controller`, `lds::poisson::SwitchedController`) are derived from an abstract class template (`lds::Controller`) that is generic over LDS types derived from `lds::System` (here, `lds::gaussian::System` and `lds::poisson::System`). `lds::Controller` provides functions for one-step updates of the control signal, based on feedback and a target/reference signal. For the common problem of output reference tracking, the controller uses the underlying system model to estimate the control signal required to track the target, effectively providing model-based open-loop control if the estimator is disabled.
 - In order to ensure dimensionalities always match internally, every property of a system/controller class is `protected` or `private`. Get methods provide read-only references for most signals/parameters. Where appropriate, set methods are defined so users can change hidden parameters if and only if the new parameter has the correct dimensions.
 # Repository Organization
-- Header files are located under `include/ldsEstCtrl_h`.
+- Header files are located under `include/ldsCtrlEst_h`.
 - Source files are located under `src/` (main source code) and `src-fit/` (model fitting-related source code).
 - Wrappers for exposing functions to Matlab as executables (mex) are located under `matlab/`. Currently, only fitting functions of the library are exposed for use in Matlab.
 - Complimentary Matlab functions for control and estimation are also located under `matlab/`. They are provided as methods of `GLDS` and `PLDS` class definitions.
