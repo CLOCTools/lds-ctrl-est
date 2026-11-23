@@ -27,7 +27,7 @@ endif()
 
 # Specify C++ standard
 # n.b. this has to be before adding targets
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 message(STATUS "CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}")
 

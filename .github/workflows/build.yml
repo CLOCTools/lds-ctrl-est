@@ -135,4 +135,4 @@ jobs:
 
     - name: Run pytest suite
       working-directory: build/python
-      run: pytest tests/ -v
+      run: PYTHONPATH=. python -m pytest tests/ -v
