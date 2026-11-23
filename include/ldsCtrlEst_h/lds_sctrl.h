@@ -228,7 +228,7 @@ inline void SwitchedController<System>::InitVars() {
 
   Kc_list_ = UniformMatrixList<>(std::vector<Matrix>(n_sys_, Kc_));
   Kc_inty_list_ = UniformMatrixList<>(std::vector<Matrix>(n_sys_, Kc_inty_));
-  Kc_u_list_ = UniformMatrixList<>(std::vector<Matrix>(n_sys_, Kc_inty_));
+  Kc_u_list_ = UniformMatrixList<>(std::vector<Matrix>(n_sys_, Kc_u_));
   g_design_list_ = UniformVectorList(std::vector<Vector>(n_sys_, g_design_));
 }
 

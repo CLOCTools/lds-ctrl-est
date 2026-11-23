@@ -176,7 +176,7 @@ data_t FitEM::NewtonSolveC() {
       fprime.zeros();
 
       for (size_t k = 0; k < x_.size(); k++) {          // trial loop
-        for (size_t kk = 0; kk < x_[0].n_cols; kk++) {  // time samp loop
+        for (size_t kk = 0; kk < x_[k].n_cols; kk++) {  // time samp loop
           // TODO(mfbolus): not sure this is correct!
           // From a version of EM implementation written years ago, and cannot
           // tell if these expectations are correct

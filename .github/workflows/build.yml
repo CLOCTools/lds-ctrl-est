@@ -10,14 +10,15 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-24.04, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -28,9 +29,14 @@ jobs:
           brew install ninja
         elif [ "${{ runner.os }}" == "Linux" ]; then
           sudo apt-get update
-          sudo apt-get install -y build-essential
+          sudo apt-get install -y build-essential ninja-build gfortran pkg-config
         fi
   
+    - name: Set up CMake 3.31.6 (before vcpkg)
+      uses: lukka/get-cmake@latest
+      with:
+        cmakeVersion: '3.31.6'
+
     - name: Run vcpkg
       uses: lukka/run-vcpkg@v11
       with:
@@ -38,7 +44,7 @@ jobs:
         runVcpkgInstall: true
         
     - name: Cache build directory
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: build
         key: build-${{ matrix.os }}-${{ hashFiles('CMakeLists.txt') }}
@@ -52,7 +58,6 @@ jobs:
         cmakeListsTxtPath: CMakeLists.txt
         configurePreset: 'linux-release'
         buildPreset: 'linux-release'
-        cmakeVersion: '3.31.6'
 
     - name: Configure and build for Windows
       if: runner.os == 'Windows'
@@ -62,7 +67,6 @@ jobs:
         configurePreset: 'windows-release'
         buildPreset: 'windows-release'
         buildPresetAdditionalArgs: "['--config Release']"
-        cmakeVersion: '3.31.6'
         
     - name: Install and Update PATH (Windows only)
       if: runner.os == 'Windows'
@@ -74,4 +78,61 @@ jobs:
     - name: Run tests
       run: |
         cd build
-        ctest -C Release
+        ctest -C Release --output-on-failure
+
+  python-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Set up Python
+      id: setup-python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Set up dependencies for macOS and Linux
+      run: |
+        if [ "${{ runner.os }}" == "macOS" ]; then
+          brew install ninja
+        elif [ "${{ runner.os }}" == "Linux" ]; then
+          sudo apt-get update
+          sudo apt-get install -y build-essential ninja-build gfortran pkg-config
+        fi
+
+    - name: Install Python test dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install numpy matplotlib pytest
+
+    - name: Set up CMake 3.31.6 (before vcpkg)
+      uses: lukka/get-cmake@latest
+      with:
+        cmakeVersion: '3.31.6'
+
+    - name: Run vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgJsonGlob: 'vcpkg.json'
+        runVcpkgInstall: true
+
+    - name: Configure and build Python bindings
+      uses: lukka/run-cmake@v10
+      with:
+        cmakeListsTxtPath: CMakeLists.txt
+        configurePreset: 'linux-release'
+        configurePresetAdditionalArgs: "['-DLDSCTRLEST_BUILD_PYTHON=ON', '-DLDSCTRLEST_BUILD_FIT=ON', '-DLDSCTRLEST_BUILD_EXAMPLES=OFF', '-DLDSCTRLEST_BUILD_TESTS=OFF', '-DLDSCTRLEST_BUILD_STATIC=OFF', '-DPython3_EXECUTABLE=${{ steps.setup-python.outputs.python-path }}']"
+        buildPreset: 'linux-release'
+
+    - name: Run pytest suite
+      working-directory: build/python
+      run: PYTHONPATH=. python -m pytest tests/ -v

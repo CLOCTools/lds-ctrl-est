@@ -16,8 +16,7 @@ include(CTest)
 # some name variants I will be using:
 set(CMAKE_PROJECT_NAME_CAP LDSCTRLEST)#all caps
 
-# TODO(mfbolus): Update
-set(PROJECT_URL https://github.com/cloctools/ldsCtrlEst)
+set(PROJECT_URL https://github.com/CLOCTools/lds-ctrl-est)
 
 # WINDOWS WARNING
 if (WIN32)
@@ -28,7 +27,7 @@ endif()
 
 # Specify C++ standard
 # n.b. this has to be before adding targets
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 message(STATUS "CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}")
 
@@ -63,6 +62,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS true)
 
 # user settings:
 option(LDSCTRLEST_BUILD_EXAMPLES "Build the example programs." ON)
+option(LDSCTRLEST_BUILD_TESTS "Build the C++ unit tests." ON)
 option(LDSCTRLEST_BUILD_FIT "Whether to build the fitting accessory code." ON)
 option(LDSCTRLEST_BUILD_STATIC
   "Whether to statically link library against OpenBLAS \
@@ -82,6 +82,7 @@ message(STATUS "CMAKE_CXX_COMPILER_VERSION = ${CMAKE_CXX_COMPILER_VERSION}")
 message(STATUS "LDSCTRLEST_BUILD_FIT       = ${LDSCTRLEST_BUILD_FIT}" )
 message(STATUS "LDSCTRLEST_BUILD_STATIC    = ${LDSCTRLEST_BUILD_STATIC}" )
 message(STATUS "LDSCTRLEST_BUILD_EXAMPLES  = ${LDSCTRLEST_BUILD_EXAMPLES}" )
+message(STATUS "LDSCTRLEST_BUILD_TESTS     = ${LDSCTRLEST_BUILD_TESTS}" )
 message(STATUS "LDSCTRLEST_BUILD_PYTHON    = ${LDSCTRLEST_BUILD_PYTHON}" )
 message(STATUS "")
 message(STATUS "*** Looking for external libraries")
@@ -138,6 +139,15 @@ if (LDSCTRLEST_BUILD_PYTHON)
   include(pybind11)
   if (NOT (LDSCTRLEST_BUILD_PYTHON AND pybind11_FOUND AND Python_FOUND))
     set(LDSCTRLEST_BUILD_PYTHON OFF)
+  else()
+    # carma overrides Armadillo's memory allocator with NumPy/Python's allocator,
+    # so standalone C++ binaries (examples/unit tests) without an initialized
+    # Python interpreter cannot be linked against the Python-enabled library.
+    if (LDSCTRLEST_BUILD_EXAMPLES OR LDSCTRLEST_BUILD_TESTS)
+      message(STATUS "LDSCTRLEST_BUILD_PYTHON is ON: disabling standalone C++ examples and unit tests in this build directory (carma uses Python's memory allocator).")
+      set(LDSCTRLEST_BUILD_EXAMPLES OFF)
+      set(LDSCTRLEST_BUILD_TESTS OFF)
+    endif()
   endif()
 endif()
 
@@ -239,6 +249,11 @@ if(LDSCTRLEST_BUILD_EXAMPLES)
       PATTERN "*.txt" EXCLUDE
       )
   add_subdirectory(examples)
+endif()
+
+# build C++ unit tests?
+if(LDSCTRLEST_BUILD_TESTS AND BUILD_TESTING)
+  add_subdirectory(tests)
 endif()
 
 # build mex functions
@@ -495,4 +510,3 @@ if(NOT LDSCTRLEST_BUILD_PYTHON)  # because Python build requires carma install
 
   endif() #(LDSCTRLEST_BUILD_FIT AND LDSCTRLEST_BUILD_STATIC)
 endif() #(NOT LDSCTRLEST_BUILD_PYTHON)
-# TODO(mfbolus): TESTING! eg cmake/Help/guide/tutorial/Complete/CMakesLists.txt
