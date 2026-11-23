@@ -58,7 +58,6 @@ jobs:
         cmakeListsTxtPath: CMakeLists.txt
         configurePreset: 'linux-release'
         buildPreset: 'linux-release'
-        cmakeVersion: '3.31.6'
 
     - name: Configure and build for Windows
       if: runner.os == 'Windows'
@@ -68,7 +67,6 @@ jobs:
         configurePreset: 'windows-release'
         buildPreset: 'windows-release'
         buildPresetAdditionalArgs: "['--config Release']"
-        cmakeVersion: '3.31.6'
         
     - name: Install and Update PATH (Windows only)
       if: runner.os == 'Windows'
@@ -134,7 +132,6 @@ jobs:
         configurePreset: 'linux-release'
         configurePresetAdditionalArgs: "['-DLDSCTRLEST_BUILD_PYTHON=ON', '-DLDSCTRLEST_BUILD_FIT=ON', '-DLDSCTRLEST_BUILD_EXAMPLES=OFF', '-DLDSCTRLEST_BUILD_TESTS=OFF', '-DLDSCTRLEST_BUILD_STATIC=OFF', '-DPython3_EXECUTABLE=${{ steps.setup-python.outputs.python-path }}']"
         buildPreset: 'linux-release'
-        cmakeVersion: '3.31.6'
 
     - name: Run pytest suite
       working-directory: build/python
