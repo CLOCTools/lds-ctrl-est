@@ -19,7 +19,6 @@
     {
       "name": "windows-release",
       "hidden": false,
-      "generator": "Visual Studio 17 2022",
       "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",

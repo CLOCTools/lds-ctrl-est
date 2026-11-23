@@ -139,6 +139,15 @@ if (LDSCTRLEST_BUILD_PYTHON)
   include(pybind11)
   if (NOT (LDSCTRLEST_BUILD_PYTHON AND pybind11_FOUND AND Python_FOUND))
     set(LDSCTRLEST_BUILD_PYTHON OFF)
+  else()
+    # carma overrides Armadillo's memory allocator with NumPy/Python's allocator,
+    # so standalone C++ binaries (examples/unit tests) without an initialized
+    # Python interpreter cannot be linked against the Python-enabled library.
+    if (LDSCTRLEST_BUILD_EXAMPLES OR LDSCTRLEST_BUILD_TESTS)
+      message(STATUS "LDSCTRLEST_BUILD_PYTHON is ON: disabling standalone C++ examples and unit tests in this build directory (carma uses Python's memory allocator).")
+      set(LDSCTRLEST_BUILD_EXAMPLES OFF)
+      set(LDSCTRLEST_BUILD_TESTS OFF)
+    endif()
   endif()
 endif()
 
