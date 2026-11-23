@@ -46,7 +46,6 @@ void ForceSymPD(Matrix& X) {
   // https://nhigham.com/2021/02/16/diagonally-perturbing-a-symmetric-matrix-to-make-it-positive-definite/
   size_t k(1);
   bool is_sympd = X.is_sympd();
-  Matrix id = Matrix(X.n_rows, X.n_cols, fill::eye);
 
   while (!is_sympd) {
     if (k > 100) {
@@ -59,24 +58,19 @@ void ForceSymPD(Matrix& X) {
       return;
     }
 
-    // Limit(d, arma::eps(0), kInf);  // force to be positive...
-    // Matrix d_diag = arma::diagmat(d);
-    // X = u * d_diag * u.t();
-
     did_succeed = arma::eig_sym(d, u, X, "std");
     if (!did_succeed) {
       throw std::runtime_error("ForceSymPD failed.");
     }
 
     data_t min_eig = arma::min(d);
-    X += id * abs(min_eig) + arma::datum::eps;
+    data_t max_abs_eig = arma::max(arma::abs(d));
+    data_t scale_eps = std::max(arma::datum::eps, arma::eps(max_abs_eig));
+    X.diag() += std::abs(min_eig) + scale_eps;
 
     // make sure symm:
     X = (X + X.t()) / 2;
-    // double check eigenvals positive after symmetrizing:
-    arma::eig_sym(d, u, X, "std");
-    min_eig = arma::min(d);
-    is_sympd = min_eig > 0;
+    is_sympd = X.is_sympd();
     k++;
   }
 }
