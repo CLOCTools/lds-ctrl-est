@@ -516,6 +516,10 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
           // TODO(mfbolus): one approach to protection against integral windup
           // would be to not integrate error when control signal saturated:
 
+          // Note: Integrates filtered linear latent output error (C*x - C*x_ref)
+          // rather than raw measurement z_t - y_ref or nonlinear y - y_ref.
+          // This keeps integral action in linear/log-rate space for PLDS and
+          // tracks the reachable steady-state setpoint cx_ref_ = C*x_ref_.
           // if(!uSaturated)
           int_e_ += (sys_.cx() - cx_ref_) * sys_.dt();  // integrated error
           dv_ -= Kc_inty_ * int_e_;  // control for integrated error
@@ -531,6 +535,9 @@ inline void Controller<System>::CalcControl(bool do_control, bool do_estimation,
           // TODO(mfbolus): one approach to protection against integral windup
           // would be to not integrate error when control signal saturated:
 
+          // Note: Integrates filtered linear latent output error (C*x - C*x_ref)
+          // rather than raw measurement z_t - y_ref or nonlinear y - y_ref
+          // (see kControlTypeDeltaU branch above).
           // if (!uSaturated)
           int_e_ += (sys_.cx() - cx_ref_) * sys_.dt();  // integrated error
           v_ -= Kc_inty_ * int_e_;  // control for integrated error

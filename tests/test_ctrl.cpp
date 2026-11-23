@@ -191,4 +191,45 @@ TEST_SUITE("controller") {
       CHECK(u[0] <= 5.0);
     }
   }
+
+  TEST_CASE("kControlTypeIntY integrates linear latent error (cx - cx_ref) in log-rate space for PLDS") {
+    // Pins v0.9 behavior: integral action accumulates (sys_.cx() - cx_ref_) * dt
+    // rather than nonlinear (sys_.y() - y_ref_) * dt or raw (z_t - y_ref_) * dt.
+    const data_t dt = 1e-3;
+    lds::poisson::System p_sys(1, 1, 1, dt, 1e-3, 1e-4);
+    p_sys.set_A(Matrix(1, 1).fill(0.9));
+    p_sys.set_B(Matrix(1, 1).fill(0.1));
+    p_sys.set_C(Matrix(1, 1).fill(1.0));
+    p_sys.set_d(Vector(1).fill(std::log(5.0 * dt)));
+    p_sys.Reset();
+
+    lds::poisson::Controller p_ctrl(p_sys, -10.0, 10.0, lds::kControlTypeIntY);
+    p_ctrl.set_Kc(Matrix(1, 1).fill(0.0));
+    const data_t k_inty = 10.0;
+    p_ctrl.set_Kc_inty(Matrix(1, 1).fill(k_inty));
+
+    const data_t y_ref_val = 25.0 * dt;
+    p_ctrl.set_y_ref(Vector(1).fill(y_ref_val));
+
+    // Pass z == y(0) == 5.0 * dt with do_estimation=true so Kalman innovation is 0
+    // and sys_.x() == 0, sys_.cx() == 0, sys_.y() == 5.0 * dt.
+    // Steady-state setpoint: (A - I) * x_ref + B * u_ref = 0 with C * x_ref = log(5)
+    // => x_ref = log(5), u_ref = 0.1 * log(5) / 0.1 = log(5).
+    const data_t expected_cx_ref = std::log(5.0);
+    const data_t expected_u_ref = expected_cx_ref;
+    const data_t expected_int_e = (0.0 - expected_cx_ref) * dt;
+    const data_t expected_u = expected_u_ref - k_inty * expected_int_e;
+
+    Vector u = p_ctrl.ControlOutputReference(Vector(1).fill(5.0 * dt),
+                                             /*do_control=*/true,
+                                             /*do_estimation=*/true,
+                                             /*do_lock_control=*/false,
+                                             /*sigma_soft_start=*/0.0,
+                                             /*sigma_u_noise=*/0.0,
+                                             /*do_reset_at_control_onset=*/false);
+    CHECK(u[0] == doctest::Approx(expected_u).epsilon(1e-12));
+    // Confirm this differs from nonlinear output-space error (y - y_ref) * dt
+    const data_t nonlinear_u = expected_u_ref - k_inty * (5.0 * dt - y_ref_val) * dt;
+    CHECK(std::abs(u[0] - nonlinear_u) > 1e-2);
+  }
 }
