@@ -9,6 +9,8 @@
 #include <ldsCtrlEst>
 
 #include <cmath>
+#include <iostream>
+#include <sstream>
 #include <stdexcept>
 #include <vector>
 
@@ -95,5 +97,45 @@ TEST_SUITE("switched_controller") {
       CHECK(u[0] <= 5.0);
     }
     CHECK(p_sctrl.sys().B()(0, 0) == doctest::Approx(0.025));
+  }
+
+  TEST_CASE("SwitchedController with kControlTypeDeltaU and n_u != n_y initializes and switches Kc_u_list_") {
+    const data_t dt = 1e-3;
+    lds::gaussian::System s0(1, 2, 2, dt, 1e-4, 1e-5, 1e-5);
+    s0.set_A(0.95 * Matrix(2, 2, arma::fill::eye));
+    Matrix B0(2, 1, arma::fill::zeros);
+    B0(0, 0) = 0.10;
+    B0(1, 0) = 0.05;
+    s0.set_B(B0);
+    s0.set_C(Matrix(2, 2, arma::fill::eye));
+    s0.Reset();
+
+    lds::gaussian::System s1 = s0;
+    Matrix B1(2, 1, arma::fill::zeros);
+    B1(0, 0) = 0.05;
+    B1(1, 0) = 0.025;
+    s1.set_B(B1);
+
+    lds::UniformSystemList<lds::gaussian::System> sys_list({s0, s1});
+    lds::gaussian::SwitchedController sctrl(std::move(sys_list), -5.0, 5.0, lds::kControlTypeDeltaU);
+
+    Matrix kc0(1, 2, arma::fill::ones);
+    Matrix kc1(1, 2, arma::fill::ones);
+    sctrl.set_Kc(lds::UniformMatrixList<>({kc0, kc1}));
+    sctrl.set_y_ref(Vector({1.0, 0.5}));
+
+    // Switch() must swap Kc_u_list_ (shape n_u x n_u = 1x1) without dimension
+    // mismatch against Kc_inty_ (shape 0x0 when kControlTypeIntY is off).
+    std::ostringstream cerr_capture;
+    std::streambuf* old_cerr = std::cerr.rdbuf(cerr_capture.rdbuf());
+    sctrl.Switch(1);
+    std::cerr.rdbuf(old_cerr);
+    CHECK(cerr_capture.str().empty());
+    CHECK(sctrl.Kc_u().n_rows == 1);
+    CHECK(sctrl.Kc_u().n_cols == 1);
+
+    Vector u = sctrl.ControlOutputReference(Vector({0.1, 0.1}));
+    CHECK(u.n_elem == 1);
+    CHECK(std::isfinite(u[0]));
   }
 }
