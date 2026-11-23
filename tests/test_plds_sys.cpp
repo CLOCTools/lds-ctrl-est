@@ -89,4 +89,30 @@ TEST_SUITE("plds_sys") {
     CHECK(arma::approx_equal(sys.x(), sys.x0(), "absdiff", 1e-12));
     CHECK(arma::approx_equal(sys.m(), sys.m0(), "absdiff", 1e-12));
   }
+
+  TEST_CASE("Poisson FitEM handles unequal trial lengths when trial 0 is longer than trial 1") {
+    const data_t dt = 1e-3;
+    const size_t n_u = 1;
+    const size_t n_x = 2;
+    const size_t n_y = 2;
+
+    arma::arma_rng::set_seed(1234);
+    Matrix u0(n_u, 15, arma::fill::randn);
+    Matrix u1(n_u, 6, arma::fill::randn);
+    Matrix z0 = arma::randi<Matrix>(n_y, 15, arma::distr_param(0, 3));
+    Matrix z1 = arma::randi<Matrix>(n_y, 6, arma::distr_param(0, 3));
+
+    lds::UniformMatrixList<lds::kMatFreeDim2> u_list({u0, u1});
+    lds::UniformMatrixList<lds::kMatFreeDim2> z_list({z0, z1});
+
+    lds::poisson::FitEM fit_em(n_x, dt, std::move(u_list), std::move(z_list));
+    const lds::poisson::Fit* fit_ptr = nullptr;
+    REQUIRE_NOTHROW(fit_ptr = &fit_em.Run(true, true, true, true, true, 2, 1e-2));
+    REQUIRE(fit_ptr != nullptr);
+    CHECK(fit_em.x().size() == 2);
+    CHECK(fit_em.x()[0].n_cols == 15);
+    CHECK(fit_em.x()[1].n_cols == 6);
+    CHECK(fit_ptr->C().is_finite());
+    CHECK(fit_ptr->d().is_finite());
+  }
 }
