@@ -31,6 +31,11 @@ jobs:
           sudo apt-get install -y build-essential
         fi
   
+    - name: Set up CMake 3.31.6 (before vcpkg)
+      uses: lukka/get-cmake@latest
+      with:
+        cmakeVersion: '3.31.6'
+
     - name: Run vcpkg
       uses: lukka/run-vcpkg@v11
       with:
@@ -107,6 +112,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install numpy matplotlib pytest
+
+    - name: Set up CMake 3.31.6 (before vcpkg)
+      uses: lukka/get-cmake@latest
+      with:
+        cmakeVersion: '3.31.6'
 
     - name: Run vcpkg
       uses: lukka/run-vcpkg@v11
