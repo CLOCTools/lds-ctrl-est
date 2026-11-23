@@ -68,9 +68,10 @@ TEST_SUITE("utils") {
     Matrix diag_neg = {{-0.5, 0.0}, {0.0, 2.0}};
     CHECK_FALSE(diag_neg.is_sympd());
     lds::ForceSymPD(diag_neg);
+    CHECK(diag_neg.is_sympd());
     Vector diag_eigs;
     arma::eig_sym(diag_eigs, diag_neg);
-    CHECK(arma::all(arma::eig_sym(diag_neg) > 0.0));
+    CHECK(arma::all(diag_eigs > 0.0));
 
     // Indefinite symmetric matrix shifted cleanly by ForceSymMinEig
     Matrix sym_indef = {{1.0, 2.0}, {2.0, 1.0}};  // eigenvalues 3 and -1
@@ -80,6 +81,35 @@ TEST_SUITE("utils") {
     Vector eigvals;
     arma::eig_sym(eigvals, sym_indef);
     CHECK(arma::min(eigvals) >= 0.25 - 1e-12);
+  }
+
+  TEST_CASE("ForceSymPD handles off-diagonal precedence, large-scale matrices, and is_sympd()") {
+    // (a) Off-diagonal eps precedence bug: {{1, 2}, {2, 1}} has min_eig = -1;
+    // adding eps to all entries instead of only the diagonal stalls at min_eig = 0.
+    Matrix sym_indef = {{1.0, 2.0}, {2.0, 1.0}};
+    CHECK_FALSE(sym_indef.is_sympd());
+    CHECK_NOTHROW(lds::ForceSymPD(sym_indef));
+    CHECK(sym_indef.is_sympd());
+
+    // Zero off-diagonal must remain zero when diagonal is shifted
+    Matrix diag_zero = {{0.0, 0.0}, {0.0, 1.0}};
+    CHECK_NOTHROW(lds::ForceSymPD(diag_zero));
+    CHECK(diag_zero(0, 1) == 0.0);
+    CHECK(diag_zero(1, 0) == 0.0);
+    CHECK(diag_zero.is_sympd());
+
+    // (b) Large-scale matrix (~1e6 entries): machine eps at 1e6 is ~1e-10, so
+    // adding scalar arma::datum::eps (~2.22e-16) is lost in rounding.
+    Matrix large_singular = {{1e6, 1e6}, {1e6, 1e6}};
+    CHECK_FALSE(large_singular.is_sympd());
+    CHECK_NOTHROW(lds::ForceSymPD(large_singular));
+    CHECK(large_singular.is_sympd());
+
+    // (c) eig_sym min_eig > 0 vs is_sympd() mismatch on poorly conditioned / scaled matrices
+    Matrix poorly_scaled = {{1e8, 0.0}, {0.0, 0.0}};
+    CHECK_FALSE(poorly_scaled.is_sympd());
+    CHECK_NOTHROW(lds::ForceSymPD(poorly_scaled));
+    CHECK(poorly_scaled.is_sympd());
   }
 
   TEST_CASE("lq and calcCov satisfy matrix identities") {
